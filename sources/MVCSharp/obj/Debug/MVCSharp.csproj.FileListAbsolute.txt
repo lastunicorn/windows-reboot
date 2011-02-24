@@ -1,5 +1,0 @@
-D:\projects\WindowsReboot\sources\MVCSharp\bin\MVCSharp.dll
-D:\projects\WindowsReboot\sources\MVCSharp\bin\MVCSharp.pdb
-D:\projects\WindowsReboot\sources\MVCSharp\obj\Debug\ResolveAssemblyReference.cache
-D:\projects\WindowsReboot\sources\MVCSharp\obj\Debug\MVCSharp.dll
-D:\projects\WindowsReboot\sources\MVCSharp\obj\Debug\MVCSharp.pdb
