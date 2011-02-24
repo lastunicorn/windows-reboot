@@ -1,0 +1,109 @@
+<html>
+	<head>
+		<title></title>
+		<script type="text/javascript">
+			var rootPath = "";
+			
+			function checkIE()
+			{
+				if (document.all)
+				{
+					var errorIE = document.getElementById('errorIE');
+					errorIE.style.display = 'block';
+				}
+			}
+		</script>
+		
+		<link rel="shortcut icon" href="icon2%2016x16.png" />
+		
+		<script type="text/javascript" src="lightbox/js/prototype.js"></script>
+		<script type="text/javascript" src="lightbox/js/scriptaculous.js?load=effects"></script>
+		<script type="text/javascript" src="lightbox/js/lightbox.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="general.css" media="screen"/>
+		<link rel="stylesheet" href="lightbox/css/lightbox.css" type="text/css" media="screen"/>
+	</head>
+	<body onload="checkIE();">
+		<div id="errorIE">
+			This page is optimized for the other browsers
+			(
+			<img src="browsers/icon-firefox.gif" alt="FireFox3" />
+			<img src="browsers/icon-opera.gif" alt="Opera9" />
+			<img src="browsers/icon-safari.gif" alt="Safari3" />
+			<img src="browsers/chrome-icon.gif" alt="Chrome1" />
+			)
+			<br/>
+			You are using Internet Explorer on your own risk!
+		</div>
+		<div id="header_frame">
+			<div id="hbg1">
+				<div id="header"></div>
+			</div>
+			<div id="hbg2"></div>
+			<div id="hbg3"></div>
+		</div>
+		<div id="content_frame">
+			<div id="content">
+				<div class="subtitle">Purpose</div>
+				<div class="paragraph">
+					Windows Reboot can help you shutting down the system at a specified time.
+					In fact it can perform some other actions beside "shut down". The list of actions:
+				</div>
+					<ul>
+						<li>lock the user interface</li>
+						<li>log off the current user</li>
+						<li>reboot - restarts the system.</li>
+						<li>shut down - shuts down the system but does not interrupt the power.</li>
+						<li>power off - interrupts also the power on mother board.</li>
+					</ul>
+				<div class="paragraph">
+					 The difference between "shut down" and "power off" can be seen on systems earlyer then WinXP SP1.
+				</div>
+				
+				<div class="subtitle">.NET Framework</div>
+				<div class="paragraph">
+					The application is made in C#.NET 2.0 and needs the <a class="extern" target="_blank" href="http://www.microsoft.com/downloads/details.aspx?familyid=0856eacb-4362-4b0d-8edd-aab15c5e04f5&displaylang=en">.NET Framework</a> to be installed on your machine.
+				</div>
+				
+				<!--<div class="subtitle">Screen shot</div>
+				<div class="paragraph">
+					<div class="image_container"><img src="print_screen.png" alt="Windows Reboot"/></div>
+				</div>-->
+				
+				<div class="subtitle">License</div>
+				<div class="paragraph">
+					Windows Reboot is open source released under the 
+					<a class="extern" target="_blank" href="http://www.gnu.org/copyleft/gpl.html">GNU GPL3</a>
+					license.
+				</div>
+				
+				<div class="subtitle">The story</div>
+				<div class="paragraph">
+					The story started when I decided to make an application that should close my system in case I fall asleep before the end of the movie.
+					That is how the Windows Reboot 1.0 appeared. It was made in VB.NET.
+				</div>
+				<div class="paragraph">
+					The versions 1.1 and 1.2 came with some small improvements. This versions where not released for the public.
+				</div>
+				<div class="paragraph">
+					Recently I translated the application into C#.NET and changed a little the interface. This is the 1.3 version and is released under the GPL license.
+				</div>
+			</div>
+			<div id="right_panel">
+				<a id="download" target="_blank" href="http://sourceforge.net/project/downloading.php?group_id=255102&use_mirror=puzzle&filename=WindowsReboot_1.3.zip&a=69190469"></a>
+				<div id="screenshots">
+					<div id="screenshots_title">Screenshots</div>
+					<a target="WindowsRebootScreenshot" href="ss/ss1.png" rel="lightbox[ss]" title="Windows Reboot"><img src="ss/ss1_tn.png" alt="Windows Reboot" /></a>
+					<a target="WindowsRebootScreenshot" href="ss/tray.png" rel="lightbox[ss]" title="Tray Icon"><img src="ss/tray_tn.png" alt="Tray Icon" /></a>
+					<a target="WindowsRebootScreenshot" href="ss/actiontime.png" rel="lightbox[ss]" title="Action Time"><img src="ss/actiontime_tn.png" alt="Action Time" /></a>
+					<a target="WindowsRebootScreenshot" href="ss/actiontype.png" rel="lightbox[ss]" title="Action Type"><img src="ss/actiontype_tn.png" alt="Action Type" /></a>
+				</div>
+			</div>
+			<!-- <a id="download" target="_blank" href="http://puzzle.dl.sourceforge.net/sourceforge/windowsreboot/WindowsReboot_1.3.zip"></a> -->
+			<div class="clear"></div>
+		</div>
+		<div id="footer_frame">
+			Dust in the Wind
+		</div>
+	</body>
+</html>

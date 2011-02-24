@@ -1,0 +1,272 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"><!-- MHonArc v2.4.9 -->
+<!--X-Subject: Re: Rebooting a Win9x/2000 box -->
+<!--X-From-R13: "Yney [" <xneyz30Nubgznvy.pbz> -->
+<!--X-Date: 19 Aug 2001 00:41:40 &#45;0000 -->
+<!--X-Message-Id: F170mRBaYFkuutSgcOr0000a41f@hotmail.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+
+
+
+<title>Karl M - Re: Rebooting a Win9x/2000 box</title>
+</head><body>
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--htdig_noindex-->
+<p>This is the mail archive of the 
+<tt>cygwin@cygwin.com</tt>
+mailing list for the <a href="http://cygwin.com/">Cygwin project</a>.
+
+
+<!--/htdig_noindex-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<!--htdig_noindex-->
+</p><hr>
+<table border="0">
+  <tbody><tr><th align="left">Index Nav:</th>
+      <td colspan="2">
+        [<a href="http://www.cygwin.com/ml/cygwin/2001-08/index.html#00816">Date&nbsp;Index</a>] [<a href="http://www.cygwin.com/ml/cygwin/2001-08/subjects.html#00816">Subject&nbsp;Index</a>] [<a href="http://www.cygwin.com/ml/cygwin/2001-08/authors.html#00816">Author&nbsp;Index</a>] [<a href="http://www.cygwin.com/ml/cygwin/2001-08/threads.html#00816">Thread&nbsp;Index</a>]
+      </td>
+  </tr>
+  <tr><th align="left">Message Nav:</th>
+      <td>[<a href="http://www.cygwin.com/ml/cygwin/2001-08/msg00815.html">Date&nbsp;Prev</a>]&nbsp;[<a href="http://www.cygwin.com/ml/cygwin/2001-08/msg00817.html">Date&nbsp;Next</a>]</td>
+      <td>[<a href="http://www.cygwin.com/ml/cygwin/2001-08/msg00815.html">Thread&nbsp;Prev</a>]&nbsp;[<a href="http://www.cygwin.com/ml/cygwin/2001-08/msg00815.html">Thread&nbsp;Next</a>]</td>
+  </tr>
+</tbody></table>
+<!--/htdig_noindex-->
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<h1>Re: Rebooting a Win9x/2000 box</h1>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<ul>
+<li><em>To</em>: cygwin at cygwin dot com</li>
+<li><em>Subject</em>: Re: Rebooting a Win9x/2000 box</li>
+<li><em>From</em>: "Karl M" &lt;karlm30 at hotmail dot com&gt;</li>
+<li><em>Date</em>: Sat, 18 Aug 2001 17:41:38 -0700</li>
+</ul>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<pre>Hi All...
+
+I tried the EWX_FORCEIFHUNG option on Windows 2000 and it did not work. I 
+still got a dialog box for my cygwin window. (I could not find the symbol 
+for EWX_FORCEIFHUNG, so I user 0x10 for the value.) EWX_FORCE worked 
+fine...I just wanted to be a bit more gentle if I could.
+
+Thanks,
+
+...Karl
+
+&gt;From: "Max Bowsher" &lt;max@bowshernet.freeserve.co.uk&gt;
+&gt;To: &lt;cygwin@cygwin.com&gt;
+&gt;Subject: Re: Rebooting a Win9x box
+&gt;Date: Sun, 12 Aug 2001 15:12:17 +0100
+&gt;
+&gt; &gt; Can somebody write a program for Cygwin that shuts down a win98
+&gt; &gt; *without* any messages?
+&gt;
+&gt;Here is all the information you should need to do that:
+&gt;
+&gt;Page from MSDN:
+&gt;Platform SDK: Windows System Information
+&gt;ExitWindowsEx
+&gt;The ExitWindowsEx function either logs off the current user, shuts down the
+&gt;system, or shuts down and restarts the system. It sends the
+&gt;WM_QUERYENDSESSION message to all applications to determine if they can be
+&gt;terminated.
+&gt;
+&gt;BOOL ExitWindowsEx(
+&gt;   UINT uFlags,       // shutdown operation
+&gt;   DWORD dwReserved   // reserved
+&gt;);
+&gt;Parameters
+&gt;uFlags
+&gt;[in] Specifies the type of shutdown. This parameter must include one of the
+&gt;following values. Value Meaning
+&gt;EWX_LOGOFF Shuts down all processes running in the security context of the
+&gt;process that called the ExitWindowsEx function. Then it logs the user off.
+&gt;EWX_POWEROFF Shuts down the system and turns off the power. The system must
+&gt;support the power-off feature.
+&gt;Windows NT/2000: The calling process must have the SE_SHUTDOWN_NAME
+&gt;privilege. For more information, see the following Remarks section.
+&gt;
+&gt;EWX_REBOOT Shuts down the system and then restarts the system.
+&gt;Windows NT/2000: The calling process must have the SE_SHUTDOWN_NAME
+&gt;privilege. For more information, see the following Remarks section.
+&gt;
+&gt;EWX_SHUTDOWN Shuts down the system to a point at which it is safe to turn
+&gt;off the power. All file buffers have been flushed to disk, and all running
+&gt;processes have stopped.
+&gt;Windows NT/2000: The calling process must have the SE_SHUTDOWN_NAME
+&gt;privilege. For more information, see the following Remarks section.
+&gt;
+&gt;
+&gt;
+&gt;This parameter can optionally include the following values. Value Meaning
+&gt;EWX_FORCE Forces processes to terminate. When this flag is set, the system
+&gt;does not send the WM_QUERYENDSESSION and WM_ENDSESSION messages. This can
+&gt;cause the applications to lose data. Therefore, you should only use this
+&gt;flag in an emergency.
+&gt;EWX_FORCEIFHUNG Windows 2000: Forces processes to terminate if they do not
+&gt;respond to the WM_QUERYENDSESSION or WM_ENDSESSION message. This flag is
+&gt;ignored if EWX_FORCE is used.
+&gt;
+&gt;
+&gt;
+&gt;dwReserved
+&gt;[in] Reserved; this parameter is ignored.
+&gt;Return Values
+&gt;If the function succeeds, the return value is nonzero.
+&gt;
+&gt;If the function fails, the return value is zero. To get extended error
+&gt;information, call GetLastError.
+&gt;
+&gt;Remarks
+&gt;The ExitWindowsEx function returns as soon as it has initiated the 
+&gt;shutdown.
+&gt;The shutdown or logoff then proceeds asynchronously.
+&gt;
+&gt;During a shutdown or log-off operation, applications that are shut down are
+&gt;allowed a specific amount of time to respond to the shutdown request. If 
+&gt;the
+&gt;time expires, the system displays a dialog box that allows the user to
+&gt;forcibly shut down the application, to retry the shutdown, or to cancel the
+&gt;shutdown request. If the EWX_FORCE value is specified, the system always
+&gt;forces applications to close and does not display the dialog box.
+&gt;
+&gt;Windows 2000: If the EWX_FORCEIFHUNG value is specified, the system forces
+&gt;hung applications to close and does not display the dialog box.
+&gt;
+&gt;################################ IMPORTANT
+&gt;#####################################
+&gt;Windows 95/98: Because of the design of the shell, calling ExitWindowsEx
+&gt;with EWX_FORCE fails to completely log off the user (the system terminates
+&gt;the applications and displays the Enter Windows Password dialog box,
+&gt;however, the user's desktop remains.) To log off the user forcibly,
+&gt;terminate the Explorer process before calling ExitWindowsEx with EWX_LOGOFF
+&gt;and EWX_FORCE.
+&gt;[See end of MSDN extract for example of doing this]
+&gt;################################ IMPORTANT
+&gt;#####################################
+&gt;
+&gt;Console processes receive a separate notification message,
+&gt;CTRL_SHUTDOWN_EVENT or CTRL_LOGOFF_EVENT, as the situation warrants. A
+&gt;console process routes these messages to its HandlerRoutine function.
+&gt;ExitWindowsEx sends these notification messages asynchronously; thus, an
+&gt;application cannot assume that the console notification messages have been
+&gt;handled when a call to ExitWindowsEx returns.
+&gt;
+&gt;Windows NT/2000: To shut down or restart the system, the calling process
+&gt;must use the AdjustTokenPrivileges function to enable the SE_SHUTDOWN_NAME
+&gt;privilege. For more information about security privileges, see Privileges.
+&gt;
+&gt;Windows 95/98: ExitWindowEx does not work from a console application, as it
+&gt;does on Windows NT/Windows 2000.
+&gt;
+&gt;Requirements
+&gt;   Windows NT/2000: Requires Windows NT 3.1 or later.
+&gt;   Windows 95/98: Requires Windows 95 or later.
+&gt;   Header: Declared in Winuser.h; include Windows.h.
+&gt;   Library: Use User32.lib.
+&gt;
+&gt;See Also
+&gt;System Shutdown Overview, System Shutdown Functions, AdjustTokenPrivileges,
+&gt;HandlerRoutine
+&gt;
+&gt;Built on Tuesday, November 16, 1999
+&gt;
+&gt;######################## END MSDN EXTRACT
+&gt;#####################################
+&gt;
+&gt;This will terminate explorer.exe
+&gt;This code will NOT work on WinNT (lacks the ToolHelp32 API),
+&gt;but should (untested) work on Win2K (with sufficient priviledges).
+&gt;
+&gt;#include &lt;windows.h&gt;
+&gt;#include &lt;tlhelp32.h&gt;
+&gt;
+&gt;void TermExplorer()
+&gt;{
+&gt;  PROCESSENTRY32 procentry;
+&gt;  BOOL bFlag;
+&gt;  HANDLE hExplorer;
+&gt;  int nPos;
+&gt;  HANDLE hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0 );
+&gt;  if( hSnapShot == INVALID_HANDLE_VALUE ) return;
+&gt;  procentry.dwSize = sizeof(PROCESSENTRY32);
+&gt;  bFlag = Process32First( hSnapShot, &amp;procentry );
+&gt;  while( bFlag )
+&gt;  {
+&gt;   nPos = lstrlen(procentry.szExeFile);
+&gt;   if (nPos)
+&gt;   {
+&gt;    while (procentry.szExeFile[--nPos] != '\\' );
+&gt;    if(lstrcmpi("explorer.exe",&amp;(procentry.szExeFile[nPos+1]))==0)
+&gt;     hExplorer =
+&gt;OpenProcess(PROCESS_ALL_ACCESS,FALSE,procentry.th32ProcessID);
+&gt;   }
+&gt;   procentry.dwSize = sizeof(PROCESSENTRY32) ;
+&gt;   bFlag = Process32Next( hSnapShot, &amp;procentry );
+&gt;  }
+&gt;  CloseHandle(hSnapShot);
+&gt;  TerminateProcess(hExplorer, 1);
+&gt;  CloseHandle(hExplorer);
+&gt;}
+&gt;
+&gt;
+&gt;
+&gt;--
+&gt;Unsubscribe info:      <a href="http://cygwin.com/ml/#unsubscribe-simple">http://cygwin.com/ml/#unsubscribe-simple</a>
+&gt;Bug reporting:         <a href="http://cygwin.com/bugs.html">http://cygwin.com/bugs.html</a>
+&gt;Documentation:         <a href="http://cygwin.com/docs.html">http://cygwin.com/docs.html</a>
+&gt;FAQ:                   <a href="http://cygwin.com/faq/">http://cygwin.com/faq/</a>
+&gt;
+
+
+_________________________________________________________________
+Get your FREE download of MSN Explorer at <a href="http://explorer.msn.com/intl.asp">http://explorer.msn.com/intl.asp</a>
+
+
+--
+Unsubscribe info:      <a href="http://cygwin.com/ml/#unsubscribe-simple">http://cygwin.com/ml/#unsubscribe-simple</a>
+Bug reporting:         <a href="http://cygwin.com/bugs.html">http://cygwin.com/bugs.html</a>
+Documentation:         <a href="http://cygwin.com/docs.html">http://cygwin.com/docs.html</a>
+FAQ:                   <a href="http://cygwin.com/faq/">http://cygwin.com/faq/</a>
+
+</pre>
+
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+<!--htdig_noindex-->
+<table border="0">
+  <tbody><tr><th align="left">Index Nav:</th>
+      <td colspan="2">
+        [<a href="http://www.cygwin.com/ml/cygwin/2001-08/index.html#00816">Date&nbsp;Index</a>] [<a href="http://www.cygwin.com/ml/cygwin/2001-08/subjects.html#00816">Subject&nbsp;Index</a>] [<a href="http://www.cygwin.com/ml/cygwin/2001-08/authors.html#00816">Author&nbsp;Index</a>] [<a href="http://www.cygwin.com/ml/cygwin/2001-08/threads.html#00816">Thread&nbsp;Index</a>]
+      </td>
+  </tr>
+  <tr><th align="left">Message Nav:</th>
+      <td>[<a href="http://www.cygwin.com/ml/cygwin/2001-08/msg00815.html">Date&nbsp;Prev</a>]&nbsp;[<a href="http://www.cygwin.com/ml/cygwin/2001-08/msg00817.html">Date&nbsp;Next</a>]</td>
+      <td>[<a href="http://www.cygwin.com/ml/cygwin/2001-08/msg00815.html">Thread&nbsp;Prev</a>]&nbsp;[<a href="http://www.cygwin.com/ml/cygwin/2001-08/msg00815.html">Thread&nbsp;Next</a>]</td>
+  </tr>
+</tbody></table>
+<!--/htdig_noindex-->
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+</body></html>

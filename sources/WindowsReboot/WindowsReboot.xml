@@ -1,0 +1,972 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WindowsReboot</name>
+    </assembly>
+    <members>
+        <member name="F:DustInTheWind.WindowsReboot.CustomGroupBox.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.CustomGroupBox.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.CustomGroupBox.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Properties.Resources.License">
+             <summary>
+               Looks up a localized string similar to                     GNU GENERAL PUBLIC LICENSE
+                                   Version 3, 29 June 2007
+            
+             Copyright (C) 2007 Free Software Foundation, Inc. &lt;http://fsf.org/&gt;
+             Everyone is permitted to copy and distribute verbatim copies
+             of this license document, but changing it is not allowed.
+            
+                                        Preamble
+            
+              The GNU General Public License is a free, copyleft license for
+            software and other kinds of works.
+            
+              The licenses for most software and other practical works are designed
+            to [rest of string was truncated]&quot;;.
+             </summary>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.ActionTimeType">
+            <summary>
+            The way in which the action time is specified.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.ActionTimeType.FixedDate">
+            <summary>
+            The action time is specified as a fixed date and time.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.ActionTimeType.Delay">
+            <summary>
+            The action time is specified as a delay from the time when the timer is started.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.ActionTimeType.Immediate">
+            <summary>
+            The action time is exactly the time when the timer is started.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.WindowsRebootPresenter.TIME_TEMPLATE">
+            <summary>
+            The template used to display the time left until action.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.WindowsRebootPresenter.TIME_TEMPLATE_EMPTY">
+            <summary>
+            The text displayed when the timer is stopped.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.WindowsRebootPresenter.actionIsSet">
+            <summary>
+            Indicates if the timer was started.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.WindowsRebootPresenter.startTime">
+            <summary>
+            The time when the timer was started.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.WindowsRebootPresenter.actionTime">
+            <summary>
+            The time when the action should be executed.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.WindowsRebootPresenter.startAtStartUp">
+            <summary>
+            A value that specifies if the form should be opened with the timer started or not.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.WindowsRebootPresenter.exitRequested">
+            <summary>
+            A value indicating if the exit of the application was requested chosing the menu item.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DustInTheWind.WindowsReboot.WindowsRebootPresenter"/> class.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnTimerElapsed">
+            <summary>
+            Method called by the timer. It updates the interface and, if necesary, it executes the chosen action.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.DoAction(DustInTheWind.WindowsReboot.ActionType)">
+            <summary>
+            Executes the action.
+            </summary>
+            <param name="actionType">The action to be executes.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.CalculateActionTime(System.DateTime)">
+            <summary>
+            Calculates the time of the action based on the values provided by the user.
+            </summary>
+            <param name="now">The current time.</param>
+            <returns>The time of the action.</returns>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.StartTimerClicked">
+            <summary>
+            Method called when the "Start timer" button is clicked.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.StopTimerClicked">
+            <summary>
+            Method called when the "Stop timer" button is clicked.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.ViewLoaded">
+            <summary>
+            Method called when the form is loaded.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.ViewClosing">
+            <summary>
+            Method called before the form is closed. It has to decide if the form is allowed to be closed or not.
+            </summary>
+            <returns>true if the form is allowed to be closed; false otherwise.</returns>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.ViewMinimized">
+            <summary>
+            Method called when the form is minimized.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnNotifyIconMouseMove">
+            <summary>
+            Method called when the mouse is moved over the notify icon.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnNotifyIconMouseClicked">
+            <summary>
+            Method called when the notify icon is clicked with the left mouse button.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnNotifyIconShowClicked">
+            <summary>
+            Method called when the "Show" item of the notify icon menu was clicked.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnNotifyIconLockComputerClicked">
+            <summary>
+            Method called when the tray icon is clicked by the user.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnNotifyIconLogOffClicked">
+            <summary>
+            Method clicked when the user choose "Log Off" from the tray icon menu.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnNotifyIconSleepClicked">
+            <summary>
+            Method clicked when the user choose "Sleep" from the tray icon menu.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnNotifyIconHibernateClicked">
+            <summary>
+            Method clicked when the user choose "Hibernate" from the tray icon menu.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnNotifyIconRebootClicked">
+            <summary>
+            Method clicked when the user choose "Reboot" from the tray icon menu.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnNotifyIconShutDownClicked">
+            <summary>
+            Method clicked when the user choose "Shut Down" from the tray icon menu.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnNotifyIconPowerOffClicked">
+            <summary>
+            Method clicked when the user choose "Power Off" from the tray icon menu.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnNotifyIconExitClicked">
+            <summary>
+            Method called when the "Exit" item of the notify icon menu was clicked.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnMenuItemGoToTrayClicked">
+            <summary>
+            Method called when the "Go To Tray" item from the "File" menu is clicked.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.MenuItemExitClicked">
+            <summary>
+            Method called when the "Exit" item from the "File" menu is clicked.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.MenuItemOptionsClicked">
+            <summary>
+            Method called when the "Options" item from the "Configuration" menu is clicked.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnMenuItemSaveCurrentSettingsClicked">
+            <summary>
+            Method called when the "Save Current Settings" item from the "Configuration" menu is clicked.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnMenuItemLoadDefaultSettingsClicked">
+            <summary>
+            Method called when the "Load Default Settings" item from the "Configuration" menu is clicked.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnMenuItemLoadInitialSettingsClicked">
+            <summary>
+            Method called when the "Load Initial Settings" item from the "Configuration" menu is clicked.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnMenuItemLicenseClicked">
+            <summary>
+            Method called when the "License" item from the "Help" menu is clicked.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.OnMenuItemAboutClicked">
+            <summary>
+            Method called when the "About" item from the "Help" menu is clicked.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.EnableInterface(System.Boolean)">
+            <summary>
+            Enables or disables the interface.
+            </summary>
+            <param name="value">A value that specifies if the interface should be enabled or disabled.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.ClearInterface">
+            <summary>
+            Clears the interface and displayed the default values.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.LoadInitialConfiguration">
+            <summary>
+            Loads the values from the configuration file and populates the interface with them.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootPresenter.SaveConfiguration">
+            <summary>
+            Saves the current values from the interface into the configuration file.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.IWindowsRebootView.Close">
+            <summary>
+            Closes the form.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.IWindowsRebootView.Hide">
+            <summary>
+            Hides the form without closing it.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.IWindowsRebootView.Show">
+            <summary>
+            Shows the form if it is hidden.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.IWindowsRebootView.DisplayError(System.Exception)">
+            <summary>
+            Displays the exception in a frendlly way for the user.
+            </summary>
+            <param name="ex">The <see cref="T:System.Exception"/> instance containing data about the error.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.IWindowsRebootView.DisplayErrorMessage(System.String)">
+            <summary>
+            Displays an error message to the user.
+            </summary>
+            <param name="message">The message text to be displayed.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.IWindowsRebootView.DisplayMessage(System.String)">
+            <summary>
+            Displays a message to the user.
+            </summary>
+            <param name="message">The message text to be displayed.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.IWindowsRebootView.DisplayLicense">
+            <summary>
+            Displays the license window.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.IWindowsRebootView.DisplayAbout">
+            <summary>
+            Displays the about window.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.IWindowsRebootView.AskToClose(System.String)">
+            <summary>
+            Displays a message box asking the user to confirm the closing.
+            </summary>
+            <param name="message">The message to be displayed in the message box.</param>
+            <returns>true if the user allows the application to be closed; false otherwise.</returns>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.IWindowsRebootView.Title">
+            <summary>
+            Gets or sets the title of the window.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.IWindowsRebootView.LabelCurrentTime">
+            <summary>
+            Sets the label that displays the current time.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.IWindowsRebootView.LabelActionTime">
+            <summary>
+            Sets the label that displays the time when the action will tace place.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.IWindowsRebootView.LabelTimer">
+            <summary>
+            Gets or sets the label that displays the time remained until the action.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.IWindowsRebootView.ActionTypes">
+            <summary>
+            Sets the available values that can be chosed for the action type.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.IWindowsRebootView.ActionType">
+            <summary>
+            Gets or sets the action type.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.IWindowsRebootView.NotifyIconText">
+            <summary>
+            Sets the tool tip text displayed by the notify icon.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.IWindowsRebootView.NotifyIconVisible">
+            <summary>
+            Sets the visibility of the notify icon.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.WindowsRebootForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootForm.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DustInTheWind.WindowsReboot.WindowsRebootForm"/> class.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootForm.DisplayError(System.Exception)">
+            <summary>
+            Displays the exception in a frendlly way for the user.
+            </summary>
+            <param name="ex">The <see cref="T:System.Exception"/> instance containing data about the error.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootForm.DisplayErrorMessage(System.String)">
+            <summary>
+            Displays an error message to the user.
+            </summary>
+            <param name="message">The message text to be displayed.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootForm.DisplayMessage(System.String)">
+            <summary>
+            Displays a message to the user.
+            </summary>
+            <param name="message">The message text to be displayed.</param>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.WindowsRebootException">
+            <summary>
+            General exception for the WindowsReboot application. It's also used as base class for all the other exceptions.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DustInTheWind.WindowsReboot.WindowsRebootException"/> class.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DustInTheWind.WindowsReboot.WindowsRebootException"/> class with a specified error message.
+            </summary>
+            <param name="message">A message that describes the error.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootException.#ctor(System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DustInTheWind.WindowsReboot.WindowsRebootException"/> class with a reference to the inner exception that is the cause of this exception.
+            </summary>
+            <param name="innerException">The exception that is the cause of the current exception.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DustInTheWind.WindowsReboot.WindowsRebootException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.WindowsRebootException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DustInTheWind.WindowsReboot.WindowsRebootException"/> class with serialized data.
+            </summary>
+            <param name="info">The object that holds the serialized object data.</param>
+            <param name="context">The contextual information about the source or destination.</param>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.Config.ActionTypeConfigElement">
+            <summary>
+            The configurtion element that specifies the initial value of the action type.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.ActionTypeConfigElement.Value">
+            <summary>
+            Gets or sets the initial value of the action type.
+            </summary>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.OptionsForm">
+            <summary>
+            Displaies some options that the user can set.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.OptionsForm.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DustInTheWind.WindowsReboot.OptionsForm"/> class.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.OptionsForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.OptionsForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.OptionsForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.Config.ActionTimeConfigElement">
+            <summary>
+            The configuration element that specifies the initial value of the action time.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.ActionTimeConfigElement.Type">
+            <summary>
+            Gets or sets the way in which the action time is specified or how it will be calculated.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.ActionTimeConfigElement.DateTime">
+            <summary>
+            Gets or sets the action time as a specific date time.
+            This value is used when the <see cref="P:Type"/> is set to FixedDate.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.ActionTimeConfigElement.Hours">
+            <summary>
+            Gets or sets the numbers hours to delay the action execution from the timer start time.
+            This value is used when the <see cref="P:Type"/> is set to Delay.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.ActionTimeConfigElement.Minutes">
+            <summary>
+            Gets or sets the numbers minutes to delay the action execution from the timer start time.
+            This value is used when the <see cref="P:Type"/> is set to Delay.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.ActionTimeConfigElement.Seconds">
+            <summary>
+            Gets or sets the numbers seconds to delay the action execution from the timer start time.
+            This value is used when the <see cref="P:Type"/> is set to Delay.
+            </summary>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.Config.MinimizeToTrayConfigElement">
+            <summary>
+            The configuration element that specifies if the main form should
+            minimize to tray icon insted of taskbar when the user clicks the
+            upper-right minimize button.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.MinimizeToTrayConfigElement.Value">
+            <summary>
+            Gets or sets a value that specifies if the main form should
+            minimize to tray icon insted of taskbar when the user
+            clicks the upper-right minimize button.
+            </summary>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.LicenseForm">
+            <summary>
+            This form displayes the license text.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.LicenseForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.LicenseForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.LicenseForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.LicenseForm.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DustInTheWind.WindowsReboot.LicenseForm"/> class.
+            </summary>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.RebootUtil">
+            <summary>
+            Util class that calls the Windows API function to execute
+            the lock, log off, sleep, hibernate, reboot, shut down and power off actions.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.RebootUtil.EWX_LOGOFF">
+            <summary>
+            Shuts down all processes running in the logon session of the process
+            that called the ExitWindowsEx function. Then it logs the user off.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.RebootUtil.EWX_SHUTDOWN">
+            <summary>
+            Shuts down the system to a point at which it is safe to turn off the power.
+            Needs the SE_SHUTDOWN_NAME privilege.
+            Specifying this flag will not turn off the power even if the system supports the power-off feature.
+            (On Windows XP with SP1 and Vista:  If the system supports the power-off feature, specifying this flag turns off the power.)
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.RebootUtil.EWX_REBOOT">
+            <summary>
+            Shuts down the system and then restarts it. 
+            Needs the SE_SHUTDOWN_NAME privilege.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.RebootUtil.EWX_POWEROFF">
+            <summary>
+            Shuts down the system and turns off the power. The system must support the power-off feature. 
+            Needs the SE_SHUTDOWN_NAME privilege.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.RebootUtil.EWX_FORCE">
+            <summary>
+            This flag has no effect if terminal services is enabled.
+            Otherwise, the system does not send the WM_QUERYENDSESSION message.
+            This can cause applications to lose data.
+            Therefore, you should only use this flag in an emergency.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.RebootUtil.EWX_FORCEIFHUNG">
+            <summary>
+            Forces processes to terminate if they do not respond to the
+            WM_QUERYENDSESSION or WM_ENDSESSION message within the timeout interval.
+            </summary>
+            <remarks>
+            I tried this flag but it doesn't work.
+            The hanged programs are not closed and the system does not shut down.
+            Tested on WinXP.
+            </remarks>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.RebootUtil.SHTDN_REASON_MAJOR_OTHER">
+            <summary>
+            Other issue.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.RebootUtil.SHTDN_REASON_MINOR_OTHER">
+            <summary>
+            Other issue.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.RebootUtil.SHTDN_REASON_FLAG_PLANNED">
+            <summary>
+            The shutdown was planned. The system generates a System State Data (SSD) file.
+            This file contains system state information such as
+            the processes, threads, memory usage, and configuration.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.RebootUtil.LockWorkStation">
+            <summary>
+            Locks the workstation's display.
+            </summary>
+            <returns>
+            <para>
+            If the function succeeds, the return value is nonzero. Because the function executes
+            asynchronously, a nonzero return value indicates that the operation has been initiated.
+            It does not indicate whether the workstation has been successfully locked.
+            </para>
+            <para>
+            If the function fails, the return value is zero.
+            To get extended error information, call GetLastError.
+            </para>
+            </returns>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.RebootUtil.ExitWindowsEx(System.Int32,System.UInt32)">
+            <summary>
+            Logs off the interactive user, shuts down the system, or shuts down and restarts the system.
+            </summary>
+            <param name="uFlags">The shutdown type.</param>
+            <param name="dwReason">
+            The reason for initiating the shutdown.
+            On Windows 2000 this parameter is ignored.
+            </param>
+            <returns>
+            <para>
+            If the function succeeds, the return value is nonzero. Because the function executes
+            asynchronously, a nonzero return value indicates that the shutdown has been initiated.
+            It does not indicate whether the shutdown will succeed. It is possible that the system,
+            the user, or another application will abort the shutdown.
+            </para>
+            <para>
+            If the function fails, the return value is zero.
+            To get extended error information, call GetLastError.
+            </para>
+            </returns>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.RebootUtil.SetSuspendState(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Suspends the system by shutting power down. Depending on the Hibernate parameter,
+            the system either enters a suspend (sleep) state or hibernation (S4).
+            </summary>
+            <param name="Hibernate">
+            If this parameter is TRUE, the system hibernates.
+            If the parameter is FALSE, the system is suspended.
+            </param>
+            <param name="ForceCritical">
+            <para>
+            Used only on Windows Server 2003, Windows XP, and Windows 2000.
+            </para>
+            <para>
+            If this parameter is TRUE, the system suspends operation immediately;
+            if it is FALSE, the system broadcasts a PBT_APMQUERYSUSPEND event to each application
+            to request permission to suspend operation.
+            </para>
+            </param>
+            <param name="DisableWakeEvent">
+            If this parameter is TRUE, the system disables all wake events.
+            If the parameter is FALSE, any system wake events remain enabled.
+            </param>
+            <returns>
+            <para>If the function succeeds, the return value is nonzero.</para>
+            <para>
+            If the function fails, the return value is zero.
+            To get extended error information, call GetLastError.
+            </para>
+            </returns>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.RebootUtil.IsWinNT">
+            <summary>
+            Checks if the system on which this application runs is an NT based system.
+            </summary>
+            <returns>true if the system is an NT based; false otherwise.</returns>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.RebootUtil.EnableShutDown">
+            <summary>
+            Sets the privilege needed to excute a ShutDown action.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.RebootUtil.Lock">
+            <summary>
+            Locks the workstation's display. To unlock the workstation, the user must log in.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.RebootUtil.LogOff(System.Boolean)">
+            <summary>
+            Logs off the current user.
+            </summary>
+            <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.RebootUtil.Sleep(System.Boolean)">
+            <summary>
+            Suspends the system by shutting power down and entering in suspend (sleep) state.
+            </summary>
+            <param name="force">
+            <para>Only on Windows Server 2003, Windows XP, and Windows 2000.</para>
+            <para>
+            If this parameter is true, the system suspends operation immediately;
+            if it is false, the system announce each application and requests permission to suspend operation.
+            </para>
+            </param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.RebootUtil.Hibernate(System.Boolean)">
+            <summary>
+            Suspends the system by shutting power down and entering in hibernation state.
+            </summary>
+            <param name="force">
+            <para>Only on Windows Server 2003, Windows XP, and Windows 2000.</para>
+            <para>
+            If this parameter is true, the system suspends operation immediately;
+            if it is false, the system announce each application and requests permission to suspend operation.
+            </para>
+            </param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.RebootUtil.Reboot(System.Boolean)">
+            <summary>
+            Restarts the system.
+            </summary>
+            <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.RebootUtil.ShutDown(System.Boolean)">
+            <summary>
+            <para>
+            Shuts down the system without switching the power off.
+            </para>
+            <para>
+            Note: On Windows XP with SP1 and Vista swithes the power off if the system supports that.
+            </para>
+            </summary>
+            <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.RebootUtil.PowerOff(System.Boolean)">
+            <summary>
+            Shuts down the system and turns off the power.
+            </summary>
+            <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.ActionTypeItem">
+            <summary>
+            Class used to associate the action type with a text displayed to the user.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.ActionTypeItem.value">
+            <summary>
+            The type of the action to be executed.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.ActionTypeItem.#ctor(DustInTheWind.WindowsReboot.ActionType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DustInTheWind.WindowsReboot.ActionTypeItem"/> class with
+            the type of the action to be executed.
+            </summary>
+            <param name="value">The type of the action to be executed.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.ActionTypeItem.ToString">
+            <summary>
+            Returns a string representation of the action type.
+            </summary>
+            <returns>A string representation of the action type.</returns>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.ActionTypeItem.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to the current instance.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with the current instance.</param>
+            <returns>true if the specified <see cref="T:System.Object"/> is equal to the current instance; otherwise, false.</returns>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.ActionTypeItem.GetHashCode">
+            <summary>
+            Serves as a hash function for the current instance.
+            </summary>
+            <returns>A hash code for the current instance.</returns>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.ActionTypeItem.Value">
+            <summary>
+            Gets the type of the action to be executed.
+            </summary>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.AboutForm">
+            <summary>
+            Displayes information about the author, the version, etc.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.AboutForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.AboutForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.AboutForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.AboutForm.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DustInTheWind.WindowsReboot.AboutForm"/> class.
+            </summary>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.Config.WindowsRebootConfigSection">
+            <summary>
+            Represents the "windowsReboot" configuration section.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.Config.WindowsRebootConfigSection.GetSection(System.Configuration.Configuration)">
+            <summary>
+            Extracts from a <see cref="T:System.Configuration.Configuration"/> object the "windowsReboot" section.
+            </summary>
+            <param name="config">The <see cref="T:System.Configuration.Configuration"/> from which to extract the "windowsReboot" section.</param>
+            <returns>An instance of <see cref="T:DustInTheWind.WindowsReboot.Config.WindowsRebootConfigSection"/> containing the "windowsReboot" section or null if the  <see cref="T:System.Configuration.Configuration"/> object does not contain such a section.</returns>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.Config.WindowsRebootConfigSection.GetOrCreateSection(System.Configuration.Configuration)">
+            <summary>
+            Extracts from a <see cref="T:System.Configuration.Configuration"/> object the "windowsReboot" section.
+            If the section does not exist it is automatically created.
+            </summary>
+            <param name="config">The <see cref="T:System.Configuration.Configuration"/> from which to extract the "windowsReboot" section.</param>
+            <returns>An instance of <see cref="T:DustInTheWind.WindowsReboot.Config.WindowsRebootConfigSection"/> containing the "windowsReboot" section.</returns>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.WindowsRebootConfigSection.ActionTime">
+            <summary>
+            Get the configuration element that specifies the initial value of the action time.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.WindowsRebootConfigSection.ActionType">
+            <summary>
+            Gets the configuration element that specifies the initial value of the action type.
+            The way in which the action time is specified or calculated.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.WindowsRebootConfigSection.ForceClosingPrograms">
+            <summary>
+            Gets the configuration element that specifies the initial value of the "Force closing programs" check box.
+            If this value is true, WIndowsReboot will ask Windows to close all the processes, even if they do not respond.
+            If this value is false, Windows will display a dialog asking the user to decide if the process should be closed or not.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.WindowsRebootConfigSection.StartTimerAtApplicationStart">
+            <summary>
+            Gets the configuration element that specifies if the timer should be started
+            immediately after the application is started.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.WindowsRebootConfigSection.MinimizeToTray">
+            <summary>
+            Gets the configuration element that specifies if the main form should
+            minimize to tray icon insted of taskbar when the user clicks the
+            upper-right minimize button.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.WindowsRebootConfigSection.CloseToTray">
+            <summary>
+            Gets the configuration element that specifies if the main form should
+            minimize to tray icon insted of closing when the user clicks the
+            upper-right minimize button.
+            </summary>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.Config.CloseToTrayConfigElement">
+            <summary>
+            The configuration element that specifies if the main form should
+            minimize to tray icon insted of closing when the user clicks the
+            upper-right 'X' button.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.CloseToTrayConfigElement.Value">
+            <summary>
+            Gets or sets a value that specifies if the main form should
+            minimize to tray icon insted of closing when the user clicks the
+            upper-right 'X' button.
+            </summary>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.Config.ForceClosingProgramsConfigElement">
+            <summary>
+            The configuration element that specifies the initial value of the "Force closing programs" check box.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.ForceClosingProgramsConfigElement.Value">
+            <summary>
+            Gets the initial value of the "Force closing programs" check box.
+            If this value is true, WindowsReboot will ask Windows to close all the processes, even if they do not respond.
+            If this value is false, Windows will display a dialog asking the user to decide if the process should be closed or not.
+            </summary>
+        </member>
+        <member name="M:DustInTheWind.WindowsReboot.Program.Main">
+            <summary>
+            The main entry point for the application.
+            </summary>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.Config.StartTimerAtApplicationStartConfigElement">
+            <summary>
+            Represents the configuration element that specifies if the timer should be started
+            immediately after the application is started.
+            </summary>
+        </member>
+        <member name="P:DustInTheWind.WindowsReboot.Config.StartTimerAtApplicationStartConfigElement.Value">
+            <summary>
+            Gets or sets a value that specifies if the timer should be started
+            imidiatly after the application is started.
+            </summary>
+        </member>
+        <member name="T:DustInTheWind.WindowsReboot.ActionType">
+            <summary>
+            Indicates an action that can be executed when the timer elapses.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.ActionType.LockWorkstation">
+            <summary>
+            Locks the computer.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.ActionType.LogOff">
+            <summary>
+            Logs the current user off.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.ActionType.Sleep">
+            <summary>
+            Suspends the system by shutting power down and entering in the sleep state.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.ActionType.Hibernate">
+            <summary>
+            Suspends the system by shutting power down and entering in the hibernation state.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.ActionType.Reboot">
+            <summary>
+            Reboots the machine.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.ActionType.ShutDown">
+            <summary>
+            Shuts down the machine without turning the power off.
+            </summary>
+        </member>
+        <member name="F:DustInTheWind.WindowsReboot.ActionType.PowerOff">
+            <summary>
+            Shuts down the machine and turns off the power.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,20 @@
+WindowsReboot Change Log
+========================
+
+Version 1.4
+-----------
+
+- I added the Sleep and Hibernate actions.
+- I added an "Options" panel from where the user can set 3 options:
+	a) minimize the application to tray icon instead of minimizing to taskbar.
+	b) minimize to tray instead of closing the application when the user clicks the "X" button of the window.
+	c) Start the timer immediately as the application starts using the previously saved configuration (action time, action type).
+
+Version 1.3
+-----------
+
+Obs! This is the first public release of the application.
+
+- I rewrote the code in c#.net (2.0). The previous versions were written in vb.net (1.1).
+- I made some changes to the design. I added the yellow clock image at the top of the window. I changed the icon.
+- I added the "Configuration" menu from where the user can current window configuration (action time, action type) for the next time the application starts.

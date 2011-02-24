@@ -1,0 +1,162 @@
+body
+{
+	margin: 0px;
+	font: 14px arial;
+	color: #606060;/**/
+	text-align: center;
+}
+
+#header_frame
+{
+	width: 100%;
+}
+
+#hbg1
+{
+	background: url(bg1.png) repeat-x bottom;
+	height: 160px;
+}
+
+#hbg2
+{
+	background: #000000;
+	height: 3px;
+}
+
+#hbg3
+{
+	background: url(bg3.png) repeat-x top;
+	height: 7px;
+}
+
+#header
+{
+	margin: auto;
+	width: 700px;
+	height: 100%;
+	/*border: 1px solid black;/**/
+	background: url(header.png) no-repeat 40px 35px;
+}
+
+#content_frame
+{
+	margin: auto;
+	width: 700px;
+}
+
+#content
+{
+	float: left;
+	margin: 0px 0px 0px 0px;
+	width: 420px;
+	text-align: justify;
+}
+
+#right_panel
+{
+	float: right;
+	width: 250px;
+	margin: 0px 0px 0px 10px;
+}
+
+#footer_frame
+{
+	border-top: 2px solid black;
+	margin: 10px 0px 10px;
+	padding: 5px 0px 0px 0px;
+	text-align: center;
+}
+
+.image_container
+{
+	text-align: center;
+}
+
+.image_container > img
+{
+	margin: 10px;
+}
+
+.image_container > p
+{
+	font: 12px arial;
+	margin: 0px 0px 10px 0px;
+}
+
+.clear
+{
+	clear: both;
+}
+
+#download
+{
+	margin: 10px 0px 0px;
+	background: url(download.png) no-repeat center center;
+	height: 70px;
+	display: block;
+}
+
+#screenshots
+{
+	margin: 40px 0px;
+	text-align: center;
+}
+
+#screenshots a
+{
+	display: block;
+	margin-bottom: 10px;
+}
+
+#screenshots a img
+{
+	border: 0px;
+}
+
+#screenshots_title
+{
+	margin: 20px 0px;
+	text-align: center;
+	font-weight: bold;
+	text-decoration: underline;
+	font-size: 16px;
+}
+
+.subtitle
+{
+	font-weight: bold;/**/
+	font-size: 15px;
+	/*text-decoration: underline;/**/
+	margin: 20px 0px 5px;
+	padding: 0px 0px 0px 10px;
+	/*background: url(blue_dot.gif) center left no-repeat;/**/
+	background: url(beige_dot.gif) center left no-repeat;/**/
+	color: #000000;
+	border-bottom: 1px solid #000000;
+}
+
+.paragraph
+{
+	margin: 5px 0px;
+}
+
+a
+{
+	font: bold 12px arial;
+	color: #245EDC;
+}
+
+a.extern
+{
+	padding-right: 17px;
+	background: url(link_extern_blue.gif) no-repeat center right;
+}
+
+#errorIE
+{
+	display: none;/**/
+	padding: 20px;
+	color: #ff0000;
+	font: bold 20px arial;
+	text-align: center;
+}

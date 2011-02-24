@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DustInTheWind.WindowsReboot" GeneratedClassName="DuckSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ActionTime_Type" Type="DustInTheWind.WindowsReboot.ActionTimeType" Scope="User">
+      <Value Profile="(Default)">Delay</Value>
+    </Setting>
+    <Setting Name="ActionTime_DateTime" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2012-12-22</Value>
+    </Setting>
+    <Setting Name="ActionTime_Hours" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ActionTime_Minutes" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ActionTime_Seconds" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ActionType" Type="DustInTheWind.WindowsReboot.ActionType" Scope="User">
+      <Value Profile="(Default)">Ring</Value>
+    </Setting>
+    <Setting Name="ForceClosingPrograms" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

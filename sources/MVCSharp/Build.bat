@@ -1,0 +1,1 @@
+MSBuild MVCSharp.csproj /property:Configuration=Release /target:Build

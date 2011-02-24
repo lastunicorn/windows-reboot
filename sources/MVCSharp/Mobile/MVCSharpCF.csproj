@@ -1,0 +1,202 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CBC4E0A8-AEE7-4F67-9B40-8F4E51A37C76}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MVCSharp</RootNamespace>
+    <AssemblyName>MVCSharp</AssemblyName>
+    <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PlatformFamilyName>PocketPC</PlatformFamilyName>
+    <PlatformID>4118C335-430C-497f-BE48-11C3316B135E</PlatformID>
+    <OSVersion>5.1</OSVersion>
+    <DeployDirSuffix>MVCSharpCF</DeployDirSuffix>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <NativePlatformName>Windows Mobile 5.0 Pocket PC SDK</NativePlatformName>
+    <FormFactorID>
+    </FormFactorID>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;$(PlatformFamilyName)</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <FileAlignment>512</FileAlignment>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;$(PlatformFamilyName)</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <FileAlignment>512</FileAlignment>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Core\Configuration\CreateHelper.cs">
+      <Link>Core\Configuration\CreateHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\MVCConfiguration.cs">
+      <Link>Core\Configuration\MVCConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Tasks\AdjacentPointsAttribute.cs">
+      <Link>Core\Configuration\Tasks\AdjacentPointsAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Tasks\DefaultTaskInfoProvider.cs">
+      <Link>Core\Configuration\Tasks\DefaultTaskInfoProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Tasks\InteractionPointAttribute.cs">
+      <Link>Core\Configuration\Tasks\InteractionPointAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Tasks\InteractionPointInfo.cs">
+      <Link>Core\Configuration\Tasks\InteractionPointInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Tasks\InteractionPointInfoCollection.cs">
+      <Link>Core\Configuration\Tasks\InteractionPointInfoCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Tasks\ITaskInfoProvider.cs">
+      <Link>Core\Configuration\Tasks\ITaskInfoProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Tasks\NavTargetAttribute.cs">
+      <Link>Core\Configuration\Tasks\NavTargetAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Tasks\TaskAttribute.cs">
+      <Link>Core\Configuration\Tasks\TaskAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Tasks\TaskInfo.cs">
+      <Link>Core\Configuration\Tasks\TaskInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Tasks\TaskInfoByAttributesProvider.cs">
+      <Link>Core\Configuration\Tasks\TaskInfoByAttributesProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Tasks\TaskInfoByXmlAttributeProvider.cs">
+      <Link>Core\Configuration\Tasks\TaskInfoByXmlAttributeProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Tasks\TaskInfoCollection.cs">
+      <Link>Core\Configuration\Tasks\TaskInfoCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Tasks\TaskInfoProviderBase.cs">
+      <Link>Core\Configuration\Tasks\TaskInfoProviderBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Views\DefaultViewInfosProvider.cs">
+      <Link>Core\Configuration\Views\DefaultViewInfosProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Views\IViewInfosProvider.cs">
+      <Link>Core\Configuration\Views\IViewInfosProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Views\ViewAttribute.cs">
+      <Link>Core\Configuration\Views\ViewAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Views\ViewCreationException.cs">
+      <Link>Core\Configuration\Views\ViewCreationException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Views\ViewInfo.cs">
+      <Link>Core\Configuration\Views\ViewInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Views\ViewInfoCollection.cs">
+      <Link>Core\Configuration\Views\ViewInfoCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Views\ViewInfoNotFoundException.cs">
+      <Link>Core\Configuration\Views\ViewInfoNotFoundException.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Configuration\Views\ViewInfosByTaskCollection.cs">
+      <Link>Core\Configuration\Views\ViewInfosByTaskCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ControllerBase.cs">
+      <Link>Core\ControllerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\ControllerBaseGeneric.cs">
+      <Link>Core\ControllerBaseGeneric.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\IController.cs">
+      <Link>Core\IController.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\IControllerGeneric.cs">
+      <Link>Core\IControllerGeneric.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Navigator.cs">
+      <Link>Core\Navigator.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\StubNavigator.cs">
+      <Link>Core\StubNavigator.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Tasks\ITask.cs">
+      <Link>Core\Tasks\ITask.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Tasks\TaskBase.cs">
+      <Link>Core\Tasks\TaskBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Tasks\TasksManager.cs">
+      <Link>Core\Tasks\TasksManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Views\INotifiedView.cs">
+      <Link>Core\Views\INotifiedView.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Views\IView.cs">
+      <Link>Core\Views\IView.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Views\IViewGeneric.cs">
+      <Link>Core\Views\IViewGeneric.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Views\IViewsManager.cs">
+      <Link>Core\Views\IViewsManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Core\Views\ViewsManagerBase.cs">
+      <Link>Core\Views\ViewsManagerBase.cs</Link>
+    </Compile>
+    <Compile Include="Mobile\Configuration\MobileformsViewAttribute.cs" />
+    <Compile Include="Mobile\Configuration\MobileformsViewInfo.cs" />
+    <Compile Include="Mobile\Configuration\MobileformsViewInfosProvider.cs" />
+    <Compile Include="Mobile\MobileformsViewsManager.cs" />
+    <Compile Include="Mobile\MobileFormView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mobile\MobileFormViewGeneric.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mobile\MobileUserControlView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Mobile\MobileUserControlViewGeneric.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}">
+        <HostingProcess disable="1" />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
