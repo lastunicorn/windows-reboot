@@ -23,7 +23,7 @@ namespace DustInTheWind.WindowsReboot
     /// Util class that calls the Windows API function to execute
     /// the lock, log off, sleep, hibernate, reboot, shut down and power off actions.
     /// </summary>
-    internal static class RebootUtil
+    internal class RebootUtil : IRebootUtil
     {
         #region WinAPI structures
 
@@ -253,12 +253,12 @@ namespace DustInTheWind.WindowsReboot
         #endregion
 
 
-        #region public static void Lock()
+        #region Actions
 
         /// <summary>
         /// Locks the workstation's display. To unlock the workstation, the user must log in.
         /// </summary>
-        public static void Lock()
+        public void Lock()
         {
             if (LockWorkStation() == FALSE)
             {
@@ -266,15 +266,11 @@ namespace DustInTheWind.WindowsReboot
             }
         }
 
-        #endregion
-
-        #region public static void LogOff(bool force)
-
         /// <summary>
         /// Logs off the current user.
         /// </summary>
         /// <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
-        public static void LogOff(bool force)
+        public void LogOff(bool force)
         {
             int flags = EWX_LOGOFF;
             uint reason = SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER | SHTDN_REASON_FLAG_PLANNED;
@@ -288,10 +284,6 @@ namespace DustInTheWind.WindowsReboot
             }
         }
 
-        #endregion
-
-        #region public static void Sleep(bool force)
-
         /// <summary>
         /// Suspends the system by shutting power down and entering in suspend (sleep) state.
         /// </summary>
@@ -302,7 +294,7 @@ namespace DustInTheWind.WindowsReboot
         /// if it is false, the system announce each application and requests permission to suspend operation.
         /// </para>
         /// </param>
-        public static void Sleep(bool force)
+        public void Sleep(bool force)
         {
             if (IsWinNT())
                 EnableShutDown();
@@ -312,10 +304,6 @@ namespace DustInTheWind.WindowsReboot
                 throw new WindowsRebootException("The Sleep action failed.");
             }
         }
-
-        #endregion
-
-        #region public static void Hibernate(bool force)
 
         /// <summary>
         /// Suspends the system by shutting power down and entering in hibernation state.
@@ -327,7 +315,7 @@ namespace DustInTheWind.WindowsReboot
         /// if it is false, the system announce each application and requests permission to suspend operation.
         /// </para>
         /// </param>
-        public static void Hibernate(bool force)
+        public void Hibernate(bool force)
         {
             if (IsWinNT())
                 EnableShutDown();
@@ -338,15 +326,11 @@ namespace DustInTheWind.WindowsReboot
             }
         }
 
-        #endregion
-
-        #region public static void Reboot(bool force)
-
         /// <summary>
         /// Restarts the system.
         /// </summary>
         /// <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
-        public static void Reboot(bool force)
+        public void Reboot(bool force)
         {
             int flags = EWX_REBOOT;
             uint reason = SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER | SHTDN_REASON_FLAG_PLANNED;
@@ -363,10 +347,6 @@ namespace DustInTheWind.WindowsReboot
             }
         }
 
-        #endregion
-
-        #region public static void ShutDown(bool force)
-
         /// <summary>
         /// <para>
         /// Shuts down the system without switching the power off.
@@ -376,7 +356,7 @@ namespace DustInTheWind.WindowsReboot
         /// </para>
         /// </summary>
         /// <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
-        public static void ShutDown(bool force)
+        public void ShutDown(bool force)
         {
             int flags = EWX_SHUTDOWN;
             uint reason = SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER | SHTDN_REASON_FLAG_PLANNED;
@@ -393,15 +373,11 @@ namespace DustInTheWind.WindowsReboot
             }
         }
 
-        #endregion
-
-        #region public static void PowerOff(bool force)
-
         /// <summary>
         /// Shuts down the system and turns off the power.
         /// </summary>
         /// <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
-        public static void PowerOff(bool force)
+        public void PowerOff(bool force)
         {
             int flags = EWX_POWEROFF;
             uint reason = SHTDN_REASON_MAJOR_OTHER | SHTDN_REASON_MINOR_OTHER | SHTDN_REASON_FLAG_PLANNED;

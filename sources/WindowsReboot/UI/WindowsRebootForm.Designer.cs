@@ -155,7 +155,7 @@ namespace DustInTheWind.WindowsReboot
             this.goToTrayToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.programToolStripMenuItem.Name = "programToolStripMenuItem";
-            this.programToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.programToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.programToolStripMenuItem.Text = "&Program";
             // 
             // goToTrayToolStripMenuItem
@@ -163,7 +163,7 @@ namespace DustInTheWind.WindowsReboot
             this.goToTrayToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.tray;
             this.goToTrayToolStripMenuItem.Name = "goToTrayToolStripMenuItem";
             this.goToTrayToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.goToTrayToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.goToTrayToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.goToTrayToolStripMenuItem.Text = "Go To &Tray";
             this.goToTrayToolStripMenuItem.Click += new System.EventHandler(this.goToTrayToolStripMenuItem_Click);
             // 
@@ -171,7 +171,7 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -185,14 +185,14 @@ namespace DustInTheWind.WindowsReboot
             this.toolStripSeparator2,
             this.optionsToolStripMenuItem});
             this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
-            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(84, 20);
+            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
             this.configurationToolStripMenuItem.Text = "&Configuration";
             // 
             // loadInitialSettingsToolStripMenuItem
             // 
             this.loadInitialSettingsToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.splat_blue;
             this.loadInitialSettingsToolStripMenuItem.Name = "loadInitialSettingsToolStripMenuItem";
-            this.loadInitialSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadInitialSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.loadInitialSettingsToolStripMenuItem.Text = "Load Initial Settings";
             this.loadInitialSettingsToolStripMenuItem.Click += new System.EventHandler(this.loadInitialSettingsToolStripMenuItem_Click);
             // 
@@ -200,32 +200,32 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.saveCurrentSettingsToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.splat_yellow;
             this.saveCurrentSettingsToolStripMenuItem.Name = "saveCurrentSettingsToolStripMenuItem";
-            this.saveCurrentSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveCurrentSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.saveCurrentSettingsToolStripMenuItem.Text = "&Save Current Settings";
             this.saveCurrentSettingsToolStripMenuItem.Click += new System.EventHandler(this.saveCurrentSettingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
             // 
             // loadDefaultSettingsToolStripMenuItem
             // 
             this.loadDefaultSettingsToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.splat_black;
             this.loadDefaultSettingsToolStripMenuItem.Name = "loadDefaultSettingsToolStripMenuItem";
-            this.loadDefaultSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadDefaultSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.loadDefaultSettingsToolStripMenuItem.Text = "Load &Default Settings";
             this.loadDefaultSettingsToolStripMenuItem.Click += new System.EventHandler(this.loadDefaultSettingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(183, 6);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.optionsToolStripMenuItem.Text = "&Options...";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
@@ -235,13 +235,13 @@ namespace DustInTheWind.WindowsReboot
             this.licenseToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // licenseToolStripMenuItem
             // 
             this.licenseToolStripMenuItem.Name = "licenseToolStripMenuItem";
-            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.licenseToolStripMenuItem.Text = "&License";
             this.licenseToolStripMenuItem.Click += new System.EventHandler(this.licenseToolStripMenuItem_Click);
             // 
@@ -249,7 +249,7 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.aboutToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.help_about16;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -281,8 +281,8 @@ namespace DustInTheWind.WindowsReboot
             this.notifyIcon1.ContextMenuStrip = this.contextMenuStripTrayIcon;
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "notifyIcon1";
-            this.notifyIcon1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseMove);
             this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseClick);
+            this.notifyIcon1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseMove);
             // 
             // contextMenuStripTrayIcon
             // 
@@ -320,7 +320,7 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.lockComputerToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.lock_16x16;
             this.lockComputerToolStripMenuItem.Name = "lockComputerToolStripMenuItem";
-            this.lockComputerToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.lockComputerToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.lockComputerToolStripMenuItem.Text = "Lock Computer";
             this.lockComputerToolStripMenuItem.Click += new System.EventHandler(this.lockComputerToolStripMenuItem_Click);
             // 
@@ -328,7 +328,7 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.logOffToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("logOffToolStripMenuItem.Image")));
             this.logOffToolStripMenuItem.Name = "logOffToolStripMenuItem";
-            this.logOffToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.logOffToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.logOffToolStripMenuItem.Text = "Log Off";
             this.logOffToolStripMenuItem.Click += new System.EventHandler(this.logOffToolStripMenuItem_Click);
             // 
@@ -336,7 +336,7 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.sleepToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("sleepToolStripMenuItem.Image")));
             this.sleepToolStripMenuItem.Name = "sleepToolStripMenuItem";
-            this.sleepToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.sleepToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.sleepToolStripMenuItem.Text = "Sleep";
             this.sleepToolStripMenuItem.Click += new System.EventHandler(this.sleepToolStripMenuItem_Click);
             // 
@@ -344,7 +344,7 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.hibernateToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.hibernate_16x16;
             this.hibernateToolStripMenuItem.Name = "hibernateToolStripMenuItem";
-            this.hibernateToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.hibernateToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.hibernateToolStripMenuItem.Text = "Hibernate";
             this.hibernateToolStripMenuItem.Click += new System.EventHandler(this.hibernateToolStripMenuItem_Click);
             // 
@@ -352,7 +352,7 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.rebootToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.reboot_16x16;
             this.rebootToolStripMenuItem.Name = "rebootToolStripMenuItem";
-            this.rebootToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.rebootToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.rebootToolStripMenuItem.Text = "Reboot";
             this.rebootToolStripMenuItem.Click += new System.EventHandler(this.rebootToolStripMenuItem_Click);
             // 
@@ -360,7 +360,7 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.shutDownToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("shutDownToolStripMenuItem.Image")));
             this.shutDownToolStripMenuItem.Name = "shutDownToolStripMenuItem";
-            this.shutDownToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.shutDownToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.shutDownToolStripMenuItem.Text = "Shut Down";
             this.shutDownToolStripMenuItem.Click += new System.EventHandler(this.shutDownToolStripMenuItem_Click);
             // 
@@ -368,7 +368,7 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.powerOffToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.poweroff_16x16;
             this.powerOffToolStripMenuItem.Name = "powerOffToolStripMenuItem";
-            this.powerOffToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.powerOffToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.powerOffToolStripMenuItem.Text = "Power Off";
             this.powerOffToolStripMenuItem.Click += new System.EventHandler(this.powerOffToolStripMenuItem_Click);
             // 
@@ -442,7 +442,6 @@ namespace DustInTheWind.WindowsReboot
             this.groupBoxActionTime.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.tableLayoutPanel6.SetColumnSpan(this.groupBoxActionTime, 2);
             this.groupBoxActionTime.Controls.Add(this.tabControlActionTime);
-            this.groupBoxActionTime.CornerRadius = 5;
             this.groupBoxActionTime.Location = new System.Drawing.Point(0, 0);
             this.groupBoxActionTime.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
             this.groupBoxActionTime.Name = "groupBoxActionTime";
@@ -451,10 +450,8 @@ namespace DustInTheWind.WindowsReboot
             this.groupBoxActionTime.TabIndex = 18;
             this.groupBoxActionTime.TabStop = false;
             this.groupBoxActionTime.Text = "1) Choose when";
-            this.groupBoxActionTime.TitleAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.groupBoxActionTime.TitleColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxActionTime.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.groupBoxActionTime.TitleMargin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.groupBoxActionTime.TitlePadding = new System.Windows.Forms.Padding(3, 0, 5, 0);
             // 
             // tabControlActionTime
@@ -683,7 +680,6 @@ namespace DustInTheWind.WindowsReboot
             this.customGroupBoxStatusInfo.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.tableLayoutPanel6.SetColumnSpan(this.customGroupBoxStatusInfo, 2);
             this.customGroupBoxStatusInfo.Controls.Add(this.tableLayoutPanelStatusInfo);
-            this.customGroupBoxStatusInfo.CornerRadius = 5;
             this.customGroupBoxStatusInfo.Location = new System.Drawing.Point(0, 251);
             this.customGroupBoxStatusInfo.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.customGroupBoxStatusInfo.Name = "customGroupBoxStatusInfo";
@@ -691,11 +687,8 @@ namespace DustInTheWind.WindowsReboot
             this.customGroupBoxStatusInfo.Size = new System.Drawing.Size(389, 56);
             this.customGroupBoxStatusInfo.TabIndex = 23;
             this.customGroupBoxStatusInfo.TabStop = false;
-            this.customGroupBoxStatusInfo.TitleAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.customGroupBoxStatusInfo.TitleColor = System.Drawing.SystemColors.ControlText;
             this.customGroupBoxStatusInfo.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customGroupBoxStatusInfo.TitleMargin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.customGroupBoxStatusInfo.TitlePadding = new System.Windows.Forms.Padding(3, 0, 3, 0);
             // 
             // tableLayoutPanelStatusInfo
             // 
@@ -766,7 +759,6 @@ namespace DustInTheWind.WindowsReboot
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxActionType.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.groupBoxActionType.Controls.Add(this.tableLayoutPanelActionType);
-            this.groupBoxActionType.CornerRadius = 5;
             this.groupBoxActionType.Location = new System.Drawing.Point(0, 141);
             this.groupBoxActionType.Margin = new System.Windows.Forms.Padding(0, 4, 4, 4);
             this.groupBoxActionType.Name = "groupBoxActionType";
@@ -775,10 +767,8 @@ namespace DustInTheWind.WindowsReboot
             this.groupBoxActionType.TabIndex = 19;
             this.groupBoxActionType.TabStop = false;
             this.groupBoxActionType.Text = "2) Choose what";
-            this.groupBoxActionType.TitleAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.groupBoxActionType.TitleColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxActionType.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.groupBoxActionType.TitleMargin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.groupBoxActionType.TitlePadding = new System.Windows.Forms.Padding(3, 0, 5, 0);
             // 
             // tableLayoutPanelActionType
@@ -855,7 +845,6 @@ namespace DustInTheWind.WindowsReboot
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxActionStart.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.groupBoxActionStart.Controls.Add(this.tableLayoutPanelActionStart);
-            this.groupBoxActionStart.CornerRadius = 5;
             this.groupBoxActionStart.Location = new System.Drawing.Point(227, 141);
             this.groupBoxActionStart.Margin = new System.Windows.Forms.Padding(4, 4, 0, 4);
             this.groupBoxActionStart.Name = "groupBoxActionStart";
@@ -864,10 +853,8 @@ namespace DustInTheWind.WindowsReboot
             this.groupBoxActionStart.TabIndex = 20;
             this.groupBoxActionStart.TabStop = false;
             this.groupBoxActionStart.Text = "3) Do it";
-            this.groupBoxActionStart.TitleAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.groupBoxActionStart.TitleColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxActionStart.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.groupBoxActionStart.TitleMargin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.groupBoxActionStart.TitlePadding = new System.Windows.Forms.Padding(3, 0, 5, 0);
             // 
             // tableLayoutPanelActionStart
@@ -943,9 +930,9 @@ namespace DustInTheWind.WindowsReboot
             this.Name = "WindowsRebootForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Windows Reboot";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WindowsRebootForm_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.SizeChanged += new System.EventHandler(this.WindowsRebootForm_SizeChanged);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WindowsRebootForm_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.contextMenuStripTrayIcon.ResumeLayout(false);

@@ -70,6 +70,8 @@ namespace DustInTheWind.WindowsReboot
         private bool displayWarningMessage = false;
         private TimeSpan warningMessageTime = TimeSpan.FromSeconds(30);
 
+        private IRebootUtil rebootUtil;
+
         #region Constructor
 
         /// <summary>
@@ -83,6 +85,8 @@ namespace DustInTheWind.WindowsReboot
                 throw new ArgumentNullException("view");
 
             this.view = view;
+
+            this.rebootUtil = new RebootUtil();
 
             this.config = this.GetConfiguration();
             this.configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
@@ -169,31 +173,31 @@ namespace DustInTheWind.WindowsReboot
                     break;
 
                 case ActionType.LockWorkstation:
-                    RebootUtil.Lock();
+                    rebootUtil.Lock();
                     break;
 
                 case ActionType.LogOff:
-                    RebootUtil.LogOff(this.view.ForceAction);
+                    rebootUtil.LogOff(this.view.ForceAction);
                     break;
 
                 case ActionType.Sleep:
-                    RebootUtil.Sleep(this.view.ForceAction);
+                    rebootUtil.Sleep(this.view.ForceAction);
                     break;
 
                 case ActionType.Hibernate:
-                    RebootUtil.Hibernate(this.view.ForceAction);
+                    rebootUtil.Hibernate(this.view.ForceAction);
                     break;
 
                 case ActionType.Reboot:
-                    RebootUtil.Reboot(this.view.ForceAction);
+                    rebootUtil.Reboot(this.view.ForceAction);
                     break;
 
                 case ActionType.ShutDown:
-                    RebootUtil.ShutDown(this.view.ForceAction);
+                    rebootUtil.ShutDown(this.view.ForceAction);
                     break;
 
                 case ActionType.PowerOff:
-                    RebootUtil.PowerOff(this.view.ForceAction);
+                    rebootUtil.PowerOff(this.view.ForceAction);
                     break;
 
                 default:
@@ -491,7 +495,7 @@ namespace DustInTheWind.WindowsReboot
             {
                 if (this.view.Confirm("Do you want to lock the workstation?"))
                 {
-                    RebootUtil.Lock();
+                    rebootUtil.Lock();
                 }
             }
             catch (Exception ex)
@@ -514,7 +518,7 @@ namespace DustInTheWind.WindowsReboot
             {
                 if (this.view.Confirm("Do you want to log off the current user?\nThe current logged in user is '" + Environment.UserDomainName + "'"))
                 {
-                    RebootUtil.LogOff(false);
+                    rebootUtil.LogOff(false);
                 }
             }
             catch (Exception ex)
@@ -536,7 +540,7 @@ namespace DustInTheWind.WindowsReboot
             {
                 if (this.view.Confirm("Do you want to put the system in 'Stand By' state?"))
                 {
-                    RebootUtil.Sleep(false);
+                    rebootUtil.Sleep(false);
                 }
             }
             catch (Exception ex)
@@ -558,7 +562,7 @@ namespace DustInTheWind.WindowsReboot
             {
                 if (this.view.Confirm("Do you want to put the system in 'Hibernate' state?"))
                 {
-                    RebootUtil.Hibernate(false);
+                    rebootUtil.Hibernate(false);
                 }
             }
             catch (Exception ex)
@@ -580,7 +584,7 @@ namespace DustInTheWind.WindowsReboot
             {
                 if (this.view.Confirm("Do you want to reboot the system?"))
                 {
-                    RebootUtil.Reboot(false);
+                    rebootUtil.Reboot(false);
                 }
             }
             catch (Exception ex)
@@ -602,7 +606,7 @@ namespace DustInTheWind.WindowsReboot
             {
                 if (this.view.Confirm("Do you want to shut down the sysyem?\n\nObs! From WinXP SP1 this command will also power off the system."))
                 {
-                    RebootUtil.ShutDown(false);
+                    rebootUtil.ShutDown(false);
                 }
             }
             catch (Exception ex)
@@ -624,7 +628,7 @@ namespace DustInTheWind.WindowsReboot
             {
                 if (this.view.Confirm("Do you want to power off the system?\n\nObs! Only if the hardware supports 'Power Off'. Otherwise just a 'Shut Down' will be performed."))
                 {
-                    RebootUtil.PowerOff(false);
+                    rebootUtil.PowerOff(false);
                 }
             }
             catch (Exception ex)
