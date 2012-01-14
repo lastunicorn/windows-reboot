@@ -16,6 +16,7 @@
 
 using System;
 using System.Windows.Forms;
+using DustInTheWind.WindowsReboot.UI.View;
 
 namespace DustInTheWind.WindowsReboot
 {

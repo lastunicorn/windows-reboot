@@ -17,7 +17,7 @@
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Properties;
 
-namespace DustInTheWind.WindowsReboot
+namespace DustInTheWind.WindowsReboot.UI.View
 {
     /// <summary>
     /// This form displayes the license text.

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot
+namespace DustInTheWind.WindowsReboot.UI.View
 {
     partial class AboutForm
     {
@@ -44,7 +44,6 @@ namespace DustInTheWind.WindowsReboot
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
             this.labelTitle = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -58,7 +57,6 @@ namespace DustInTheWind.WindowsReboot
             this.pictureBoxClock = new System.Windows.Forms.PictureBox();
             this.labelMoto = new System.Windows.Forms.Label();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
-            this.customGroupBox1 = new DustInTheWind.WindowsReboot.CustomGroupBox(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxClock)).BeginInit();
             this.SuspendLayout();
@@ -203,18 +201,6 @@ namespace DustInTheWind.WindowsReboot
             this.textBoxDescription.Size = new System.Drawing.Size(297, 69);
             this.textBoxDescription.TabIndex = 4;
             // 
-            // customGroupBox1
-            // 
-            this.customGroupBox1.BorderColor = System.Drawing.SystemColors.ActiveBorder;
-            this.customGroupBox1.Location = new System.Drawing.Point(72, 93);
-            this.customGroupBox1.Name = "customGroupBox1";
-            this.customGroupBox1.Size = new System.Drawing.Size(200, 100);
-            this.customGroupBox1.TabIndex = 5;
-            this.customGroupBox1.TabStop = false;
-            this.customGroupBox1.Text = "customGroupBox1";
-            this.customGroupBox1.TitleColor = System.Drawing.SystemColors.ControlText;
-            this.customGroupBox1.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            // 
             // AboutForm
             // 
             this.AcceptButton = this.buttonOkay;
@@ -222,7 +208,6 @@ namespace DustInTheWind.WindowsReboot
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonOkay;
             this.ClientSize = new System.Drawing.Size(321, 259);
-            this.Controls.Add(this.customGroupBox1);
             this.Controls.Add(this.textBoxDescription);
             this.Controls.Add(this.buttonOkay);
             this.Controls.Add(this.labelMoto);
@@ -259,6 +244,5 @@ namespace DustInTheWind.WindowsReboot
         private System.Windows.Forms.TextBox labelDate;
         private System.Windows.Forms.TextBox labelAuthor;
         private System.Windows.Forms.TextBox labelVersion;
-        private CustomGroupBox customGroupBox1;
     }
 }

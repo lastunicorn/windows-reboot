@@ -18,7 +18,7 @@ using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Config;
 
-namespace DustInTheWind.WindowsReboot
+namespace DustInTheWind.WindowsReboot.UI.View
 {
     internal partial class WindowsRebootForm : Form, IWindowsRebootView
     {

@@ -17,7 +17,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace DustInTheWind.WindowsReboot
+namespace DustInTheWind.WindowsReboot.Core
 {
     /// <summary>
     /// Util class that calls the Windows API function to execute
