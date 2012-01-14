@@ -1,5 +1,5 @@
 ﻿// Windows Reboot
-// Copyright (C) 2009 Dust in the Wind
+// Copyright (C) 2009 Iuga Alexandru
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ namespace DustInTheWind.WindowsReboot
             this.labelVersion.Text = VersionUtil.GetVersion().ToString();
             
             this.labelAuthor.Text = Application.CompanyName;
-            this.labelDate.Text = new DateTime(2010, 4, 14).ToString("MMMM yyyy");
+            this.labelDate.Text = new DateTime(2009, 4, 5).ToString("MMMM yyyy");
             this.textBoxDescription.Text = this.AssemblyDescription;
         }
 

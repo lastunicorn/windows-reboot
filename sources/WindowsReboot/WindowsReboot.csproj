@@ -1,18 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C407B401-6749-4430-AC5C-8923572A0EA5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DustInTheWind.WindowsReboot</RootNamespace>
     <AssemblyName>WindowsReboot</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>icon.ico</ApplicationIcon>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>http://localhost/WindowsReboot/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,6 +43,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>WindowsReboot.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,13 +53,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>WindowsReboot.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -48,11 +67,6 @@
   <ItemGroup>
     <Compile Include="ActionTimeType.cs" />
     <Compile Include="ActionType.cs" />
-    <Compile Include="DuckSettings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>DuckSettings.settings</DependentUpon>
-    </Compile>
     <Compile Include="UI\ActionTypeItem.cs" />
     <Compile Include="Config\ActionTimeConfigElement.cs" />
     <Compile Include="Config\ActionTypeConfigElement.cs" />
@@ -67,11 +81,6 @@
     <Compile Include="UI\CustomGroupBox.Designer.cs">
       <DependentUpon>CustomGroupBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\IOptionsView.cs" />
-    <Compile Include="UI\MainTask.cs" />
-    <Compile Include="UI\OptionsPresenter.cs" />
-    <Compile Include="UI\OptionsTask.cs" />
-    <Compile Include="UI\WindowsRebootModel.cs" />
     <Compile Include="WindowsRebootException.cs" />
     <Compile Include="UI\LicenseForm.cs">
       <SubType>Form</SubType>
@@ -91,11 +100,11 @@
     <Compile Include="UI\WindowsRebootForm.Designer.cs">
       <DependentUpon>WindowsRebootForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\AboutForm.cs">
+    <Compile Include="UI\FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\AboutForm.Designer.cs">
-      <DependentUpon>AboutForm.cs</DependentUpon>
+    <Compile Include="UI\FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\IWindowsRebootView.cs" />
     <Compile Include="Program.cs" />
@@ -113,8 +122,8 @@
       <DependentUpon>WindowsRebootForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\AboutForm.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
+    <EmbeddedResource Include="UI\FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -137,17 +146,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RebootUtil.cs" />
-    <Compile Include="UI\WindowsRebootPresenter.cs">
-    </Compile>
+    <Compile Include="UI\WindowsRebootPresenter.cs" />
     <Compile Include="VersionUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
     <None Include="ClassDiagram1.cd" />
-    <None Include="DuckSettings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>DuckSettings.Designer.cs</LastGenOutput>
-    </None>
     <None Include="Resources\3.png" />
     <None Include="Resources\2.png" />
     <None Include="Resources\1.png" />
@@ -175,10 +179,21 @@
     <None Include="Resources\header.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MVCSharp\MVCSharp.csproj">
-      <Project>{C04A36B0-4A58-45D4-B95B-A4A58AFEBC95}</Project>
-      <Name>MVCSharp</Name>
-    </ProjectReference>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

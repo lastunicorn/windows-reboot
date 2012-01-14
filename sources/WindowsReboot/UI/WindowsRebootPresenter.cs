@@ -1,5 +1,5 @@
 ﻿// Windows Reboot
-// Copyright (C) 2009 Dust in the Wind
+// Copyright (C) 2009 Iuga Alexandru
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,25 +18,15 @@ using System;
 using System.Configuration;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Config;
-using MVCSharp.Core;
-using DustInTheWind.WindowsReboot.UI;
 
 namespace DustInTheWind.WindowsReboot
 {
-    internal class WindowsRebootPresenter : ControllerBase<MainTask, IWindowsRebootView>
+    internal class WindowsRebootPresenter
     {
-        //public override MainTask Task
-        //{
-        //    get            {                return base.Task;            }
-        //    set
-        //    {
-        //        base.Task = value;
-        //        if (value != null)
-        //        {
-        //            value.Model = 
-        //        }
-        //    }
-        //}
+        /// <summary>
+        /// The view used to interact with the user.
+        /// </summary>
+        private readonly IWindowsRebootView view;
 
         /// <summary>
         /// The template used to display the time left until action.
@@ -68,12 +58,12 @@ namespace DustInTheWind.WindowsReboot
         /// </summary>
         private bool startAtStartUp = false;
 
-        //private Configuration config;
+        private Configuration config;
 
-        //private WindowsRebootConfigSection configSection;
+        private WindowsRebootConfigSection configSection;
 
         /// <summary>
-        /// A value indicating if the exit of the application was requested chosing the menu item.
+        /// A value indicationg if the exit of the application was requested chosing the menu item.
         /// </summary>
         private bool exitRequested = false;
 
@@ -83,12 +73,19 @@ namespace DustInTheWind.WindowsReboot
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WindowsRebootPresenter"/> class.
+        /// Initializes a new instance of the <see cref="WindowsRebootPresenter"/> class with
+        /// the view used to interact with the user.
         /// </summary>
-        public WindowsRebootPresenter()
+        /// <param name="view">The view used to interact with the user.</param>
+        public WindowsRebootPresenter(IWindowsRebootView view)
         {
-            //config = GetConfiguration();
-            //configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
+            if (view == null)
+                throw new ArgumentNullException("view");
+
+            this.view = view;
+
+            this.config = this.GetConfiguration();
+            this.configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
         }
 
         #endregion
@@ -104,60 +101,55 @@ namespace DustInTheWind.WindowsReboot
             DateTime now = DateTime.Now;
 
             // Refresh the current time label.
-            View.LabelCurrentTime = now.ToLongDateString() + "  :  " + now.ToLongTimeString();
+            this.view.LabelCurrentTime = now.ToLongDateString() + "  :  " + now.ToLongTimeString();
 
-            if (actionIsSet)
+            if (this.actionIsSet)
             {
                 // Refresh the timer label.
 
-                TimeSpan timeUntilAction = new TimeSpan(actionTime.Ticks - now.Ticks);
-                View.LabelTimer = ToTimerString(timeUntilAction);
+                TimeSpan timeUntilAction = new TimeSpan(this.actionTime.Ticks - now.Ticks);
+                string tmp;
 
+                int d = timeUntilAction.Days;
+                int h = timeUntilAction.Hours;
+                int m = timeUntilAction.Minutes;
+                int s = timeUntilAction.Seconds;
+                int f = Convert.ToInt32(Math.Round((double)(timeUntilAction.Milliseconds / 100)));
 
-                if (displayWarningMessage && this.actionTime - this.warningMessageTime <= now)
+                if (d == 1)
                 {
-                    displayWarningMessage = false;
-                    View.DisplayMessage("Warning");
+                    tmp = "1 day . ";
+                }
+                else if (d > 1)
+                {
+                    tmp = d + " days . ";
+                }
+                else
+                {
+                    tmp = string.Empty;
+                }
+
+                tmp += string.Format(TIME_TEMPLATE, h, m, s, f);
+
+                this.view.LabelTimer = tmp;
+
+
+                if (this.displayWarningMessage && this.actionTime - this.warningMessageTime <= now)
+                {
+                    this.displayWarningMessage = false;
+                    this.view.DisplayMessage("Warning");
                 }
 
                 // Check if it is the time to do the action.
-                if (actionTime <= now)
+                if (this.actionTime <= now)
                 {
-                    actionIsSet = false;
-                    DoAction(View.ActionType.Value);
-                    EnableInterface(true);
-                    View.LabelActionTime = string.Empty;
-                    View.LabelTimer = TIME_TEMPLATE_EMPTY;
+                    this.actionIsSet = false;
+                    this.DoAction(this.view.ActionType.Value);
+                    this.EnableInterface(true);
+                    this.view.LabelActionTime = string.Empty;
+                    this.view.LabelTimer = TIME_TEMPLATE_EMPTY;
                 }
             }
-        }
-
-        private string ToTimerString(TimeSpan time)
-        {
-            string tmp;
-
-            int d = time.Days;
-            int h = time.Hours;
-            int m = time.Minutes;
-            int s = time.Seconds;
-            int f = Convert.ToInt32(Math.Round((double)(time.Milliseconds / 100)));
-
-            if (d == 1)
-            {
-                tmp = "1 day . ";
-            }
-            else if (d > 1)
-            {
-                tmp = d + " days . ";
-            }
-            else
-            {
-                tmp = string.Empty;
-            }
-
-            tmp += string.Format(TIME_TEMPLATE, h, m, s, f);
-
-            return tmp;
         }
 
         #endregion
@@ -173,7 +165,7 @@ namespace DustInTheWind.WindowsReboot
             switch (actionType)
             {
                 case ActionType.Ring:
-                    View.DisplayMessage(string.Format("Ring-ring! It is {0}", DateTime.Now.ToShortTimeString()));
+                    this.view.DisplayMessage("Ring-ring!");
                     break;
 
                 case ActionType.LockWorkstation:
@@ -181,27 +173,27 @@ namespace DustInTheWind.WindowsReboot
                     break;
 
                 case ActionType.LogOff:
-                    RebootUtil.LogOff(View.ForceAction);
+                    RebootUtil.LogOff(this.view.ForceAction);
                     break;
 
                 case ActionType.Sleep:
-                    RebootUtil.Sleep(View.ForceAction);
+                    RebootUtil.Sleep(this.view.ForceAction);
                     break;
 
                 case ActionType.Hibernate:
-                    RebootUtil.Hibernate(View.ForceAction);
+                    RebootUtil.Hibernate(this.view.ForceAction);
                     break;
 
                 case ActionType.Reboot:
-                    RebootUtil.Reboot(View.ForceAction);
+                    RebootUtil.Reboot(this.view.ForceAction);
                     break;
 
                 case ActionType.ShutDown:
-                    RebootUtil.ShutDown(View.ForceAction);
+                    RebootUtil.ShutDown(this.view.ForceAction);
                     break;
 
                 case ActionType.PowerOff:
-                    RebootUtil.PowerOff(View.ForceAction);
+                    RebootUtil.PowerOff(this.view.ForceAction);
                     break;
 
                 default:
@@ -222,15 +214,15 @@ namespace DustInTheWind.WindowsReboot
         {
             DateTime time;
 
-            if (View.FixedTimeGroupSelected)
+            if (this.view.FixedTimeGroupSelected)
             {
-                time = View.FixedDate.Add(View.FixedTime);
+                time = this.view.FixedDate.Add(this.view.FixedTime);
             }
-            else if (View.DelayGroupSelected)
+            else if (this.view.DelayGroupSelected)
             {
-                time = now.Add(new TimeSpan(View.Hours, View.Minutes, View.Seconds));
+                time = now.Add(new TimeSpan(this.view.Hours, this.view.Minutes, this.view.Seconds));
             }
-            else if (View.ImmediateGroupSelected)
+            else if (this.view.ImmediateGroupSelected)
             {
                 time = now;
             }
@@ -247,74 +239,84 @@ namespace DustInTheWind.WindowsReboot
 
         #region Start/Stop timer
 
+        #region internal void OnStartTimerClicked()
+
         /// <summary>
         /// Method called when the "Start timer" button is clicked.
         /// </summary>
-        internal void StartTimerClicked()
+        internal void OnStartTimerClicked()
         {
             try
             {
                 DateTime now = DateTime.Now;
-                DateTime actionTime = CalculateActionTime(now);
+                DateTime actionTime = this.CalculateActionTime(now);
 
                 if (actionTime < now)
                 {
                     string currentTimeString = now.ToLongDateString() + " : " + now.ToLongTimeString();
                     string actionTimeString = actionTime.ToLongDateString() + " : " + actionTime.ToLongTimeString();
-                    View.DisplayErrorMessage(string.Format("The action time already passed.\nPlease specify a time in the future to execute the action.\n\nCurrent time: {0}\nRequested action time: {1}.", currentTimeString, actionTimeString));
+                    this.view.DisplayErrorMessage(string.Format("The action time already passed.\nPlease specify a time in the future to execute the action.\n\nCurrent time: {0}\nRequested action time: {1}.", currentTimeString, actionTimeString));
                 }
                 else
                 {
                     this.actionTime = actionTime;
-                    startTime = now;
-                    EnableInterface(false);
-                    View.LabelActionTime = this.actionTime.ToLongDateString() + "  :  " + actionTime.ToLongTimeString();
+                    this.startTime = now;
+                    this.EnableInterface(false);
+                    this.view.LabelActionTime = this.actionTime.ToLongDateString() + "  :  " + this.actionTime.ToLongTimeString();
 
-                    if (View.DisplayActionWarning && actionTime - now > warningMessageTime)
-                        displayWarningMessage = true;
+                    if (this.view.DisplayActionWarning && actionTime - now > this.warningMessageTime)
+                        this.displayWarningMessage = true;
 
-                    actionIsSet = true;
+                    this.actionIsSet = true;
                 }
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
+
+        #endregion
+
+        #region internal void OnStopTimerClicked()
 
         /// <summary>
         /// Method called when the "Stop timer" button is clicked.
         /// </summary>
-        internal void StopTimerClicked()
+        internal void OnStopTimerClicked()
         {
             try
             {
-                actionIsSet = false;
-                EnableInterface(true);
-                View.LabelActionTime = string.Empty;
-                View.LabelTimer = TIME_TEMPLATE_EMPTY;
+                this.actionIsSet = false;
+                this.EnableInterface(true);
+                this.view.LabelActionTime = string.Empty;
+                this.view.LabelTimer = TIME_TEMPLATE_EMPTY;
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
+
+        #endregion
 
         #endregion
 
 
         #region Load/Close Form events
 
+        #region internal void OnFormLoad()
+
         /// <summary>
         /// Method called when the form is loaded.
         /// </summary>
-        internal void ViewLoaded()
+        internal void OnFormLoad()
         {
             try
             {
                 string title = Application.ProductName + " " + VersionUtil.GetVersionToString();
-                View.Title = title;
-                View.NotifyIconText = title;
+                this.view.Title = title;
+                this.view.NotifyIconText = title;
 
                 Array values = Enum.GetValues(typeof(ActionType));
 
@@ -325,39 +327,43 @@ namespace DustInTheWind.WindowsReboot
                     items[i] = new ActionTypeItem((ActionType)values.GetValue(i));
                 }
 
-                View.ActionTypes = items;
+                this.view.ActionTypes = items;
 
                 this.LoadInitialConfiguration();
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
 
             if (this.startAtStartUp)
-                this.StartTimerClicked();
+                this.OnStartTimerClicked();
         }
+
+        #endregion
+
+        #region internal bool OnFormClosing()
 
         /// <summary>
         /// Method called before the form is closed. It has to decide if the form is allowed to be closed or not.
         /// </summary>
         /// <returns>true if the form is allowed to be closed; false otherwise.</returns>
-        internal bool ViewClosing()
+        internal bool OnFormClosing()
         {
             bool allowClosing = false;
 
-            if (!exitRequested && Task.Settings.CloseToTray)
+            if (!this.exitRequested && this.configSection.CloseToTray.Value)
             {
                 // Minimize to tray
-                View.Hide();
-                View.NotifyIconVisible = true;
+                this.view.Hide();
+                this.view.NotifyIconVisible = true;
             }
             else
             {
                 if (this.actionIsSet)
                 {
                     // If timer is started ask if realy want to close.
-                    allowClosing = View.AskToClose("The timer is started. Are you sure you want to close the application?");
+                    allowClosing = this.view.AskToClose("The timer is started. Are you sure you want to close the application?");
                 }
                 else
                 {
@@ -368,7 +374,7 @@ namespace DustInTheWind.WindowsReboot
 
 
             if (allowClosing)
-                View.NotifyIconVisible = false;
+                this.view.NotifyIconVisible = false;
 
 
             this.exitRequested = false;
@@ -376,28 +382,37 @@ namespace DustInTheWind.WindowsReboot
             return allowClosing;
         }
 
+        #endregion
+
+
+        #region internal void OnFormMinimized()
+
         /// <summary>
         /// Method called when the form is minimized.
         /// </summary>
-        internal void ViewMinimized()
+        internal void OnFormMinimized()
         {
             try
             {
-                if (Task.Settings.MinimizeToTray)
+                if (this.configSection.MinimizeToTray.Value)
                 {
-                    View.Hide();
-                    View.NotifyIconVisible = true;
+                    this.view.Hide();
+                    this.view.NotifyIconVisible = true;
                 }
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
 
         #endregion
 
+        #endregion
+
         #region Notify icon events
+
+        #region internal void OnNotifyIconMouseMove()
 
         /// <summary>
         /// Method called when the mouse is moved over the notify icon.
@@ -406,20 +421,24 @@ namespace DustInTheWind.WindowsReboot
         {
             try
             {
-                if (actionIsSet)
+                if (this.actionIsSet)
                 {
-                    View.NotifyIconText = View.LabelTimer;
+                    this.view.NotifyIconText = this.view.LabelTimer;
                 }
                 else
                 {
-                    View.NotifyIconText = View.Title;
+                    this.view.NotifyIconText = this.view.Title;
                 }
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
+
+        #endregion
+
+        #region internal void OnNotifyIconMouseClicked()
 
         /// <summary>
         /// Method called when the notify icon is clicked with the left mouse button.
@@ -428,15 +447,19 @@ namespace DustInTheWind.WindowsReboot
         {
             try
             {
-                View.Show();
-                View.WindowState = FormWindowState.Normal;
-                View.NotifyIconVisible = false;
+                this.view.Show();
+                this.view.WindowState = FormWindowState.Normal;
+                this.view.NotifyIconVisible = false;
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
+
+        #endregion
+
+        #region internal void OnNotifyIconShowClicked()
 
         /// <summary>
         /// Method called when the "Show" item of the notify icon menu was clicked.
@@ -445,15 +468,19 @@ namespace DustInTheWind.WindowsReboot
         {
             try
             {
-                View.Show();
-                View.WindowState = FormWindowState.Normal;
-                View.NotifyIconVisible = false;
+                this.view.Show();
+                this.view.WindowState = FormWindowState.Normal;
+                this.view.NotifyIconVisible = false;
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
+
+        #endregion
+
+        #region internal void OnNotifyIconLockComputerClicked()
 
         /// <summary>
         /// Method called when the tray icon is clicked by the user.
@@ -462,17 +489,21 @@ namespace DustInTheWind.WindowsReboot
         {
             try
             {
-                if (View.Confirm("Do you want to lock the workstation?"))
+                if (this.view.Confirm("Do you want to lock the workstation?"))
                 {
                     RebootUtil.Lock();
                 }
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
 
+        #endregion
+
+
+        #region internal void OnNotifyIconLogOffClicked()
 
         /// <summary>
         /// Method clicked when the user choose "Log Off" from the tray icon menu.
@@ -481,16 +512,20 @@ namespace DustInTheWind.WindowsReboot
         {
             try
             {
-                if (View.Confirm("Do you want to log off the current user?\nThe current logged in user is '" + Environment.UserDomainName + "'"))
+                if (this.view.Confirm("Do you want to log off the current user?\nThe current logged in user is '" + Environment.UserDomainName + "'"))
                 {
                     RebootUtil.LogOff(false);
                 }
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
+
+        #endregion
+
+        #region internal void OnNotifyIconSleepClicked()
 
         /// <summary>
         /// Method clicked when the user choose "Sleep" from the tray icon menu.
@@ -499,16 +534,20 @@ namespace DustInTheWind.WindowsReboot
         {
             try
             {
-                if (View.Confirm("Do you want to put the system in 'Stand By' state?"))
+                if (this.view.Confirm("Do you want to put the system in 'Stand By' state?"))
                 {
                     RebootUtil.Sleep(false);
                 }
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
+
+        #endregion
+
+        #region internal void OnNotifyIconHibernateClicked()
 
         /// <summary>
         /// Method clicked when the user choose "Hibernate" from the tray icon menu.
@@ -517,16 +556,20 @@ namespace DustInTheWind.WindowsReboot
         {
             try
             {
-                if (View.Confirm("Do you want to put the system in 'Hibernate' state?"))
+                if (this.view.Confirm("Do you want to put the system in 'Hibernate' state?"))
                 {
                     RebootUtil.Hibernate(false);
                 }
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
+
+        #endregion
+
+        #region internal void OnNotifyIconRebootClicked()
 
         /// <summary>
         /// Method clicked when the user choose "Reboot" from the tray icon menu.
@@ -535,16 +578,20 @@ namespace DustInTheWind.WindowsReboot
         {
             try
             {
-                if (View.Confirm("Do you want to reboot the system?"))
+                if (this.view.Confirm("Do you want to reboot the system?"))
                 {
                     RebootUtil.Reboot(false);
                 }
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
+
+        #endregion
+
+        #region internal void OnNotifyIconShutDownClicked()
 
         /// <summary>
         /// Method clicked when the user choose "Shut Down" from the tray icon menu.
@@ -553,16 +600,20 @@ namespace DustInTheWind.WindowsReboot
         {
             try
             {
-                if (View.Confirm("Do you want to shut down the sysyem?\n\nObs! From WinXP SP1 this command will also power off the system."))
+                if (this.view.Confirm("Do you want to shut down the sysyem?\n\nObs! From WinXP SP1 this command will also power off the system."))
                 {
                     RebootUtil.ShutDown(false);
                 }
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
+
+        #endregion
+
+        #region internal void OnNotifyIconPowerOffClicked()
 
         /// <summary>
         /// Method clicked when the user choose "Power Off" from the tray icon menu.
@@ -571,17 +622,21 @@ namespace DustInTheWind.WindowsReboot
         {
             try
             {
-                if (View.Confirm("Do you want to power off the system?\n\nObs! Only if the hardware supports 'Power Off'. Otherwise just a 'Shut Down' will be performed."))
+                if (this.view.Confirm("Do you want to power off the system?\n\nObs! Only if the hardware supports 'Power Off'. Otherwise just a 'Shut Down' will be performed."))
                 {
                     RebootUtil.PowerOff(false);
                 }
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
 
+        #endregion
+
+
+        #region internal void OnNotifyIconExitClicked()
 
         /// <summary>
         /// Method called when the "Exit" item of the notify icon menu was clicked.
@@ -591,13 +646,15 @@ namespace DustInTheWind.WindowsReboot
             try
             {
                 this.exitRequested = true;
-                View.Close();
+                this.view.Close();
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
+
+        #endregion
 
         #endregion
 
@@ -612,48 +669,52 @@ namespace DustInTheWind.WindowsReboot
         {
             try
             {
-                View.Hide();
-                View.NotifyIconVisible = true;
+                this.view.Hide();
+                this.view.NotifyIconVisible = true;
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
 
         #endregion
 
+        #region internal void OnMenuItemExitClicked()
+
         /// <summary>
         /// Method called when the "Exit" item from the "File" menu is clicked.
         /// </summary>
-        internal void MenuItemExitClicked()
+        internal void OnMenuItemExitClicked()
         {
             try
             {
                 this.exitRequested = true;
-                View.Close();
+                this.view.Close();
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
+
+        #endregion
+
+        #region internal void OnMenuItemOptionsClicked()
 
         /// <summary>
         /// Method called when the "Options" item from the "Configuration" menu is clicked.
         /// </summary>
-        internal void MenuItemOptionsClicked()
+        internal void OnMenuItemOptionsClicked()
         {
-            Task.TasksManager.StartTask(typeof(OptionsTask), new object[] { Task.Settings });
-
-            //Task.Navigator.Navigate(MainTask.Options);
-
-            //if (View.DisplayOptions(this.configSection))
-            //{
-            //    // Save the option to the file.
-            //    this.config.Save(ConfigurationSaveMode.Modified);
-            //}
+            if (this.view.DisplayOptions(this.configSection))
+            {
+                // Save the option to the file.
+                this.config.Save(ConfigurationSaveMode.Modified);
+            }
         }
+
+        #endregion
 
         #region internal void OnMenuItemSaveCurrentSettingsClicked()
 
@@ -665,11 +726,11 @@ namespace DustInTheWind.WindowsReboot
             try
             {
                 this.SaveConfiguration();
-                View.DisplayMessage("The configuration was saved.");
+                this.view.DisplayMessage("The configuration was saved.");
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
 
@@ -686,7 +747,7 @@ namespace DustInTheWind.WindowsReboot
             {
                 if (this.actionIsSet)
                 {
-                    View.DisplayErrorMessage("Cannot complete the task while the timer is started.");
+                    this.view.DisplayErrorMessage("Cannot complete the task while the timer is started.");
                 }
                 else
                 {
@@ -695,7 +756,7 @@ namespace DustInTheWind.WindowsReboot
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
 
@@ -712,7 +773,7 @@ namespace DustInTheWind.WindowsReboot
             {
                 if (this.actionIsSet)
                 {
-                    View.DisplayErrorMessage("Cannot complete the task while the timer is started.");
+                    this.view.DisplayErrorMessage("Cannot complete the task while the timer is started.");
                 }
                 else
                 {
@@ -721,7 +782,7 @@ namespace DustInTheWind.WindowsReboot
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
 
@@ -736,11 +797,11 @@ namespace DustInTheWind.WindowsReboot
         {
             try
             {
-                View.DisplayLicense();
+                this.view.DisplayLicense();
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
 
@@ -755,11 +816,11 @@ namespace DustInTheWind.WindowsReboot
         {
             try
             {
-                View.DisplayAbout();
+                this.view.DisplayAbout();
             }
             catch (Exception ex)
             {
-                View.DisplayError(ex);
+                this.view.DisplayError(ex);
             }
         }
 
@@ -776,10 +837,10 @@ namespace DustInTheWind.WindowsReboot
         /// <param name="value">A value that specifies if the interface should be enabled or disabled.</param>
         private void EnableInterface(bool value)
         {
-            View.ActionTimeGroupEnabled = value;
-            View.ActionTypeGroupEnabled = value;
-            View.MenuItem_LoadInitialSettingsEnabled = value;
-            View.MenuItem_LoadDefaultSettingsEnabled = value;
+            this.view.ActionTimeGroupEnabled = value;
+            this.view.ActionTypeGroupEnabled = value;
+            this.view.MenuItem_LoadInitialSettingsEnabled = value;
+            this.view.MenuItem_LoadDefaultSettingsEnabled = value;
         }
 
         #endregion
@@ -793,18 +854,18 @@ namespace DustInTheWind.WindowsReboot
         {
             DateTime now = DateTime.Now;
 
-            View.FixedDate = now.Date;
-            View.FixedTime = now.TimeOfDay;
+            this.view.FixedDate = now.Date;
+            this.view.FixedTime = now.TimeOfDay;
 
-            View.Hours = 0;
-            View.Minutes = 0;
-            View.Seconds = 0;
+            this.view.Hours = 0;
+            this.view.Minutes = 0;
+            this.view.Seconds = 0;
 
-            View.DelayGroupSelected = true;
+            this.view.DelayGroupSelected = true;
 
-            View.ActionType = new ActionTypeItem(ActionType.PowerOff);
+            this.view.ActionType = new ActionTypeItem(ActionType.PowerOff);
 
-            View.ForceAction = true;
+            this.view.ForceAction = true;
         }
 
         #endregion
@@ -823,31 +884,31 @@ namespace DustInTheWind.WindowsReboot
             switch (configSection.ActionTime.Type)
             {
                 case ActionTimeType.FixedDate:
-                    View.FixedDate = Task.DuckSettings.ActionTime_DateTime.Date;
-                    View.FixedTime = Task.DuckSettings.ActionTime_DateTime.TimeOfDay;
-                    View.FixedTimeGroupSelected = true;
+                    this.view.FixedDate = this.configSection.ActionTime.DateTime.Date;
+                    this.view.FixedTime = this.configSection.ActionTime.DateTime.TimeOfDay;
+                    this.view.FixedTimeGroupSelected = true;
                     break;
 
                 case ActionTimeType.Delay:
-                    View.Hours = Task.DuckSettings.ActionTime_Hours;
-                    View.Minutes = Task.DuckSettings.ActionTime_Minutes;
-                    View.Seconds = Task.DuckSettings.ActionTime_Seconds;
-                    View.DelayGroupSelected = true;
+                    this.view.Hours = this.configSection.ActionTime.Hours;
+                    this.view.Minutes = this.configSection.ActionTime.Minutes;
+                    this.view.Seconds = this.configSection.ActionTime.Seconds;
+                    this.view.DelayGroupSelected = true;
                     break;
 
                 case ActionTimeType.Immediate:
-                    View.ImmediateGroupSelected = true;
+                    this.view.ImmediateGroupSelected = true;
                     break;
 
                 default:
                     break;
             }
 
-            View.ActionType = new ActionTypeItem(Task.DuckSettings.ActionType);
+            this.view.ActionType = new ActionTypeItem(this.configSection.ActionType.Value);
 
-            View.ForceAction = Task.DuckSettings.ForceClosingPrograms;
+            this.view.ForceAction = this.configSection.ForceClosingPrograms.Value;
 
-            this.startAtStartUp = Task.Settings.TimerInitiallyStarted;
+            this.startAtStartUp = this.configSection.StartTimerAtApplicationStart.Value;
         }
 
         #endregion
@@ -862,37 +923,37 @@ namespace DustInTheWind.WindowsReboot
             //Configuration config = this.GetConfiguration();
             //WindowsRebootConfigSection configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
 
-            if (View.FixedTimeGroupSelected)
+            if (this.view.FixedTimeGroupSelected)
             {
-                Task.DuckSettings.ActionTime_Type = ActionTimeType.FixedDate;
-                Task.DuckSettings.ActionTime_DateTime = View.FixedDate.Date.Add(View.FixedTime);
-                Task.DuckSettings.ActionTime_Hours = 0;
-                Task.DuckSettings.ActionTime_Minutes = 0;
-                Task.DuckSettings.ActionTime_Seconds = 0;
+                this.configSection.ActionTime.Type = ActionTimeType.FixedDate;
+                this.configSection.ActionTime.DateTime = this.view.FixedDate.Date.Add(this.view.FixedTime);
+                this.configSection.ActionTime.Hours = 0;
+                this.configSection.ActionTime.Minutes = 0;
+                this.configSection.ActionTime.Seconds = 0;
             }
-            else if (View.DelayGroupSelected)
+            else if (this.view.DelayGroupSelected)
             {
-                Task.DuckSettings.ActionTime_Type = ActionTimeType.Delay;
-                Task.DuckSettings.ActionTime_Hours = View.Hours;
-                Task.DuckSettings.ActionTime_Minutes = View.Minutes;
-                Task.DuckSettings.ActionTime_Seconds = View.Seconds;
-                Task.DuckSettings.ActionTime_DateTime = DateTime.Now;
+                this.configSection.ActionTime.Type = ActionTimeType.Delay;
+                this.configSection.ActionTime.Hours = this.view.Hours;
+                this.configSection.ActionTime.Minutes = this.view.Minutes;
+                this.configSection.ActionTime.Seconds = this.view.Seconds;
+                this.configSection.ActionTime.DateTime = DateTime.Now;
             }
-            else if (View.ImmediateGroupSelected)
+            else if (this.view.ImmediateGroupSelected)
             {
-                Task.DuckSettings.ActionTime_Type = ActionTimeType.Immediate;
-                Task.DuckSettings.ActionTime_DateTime = DateTime.Now;
-                Task.DuckSettings.ActionTime_Hours = 0;
-                Task.DuckSettings.ActionTime_Minutes = 0;
-                Task.DuckSettings.ActionTime_Seconds = 0;
+                this.configSection.ActionTime.Type = ActionTimeType.Immediate;
+                this.configSection.ActionTime.DateTime = DateTime.Now;
+                this.configSection.ActionTime.Hours = 0;
+                this.configSection.ActionTime.Minutes = 0;
+                this.configSection.ActionTime.Seconds = 0;
             }
 
-            Task.DuckSettings.ActionType = View.ActionType.Value;
+            this.configSection.ActionType.Value = this.view.ActionType.Value;
 
-            Task.DuckSettings.ForceClosingPrograms = View.ForceAction;
+            this.configSection.ForceClosingPrograms.Value = this.view.ForceAction;
 
             //config.Save();
-            Task.DuckSettings.Save();
+            this.config.Save(ConfigurationSaveMode.Modified);
         }
 
         #endregion
@@ -914,42 +975,42 @@ namespace DustInTheWind.WindowsReboot
 
         internal void OnActionTypeChanged()
         {
-            switch (View.ActionType.Value)
+            switch (this.view.ActionType.Value)
             {
                 case ActionType.Ring:
-                    View.ForceActionVisible = false;
+                    this.view.ForceActionVisible = false;
                     break;
 
                 case ActionType.LockWorkstation:
-                    View.ForceActionVisible = false;
+                    this.view.ForceActionVisible = false;
                     break;
 
                 case ActionType.LogOff:
-                    View.ForceActionVisible = true;
+                    this.view.ForceActionVisible = true;
                     break;
 
                 case ActionType.Sleep:
-                    View.ForceActionVisible = true;
+                    this.view.ForceActionVisible = true;
                     break;
 
                 case ActionType.Hibernate:
-                    View.ForceActionVisible = true;
+                    this.view.ForceActionVisible = true;
                     break;
 
                 case ActionType.Reboot:
-                    View.ForceActionVisible = true;
+                    this.view.ForceActionVisible = true;
                     break;
 
                 case ActionType.ShutDown:
-                    View.ForceActionVisible = true;
+                    this.view.ForceActionVisible = true;
                     break;
 
                 case ActionType.PowerOff:
-                    View.ForceActionVisible = true;
+                    this.view.ForceActionVisible = true;
                     break;
 
                 default:
-                    View.ForceActionVisible = false;
+                    this.view.ForceActionVisible = false;
                     break;
             }
         }

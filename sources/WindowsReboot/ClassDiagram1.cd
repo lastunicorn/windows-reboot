@@ -9,18 +9,6 @@
   </Class>
   <Class Name="DustInTheWind.WindowsReboot.RebootUtil" Collapsed="true">
     <Position X="0.5" Y="3.25" Width="1.5" />
-    <NestedTypes>
-      <Struct Name="DustInTheWind.WindowsReboot.RebootUtil.LUID" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>RebootUtil.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Struct>
-      <Struct Name="DustInTheWind.WindowsReboot.RebootUtil.TOKEN_PRIVILEGES" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>RebootUtil.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Struct>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>IQAQAAAIiSJABAAIABgAAAAAEABogJAAAAACAQQIAAA=</HashCode>
       <FileName>RebootUtil.cs</FileName>
@@ -63,23 +51,6 @@
   </Class>
   <Class Name="DustInTheWind.WindowsReboot.WindowsRebootForm" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="4.75" Y="0.5" Width="1.75" />
-    <NestedTypes>
-      <Delegate Name="DustInTheWind.WindowsReboot.WindowsRebootForm.DisplayErrorDelegate" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>UI\WindowsRebootForm.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-      <Delegate Name="DustInTheWind.WindowsReboot.WindowsRebootForm.DisplayErrorMessageDelegate" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>UI\WindowsRebootForm.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-      <Delegate Name="DustInTheWind.WindowsReboot.WindowsRebootForm.DisplayMessageDelegate" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>UI\WindowsRebootForm.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>UxbIXT2aqDCSZXwPTwWKKEDPESkieIFAIjcLQ2kwCGE=</HashCode>
       <FileName>UI\WindowsRebootForm.cs</FileName>
@@ -181,12 +152,12 @@
       <FileName>Config\WindowsRebootConfigSection.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="ActionTime" />
+      <Property Name="ActionType" />
       <Property Name="ForceClosingPrograms" />
       <Property Name="StartTimerAtApplicationStart" />
-      <Property Name="CloseToTray" />
-      <Property Name="ActionType" />
-      <Property Name="ActionTime" />
       <Property Name="MinimizeToTray" />
+      <Property Name="CloseToTray" />
     </ShowAsAssociation>
   </Class>
   <Class Name="DustInTheWind.WindowsReboot.Properties.Resources" Collapsed="true">
@@ -199,6 +170,13 @@
     <Position X="13.75" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DustInTheWind.WindowsReboot.Class1">
+    <Position X="2.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Class1.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="DustInTheWind.WindowsReboot.IWindowsRebootView" Collapsed="true">

@@ -1,5 +1,5 @@
 ﻿// Windows Reboot
-// Copyright (C) 2009 Dust in the Wind
+// Copyright (C) 2009 Iuga Alexandru
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -241,7 +241,7 @@ namespace DustInTheWind.WindowsReboot
             // licenseToolStripMenuItem
             // 
             this.licenseToolStripMenuItem.Name = "licenseToolStripMenuItem";
-            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.licenseToolStripMenuItem.Text = "&License";
             this.licenseToolStripMenuItem.Click += new System.EventHandler(this.licenseToolStripMenuItem_Click);
             // 
@@ -249,7 +249,7 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.aboutToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.help_about16;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -442,6 +442,7 @@ namespace DustInTheWind.WindowsReboot
             this.groupBoxActionTime.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.tableLayoutPanel6.SetColumnSpan(this.groupBoxActionTime, 2);
             this.groupBoxActionTime.Controls.Add(this.tabControlActionTime);
+            this.groupBoxActionTime.CornerRadius = 5;
             this.groupBoxActionTime.Location = new System.Drawing.Point(0, 0);
             this.groupBoxActionTime.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
             this.groupBoxActionTime.Name = "groupBoxActionTime";
@@ -450,8 +451,10 @@ namespace DustInTheWind.WindowsReboot
             this.groupBoxActionTime.TabIndex = 18;
             this.groupBoxActionTime.TabStop = false;
             this.groupBoxActionTime.Text = "1) Choose when";
+            this.groupBoxActionTime.TitleAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.groupBoxActionTime.TitleColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxActionTime.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.groupBoxActionTime.TitleMargin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.groupBoxActionTime.TitlePadding = new System.Windows.Forms.Padding(3, 0, 5, 0);
             // 
             // tabControlActionTime
@@ -472,7 +475,7 @@ namespace DustInTheWind.WindowsReboot
             this.tabPageFixedDate.Controls.Add(this.tableLayoutPanel2);
             this.tabPageFixedDate.Location = new System.Drawing.Point(4, 22);
             this.tabPageFixedDate.Name = "tabPageFixedDate";
-            this.tabPageFixedDate.Padding = new System.Windows.Forms.Padding(12, 8, 12, 8);
+            this.tabPageFixedDate.Padding = new System.Windows.Forms.Padding(8);
             this.tabPageFixedDate.Size = new System.Drawing.Size(365, 76);
             this.tabPageFixedDate.TabIndex = 0;
             this.tabPageFixedDate.Text = "Fixed Date";
@@ -488,19 +491,20 @@ namespace DustInTheWind.WindowsReboot
             this.tableLayoutPanel2.Controls.Add(this.dateTimePickerFixedDate, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.label9, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(12, 8);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(8, 8);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(341, 60);
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 0F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(349, 60);
             this.tableLayoutPanel2.TabIndex = 4;
             // 
             // dateTimePickerFixedTime
             // 
             this.dateTimePickerFixedTime.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.dateTimePickerFixedTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePickerFixedTime.Location = new System.Drawing.Point(42, 35);
+            this.dateTimePickerFixedTime.Location = new System.Drawing.Point(42, 29);
             this.dateTimePickerFixedTime.Name = "dateTimePickerFixedTime";
             this.dateTimePickerFixedTime.ShowUpDown = true;
             this.dateTimePickerFixedTime.Size = new System.Drawing.Size(144, 20);
@@ -510,7 +514,7 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 8);
+            this.label8.Location = new System.Drawing.Point(3, 6);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(33, 13);
             this.label8.TabIndex = 3;
@@ -521,16 +525,16 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.dateTimePickerFixedDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.dateTimePickerFixedDate.CustomFormat = "dd MMMM yyyy - HH:mm:ss";
-            this.dateTimePickerFixedDate.Location = new System.Drawing.Point(42, 5);
+            this.dateTimePickerFixedDate.Location = new System.Drawing.Point(42, 3);
             this.dateTimePickerFixedDate.Name = "dateTimePickerFixedDate";
-            this.dateTimePickerFixedDate.Size = new System.Drawing.Size(296, 20);
+            this.dateTimePickerFixedDate.Size = new System.Drawing.Size(304, 20);
             this.dateTimePickerFixedDate.TabIndex = 2;
             // 
             // label9
             // 
             this.label9.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 38);
+            this.label9.Location = new System.Drawing.Point(3, 32);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(33, 13);
             this.label9.TabIndex = 3;
@@ -550,6 +554,8 @@ namespace DustInTheWind.WindowsReboot
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
@@ -563,58 +569,52 @@ namespace DustInTheWind.WindowsReboot
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 0F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(341, 52);
             this.tableLayoutPanel1.TabIndex = 15;
             // 
             // numericUpDownSeconds
             // 
-            this.numericUpDownSeconds.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownSeconds.Location = new System.Drawing.Point(231, 16);
-            this.numericUpDownSeconds.Margin = new System.Windows.Forms.Padding(5, 3, 3, 3);
+            this.numericUpDownSeconds.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDownSeconds.Location = new System.Drawing.Point(229, 16);
             this.numericUpDownSeconds.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.numericUpDownSeconds.Name = "numericUpDownSeconds";
-            this.numericUpDownSeconds.Size = new System.Drawing.Size(107, 20);
+            this.numericUpDownSeconds.Size = new System.Drawing.Size(109, 20);
             this.numericUpDownSeconds.TabIndex = 2;
             this.numericUpDownSeconds.ThousandsSeparator = true;
             // 
             // numericUpDownMinutes
             // 
-            this.numericUpDownMinutes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownMinutes.Location = new System.Drawing.Point(117, 16);
-            this.numericUpDownMinutes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.numericUpDownMinutes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDownMinutes.Location = new System.Drawing.Point(116, 16);
             this.numericUpDownMinutes.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.numericUpDownMinutes.Name = "numericUpDownMinutes";
-            this.numericUpDownMinutes.Size = new System.Drawing.Size(105, 20);
+            this.numericUpDownMinutes.Size = new System.Drawing.Size(107, 20);
             this.numericUpDownMinutes.TabIndex = 2;
             this.numericUpDownMinutes.ThousandsSeparator = true;
             // 
             // numericUpDownHours
             // 
-            this.numericUpDownHours.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDownHours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.numericUpDownHours.Location = new System.Drawing.Point(3, 16);
-            this.numericUpDownHours.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
             this.numericUpDownHours.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.numericUpDownHours.Name = "numericUpDownHours";
-            this.numericUpDownHours.Size = new System.Drawing.Size(105, 20);
+            this.numericUpDownHours.Size = new System.Drawing.Size(107, 20);
             this.numericUpDownHours.TabIndex = 2;
             this.numericUpDownHours.ThousandsSeparator = true;
             // 
@@ -622,8 +622,8 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(228, 0);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 3, 0);
+            this.label3.Location = new System.Drawing.Point(226, 0);
+            this.label3.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 3;
@@ -646,8 +646,8 @@ namespace DustInTheWind.WindowsReboot
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(114, 0);
-            this.label2.Margin = new System.Windows.Forms.Padding(1, 0, 3, 0);
+            this.label2.Location = new System.Drawing.Point(113, 0);
+            this.label2.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(47, 13);
             this.label2.TabIndex = 3;
@@ -683,6 +683,7 @@ namespace DustInTheWind.WindowsReboot
             this.customGroupBoxStatusInfo.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.tableLayoutPanel6.SetColumnSpan(this.customGroupBoxStatusInfo, 2);
             this.customGroupBoxStatusInfo.Controls.Add(this.tableLayoutPanelStatusInfo);
+            this.customGroupBoxStatusInfo.CornerRadius = 5;
             this.customGroupBoxStatusInfo.Location = new System.Drawing.Point(0, 251);
             this.customGroupBoxStatusInfo.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.customGroupBoxStatusInfo.Name = "customGroupBoxStatusInfo";
@@ -690,8 +691,11 @@ namespace DustInTheWind.WindowsReboot
             this.customGroupBoxStatusInfo.Size = new System.Drawing.Size(389, 56);
             this.customGroupBoxStatusInfo.TabIndex = 23;
             this.customGroupBoxStatusInfo.TabStop = false;
+            this.customGroupBoxStatusInfo.TitleAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.customGroupBoxStatusInfo.TitleColor = System.Drawing.SystemColors.ControlText;
             this.customGroupBoxStatusInfo.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customGroupBoxStatusInfo.TitleMargin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.customGroupBoxStatusInfo.TitlePadding = new System.Windows.Forms.Padding(3, 0, 3, 0);
             // 
             // tableLayoutPanelStatusInfo
             // 
@@ -762,6 +766,7 @@ namespace DustInTheWind.WindowsReboot
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxActionType.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.groupBoxActionType.Controls.Add(this.tableLayoutPanelActionType);
+            this.groupBoxActionType.CornerRadius = 5;
             this.groupBoxActionType.Location = new System.Drawing.Point(0, 141);
             this.groupBoxActionType.Margin = new System.Windows.Forms.Padding(0, 4, 4, 4);
             this.groupBoxActionType.Name = "groupBoxActionType";
@@ -770,8 +775,10 @@ namespace DustInTheWind.WindowsReboot
             this.groupBoxActionType.TabIndex = 19;
             this.groupBoxActionType.TabStop = false;
             this.groupBoxActionType.Text = "2) Choose what";
+            this.groupBoxActionType.TitleAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.groupBoxActionType.TitleColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxActionType.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.groupBoxActionType.TitleMargin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.groupBoxActionType.TitlePadding = new System.Windows.Forms.Padding(3, 0, 5, 0);
             // 
             // tableLayoutPanelActionType
@@ -848,6 +855,7 @@ namespace DustInTheWind.WindowsReboot
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxActionStart.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.groupBoxActionStart.Controls.Add(this.tableLayoutPanelActionStart);
+            this.groupBoxActionStart.CornerRadius = 5;
             this.groupBoxActionStart.Location = new System.Drawing.Point(227, 141);
             this.groupBoxActionStart.Margin = new System.Windows.Forms.Padding(4, 4, 0, 4);
             this.groupBoxActionStart.Name = "groupBoxActionStart";
@@ -856,8 +864,10 @@ namespace DustInTheWind.WindowsReboot
             this.groupBoxActionStart.TabIndex = 20;
             this.groupBoxActionStart.TabStop = false;
             this.groupBoxActionStart.Text = "3) Do it";
+            this.groupBoxActionStart.TitleAlignment = System.Windows.Forms.HorizontalAlignment.Left;
             this.groupBoxActionStart.TitleColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxActionStart.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.groupBoxActionStart.TitleMargin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.groupBoxActionStart.TitlePadding = new System.Windows.Forms.Padding(3, 0, 5, 0);
             // 
             // tableLayoutPanelActionStart
@@ -882,9 +892,9 @@ namespace DustInTheWind.WindowsReboot
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonStopTimer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonStopTimer.Location = new System.Drawing.Point(4, 43);
-            this.buttonStopTimer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 12);
+            this.buttonStopTimer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 4);
             this.buttonStopTimer.Name = "buttonStopTimer";
-            this.buttonStopTimer.Size = new System.Drawing.Size(148, 25);
+            this.buttonStopTimer.Size = new System.Drawing.Size(148, 33);
             this.buttonStopTimer.TabIndex = 4;
             this.buttonStopTimer.Text = "Stop timer";
             this.buttonStopTimer.UseVisualStyleBackColor = true;
@@ -896,10 +906,10 @@ namespace DustInTheWind.WindowsReboot
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonStartTimer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonStartTimer.Location = new System.Drawing.Point(4, 12);
-            this.buttonStartTimer.Margin = new System.Windows.Forms.Padding(4, 12, 4, 3);
+            this.buttonStartTimer.Location = new System.Drawing.Point(4, 4);
+            this.buttonStartTimer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 3);
             this.buttonStartTimer.Name = "buttonStartTimer";
-            this.buttonStartTimer.Size = new System.Drawing.Size(148, 25);
+            this.buttonStartTimer.Size = new System.Drawing.Size(148, 33);
             this.buttonStartTimer.TabIndex = 0;
             this.buttonStartTimer.Text = "Start timer";
             this.buttonStartTimer.UseVisualStyleBackColor = true;
@@ -947,6 +957,7 @@ namespace DustInTheWind.WindowsReboot
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.tabPageDelay.ResumeLayout(false);
+            this.tabPageDelay.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSeconds)).EndInit();

@@ -1,5 +1,5 @@
 ﻿// Windows Reboot
-// Copyright (C) 2009 Dust in the Wind
+// Copyright (C) 2009 Iuga Alexandru
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,48 +17,38 @@
 using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Config;
-using MVCSharp.Winforms;
-using MVCSharp.Core.Configuration.Views;
-using DustInTheWind.WindowsReboot.UI;
-using MVCSharp.Winforms.Configuration;
 
 namespace DustInTheWind.WindowsReboot
 {
-    //[ViewAttribute(typeof(MainTask), MainTask.MainView)]
-    [WinformsView(typeof(MainTask), MainTask.MainView)]
-    internal partial class WindowsRebootForm : WinFormView, IWindowsRebootView
+    internal partial class WindowsRebootForm : Form, IWindowsRebootView
     {
-        private WindowsRebootPresenter Presenter
-        {
-            get { return Controller as WindowsRebootPresenter; }
-        }
+        private readonly WindowsRebootPresenter presenter;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WindowsRebootForm"/> class.
-        /// </summary>
         public WindowsRebootForm()
         {
             InitializeComponent();
+
+            this.presenter = new WindowsRebootPresenter(this);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            Presenter.OnTimerElapsed();
+            this.presenter.OnTimerElapsed();
         }
 
         private void buttonStartTimer_Click(object sender, EventArgs e)
         {
-            Presenter.StartTimerClicked();
+            this.presenter.OnStartTimerClicked();
         }
 
         private void buttonStopTimer_Click(object sender, EventArgs e)
         {
-            Presenter.StopTimerClicked();
+            this.presenter.OnStopTimerClicked();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Presenter.ViewLoaded();
+            this.presenter.OnFormLoad();
         }
 
 
@@ -66,82 +56,82 @@ namespace DustInTheWind.WindowsReboot
 
         private void goToTrayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.OnMenuItemGoToTrayClicked();
+            this.presenter.OnMenuItemGoToTrayClicked();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.MenuItemExitClicked();
+            this.presenter.OnMenuItemExitClicked();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.OnMenuItemAboutClicked();
+            this.presenter.OnMenuItemAboutClicked();
         }
 
         private void loadInitialSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.OnMenuItemLoadInitialSettingsClicked();
+            this.presenter.OnMenuItemLoadInitialSettingsClicked();
         }
 
         private void saveCurrentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.OnMenuItemSaveCurrentSettingsClicked();
+            this.presenter.OnMenuItemSaveCurrentSettingsClicked();
         }
 
         private void loadDefaultSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.OnMenuItemLoadDefaultSettingsClicked();
+            this.presenter.OnMenuItemLoadDefaultSettingsClicked();
         }
 
         private void licenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.OnMenuItemLicenseClicked();
+            this.presenter.OnMenuItemLicenseClicked();
         }
 
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.OnNotifyIconShowClicked();
+            this.presenter.OnNotifyIconShowClicked();
         }
 
         private void lockComputerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.OnNotifyIconLockComputerClicked();
+            this.presenter.OnNotifyIconLockComputerClicked();
         }
 
         private void logOffToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.OnNotifyIconLogOffClicked();
+            this.presenter.OnNotifyIconLogOffClicked();
         }
 
         private void sleepToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.OnNotifyIconSleepClicked();
+            this.presenter.OnNotifyIconSleepClicked();
         }
 
         private void hibernateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.OnNotifyIconHibernateClicked();
+            this.presenter.OnNotifyIconHibernateClicked();
         }
 
         private void rebootToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.OnNotifyIconRebootClicked();
+            this.presenter.OnNotifyIconRebootClicked();
         }
 
         private void shutDownToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.OnNotifyIconShutDownClicked();
+            this.presenter.OnNotifyIconShutDownClicked();
         }
 
         private void powerOffToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.OnNotifyIconPowerOffClicked();
+            this.presenter.OnNotifyIconPowerOffClicked();
         }
 
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Presenter.OnNotifyIconExitClicked();
+            this.presenter.OnNotifyIconExitClicked();
         }
 
         #endregion
@@ -152,13 +142,13 @@ namespace DustInTheWind.WindowsReboot
         {
             if (e.Button == MouseButtons.Left)
             {
-                Presenter.OnNotifyIconMouseClicked();
+                this.presenter.OnNotifyIconMouseClicked();
             }
         }
 
         private void notifyIcon1_MouseMove(object sender, MouseEventArgs e)
         {
-            Presenter.OnNotifyIconMouseMove();
+            this.presenter.OnNotifyIconMouseMove();
         }
 
         #endregion
@@ -316,7 +306,7 @@ namespace DustInTheWind.WindowsReboot
 
         public bool DisplayOptions(WindowsRebootConfigSection configSection)
         {
-            using (OptionsForm form = new OptionsForm())
+            using (OptionsForm form = new OptionsForm(configSection))
             {
                 return (form.ShowDialog(this) == DialogResult.OK);
             }
@@ -392,7 +382,7 @@ namespace DustInTheWind.WindowsReboot
 
         private void WindowsRebootForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = !Presenter.ViewClosing();
+            e.Cancel = !this.presenter.OnFormClosing();
         }
 
         public bool AskToClose(string message)
@@ -409,19 +399,19 @@ namespace DustInTheWind.WindowsReboot
         {
             if (this.WindowState == FormWindowState.Minimized)
             {
-                Presenter.ViewMinimized();
+                this.presenter.OnFormMinimized();
             }
 
         }
 
         private void comboBoxAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Presenter.OnActionTypeChanged();
+            this.presenter.OnActionTypeChanged();
         }
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Presenter.MenuItemOptionsClicked();
+            this.presenter.OnMenuItemOptionsClicked();
         }
     }
 }

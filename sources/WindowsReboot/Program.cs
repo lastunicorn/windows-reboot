@@ -1,5 +1,5 @@
 ﻿// Windows Reboot
-// Copyright (C) 2009 Dust in the Wind
+// Copyright (C) 2009 Iuga Alexandru
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
 
 using System;
 using System.Windows.Forms;
-using MVCSharp.Core.Tasks;
-using MVCSharp.Winforms;
-using DustInTheWind.WindowsReboot.UI;
 
 namespace DustInTheWind.WindowsReboot
 {
@@ -32,12 +29,7 @@ namespace DustInTheWind.WindowsReboot
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            TasksManager tasksManager = new TasksManager(WinformsViewsManager.GetDefaultConfig());
-            tasksManager.StartTask(typeof(MainTask));
-            
-            //Application.Run(new WindowsRebootForm());
-            Application.Run(Application.OpenForms[0]);
+            Application.Run(new WindowsRebootForm());
         }
     }
 }
