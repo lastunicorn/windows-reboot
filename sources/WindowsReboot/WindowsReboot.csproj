@@ -82,6 +82,7 @@
     <Compile Include="UI\CustomGroupBox.Designer.cs">
       <DependentUpon>CustomGroupBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\UserInterface.cs" />
     <Compile Include="WinApi\LUID.cs" />
     <Compile Include="WinApi\TOKEN_PRIVILEGES.cs" />
     <Compile Include="WinApi\WinApiConstants.cs" />

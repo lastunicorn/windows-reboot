@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot.UI.View
+namespace DustInTheWind.WindowsReboot.UI.Views
 {
     partial class WindowsRebootForm
     {
@@ -81,7 +81,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonStartTimer = new System.Windows.Forms.Button();
-            this.groupBoxActionTime = new DustInTheWind.WindowsReboot.CustomGroupBox(this.components);
+            this.groupBoxActionTime = new CustomGroupBox(this.components);
             this.tabControlActionTime = new System.Windows.Forms.TabControl();
             this.tabPageFixedDate = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -99,19 +99,19 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.label2 = new System.Windows.Forms.Label();
             this.tabPageImmediate = new System.Windows.Forms.TabPage();
             this.label7 = new System.Windows.Forms.Label();
-            this.customGroupBoxStatusInfo = new DustInTheWind.WindowsReboot.CustomGroupBox(this.components);
+            this.customGroupBoxStatusInfo = new CustomGroupBox(this.components);
             this.tableLayoutPanelStatusInfo = new System.Windows.Forms.TableLayoutPanel();
             this.labelActionTime = new System.Windows.Forms.Label();
             this.labelCurrentTime = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.groupBoxActionType = new DustInTheWind.WindowsReboot.CustomGroupBox(this.components);
+            this.groupBoxActionType = new CustomGroupBox(this.components);
             this.tableLayoutPanelActionType = new System.Windows.Forms.TableLayoutPanel();
             this.checkBoxForceAction = new System.Windows.Forms.CheckBox();
             this.comboBoxAction = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.checkBoxDisplayActionWarning = new System.Windows.Forms.CheckBox();
-            this.groupBoxActionStart = new DustInTheWind.WindowsReboot.CustomGroupBox(this.components);
+            this.groupBoxActionStart = new CustomGroupBox(this.components);
             this.tableLayoutPanelActionStart = new System.Windows.Forms.TableLayoutPanel();
             this.buttonStopTimer = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
@@ -417,7 +417,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
             // 
             this.tableLayoutPanel6.ColumnCount = 2;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 166F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149F));
             this.tableLayoutPanel6.Controls.Add(this.groupBoxActionTime, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.customGroupBoxStatusInfo, 0, 2);
             this.tableLayoutPanel6.Controls.Add(this.groupBoxActionType, 0, 1);
@@ -454,7 +454,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.buttonStartTimer.Location = new System.Drawing.Point(4, 4);
             this.buttonStartTimer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 3);
             this.buttonStartTimer.Name = "buttonStartTimer";
-            this.buttonStartTimer.Size = new System.Drawing.Size(148, 33);
+            this.buttonStartTimer.Size = new System.Drawing.Size(131, 33);
             this.buttonStartTimer.TabIndex = 0;
             this.buttonStartTimer.Text = "Start";
             this.buttonStartTimer.UseVisualStyleBackColor = true;
@@ -788,7 +788,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.groupBoxActionType.Margin = new System.Windows.Forms.Padding(0, 4, 4, 4);
             this.groupBoxActionType.Name = "groupBoxActionType";
             this.groupBoxActionType.Padding = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.groupBoxActionType.Size = new System.Drawing.Size(219, 102);
+            this.groupBoxActionType.Size = new System.Drawing.Size(236, 102);
             this.groupBoxActionType.TabIndex = 19;
             this.groupBoxActionType.TabStop = false;
             this.groupBoxActionType.Text = "2) Choose what";
@@ -815,7 +815,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.tableLayoutPanelActionType.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanelActionType.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanelActionType.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelActionType.Size = new System.Drawing.Size(213, 73);
+            this.tableLayoutPanelActionType.Size = new System.Drawing.Size(230, 73);
             this.tableLayoutPanelActionType.TabIndex = 18;
             // 
             // checkBoxForceAction
@@ -827,7 +827,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.checkBoxForceAction.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxForceAction.Location = new System.Drawing.Point(72, 30);
             this.checkBoxForceAction.Name = "checkBoxForceAction";
-            this.checkBoxForceAction.Size = new System.Drawing.Size(138, 17);
+            this.checkBoxForceAction.Size = new System.Drawing.Size(155, 17);
             this.checkBoxForceAction.TabIndex = 5;
             this.checkBoxForceAction.Text = "Force action";
             this.checkBoxForceAction.UseVisualStyleBackColor = true;
@@ -839,7 +839,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.comboBoxAction.FormattingEnabled = true;
             this.comboBoxAction.Location = new System.Drawing.Point(72, 3);
             this.comboBoxAction.Name = "comboBoxAction";
-            this.comboBoxAction.Size = new System.Drawing.Size(138, 21);
+            this.comboBoxAction.Size = new System.Drawing.Size(155, 21);
             this.comboBoxAction.TabIndex = 3;
             this.comboBoxAction.SelectedIndexChanged += new System.EventHandler(this.comboBoxAction_SelectedIndexChanged);
             // 
@@ -860,7 +860,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.checkBoxDisplayActionWarning.AutoSize = true;
             this.checkBoxDisplayActionWarning.Location = new System.Drawing.Point(72, 53);
             this.checkBoxDisplayActionWarning.Name = "checkBoxDisplayActionWarning";
-            this.checkBoxDisplayActionWarning.Size = new System.Drawing.Size(138, 17);
+            this.checkBoxDisplayActionWarning.Size = new System.Drawing.Size(155, 17);
             this.checkBoxDisplayActionWarning.TabIndex = 15;
             this.checkBoxDisplayActionWarning.Text = "Display warning";
             this.checkBoxDisplayActionWarning.UseVisualStyleBackColor = true;
@@ -872,11 +872,11 @@ namespace DustInTheWind.WindowsReboot.UI.View
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxActionStart.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.groupBoxActionStart.Controls.Add(this.tableLayoutPanelActionStart);
-            this.groupBoxActionStart.Location = new System.Drawing.Point(227, 141);
+            this.groupBoxActionStart.Location = new System.Drawing.Point(244, 141);
             this.groupBoxActionStart.Margin = new System.Windows.Forms.Padding(4, 4, 0, 4);
             this.groupBoxActionStart.Name = "groupBoxActionStart";
             this.groupBoxActionStart.Padding = new System.Windows.Forms.Padding(3, 6, 3, 3);
-            this.groupBoxActionStart.Size = new System.Drawing.Size(162, 102);
+            this.groupBoxActionStart.Size = new System.Drawing.Size(145, 102);
             this.groupBoxActionStart.TabIndex = 20;
             this.groupBoxActionStart.TabStop = false;
             this.groupBoxActionStart.Text = "3) Do it";
@@ -896,7 +896,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.tableLayoutPanelActionStart.RowCount = 2;
             this.tableLayoutPanelActionStart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelActionStart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelActionStart.Size = new System.Drawing.Size(156, 80);
+            this.tableLayoutPanelActionStart.Size = new System.Drawing.Size(139, 80);
             this.tableLayoutPanelActionStart.TabIndex = 5;
             // 
             // buttonStopTimer
@@ -909,7 +909,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.buttonStopTimer.Location = new System.Drawing.Point(4, 43);
             this.buttonStopTimer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 4);
             this.buttonStopTimer.Name = "buttonStopTimer";
-            this.buttonStopTimer.Size = new System.Drawing.Size(148, 33);
+            this.buttonStopTimer.Size = new System.Drawing.Size(131, 33);
             this.buttonStopTimer.TabIndex = 4;
             this.buttonStopTimer.Text = "Stop";
             this.buttonStopTimer.UseVisualStyleBackColor = true;

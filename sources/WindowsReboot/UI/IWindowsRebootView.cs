@@ -18,7 +18,7 @@ using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Config;
 
-namespace DustInTheWind.WindowsReboot
+namespace DustInTheWind.WindowsReboot.UI
 {
     internal interface IWindowsRebootView
     {
@@ -115,23 +115,11 @@ namespace DustInTheWind.WindowsReboot
         void DisplayMessage(string message);
 
         /// <summary>
-        /// Displays the license window.
-        /// </summary>
-        void DisplayLicense();
-
-        /// <summary>
-        /// Displays the about window.
-        /// </summary>
-        void DisplayAbout();
-
-        /// <summary>
         /// Displays a message box asking the user to confirm the closing.
         /// </summary>
         /// <param name="message">The message to be displayed in the message box.</param>
         /// <returns>true if the user allows the application to be closed; false otherwise.</returns>
         bool AskToClose(string message);
-
-        bool DisplayOptions(WindowsRebootConfigSection configSection);
 
         FormWindowState WindowState { get; set; }
 

@@ -14,31 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot
+using System;
+
+namespace DustInTheWind.WindowsReboot.UI
 {
     /// <summary>
     /// Class used to associate the action type with a text displayed to the user.
     /// </summary>
-    public class ActionTypeItem
+    public class ActionTypeItem : IEquatable<ActionTypeItem>
     {
-        #region Value
-
-        /// <summary>
-        /// The type of the action to be executed.
-        /// </summary>
-        private ActionType value;
-
         /// <summary>
         /// Gets the type of the action to be executed.
         /// </summary>
-        public ActionType Value
-        {
-            get { return value; }
-        }
-
-        #endregion
-
-        #region Constructor
+        public ActionType Value { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ActionTypeItem"/> class with
@@ -47,12 +35,8 @@ namespace DustInTheWind.WindowsReboot
         /// <param name="value">The type of the action to be executed.</param>
         public ActionTypeItem(ActionType value)
         {
-            this.value = value;
+            Value = value;
         }
-
-        #endregion
-
-        #region public override string ToString()
 
         /// <summary>
         /// Returns a string representation of the action type.
@@ -60,7 +44,7 @@ namespace DustInTheWind.WindowsReboot
         /// <returns>A string representation of the action type.</returns>
         public override string ToString()
         {
-            switch (value)
+            switch (Value)
             {
                 case ActionType.LockWorkstation:
                     return "Lock Computer";
@@ -84,13 +68,9 @@ namespace DustInTheWind.WindowsReboot
                     return "Power Off";
 
                 default:
-                    return value.ToString();
+                    return Value.ToString();
             }
         }
-
-        #endregion
-
-        #region public override bool Equals(object obj)
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object"/> is equal to the current instance.
@@ -99,26 +79,16 @@ namespace DustInTheWind.WindowsReboot
         /// <returns>true if the specified <see cref="System.Object"/> is equal to the current instance; otherwise, false.</returns>
         public override bool Equals(object obj)
         {
-            // If parameter is null return false.
-            if (obj == null)
-            {
-                return false;
-            }
-
-            // If parameter cannot be cast to Point return false.
-            ActionTypeItem a = obj as ActionTypeItem;
-            if (a == null)
-            {
-                return false;
-            }
-
-            // Return true if the fields match:
-            return value == a.value;
+            return Equals(obj as ActionTypeItem);
         }
 
-        #endregion
+        public bool Equals(ActionTypeItem other)
+        {
+            if (other == null)
+                return false;
 
-        #region public override int GetHashCode()
+            return Value == other.Value;
+        }
 
         /// <summary>
         /// Serves as a hash function for the current instance.
@@ -126,9 +96,7 @@ namespace DustInTheWind.WindowsReboot
         /// <returns>A hash code for the current instance.</returns>
         public override int GetHashCode()
         {
-            return (int)value;
+            return Value.GetHashCode();
         }
-
-        #endregion
     }
 }

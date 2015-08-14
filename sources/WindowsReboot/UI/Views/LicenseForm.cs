@@ -17,7 +17,7 @@
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Properties;
 
-namespace DustInTheWind.WindowsReboot.UI.View
+namespace DustInTheWind.WindowsReboot.UI.Views
 {
     /// <summary>
     /// This form displayes the license text.
@@ -31,7 +31,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
         {
             InitializeComponent();
 
-            this.textBoxDescription.Text = Resources.License;
+            textBoxDescription.Text = Resources.License;
         }
     }
 }

@@ -18,16 +18,14 @@ using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Config;
 
-namespace DustInTheWind.WindowsReboot.UI.View
+namespace DustInTheWind.WindowsReboot.UI.Views
 {
     /// <summary>
     /// Displaies some options that the user can set.
     /// </summary>
     public partial class OptionsForm : Form
     {
-        private WindowsRebootConfigSection configSection;
-
-        #region Constructor
+        private readonly WindowsRebootConfigSection configSection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OptionsForm"/> class with
@@ -44,20 +42,18 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.configSection = configSection;
         }
 
-        #endregion
-
         private void OptionsForm_Shown(object sender, EventArgs e)
         {
-            this.checkBoxCloseToTray.Checked = this.configSection.CloseToTray.Value;
-            this.checkBoxMinimizeToTray.Checked = this.configSection.MinimizeToTray.Value;
-            this.checkBoxStartTimerAtApplicationStart.Checked = this.configSection.StartTimerAtApplicationStart.Value;
+            checkBoxCloseToTray.Checked = configSection.CloseToTray.Value;
+            checkBoxMinimizeToTray.Checked = configSection.MinimizeToTray.Value;
+            checkBoxStartTimerAtApplicationStart.Checked = configSection.StartTimerAtApplicationStart.Value;
         }
 
-        private void buttonOkay_Click(object sender, EventArgs e)
+        private void HandleButtonOkayClick(object sender, EventArgs e)
         {
-            this.configSection.CloseToTray.Value = this.checkBoxCloseToTray.Checked;
-            this.configSection.MinimizeToTray.Value = this.checkBoxMinimizeToTray.Checked;
-            this.configSection.StartTimerAtApplicationStart.Value = this.checkBoxStartTimerAtApplicationStart.Checked;
+            configSection.CloseToTray.Value = checkBoxCloseToTray.Checked;
+            configSection.MinimizeToTray.Value = checkBoxMinimizeToTray.Checked;
+            configSection.StartTimerAtApplicationStart.Value = checkBoxStartTimerAtApplicationStart.Checked;
         }
     }
 }

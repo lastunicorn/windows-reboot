@@ -18,14 +18,14 @@ using System;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace DustInTheWind.WindowsReboot.UI.View
+namespace DustInTheWind.WindowsReboot.UI.Views
 {
     /// <summary>
     /// Displayes information about the author, the version, etc.
     /// </summary>
     public partial class AboutForm : Form
     {
-        private Assembly currentAssembly = Assembly.GetExecutingAssembly();
+        private readonly Assembly currentAssembly = Assembly.GetExecutingAssembly();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AboutForm"/> class.
@@ -34,30 +34,29 @@ namespace DustInTheWind.WindowsReboot.UI.View
         {
             InitializeComponent();
 
-            this.labelTitle.Text = Application.ProductName + " " + VersionUtil.GetVersionToString();
-            this.labelVersion.Text = VersionUtil.GetVersion().ToString();
-            
-            this.labelAuthor.Text = Application.CompanyName;
-            this.labelDate.Text = new DateTime(2009, 4, 5).ToString("MMMM yyyy");
-            this.textBoxDescription.Text = this.AssemblyDescription;
+            labelTitle.Text = string.Format("{0} {1}", Application.ProductName, VersionUtil.GetVersionToString());
+            labelVersion.Text = VersionUtil.GetVersion().ToString();
+
+            labelAuthor.Text = Application.CompanyName;
+            labelDate.Text = new DateTime(2009, 4, 5).ToString("MMMM yyyy");
+            textBoxDescription.Text = AssemblyDescription;
         }
 
         private string AssemblyDescription
         {
             get
             {
-                object[] attributes = this.currentAssembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyDescriptionAttribute)attributes[0]).Description;
+                object[] attributes = currentAssembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+
+                return attributes.Length == 0
+                    ? string.Empty 
+                    : ((AssemblyDescriptionAttribute)attributes[0]).Description;
             }
         }
 
-        private void buttonOkay_Click(object sender, EventArgs e)
+        private void HandleButtonOkayClick(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

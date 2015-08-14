@@ -14,23 +14,38 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Windows.Forms;
+using DustInTheWind.WindowsReboot.Config;
 using DustInTheWind.WindowsReboot.UI.Views;
 
-namespace DustInTheWind.WindowsReboot
+namespace DustInTheWind.WindowsReboot.UI
 {
-    static class Program
+    internal class UserInterface
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
+        public Form MainForm { get; set; }
+
+        public void DisplayAbout()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new WindowsRebootForm());
+            using (AboutForm form = new AboutForm())
+            {
+                form.ShowDialog(MainForm);
+            }
+        }
+
+        public void DisplayLicense()
+        {
+            using (LicenseForm form = new LicenseForm())
+            {
+                form.ShowDialog(MainForm);
+            }
+        }
+
+        public bool DisplayOptions(WindowsRebootConfigSection configSection)
+        {
+            using (OptionsForm form = new OptionsForm(configSection))
+            {
+                return (form.ShowDialog(MainForm) == DialogResult.OK);
+            }
         }
     }
 }

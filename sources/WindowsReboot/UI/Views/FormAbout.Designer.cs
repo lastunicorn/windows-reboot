@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot.UI.View
+namespace DustInTheWind.WindowsReboot.UI.Views
 {
     partial class AboutForm
     {
@@ -163,7 +163,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.buttonOkay.TabIndex = 0;
             this.buttonOkay.Text = "Okay";
             this.buttonOkay.UseVisualStyleBackColor = true;
-            this.buttonOkay.Click += new System.EventHandler(this.buttonOkay_Click);
+            this.buttonOkay.Click += new System.EventHandler(this.HandleButtonOkayClick);
             // 
             // pictureBoxClock
             // 

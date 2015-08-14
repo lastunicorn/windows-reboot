@@ -18,37 +18,41 @@ using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Config;
 
-namespace DustInTheWind.WindowsReboot.UI.View
+namespace DustInTheWind.WindowsReboot.UI.Views
 {
     internal partial class WindowsRebootForm : Form, IWindowsRebootView
     {
         private readonly WindowsRebootPresenter presenter;
+        private UserInterface userInterface;
 
         public WindowsRebootForm()
         {
             InitializeComponent();
 
-            this.presenter = new WindowsRebootPresenter(this);
+            userInterface = new UserInterface();
+            userInterface.MainForm = this;
+
+            presenter = new WindowsRebootPresenter(this, userInterface);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            this.presenter.OnTimerElapsed();
+            presenter.OnTimerElapsed();
         }
 
         private void buttonStartTimer_Click(object sender, EventArgs e)
         {
-            this.presenter.OnStartTimerClicked();
+            presenter.OnStartTimerClicked();
         }
 
         private void buttonStopTimer_Click(object sender, EventArgs e)
         {
-            this.presenter.OnStopTimerClicked();
+            presenter.OnStopTimerClicked();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.presenter.OnFormLoad();
+            presenter.OnFormLoad();
         }
 
 
@@ -286,30 +290,6 @@ namespace DustInTheWind.WindowsReboot.UI.View
         public bool NotifyIconVisible
         {
             set { this.notifyIcon1.Visible = value; }
-        }
-
-        public void DisplayAbout()
-        {
-            using (AboutForm form = new AboutForm())
-            {
-                form.ShowDialog(this);
-            }
-        }
-
-        public void DisplayLicense()
-        {
-            using (LicenseForm form = new LicenseForm())
-            {
-                form.ShowDialog(this);
-            }
-        }
-
-        public bool DisplayOptions(WindowsRebootConfigSection configSection)
-        {
-            using (OptionsForm form = new OptionsForm(configSection))
-            {
-                return (form.ShowDialog(this) == DialogResult.OK);
-            }
         }
 
         #endregion

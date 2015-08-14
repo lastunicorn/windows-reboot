@@ -14,14 +14,15 @@
       <FileName>RebootUtil.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="DustInTheWind.WindowsReboot.ActionTypeItem" Collapsed="true">
+  <Class Name="DustInTheWind.WindowsReboot.UI.ActionTypeItem" Collapsed="true">
     <Position X="10.25" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEgAAAAAAAAAAAAKAAAAAgAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEgAAAAAAAAAAAAIAAAAAgAAAAAAA=</HashCode>
       <FileName>UI\ActionTypeItem.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="DustInTheWind.WindowsReboot.CustomGroupBox" Collapsed="true">
+  <Class Name="DustInTheWind.WindowsReboot.UI.CustomGroupBox" Collapsed="true">
     <Position X="3" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>cECAABEAAGAAAABAIEaAAIAigACAAiAEAIAgBFFADAA=</HashCode>
@@ -62,7 +63,7 @@
     </ShowAsAssociation>
     <Lollipop Position="0.1" />
   </Class>
-  <Class Name="DustInTheWind.WindowsReboot.WindowsRebootPresenter" Collapsed="true">
+  <Class Name="DustInTheWind.WindowsReboot.UI.WindowsRebootPresenter" Collapsed="true">
     <Position X="4.75" Y="2" Width="2" />
     <AssociationLine Name="configSection" Type="DustInTheWind.WindowsReboot.Config.WindowsRebootConfigSection" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
@@ -179,10 +180,10 @@
       <FileName>Class1.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="DustInTheWind.WindowsReboot.IWindowsRebootView" Collapsed="true">
+  <Interface Name="DustInTheWind.WindowsReboot.UI.IWindowsRebootView" Collapsed="true">
     <Position X="7.75" Y="2" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>QAAAABAAIBCQAWQCXAAIIAAIEQAEEAAAIAkJQgGQAAA=</HashCode>
+      <HashCode>QAAAABAAADCQAWQAXAAIIAAIEQAEEAAAAAkJQgGAAAA=</HashCode>
       <FileName>UI\IWindowsRebootView.cs</FileName>
     </TypeIdentifier>
   </Interface>
