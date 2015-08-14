@@ -42,7 +42,7 @@ namespace DustInTheWind.WindowsReboot
         /// <summary>
         /// Indicates if the timer was started.
         /// </summary>
-        private volatile bool actionIsSet = false;
+        private volatile bool actionIsSet;
 
         /// <summary>
         /// The time when the timer was started.
@@ -57,21 +57,21 @@ namespace DustInTheWind.WindowsReboot
         /// <summary>
         /// A value that specifies if the form should be opened with the timer started or not.
         /// </summary>
-        private bool startAtStartUp = false;
+        private bool startAtStartUp;
 
-        private Configuration config;
+        private readonly Configuration config;
 
-        private WindowsRebootConfigSection configSection;
+        private readonly WindowsRebootConfigSection configSection;
 
         /// <summary>
         /// A value indicationg if the exit of the application was requested chosing the menu item.
         /// </summary>
-        private bool exitRequested = false;
+        private bool exitRequested;
 
-        private bool displayWarningMessage = false;
-        private TimeSpan warningMessageTime = TimeSpan.FromSeconds(30);
+        private bool displayWarningMessage;
+        private readonly TimeSpan warningMessageTime = TimeSpan.FromSeconds(30);
 
-        private IRebootUtil rebootUtil;
+        private readonly IRebootUtil rebootUtil;
 
         #region Constructor
 
@@ -87,14 +87,13 @@ namespace DustInTheWind.WindowsReboot
 
             this.view = view;
 
-            this.rebootUtil = new RebootUtil();
+            rebootUtil = new RebootUtil();
 
-            this.config = this.GetConfiguration();
-            this.configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
+            config = GetConfiguration();
+            configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
         }
 
         #endregion
-
 
         #region internal void OnTimerElapsed()
 
@@ -241,7 +240,6 @@ namespace DustInTheWind.WindowsReboot
 
         #endregion
 
-
         #region Start/Stop timer
 
         #region internal void OnStartTimerClicked()
@@ -306,7 +304,6 @@ namespace DustInTheWind.WindowsReboot
         #endregion
 
         #endregion
-
 
         #region Load/Close Form events
 
@@ -388,7 +385,6 @@ namespace DustInTheWind.WindowsReboot
         }
 
         #endregion
-
 
         #region internal void OnFormMinimized()
 
@@ -506,7 +502,6 @@ namespace DustInTheWind.WindowsReboot
         }
 
         #endregion
-
 
         #region internal void OnNotifyIconLogOffClicked()
 
@@ -639,7 +634,6 @@ namespace DustInTheWind.WindowsReboot
         }
 
         #endregion
-
 
         #region internal void OnNotifyIconExitClicked()
 
@@ -833,7 +827,6 @@ namespace DustInTheWind.WindowsReboot
 
         #endregion
 
-
         #region private void EnableInterface(bool value)
 
         /// <summary>
@@ -928,37 +921,37 @@ namespace DustInTheWind.WindowsReboot
             //Configuration config = this.GetConfiguration();
             //WindowsRebootConfigSection configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
 
-            if (this.view.FixedTimeGroupSelected)
+            if (view.FixedTimeGroupSelected)
             {
-                this.configSection.ActionTime.Type = ActionTimeType.FixedDate;
-                this.configSection.ActionTime.DateTime = this.view.FixedDate.Date.Add(this.view.FixedTime);
-                this.configSection.ActionTime.Hours = 0;
-                this.configSection.ActionTime.Minutes = 0;
-                this.configSection.ActionTime.Seconds = 0;
+                configSection.ActionTime.Type = ActionTimeType.FixedDate;
+                configSection.ActionTime.DateTime = view.FixedDate.Date.Add(view.FixedTime);
+                configSection.ActionTime.Hours = 0;
+                configSection.ActionTime.Minutes = 0;
+                configSection.ActionTime.Seconds = 0;
             }
-            else if (this.view.DelayGroupSelected)
+            else if (view.DelayGroupSelected)
             {
-                this.configSection.ActionTime.Type = ActionTimeType.Delay;
-                this.configSection.ActionTime.Hours = this.view.Hours;
-                this.configSection.ActionTime.Minutes = this.view.Minutes;
-                this.configSection.ActionTime.Seconds = this.view.Seconds;
-                this.configSection.ActionTime.DateTime = DateTime.Now;
+                configSection.ActionTime.Type = ActionTimeType.Delay;
+                configSection.ActionTime.Hours = view.Hours;
+                configSection.ActionTime.Minutes = view.Minutes;
+                configSection.ActionTime.Seconds = view.Seconds;
+                configSection.ActionTime.DateTime = DateTime.Now;
             }
-            else if (this.view.ImmediateGroupSelected)
+            else if (view.ImmediateGroupSelected)
             {
-                this.configSection.ActionTime.Type = ActionTimeType.Immediate;
-                this.configSection.ActionTime.DateTime = DateTime.Now;
-                this.configSection.ActionTime.Hours = 0;
-                this.configSection.ActionTime.Minutes = 0;
-                this.configSection.ActionTime.Seconds = 0;
+                configSection.ActionTime.Type = ActionTimeType.Immediate;
+                configSection.ActionTime.DateTime = DateTime.Now;
+                configSection.ActionTime.Hours = 0;
+                configSection.ActionTime.Minutes = 0;
+                configSection.ActionTime.Seconds = 0;
             }
 
-            this.configSection.ActionType.Value = this.view.ActionType.Value;
+            configSection.ActionType.Value = view.ActionType.Value;
 
-            this.configSection.ForceClosingPrograms.Value = this.view.ForceAction;
+            configSection.ForceClosingPrograms.Value = view.ForceAction;
 
             //config.Save();
-            this.config.Save(ConfigurationSaveMode.Modified);
+            config.Save(ConfigurationSaveMode.Modified);
         }
 
         #endregion
@@ -980,42 +973,21 @@ namespace DustInTheWind.WindowsReboot
 
         internal void OnActionTypeChanged()
         {
-            switch (this.view.ActionType.Value)
+            switch (view.ActionType.Value)
             {
-                case ActionType.Ring:
-                    this.view.ForceActionVisible = false;
-                    break;
-
-                case ActionType.LockWorkstation:
-                    this.view.ForceActionVisible = false;
-                    break;
-
                 case ActionType.LogOff:
-                    this.view.ForceActionVisible = true;
-                    break;
-
                 case ActionType.Sleep:
-                    this.view.ForceActionVisible = true;
-                    break;
-
                 case ActionType.Hibernate:
-                    this.view.ForceActionVisible = true;
-                    break;
-
                 case ActionType.Reboot:
-                    this.view.ForceActionVisible = true;
-                    break;
-
                 case ActionType.ShutDown:
-                    this.view.ForceActionVisible = true;
-                    break;
-
                 case ActionType.PowerOff:
-                    this.view.ForceActionVisible = true;
+                    view.ForceActionEnabled = true;
+                    view.ForceAction = true;
                     break;
 
                 default:
-                    this.view.ForceActionVisible = false;
+                    view.ForceActionEnabled = false;
+                    view.ForceAction = false;
                     break;
             }
         }

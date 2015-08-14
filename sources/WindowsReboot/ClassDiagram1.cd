@@ -50,7 +50,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="DustInTheWind.WindowsReboot.WindowsRebootForm" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.75" Y="0.5" Width="1.75" />
+    <Position X="2.5" Y="0.5" Width="4" />
     <TypeIdentifier>
       <HashCode>UxbIXT2aqDCSZXwPTwWKKEDPESkieIFAIjcLQ2kwCGE=</HashCode>
       <FileName>UI\WindowsRebootForm.cs</FileName>

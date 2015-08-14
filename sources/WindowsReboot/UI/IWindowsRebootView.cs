@@ -58,7 +58,7 @@ namespace DustInTheWind.WindowsReboot
         bool ActionTypeGroupEnabled { set; }
         bool MenuItem_LoadInitialSettingsEnabled { set; }
         bool MenuItem_LoadDefaultSettingsEnabled { set; }
-        bool ForceActionVisible { set; }
+        bool ForceActionEnabled { set; }
         bool FixedTimeGroupSelected { get; set; }
         bool DelayGroupSelected { get; set; }
         bool ImmediateGroupSelected { get; set; }

@@ -225,9 +225,9 @@ namespace DustInTheWind.WindowsReboot.UI.View
             set { this.comboBoxAction.Enabled = value; }
         }
 
-        public bool ForceActionVisible
+        public bool ForceActionEnabled
         {
-            set { this.checkBoxForceAction.Visible = value; }
+            set { this.checkBoxForceAction.Enabled = value; }
         }
 
         public bool FixedTimeGroupSelected

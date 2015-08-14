@@ -79,6 +79,8 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.labelBlackLine2 = new System.Windows.Forms.Label();
             this.pictureBoxHeader = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonStartTimer = new System.Windows.Forms.Button();
             this.groupBoxActionTime = new DustInTheWind.WindowsReboot.CustomGroupBox(this.components);
             this.tabControlActionTime = new System.Windows.Forms.TabControl();
             this.tabPageFixedDate = new System.Windows.Forms.TabPage();
@@ -112,12 +114,11 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.groupBoxActionStart = new DustInTheWind.WindowsReboot.CustomGroupBox(this.components);
             this.tableLayoutPanelActionStart = new System.Windows.Forms.TableLayoutPanel();
             this.buttonStopTimer = new System.Windows.Forms.Button();
-            this.buttonStartTimer = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStripTrayIcon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHeader)).BeginInit();
             this.tableLayoutPanel6.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.groupBoxActionTime.SuspendLayout();
             this.tabControlActionTime.SuspendLayout();
             this.tabPageFixedDate.SuspendLayout();
@@ -134,7 +135,6 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.tableLayoutPanelActionType.SuspendLayout();
             this.groupBoxActionStart.SuspendLayout();
             this.tableLayoutPanelActionStart.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -193,7 +193,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.loadInitialSettingsToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.splat_blue;
             this.loadInitialSettingsToolStripMenuItem.Name = "loadInitialSettingsToolStripMenuItem";
             this.loadInitialSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.loadInitialSettingsToolStripMenuItem.Text = "Load Initial Settings";
+            this.loadInitialSettingsToolStripMenuItem.Text = "&Load Settings";
             this.loadInitialSettingsToolStripMenuItem.Click += new System.EventHandler(this.loadInitialSettingsToolStripMenuItem_Click);
             // 
             // saveCurrentSettingsToolStripMenuItem
@@ -201,7 +201,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.saveCurrentSettingsToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.splat_yellow;
             this.saveCurrentSettingsToolStripMenuItem.Name = "saveCurrentSettingsToolStripMenuItem";
             this.saveCurrentSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.saveCurrentSettingsToolStripMenuItem.Text = "&Save Current Settings";
+            this.saveCurrentSettingsToolStripMenuItem.Text = "&Save Settings";
             this.saveCurrentSettingsToolStripMenuItem.Click += new System.EventHandler(this.saveCurrentSettingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
@@ -255,18 +255,18 @@ namespace DustInTheWind.WindowsReboot.UI.View
             // 
             // labelTimer
             // 
-            this.labelTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelTimer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.labelTimer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tableLayoutPanel6.SetColumnSpan(this.labelTimer, 2);
-            this.labelTimer.Font = new System.Drawing.Font("Trebuchet MS", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTimer.Font = new System.Drawing.Font("Trebuchet MS", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTimer.ForeColor = System.Drawing.Color.RoyalBlue;
             this.labelTimer.Location = new System.Drawing.Point(0, 315);
             this.labelTimer.Margin = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.labelTimer.Name = "labelTimer";
-            this.labelTimer.Size = new System.Drawing.Size(389, 29);
+            this.labelTimer.Size = new System.Drawing.Size(389, 40);
             this.labelTimer.TabIndex = 7;
             this.labelTimer.Text = "--  :  --  :  --  .  -";
             this.labelTimer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -292,13 +292,13 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.toolStripSeparator3,
             this.toolStripMenuItem2});
             this.contextMenuStripTrayIcon.Name = "contextMenuStrip1";
-            this.contextMenuStripTrayIcon.Size = new System.Drawing.Size(129, 76);
+            this.contextMenuStripTrayIcon.Size = new System.Drawing.Size(138, 76);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.win_reboot;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(128, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(137, 22);
             this.toolStripMenuItem1.Text = "Show";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
             // 
@@ -313,7 +313,7 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.shutDownToolStripMenuItem,
             this.powerOffToolStripMenuItem});
             this.actionNowToolStripMenuItem.Name = "actionNowToolStripMenuItem";
-            this.actionNowToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.actionNowToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.actionNowToolStripMenuItem.Text = "Action Now";
             // 
             // lockComputerToolStripMenuItem
@@ -375,12 +375,12 @@ namespace DustInTheWind.WindowsReboot.UI.View
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(125, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(134, 6);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(128, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(137, 22);
             this.toolStripMenuItem2.Text = "Exit";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
@@ -430,15 +430,38 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(389, 344);
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(389, 355);
             this.tableLayoutPanel6.TabIndex = 21;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.tableLayoutPanel6);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 87);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(10);
+            this.panel1.Size = new System.Drawing.Size(409, 375);
+            this.panel1.TabIndex = 22;
+            // 
+            // buttonStartTimer
+            // 
+            this.buttonStartTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonStartTimer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonStartTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonStartTimer.Location = new System.Drawing.Point(4, 4);
+            this.buttonStartTimer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 3);
+            this.buttonStartTimer.Name = "buttonStartTimer";
+            this.buttonStartTimer.Size = new System.Drawing.Size(148, 33);
+            this.buttonStartTimer.TabIndex = 0;
+            this.buttonStartTimer.Text = "Start";
+            this.buttonStartTimer.UseVisualStyleBackColor = true;
+            this.buttonStartTimer.Click += new System.EventHandler(this.buttonStartTimer_Click);
             // 
             // groupBoxActionTime
             // 
-            this.groupBoxActionTime.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxActionTime.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.tableLayoutPanel6.SetColumnSpan(this.groupBoxActionTime, 2);
             this.groupBoxActionTime.Controls.Add(this.tabControlActionTime);
@@ -480,6 +503,8 @@ namespace DustInTheWind.WindowsReboot.UI.View
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.AutoSize = true;
+            this.tableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -487,14 +512,14 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.tableLayoutPanel2.Controls.Add(this.label8, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.dateTimePickerFixedDate, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.label9, 0, 1);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(8, 8);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 0F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(349, 60);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(349, 52);
             this.tableLayoutPanel2.TabIndex = 4;
             // 
             // dateTimePickerFixedTime
@@ -563,14 +588,14 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.tableLayoutPanel1.Controls.Add(this.label3, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 0F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(341, 52);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(341, 39);
             this.tableLayoutPanel1.TabIndex = 15;
             // 
             // numericUpDownSeconds
@@ -674,9 +699,9 @@ namespace DustInTheWind.WindowsReboot.UI.View
             // 
             // customGroupBoxStatusInfo
             // 
-            this.customGroupBoxStatusInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.customGroupBoxStatusInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.customGroupBoxStatusInfo.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.tableLayoutPanel6.SetColumnSpan(this.customGroupBoxStatusInfo, 2);
             this.customGroupBoxStatusInfo.Controls.Add(this.tableLayoutPanelStatusInfo);
@@ -754,9 +779,9 @@ namespace DustInTheWind.WindowsReboot.UI.View
             // 
             // groupBoxActionType
             // 
-            this.groupBoxActionType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxActionType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxActionType.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.groupBoxActionType.Controls.Add(this.tableLayoutPanelActionType);
             this.groupBoxActionType.Location = new System.Drawing.Point(0, 141);
@@ -773,6 +798,8 @@ namespace DustInTheWind.WindowsReboot.UI.View
             // 
             // tableLayoutPanelActionType
             // 
+            this.tableLayoutPanelActionType.AutoSize = true;
+            this.tableLayoutPanelActionType.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanelActionType.ColumnCount = 2;
             this.tableLayoutPanelActionType.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanelActionType.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -780,21 +807,21 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.tableLayoutPanelActionType.Controls.Add(this.comboBoxAction, 1, 0);
             this.tableLayoutPanelActionType.Controls.Add(this.label6, 0, 0);
             this.tableLayoutPanelActionType.Controls.Add(this.checkBoxDisplayActionWarning, 1, 2);
-            this.tableLayoutPanelActionType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelActionType.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanelActionType.Location = new System.Drawing.Point(3, 21);
             this.tableLayoutPanelActionType.Name = "tableLayoutPanelActionType";
-            this.tableLayoutPanelActionType.RowCount = 4;
+            this.tableLayoutPanelActionType.RowCount = 3;
             this.tableLayoutPanelActionType.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanelActionType.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanelActionType.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanelActionType.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 0F));
-            this.tableLayoutPanelActionType.Size = new System.Drawing.Size(213, 78);
+            this.tableLayoutPanelActionType.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelActionType.Size = new System.Drawing.Size(213, 73);
             this.tableLayoutPanelActionType.TabIndex = 18;
             // 
             // checkBoxForceAction
             // 
-            this.checkBoxForceAction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxForceAction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxForceAction.AutoSize = true;
             this.checkBoxForceAction.Checked = true;
             this.checkBoxForceAction.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -828,8 +855,8 @@ namespace DustInTheWind.WindowsReboot.UI.View
             // 
             // checkBoxDisplayActionWarning
             // 
-            this.checkBoxDisplayActionWarning.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxDisplayActionWarning.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxDisplayActionWarning.AutoSize = true;
             this.checkBoxDisplayActionWarning.Location = new System.Drawing.Point(72, 53);
             this.checkBoxDisplayActionWarning.Name = "checkBoxDisplayActionWarning";
@@ -840,9 +867,9 @@ namespace DustInTheWind.WindowsReboot.UI.View
             // 
             // groupBoxActionStart
             // 
-            this.groupBoxActionStart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxActionStart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxActionStart.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.groupBoxActionStart.Controls.Add(this.tableLayoutPanelActionStart);
             this.groupBoxActionStart.Location = new System.Drawing.Point(227, 141);
@@ -874,50 +901,26 @@ namespace DustInTheWind.WindowsReboot.UI.View
             // 
             // buttonStopTimer
             // 
-            this.buttonStopTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonStopTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonStopTimer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonStopTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonStopTimer.Location = new System.Drawing.Point(4, 43);
             this.buttonStopTimer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 4);
             this.buttonStopTimer.Name = "buttonStopTimer";
             this.buttonStopTimer.Size = new System.Drawing.Size(148, 33);
             this.buttonStopTimer.TabIndex = 4;
-            this.buttonStopTimer.Text = "Stop timer";
+            this.buttonStopTimer.Text = "Stop";
             this.buttonStopTimer.UseVisualStyleBackColor = true;
             this.buttonStopTimer.Click += new System.EventHandler(this.buttonStopTimer_Click);
-            // 
-            // buttonStartTimer
-            // 
-            this.buttonStartTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonStartTimer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonStartTimer.Location = new System.Drawing.Point(4, 4);
-            this.buttonStartTimer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 3);
-            this.buttonStartTimer.Name = "buttonStartTimer";
-            this.buttonStartTimer.Size = new System.Drawing.Size(148, 33);
-            this.buttonStartTimer.TabIndex = 0;
-            this.buttonStartTimer.Text = "Start timer";
-            this.buttonStartTimer.UseVisualStyleBackColor = true;
-            this.buttonStartTimer.Click += new System.EventHandler(this.buttonStartTimer_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.tableLayoutPanel6);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 87);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(10);
-            this.panel1.Size = new System.Drawing.Size(409, 364);
-            this.panel1.TabIndex = 22;
             // 
             // WindowsRebootForm
             // 
             this.AcceptButton = this.buttonStartTimer;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(409, 451);
+            this.ClientSize = new System.Drawing.Size(409, 462);
             this.Controls.Add(this.labelBlackLine2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBoxHeader);
@@ -938,9 +941,11 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.contextMenuStripTrayIcon.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHeader)).EndInit();
             this.tableLayoutPanel6.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.groupBoxActionTime.ResumeLayout(false);
             this.tabControlActionTime.ResumeLayout(false);
             this.tabPageFixedDate.ResumeLayout(false);
+            this.tabPageFixedDate.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.tabPageDelay.ResumeLayout(false);
@@ -955,11 +960,11 @@ namespace DustInTheWind.WindowsReboot.UI.View
             this.tableLayoutPanelStatusInfo.ResumeLayout(false);
             this.tableLayoutPanelStatusInfo.PerformLayout();
             this.groupBoxActionType.ResumeLayout(false);
+            this.groupBoxActionType.PerformLayout();
             this.tableLayoutPanelActionType.ResumeLayout(false);
             this.tableLayoutPanelActionType.PerformLayout();
             this.groupBoxActionStart.ResumeLayout(false);
             this.tableLayoutPanelActionStart.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
