@@ -1,4 +1,4 @@
-// Windows Reboot
+﻿// Windows Reboot
 // Copyright (C) 2009-2012 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,11 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot.WinApi
+using System;
+using System.Reflection;
+
+namespace DustInTheWind.WindowsReboot.Core
 {
-    internal struct LUID
+    public static class VersionUtil
     {
-        public int UsedPart;
-        public int IgnoredForNowHigh32BitPart;
+        public static string GetVersionToString()
+        {
+            Version version = GetVersion();
+            return version.ToString(3);
+        }
+
+        public static Version GetVersion()
+        {
+            return Assembly.GetEntryAssembly().GetName().Version;
+        }
     }
 }

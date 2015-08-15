@@ -14,37 +14,32 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.Config;
-using DustInTheWind.WindowsReboot.UI.Views;
+using System.Configuration;
 
-namespace DustInTheWind.WindowsReboot.UI
+namespace DustInTheWind.WindowsReboot.Core.Config
 {
-    internal class UserInterface
+    /// <summary>
+    /// The configuration element that specifies if the main form should
+    /// minimize to tray icon insted of closing when the user clicks the
+    /// upper-right 'X' button.
+    /// </summary>
+    public class CloseToTrayConfigElement : ConfigurationElement
     {
-        public Form MainForm { get; set; }
-
-        public void DisplayAbout()
+        /// <summary>
+        /// Gets or sets a value that specifies if the main form should
+        /// minimize to tray icon insted of closing when the user clicks the
+        /// upper-right 'X' button.
+        /// </summary>
+        [ConfigurationProperty("value", IsRequired = true)]
+        public bool Value
         {
-            using (AboutForm form = new AboutForm())
+            get
             {
-                form.ShowDialog(MainForm);
+                return (bool)this["value"];
             }
-        }
-
-        public void DisplayLicense()
-        {
-            using (LicenseForm form = new LicenseForm())
+            set
             {
-                form.ShowDialog(MainForm);
-            }
-        }
-
-        public bool DisplayOptions(WindowsRebootConfigSection configSection)
-        {
-            using (OptionsForm form = new OptionsForm(configSection))
-            {
-                return (form.ShowDialog(MainForm) == DialogResult.OK);
+                this["value"] = value;
             }
         }
     }

@@ -15,8 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.WindowsReboot.Core;
 
-namespace DustInTheWind.WindowsReboot.UI
+namespace DustInTheWind.WindowsReboot.Presentation
 {
     /// <summary>
     /// Class used to associate the action type with a text displayed to the user.

@@ -17,7 +17,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <PublishUrl>http://localhost/WindowsReboot/</PublishUrl>
     <Install>true</Install>
@@ -65,29 +65,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionTimeType.cs" />
-    <Compile Include="ActionType.cs" />
-    <Compile Include="Core\IRebootUtil.cs" />
+    <Compile Include="..\AssemblyInfo.shared.cs">
+      <Link>Properties\AssemblyInfo.shared.cs</Link>
+    </Compile>
+    <Compile Include="IUiDispatcher.cs" />
     <Compile Include="UI\ActionTypeItem.cs" />
-    <Compile Include="Config\ActionTimeConfigElement.cs" />
-    <Compile Include="Config\ActionTypeConfigElement.cs" />
-    <Compile Include="Config\CloseToTrayConfigElement.cs" />
-    <Compile Include="Config\ForceClosingProgramsConfigElement.cs" />
-    <Compile Include="Config\MinimizeToTrayConfigElement.cs" />
-    <Compile Include="Config\StartTimerAtApplicationStartConfigElement.cs" />
-    <Compile Include="Config\WindowsRebootConfigSection.cs" />
     <Compile Include="UI\CustomGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\CustomGroupBox.Designer.cs">
       <DependentUpon>CustomGroupBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\UserInterface.cs" />
-    <Compile Include="WinApi\LUID.cs" />
-    <Compile Include="WinApi\TOKEN_PRIVILEGES.cs" />
-    <Compile Include="WinApi\WinApiConstants.cs" />
-    <Compile Include="WinApi\WinApiFunctions.cs" />
-    <Compile Include="WindowsRebootException.cs" />
+    <Compile Include="UiDispatcher.cs" />
+    <Compile Include="UserInterface.cs" />
     <Compile Include="UI\Views\LicenseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,9 +141,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Core\RebootUtil.cs" />
     <Compile Include="UI\WindowsRebootPresenter.cs" />
-    <Compile Include="VersionUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
@@ -201,6 +189,13 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Core.csproj">
+      <Project>{76665ccc-6451-4caf-893b-7da3d7f6ead0}</Project>
+      <Name>WindowsReboot.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

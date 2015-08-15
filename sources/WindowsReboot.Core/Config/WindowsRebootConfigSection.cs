@@ -16,7 +16,7 @@
 
 using System.Configuration;
 
-namespace DustInTheWind.WindowsReboot.Config
+namespace DustInTheWind.WindowsReboot.Core.Config
 {
     /// <summary>
     /// Represents the "windowsReboot" configuration section.

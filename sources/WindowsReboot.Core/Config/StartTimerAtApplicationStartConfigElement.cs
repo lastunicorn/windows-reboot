@@ -16,19 +16,17 @@
 
 using System.Configuration;
 
-namespace DustInTheWind.WindowsReboot.Config
+namespace DustInTheWind.WindowsReboot.Core.Config
 {
     /// <summary>
-    /// The configuration element that specifies if the main form should
-    /// minimize to tray icon insted of closing when the user clicks the
-    /// upper-right 'X' button.
+    /// Represents the configuration element that specifies if the timer should be started
+    /// immediately after the application is started.
     /// </summary>
-    public class CloseToTrayConfigElement : ConfigurationElement
+    public class StartTimerAtApplicationStartConfigElement : ConfigurationElement
     {
         /// <summary>
-        /// Gets or sets a value that specifies if the main form should
-        /// minimize to tray icon insted of closing when the user clicks the
-        /// upper-right 'X' button.
+        /// Gets or sets a value that specifies if the timer should be started
+        /// imidiatly after the application is started.
         /// </summary>
         [ConfigurationProperty("value", IsRequired = true)]
         public bool Value

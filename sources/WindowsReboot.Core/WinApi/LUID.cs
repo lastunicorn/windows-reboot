@@ -1,4 +1,4 @@
-﻿// Windows Reboot
+// Windows Reboot
 // Copyright (C) 2009-2012 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,29 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Configuration;
-
-namespace DustInTheWind.WindowsReboot.Config
+namespace DustInTheWind.WindowsReboot.Core.WinApi
 {
-    /// <summary>
-    /// The configurtion element that specifies the initial value of the action type.
-    /// </summary>
-    public class ActionTypeConfigElement : ConfigurationElement
+    internal struct LUID
     {
-        /// <summary>
-        /// Gets or sets the initial value of the action type.
-        /// </summary>
-        [ConfigurationProperty("value", IsRequired = true)]
-        public ActionType Value
-        {
-            get
-            {
-                return (ActionType)this["value"];
-            }
-            set
-            {
-                this["value"] = value;
-            }
-        }
+        public int UsedPart;
+        public int IgnoredForNowHigh32BitPart;
     }
 }

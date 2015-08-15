@@ -1,9 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot", "WindowsReboot\WindowsReboot.csproj", "{C407B401-6749-4430-AC5C-8923572A0EA5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.Tests", "WindowsReboot.Tests\WindowsReboot.Tests.csproj", "{738C66BC-F74F-47E5-A526-0C565CD1911F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.Core", "WindowsReboot.Core\WindowsReboot.Core.csproj", "{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +23,10 @@ Global
 		{738C66BC-F74F-47E5-A526-0C565CD1911F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{738C66BC-F74F-47E5-A526-0C565CD1911F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{738C66BC-F74F-47E5-A526-0C565CD1911F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

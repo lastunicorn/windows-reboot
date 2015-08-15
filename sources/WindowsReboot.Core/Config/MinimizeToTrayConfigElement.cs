@@ -14,26 +14,33 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot
+using System.Configuration;
+
+namespace DustInTheWind.WindowsReboot.Core.Config
 {
     /// <summary>
-    /// The way in which the action time is specified.
+    /// The configuration element that specifies if the main form should
+    /// minimize to tray icon insted of taskbar when the user clicks the
+    /// upper-right minimize button.
     /// </summary>
-    public enum ActionTimeType
+    public class MinimizeToTrayConfigElement : ConfigurationElement
     {
         /// <summary>
-        /// The action time is specified as a fixed date and time.
+        /// Gets or sets a value that specifies if the main form should
+        /// minimize to tray icon insted of taskbar when the user
+        /// clicks the upper-right minimize button.
         /// </summary>
-        FixedDate,
-
-        /// <summary>
-        /// The action time is specified as a delay from the time when the timer is started.
-        /// </summary>
-        Delay,
-
-        /// <summary>
-        /// The action time is exactly the time when the timer is started.
-        /// </summary>
-        Immediate
+        [ConfigurationProperty("value", IsRequired = true)]
+        public bool Value
+        {
+            get
+            {
+                return (bool)this["value"];
+            }
+            set
+            {
+                this["value"] = value;
+            }
+        }
     }
 }

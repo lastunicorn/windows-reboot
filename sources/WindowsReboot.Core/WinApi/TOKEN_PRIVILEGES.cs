@@ -14,23 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.Presentation;
-
-namespace DustInTheWind.WindowsReboot
+namespace DustInTheWind.WindowsReboot.Core.WinApi
 {
-    static class Program
+    internal struct TOKEN_PRIVILEGES
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new WindowsRebootForm());
-        }
+        public int PrivilegeCount;
+        public LUID TheLuid;
+        public int Attributes;
     }
 }

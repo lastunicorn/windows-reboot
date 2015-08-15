@@ -17,8 +17,9 @@
 using System;
 using System.Reflection;
 using System.Windows.Forms;
+using DustInTheWind.WindowsReboot.Core;
 
-namespace DustInTheWind.WindowsReboot.UI.Views
+namespace DustInTheWind.WindowsReboot.Presentation
 {
     /// <summary>
     /// Displayes information about the author, the version, etc.

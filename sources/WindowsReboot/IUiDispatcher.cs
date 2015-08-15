@@ -1,4 +1,4 @@
-﻿// Windows Reboot
+// Windows Reboot
 // Copyright (C) 2009-2012 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot.WinApi
+using System;
+
+namespace DustInTheWind.WindowsReboot
 {
-    internal struct TOKEN_PRIVILEGES
+    internal interface IUiDispatcher
     {
-        public int PrivilegeCount;
-        public LUID TheLuid;
-        public int Attributes;
+        void Dispatch(Action action);
     }
 }

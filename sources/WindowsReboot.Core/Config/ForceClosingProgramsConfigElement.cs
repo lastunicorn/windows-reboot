@@ -16,19 +16,17 @@
 
 using System.Configuration;
 
-namespace DustInTheWind.WindowsReboot.Config
+namespace DustInTheWind.WindowsReboot.Core.Config
 {
     /// <summary>
-    /// The configuration element that specifies if the main form should
-    /// minimize to tray icon insted of taskbar when the user clicks the
-    /// upper-right minimize button.
+    /// The configuration element that specifies the initial value of the "Force closing programs" check box.
     /// </summary>
-    public class MinimizeToTrayConfigElement : ConfigurationElement
+    public class ForceClosingProgramsConfigElement : ConfigurationElement
     {
         /// <summary>
-        /// Gets or sets a value that specifies if the main form should
-        /// minimize to tray icon insted of taskbar when the user
-        /// clicks the upper-right minimize button.
+        /// Gets the initial value of the "Force closing programs" check box.
+        /// If this value is true, WindowsReboot will ask Windows to close all the processes, even if they do not respond.
+        /// If this value is false, Windows will display a dialog asking the user to decide if the process should be closed or not.
         /// </summary>
         [ConfigurationProperty("value", IsRequired = true)]
         public bool Value

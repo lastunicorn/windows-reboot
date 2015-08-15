@@ -16,24 +16,22 @@
 
 using System.Configuration;
 
-namespace DustInTheWind.WindowsReboot.Config
+namespace DustInTheWind.WindowsReboot.Core.Config
 {
     /// <summary>
-    /// The configuration element that specifies the initial value of the "Force closing programs" check box.
+    /// The configurtion element that specifies the initial value of the action type.
     /// </summary>
-    public class ForceClosingProgramsConfigElement : ConfigurationElement
+    public class ActionTypeConfigElement : ConfigurationElement
     {
         /// <summary>
-        /// Gets the initial value of the "Force closing programs" check box.
-        /// If this value is true, WindowsReboot will ask Windows to close all the processes, even if they do not respond.
-        /// If this value is false, Windows will display a dialog asking the user to decide if the process should be closed or not.
+        /// Gets or sets the initial value of the action type.
         /// </summary>
         [ConfigurationProperty("value", IsRequired = true)]
-        public bool Value
+        public ActionType Value
         {
             get
             {
-                return (bool)this["value"];
+                return (ActionType)this["value"];
             }
             set
             {

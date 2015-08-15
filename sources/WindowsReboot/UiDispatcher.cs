@@ -15,21 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Reflection;
+using System.Threading;
 
 namespace DustInTheWind.WindowsReboot
 {
-    internal static class VersionUtil
+    class UiDispatcher : IUiDispatcher
     {
-        public static string GetVersionToString()
+        private readonly SynchronizationContext synchronizationContext;
+
+        public UiDispatcher()
         {
-            Version version = Assembly.GetExecutingAssembly().GetName().Version;
-            return version.ToString(3);
+            synchronizationContext = SynchronizationContext.Current;
         }
 
-        public static Version GetVersion()
+        public void Dispatch(Action action)
         {
-            return Assembly.GetExecutingAssembly().GetName().Version;
+            synchronizationContext.Post(o => action(), null);
         }
     }
 }

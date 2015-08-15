@@ -16,7 +16,7 @@
 
 using System;
 using System.Runtime.InteropServices;
-using DustInTheWind.WindowsReboot.WinApi;
+using DustInTheWind.WindowsReboot.Core.WinApi;
 
 namespace DustInTheWind.WindowsReboot.Core
 {
@@ -24,7 +24,7 @@ namespace DustInTheWind.WindowsReboot.Core
     /// Util class that calls the Windows API function to execute
     /// the lock, log off, sleep, hibernate, reboot, shut down and power off actions.
     /// </summary>
-    internal class RebootUtil : IRebootUtil
+    public class RebootUtil : IRebootUtil
     {
         /// <summary>
         /// Checks if the system on which this application runs is an NT based system.

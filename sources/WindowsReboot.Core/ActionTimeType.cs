@@ -14,31 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Configuration;
-
-namespace DustInTheWind.WindowsReboot.Config
+namespace DustInTheWind.WindowsReboot.Core
 {
     /// <summary>
-    /// Represents the configuration element that specifies if the timer should be started
-    /// immediately after the application is started.
+    /// The way in which the action time is specified.
     /// </summary>
-    public class StartTimerAtApplicationStartConfigElement : ConfigurationElement
+    public enum ActionTimeType
     {
         /// <summary>
-        /// Gets or sets a value that specifies if the timer should be started
-        /// imidiatly after the application is started.
+        /// The action time is specified as a fixed date and time.
         /// </summary>
-        [ConfigurationProperty("value", IsRequired = true)]
-        public bool Value
-        {
-            get
-            {
-                return (bool)this["value"];
-            }
-            set
-            {
-                this["value"] = value;
-            }
-        }
+        FixedDate,
+
+        /// <summary>
+        /// The action time is specified as a delay from the time when the timer is started.
+        /// </summary>
+        Delay,
+
+        /// <summary>
+        /// The action time is exactly the time when the timer is started.
+        /// </summary>
+        Immediate
     }
 }

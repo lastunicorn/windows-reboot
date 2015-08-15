@@ -19,7 +19,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace DustInTheWind.WindowsReboot.UI
+namespace DustInTheWind.WindowsReboot.Presentation
 {
     [ToolboxItem(true)]
     public partial class CustomGroupBox : System.Windows.Forms.GroupBox

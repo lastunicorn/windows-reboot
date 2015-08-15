@@ -17,7 +17,7 @@
 using System;
 using System.Configuration;
 
-namespace DustInTheWind.WindowsReboot.Config
+namespace DustInTheWind.WindowsReboot.Core.Config
 {
     /// <summary>
     /// The configuration element that specifies the initial value of the action time.

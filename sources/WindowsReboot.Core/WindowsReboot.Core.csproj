@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{738C66BC-F74F-47E5-A526-0C565CD1911F}</ProjectGuid>
+    <ProjectGuid>{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DustInTheWind.WindowsReboot.Tests</RootNamespace>
-    <AssemblyName>WindowsReboot.Tests</AssemblyName>
+    <RootNamespace>DustInTheWind.WindowsReboot.Core</RootNamespace>
+    <AssemblyName>WindowsReboot.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -32,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,13 +44,25 @@
     <Compile Include="..\AssemblyInfo.shared.cs">
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
+    <Compile Include="ActionTimeType.cs" />
+    <Compile Include="ActionType.cs" />
+    <Compile Include="Config\ActionTimeConfigElement.cs" />
+    <Compile Include="Config\ActionTypeConfigElement.cs" />
+    <Compile Include="Config\CloseToTrayConfigElement.cs" />
+    <Compile Include="Config\ForceClosingProgramsConfigElement.cs" />
+    <Compile Include="Config\MinimizeToTrayConfigElement.cs" />
+    <Compile Include="Config\StartTimerAtApplicationStartConfigElement.cs" />
+    <Compile Include="Config\WindowsRebootConfigSection.cs" />
+    <Compile Include="Config\WrConfiguration.cs" />
+    <Compile Include="IRebootUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WindowsReboot\WindowsReboot.csproj">
-      <Project>{C407B401-6749-4430-AC5C-8923572A0EA5}</Project>
-      <Name>WindowsReboot</Name>
-    </ProjectReference>
+    <Compile Include="RebootUtil.cs" />
+    <Compile Include="VersionUtil.cs" />
+    <Compile Include="WinApi\LUID.cs" />
+    <Compile Include="WinApi\TOKEN_PRIVILEGES.cs" />
+    <Compile Include="WinApi\WinApiConstants.cs" />
+    <Compile Include="WinApi\WinApiFunctions.cs" />
+    <Compile Include="WindowsRebootException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

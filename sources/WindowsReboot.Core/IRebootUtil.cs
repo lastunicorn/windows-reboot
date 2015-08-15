@@ -14,14 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace DustInTheWind.WindowsReboot.Core
 {
-    internal interface IRebootUtil
+    public interface IRebootUtil
     {
         /// <summary>
         /// Locks the workstation's display. To unlock the workstation, the user must log in.
