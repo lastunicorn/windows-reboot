@@ -60,8 +60,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.licenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.labelTimer = new System.Windows.Forms.Label();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStripTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -94,11 +92,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
             this.tabPageImmediate = new System.Windows.Forms.TabPage();
             this.labelImmediate = new System.Windows.Forms.Label();
             this.customGroupBoxStatusInfo = new DustInTheWind.WindowsReboot.Presentation.CustomGroupBox(this.components);
-            this.tableLayoutPanelStatusInfo = new System.Windows.Forms.TableLayoutPanel();
-            this.labelActionTime = new System.Windows.Forms.Label();
-            this.labelCurrentTime = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.statusControl1 = new DustInTheWind.WindowsReboot.Presentation.StatusControl();
             this.groupBoxActionType = new DustInTheWind.WindowsReboot.Presentation.CustomGroupBox(this.components);
             this.tableLayoutPanelActionType = new System.Windows.Forms.TableLayoutPanel();
             this.checkBoxForceAction = new System.Windows.Forms.CheckBox();
@@ -124,7 +118,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHours)).BeginInit();
             this.tabPageImmediate.SuspendLayout();
             this.customGroupBoxStatusInfo.SuspendLayout();
-            this.tableLayoutPanelStatusInfo.SuspendLayout();
             this.groupBoxActionType.SuspendLayout();
             this.tableLayoutPanelActionType.SuspendLayout();
             this.groupBoxActionStart.SuspendLayout();
@@ -247,28 +240,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // labelTimer
-            // 
-            this.labelTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelTimer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.labelTimer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tableLayoutPanel6.SetColumnSpan(this.labelTimer, 2);
-            this.labelTimer.Font = new System.Drawing.Font("Trebuchet MS", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTimer.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.labelTimer.Location = new System.Drawing.Point(0, 315);
-            this.labelTimer.Margin = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.labelTimer.Name = "labelTimer";
-            this.labelTimer.Size = new System.Drawing.Size(389, 40);
-            this.labelTimer.TabIndex = 7;
-            this.labelTimer.Text = "--  :  --  :  --  .  -";
-            this.labelTimer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // notifyIcon1
             // 
@@ -416,15 +387,13 @@ namespace DustInTheWind.WindowsReboot.Presentation
             this.tableLayoutPanel6.Controls.Add(this.customGroupBoxStatusInfo, 0, 2);
             this.tableLayoutPanel6.Controls.Add(this.groupBoxActionType, 0, 1);
             this.tableLayoutPanel6.Controls.Add(this.groupBoxActionStart, 1, 1);
-            this.tableLayoutPanel6.Controls.Add(this.labelTimer, 0, 3);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(10, 10);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 4;
+            this.tableLayoutPanel6.RowCount = 3;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 110F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(389, 355);
             this.tableLayoutPanel6.TabIndex = 21;
             // 
@@ -621,78 +590,25 @@ namespace DustInTheWind.WindowsReboot.Presentation
             | System.Windows.Forms.AnchorStyles.Right)));
             this.customGroupBoxStatusInfo.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.tableLayoutPanel6.SetColumnSpan(this.customGroupBoxStatusInfo, 2);
-            this.customGroupBoxStatusInfo.Controls.Add(this.tableLayoutPanelStatusInfo);
+            this.customGroupBoxStatusInfo.Controls.Add(this.statusControl1);
             this.customGroupBoxStatusInfo.Location = new System.Drawing.Point(0, 251);
             this.customGroupBoxStatusInfo.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.customGroupBoxStatusInfo.Name = "customGroupBoxStatusInfo";
             this.customGroupBoxStatusInfo.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.customGroupBoxStatusInfo.Size = new System.Drawing.Size(389, 56);
+            this.customGroupBoxStatusInfo.Size = new System.Drawing.Size(389, 100);
             this.customGroupBoxStatusInfo.TabIndex = 23;
             this.customGroupBoxStatusInfo.TabStop = false;
             this.customGroupBoxStatusInfo.TitleColor = System.Drawing.SystemColors.ControlText;
             this.customGroupBoxStatusInfo.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             // 
-            // tableLayoutPanelStatusInfo
+            // statusControl1
             // 
-            this.tableLayoutPanelStatusInfo.ColumnCount = 2;
-            this.tableLayoutPanelStatusInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelStatusInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelStatusInfo.Controls.Add(this.labelActionTime, 1, 1);
-            this.tableLayoutPanelStatusInfo.Controls.Add(this.labelCurrentTime, 1, 0);
-            this.tableLayoutPanelStatusInfo.Controls.Add(this.label5, 0, 1);
-            this.tableLayoutPanelStatusInfo.Controls.Add(this.label4, 0, 0);
-            this.tableLayoutPanelStatusInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelStatusInfo.Location = new System.Drawing.Point(8, 9);
-            this.tableLayoutPanelStatusInfo.Name = "tableLayoutPanelStatusInfo";
-            this.tableLayoutPanelStatusInfo.RowCount = 2;
-            this.tableLayoutPanelStatusInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelStatusInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelStatusInfo.Size = new System.Drawing.Size(373, 38);
-            this.tableLayoutPanelStatusInfo.TabIndex = 15;
-            // 
-            // labelActionTime
-            // 
-            this.labelActionTime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelActionTime.Location = new System.Drawing.Point(85, 19);
-            this.labelActionTime.Margin = new System.Windows.Forms.Padding(8, 0, 3, 0);
-            this.labelActionTime.Name = "labelActionTime";
-            this.labelActionTime.Size = new System.Drawing.Size(285, 19);
-            this.labelActionTime.TabIndex = 13;
-            this.labelActionTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelCurrentTime
-            // 
-            this.labelCurrentTime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelCurrentTime.Location = new System.Drawing.Point(85, 0);
-            this.labelCurrentTime.Margin = new System.Windows.Forms.Padding(8, 0, 3, 0);
-            this.labelCurrentTime.Name = "labelCurrentTime";
-            this.labelCurrentTime.Size = new System.Drawing.Size(285, 19);
-            this.labelCurrentTime.TabIndex = 13;
-            this.labelCurrentTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 22);
-            this.label5.Margin = new System.Windows.Forms.Padding(8, 0, 3, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(62, 13);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Action time:";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label4
-            // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 3);
-            this.label4.Margin = new System.Windows.Forms.Padding(8, 0, 3, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(66, 13);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "Current time:";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.statusControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusControl1.Location = new System.Drawing.Point(8, 9);
+            this.statusControl1.Name = "statusControl1";
+            this.statusControl1.Size = new System.Drawing.Size(373, 82);
+            this.statusControl1.TabIndex = 16;
+            this.statusControl1.ViewModel = null;
             // 
             // groupBoxActionType
             // 
@@ -897,8 +813,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHours)).EndInit();
             this.tabPageImmediate.ResumeLayout(false);
             this.customGroupBoxStatusInfo.ResumeLayout(false);
-            this.tableLayoutPanelStatusInfo.ResumeLayout(false);
-            this.tableLayoutPanelStatusInfo.PerformLayout();
             this.groupBoxActionType.ResumeLayout(false);
             this.groupBoxActionType.PerformLayout();
             this.tableLayoutPanelActionType.ResumeLayout(false);
@@ -929,8 +843,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
         private System.Windows.Forms.Button buttonStartTimer;
         private System.Windows.Forms.Button buttonStopTimer;
         private System.Windows.Forms.CheckBox checkBoxForceAction;
-        private System.Windows.Forms.Label labelTimer;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.PictureBox pictureBoxHeader;
         private System.Windows.Forms.Label labelBlackLine1;
@@ -939,10 +851,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
         private System.Windows.Forms.TabPage tabPageFixedDate;
         private System.Windows.Forms.TabPage tabPageDelay;
         private System.Windows.Forms.TabPage tabPageImmediate;
-        private System.Windows.Forms.Label labelCurrentTime;
-        private System.Windows.Forms.Label labelActionTime;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label labelImmediate;
         private System.Windows.Forms.ToolStripMenuItem licenseToolStripMenuItem;
@@ -966,7 +874,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
         private System.Windows.Forms.ToolStripMenuItem sleepToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hibernateToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelStatusInfo;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelActionStart;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelActionType;
         private CustomGroupBox groupBoxActionTime;
@@ -977,6 +884,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
         private CustomGroupBox customGroupBoxStatusInfo;
         private System.Windows.Forms.CheckBox checkBoxDisplayActionWarning;
         private FixedDateControl fixedDateControl1;
+        private StatusControl statusControl1;
     }
 }
 

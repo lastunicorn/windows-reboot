@@ -44,6 +44,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
         public bool ForceAction { get; set; }
 
         private readonly TimeSpan warningMessageTime = TimeSpan.FromSeconds(30);
+        public TimeSpan TimeUntilAction { get; private set; }
 
         public event EventHandler Started;
         public event EventHandler Stoped;
@@ -101,26 +102,21 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
         private void HandleTickerTick(object sender, EventArgs eventArgs)
         {
-            Check();
-        }
-
-        private void Check()
-        {
             if (!isRunning)
                 return;
 
             DateTime now = DateTime.Now;
 
-            RefreshTimerLabel(now);
+            CalculateRemainingTime(now);
             DisplayWarningIfNeeded(now);
             DoActionIfNeeded(now);
         }
 
-        private void RefreshTimerLabel(DateTime now)
+        private void CalculateRemainingTime(DateTime now)
         {
-            TimeSpan timeUntilAction = ActionTime - now;
+            TimeUntilAction = ActionTime - now;
 
-            OnTick(new TickEventArgs(timeUntilAction));
+            OnTick(new TickEventArgs(TimeUntilAction));
         }
 
         private void DisplayWarningIfNeeded(DateTime now)

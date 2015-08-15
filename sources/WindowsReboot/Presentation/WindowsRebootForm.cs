@@ -38,18 +38,11 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
             comboBoxAction.DataSource = presenter.ActionTypes;
             comboBoxAction.Bind(x => x.SelectedItem, presenter, x => x.SelectedActionType, false, DataSourceUpdateMode.OnPropertyChanged);
-            
+
             this.Bind(x => x.Text, presenter, x => x.Title, false, DataSourceUpdateMode.Never);
-            labelCurrentTime.Bind(x => x.Text, presenter, x => x.LabelCurrentTime, false, DataSourceUpdateMode.Never);
-            labelActionTime.Bind(x => x.Text, presenter, x => x.LabelActionTime, false, DataSourceUpdateMode.Never);
-            labelTimer.Bind(x => x.Text, presenter, x => x.LabelTimer, false, DataSourceUpdateMode.Never);
 
             fixedDateControl1.ViewModel = presenter.FixedDateControlViewModel;
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            presenter.OnTimerElapsed();
+            statusControl1.ViewModel = presenter.StatusControlViewModel;
         }
 
         private void buttonStartTimer_Click(object sender, EventArgs e)

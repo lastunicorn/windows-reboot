@@ -31,17 +31,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
         private readonly IWindowsRebootView view;
 
         private readonly UserInterface userInterface;
-        private readonly UiDispatcher uiDispatcher;
-
-        /// <summary>
-        /// The template used to display the time left until action.
-        /// </summary>
-        private const string TimeTemplate = "{0:00} : {1:00} : {2:00} . {3:0}";
-
-        /// <summary>
-        /// The text displayed when the timer is stopped.
-        /// </summary>
-        private const string TimeTemplateEmpty = "--  :  --  :  --  .  -";
 
         /// <summary>
         /// A value that specifies if the form should be opened with the timer started or not.
@@ -61,12 +50,10 @@ namespace DustInTheWind.WindowsReboot.Presentation
         private readonly Performer performer;
         private ActionTypeItem selectedActionType;
         private string title;
-        private string labelCurrentTime;
-        private string labelActionTime;
-        private string labelTimer;
         private ActionTypeItem[] actionTypes;
 
         public FixedDateControlViewModel FixedDateControlViewModel { get; private set; }
+        public StatusControlViewModel StatusControlViewModel { get; private set; }
 
         /// <summary>
         /// Sets the available values that can be chosed for the action type.
@@ -107,45 +94,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
             }
         }
 
-        /// <summary>
-        /// Sets the label that displays the current time.
-        /// </summary>
-        public string LabelCurrentTime
-        {
-            get { return labelCurrentTime; }
-            set
-            {
-                labelCurrentTime = value;
-                OnPropertyChanged("LabelCurrentTime");
-            }
-        }
-
-        /// <summary>
-        /// Sets the label that displays the time when the action will tace place.
-        /// </summary>
-        public string LabelActionTime
-        {
-            get { return labelActionTime; }
-            set
-            {
-                labelActionTime = value;
-                OnPropertyChanged("LabelActionTime");
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the label that displays the time remained until the action.
-        /// </summary>
-        public string LabelTimer
-        {
-            get { return labelTimer; }
-            set
-            {
-                labelTimer = value;
-                OnPropertyChanged("LabelTimer");
-            }
-        }
-
         #region Constructor
 
         /// <summary>
@@ -162,95 +110,35 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
             this.view = view;
             this.userInterface = userInterface;
-            this.uiDispatcher = uiDispatcher;
+
+            ITicker ticker = new Ticker100();
+            performer = new Performer(userInterface, uiDispatcher, ticker);
 
             FixedDateControlViewModel = new FixedDateControlViewModel();
+            StatusControlViewModel = new StatusControlViewModel(ticker, performer, uiDispatcher);
 
             rebootUtil = new RebootUtil();
 
             config = GetConfiguration();
             configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
 
-            ITicker ticker = new Ticker100();
-
-            performer = new Performer(userInterface, uiDispatcher, ticker);
             performer.Started += HandlePerformerStarted;
             performer.Stoped += HandlePerformerStoped;
-            performer.Tick += HandlePerformerTick;
 
             ActionTypes = Enum.GetValues(typeof(ActionType))
                 .Cast<ActionType>()
                 .Select(x => new ActionTypeItem(x))
                 .ToArray();
-
-            ticker.Tick += HandleTickerTick;
-        }
-
-        private void HandlePerformerTick(object sender, TickEventArgs e)
-        {
-            uiDispatcher.Dispatch(() =>
-            {
-                LabelTimer = ConstructTimerLabel(e.TimeUntilAction);
-            });
         }
 
         private void HandlePerformerStarted(object sender, EventArgs eventArgs)
         {
             EnableInterface(false);
-            LabelActionTime = performer.ActionTime.ToLongDateString() + "  :  " + performer.ActionTime.ToLongTimeString();
         }
 
         private void HandlePerformerStoped(object sender, EventArgs eventArgs)
         {
             EnableInterface(true);
-            LabelActionTime = string.Empty;
-            LabelTimer = TimeTemplateEmpty;
-        }
-
-        #endregion
-
-        #region internal void OnTimerElapsed()
-
-        private void HandleTickerTick(object sender, EventArgs e)
-        {
-            DateTime now = DateTime.Now;
-
-            RefreshCurentTimeLabel(now);
-        }
-
-        private void RefreshCurentTimeLabel(DateTime now)
-        {
-            uiDispatcher.Dispatch(() =>
-            {
-                LabelCurrentTime = string.Format("{0}  :  {1}", now.ToLongDateString(), now.ToLongTimeString());
-            });
-        }
-
-        private static string ConstructTimerLabel(TimeSpan timeUntilAction)
-        {
-            string tmp;
-
-            int d = timeUntilAction.Days;
-            int h = timeUntilAction.Hours;
-            int m = timeUntilAction.Minutes;
-            int s = timeUntilAction.Seconds;
-            int f = Convert.ToInt32(Math.Round((double)(timeUntilAction.Milliseconds / 100)));
-
-            if (d == 1)
-            {
-                tmp = "1 day . ";
-            }
-            else if (d > 1)
-            {
-                tmp = d + " days . ";
-            }
-            else
-            {
-                tmp = string.Empty;
-            }
-
-            tmp += string.Format(TimeTemplate, h, m, s, f);
-            return tmp;
         }
 
         #endregion
@@ -417,7 +305,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
             try
             {
                 view.NotifyIconText = performer.IsRunning
-                    ? LabelTimer
+                    ? TimerFormatter.Format(performer.TimeUntilAction)
                     : Title;
             }
             catch (Exception ex)
