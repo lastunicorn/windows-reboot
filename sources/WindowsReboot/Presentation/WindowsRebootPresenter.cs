@@ -31,6 +31,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
         private readonly IWindowsRebootView view;
 
         private readonly UserInterface userInterface;
+        private readonly UiDispatcher uiDispatcher;
 
         /// <summary>
         /// A value that specifies if the form should be opened with the timer started or not.
@@ -111,6 +112,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
             this.view = view;
             this.userInterface = userInterface;
+            this.uiDispatcher = uiDispatcher;
 
             ITicker ticker = new Ticker100();
             performer = new Performer(userInterface, uiDispatcher, ticker);
@@ -140,7 +142,10 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
         private void HandlePerformerStoped(object sender, EventArgs eventArgs)
         {
-            EnableInterface(true);
+            uiDispatcher.Dispatch(() =>
+            {
+                EnableInterface(true);
+            });
         }
 
         #endregion
@@ -803,16 +808,16 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
         #endregion
 
-        internal void OnActionTypeChanged()
+        internal void OnActionTypeChanged(ActionTypeItem selectedActionType)
         {
-            if (SelectedActionType == null)
+            if (selectedActionType == null)
             {
                 view.ForceActionEnabled = false;
                 view.ForceAction = false;
                 return;
             }
 
-            switch (SelectedActionType.Value)
+            switch (selectedActionType.Value)
             {
                 case ActionType.LogOff:
                 case ActionType.Sleep:

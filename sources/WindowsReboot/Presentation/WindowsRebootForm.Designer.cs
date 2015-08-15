@@ -573,8 +573,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
             this.comboBoxAction.Size = new System.Drawing.Size(155, 21);
             this.comboBoxAction.TabIndex = 3;
             this.comboBoxAction.SelectedIndexChanged += new System.EventHandler(this.comboBoxAction_SelectedIndexChanged);
-            this.comboBoxAction.SelectionChangeCommitted += new System.EventHandler(this.comboBoxAction_SelectionChangeCommitted);
-            this.comboBoxAction.SelectedValueChanged += new System.EventHandler(this.comboBoxAction_SelectedValueChanged);
             // 
             // label6
             // 

@@ -263,22 +263,12 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
         private void comboBoxAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //presenter.OnActionTypeChanged();
+            presenter.OnActionTypeChanged(comboBoxAction.SelectedItem as ActionTypeItem);
         }
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             presenter.OnMenuItemOptionsClicked();
-        }
-
-        private void comboBoxAction_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            //presenter.OnActionTypeChanged();
-        }
-
-        private void comboBoxAction_SelectedValueChanged(object sender, EventArgs e)
-        {
-            presenter.OnActionTypeChanged();
         }
     }
 }
