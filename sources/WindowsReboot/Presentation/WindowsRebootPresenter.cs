@@ -54,6 +54,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
         public FixedDateControlViewModel FixedDateControlViewModel { get; private set; }
         public StatusControlViewModel StatusControlViewModel { get; private set; }
+        public DelayTimeControlViewModel DelayTimeControlViewModel { get; private set; }
 
         /// <summary>
         /// Sets the available values that can be chosed for the action type.
@@ -116,6 +117,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
             FixedDateControlViewModel = new FixedDateControlViewModel();
             StatusControlViewModel = new StatusControlViewModel(ticker, performer, uiDispatcher);
+            DelayTimeControlViewModel = new DelayTimeControlViewModel();
 
             rebootUtil = new RebootUtil();
 
@@ -152,26 +154,27 @@ namespace DustInTheWind.WindowsReboot.Presentation
         /// <returns>The time of the action.</returns>
         private DateTime CalculateActionTime(DateTime now)
         {
-            DateTime time;
+            DateTime actionTime;
 
             if (view.FixedTimeGroupSelected)
             {
-                time = FixedDateControlViewModel.GetFullTime();
+                actionTime = FixedDateControlViewModel.GetFullTime();
             }
             else if (view.DelayGroupSelected)
             {
-                time = now.Add(new TimeSpan(view.Hours, view.Minutes, view.Seconds));
+                TimeSpan time = DelayTimeControlViewModel.GetTime();
+                actionTime = now.Add(time);
             }
             else if (view.ImmediateGroupSelected)
             {
-                time = now;
+                actionTime = now;
             }
             else
             {
                 throw new Exception("No action time was chosen.");
             }
 
-            return time;
+            return actionTime;
         }
 
         #endregion
@@ -186,7 +189,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
             try
             {
                 if (SelectedActionType == null)
-                    return;
+                    throw new WindowsRebootException("Select an action to be performed.");
 
                 DateTime now = DateTime.Now;
                 DateTime actionTime = CalculateActionTime(now);
@@ -688,14 +691,8 @@ namespace DustInTheWind.WindowsReboot.Presentation
         /// </summary>
         private void ClearInterface()
         {
-            DateTime now = DateTime.Now;
-
-            FixedDateControlViewModel.Date = now.Date;
-            FixedDateControlViewModel.Time = now;
-
-            view.Hours = 0;
-            view.Minutes = 0;
-            view.Seconds = 0;
+            FixedDateControlViewModel.Clear();
+            DelayTimeControlViewModel.Clear();
 
             view.DelayGroupSelected = true;
 
@@ -726,9 +723,9 @@ namespace DustInTheWind.WindowsReboot.Presentation
                     break;
 
                 case ActionTimeType.Delay:
-                    view.Hours = this.configSection.ActionTime.Hours;
-                    view.Minutes = this.configSection.ActionTime.Minutes;
-                    view.Seconds = this.configSection.ActionTime.Seconds;
+                    DelayTimeControlViewModel.Hours = this.configSection.ActionTime.Hours;
+                    DelayTimeControlViewModel.Minutes = this.configSection.ActionTime.Minutes;
+                    DelayTimeControlViewModel.Seconds = this.configSection.ActionTime.Seconds;
                     view.DelayGroupSelected = true;
                     break;
 
@@ -767,9 +764,9 @@ namespace DustInTheWind.WindowsReboot.Presentation
             else if (view.DelayGroupSelected)
             {
                 configSection.ActionTime.Type = ActionTimeType.Delay;
-                configSection.ActionTime.Hours = view.Hours;
-                configSection.ActionTime.Minutes = view.Minutes;
-                configSection.ActionTime.Seconds = view.Seconds;
+                configSection.ActionTime.Hours = DelayTimeControlViewModel.Hours;
+                configSection.ActionTime.Minutes = DelayTimeControlViewModel.Minutes;
+                configSection.ActionTime.Seconds = DelayTimeControlViewModel.Seconds;
                 configSection.ActionTime.DateTime = DateTime.Now;
             }
             else if (view.ImmediateGroupSelected)

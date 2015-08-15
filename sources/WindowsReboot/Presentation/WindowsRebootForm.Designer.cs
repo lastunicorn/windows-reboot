@@ -82,13 +82,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
             this.tabPageFixedDate = new System.Windows.Forms.TabPage();
             this.fixedDateControl1 = new DustInTheWind.WindowsReboot.Presentation.FixedDateControl();
             this.tabPageDelay = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.numericUpDownSeconds = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownMinutes = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownHours = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.delayTimeControl1 = new DustInTheWind.WindowsReboot.Presentation.DelayTimeControl();
             this.tabPageImmediate = new System.Windows.Forms.TabPage();
             this.labelImmediate = new System.Windows.Forms.Label();
             this.customGroupBoxStatusInfo = new DustInTheWind.WindowsReboot.Presentation.CustomGroupBox(this.components);
@@ -112,10 +106,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
             this.tabControlActionTime.SuspendLayout();
             this.tabPageFixedDate.SuspendLayout();
             this.tabPageDelay.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSeconds)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHours)).BeginInit();
             this.tabPageImmediate.SuspendLayout();
             this.customGroupBoxStatusInfo.SuspendLayout();
             this.groupBoxActionType.SuspendLayout();
@@ -451,7 +441,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
             // 
             // tabPageDelay
             // 
-            this.tabPageDelay.Controls.Add(this.tableLayoutPanel1);
+            this.tabPageDelay.Controls.Add(this.delayTimeControl1);
             this.tabPageDelay.Location = new System.Drawing.Point(4, 22);
             this.tabPageDelay.Name = "tabPageDelay";
             this.tabPageDelay.Padding = new System.Windows.Forms.Padding(12);
@@ -460,107 +450,15 @@ namespace DustInTheWind.WindowsReboot.Presentation
             this.tabPageDelay.Text = "Delay";
             this.tabPageDelay.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel1
+            // delayTimeControl1
             // 
-            this.tableLayoutPanel1.AutoSize = true;
-            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tableLayoutPanel1.Controls.Add(this.numericUpDownSeconds, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.numericUpDownMinutes, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.numericUpDownHours, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(341, 39);
-            this.tableLayoutPanel1.TabIndex = 15;
-            // 
-            // numericUpDownSeconds
-            // 
-            this.numericUpDownSeconds.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownSeconds.Location = new System.Drawing.Point(229, 16);
-            this.numericUpDownSeconds.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numericUpDownSeconds.Name = "numericUpDownSeconds";
-            this.numericUpDownSeconds.Size = new System.Drawing.Size(109, 20);
-            this.numericUpDownSeconds.TabIndex = 2;
-            this.numericUpDownSeconds.ThousandsSeparator = true;
-            // 
-            // numericUpDownMinutes
-            // 
-            this.numericUpDownMinutes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownMinutes.Location = new System.Drawing.Point(116, 16);
-            this.numericUpDownMinutes.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numericUpDownMinutes.Name = "numericUpDownMinutes";
-            this.numericUpDownMinutes.Size = new System.Drawing.Size(107, 20);
-            this.numericUpDownMinutes.TabIndex = 2;
-            this.numericUpDownMinutes.ThousandsSeparator = true;
-            // 
-            // numericUpDownHours
-            // 
-            this.numericUpDownHours.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownHours.Location = new System.Drawing.Point(3, 16);
-            this.numericUpDownHours.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.numericUpDownHours.Name = "numericUpDownHours";
-            this.numericUpDownHours.Size = new System.Drawing.Size(107, 20);
-            this.numericUpDownHours.TabIndex = 2;
-            this.numericUpDownHours.ThousandsSeparator = true;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(226, 0);
-            this.label3.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(52, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Seconds:";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Hours:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(113, 0);
-            this.label2.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Minutes:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.delayTimeControl1.AutoSize = true;
+            this.delayTimeControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.delayTimeControl1.Location = new System.Drawing.Point(12, 12);
+            this.delayTimeControl1.Name = "delayTimeControl1";
+            this.delayTimeControl1.Size = new System.Drawing.Size(341, 39);
+            this.delayTimeControl1.TabIndex = 0;
+            this.delayTimeControl1.ViewModel = null;
             // 
             // tabPageImmediate
             // 
@@ -675,6 +573,8 @@ namespace DustInTheWind.WindowsReboot.Presentation
             this.comboBoxAction.Size = new System.Drawing.Size(155, 21);
             this.comboBoxAction.TabIndex = 3;
             this.comboBoxAction.SelectedIndexChanged += new System.EventHandler(this.comboBoxAction_SelectedIndexChanged);
+            this.comboBoxAction.SelectionChangeCommitted += new System.EventHandler(this.comboBoxAction_SelectionChangeCommitted);
+            this.comboBoxAction.SelectedValueChanged += new System.EventHandler(this.comboBoxAction_SelectedValueChanged);
             // 
             // label6
             // 
@@ -806,11 +706,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
             this.tabPageFixedDate.PerformLayout();
             this.tabPageDelay.ResumeLayout(false);
             this.tabPageDelay.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSeconds)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHours)).EndInit();
             this.tabPageImmediate.ResumeLayout(false);
             this.customGroupBoxStatusInfo.ResumeLayout(false);
             this.groupBoxActionType.ResumeLayout(false);
@@ -833,12 +728,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown numericUpDownSeconds;
-        private System.Windows.Forms.NumericUpDown numericUpDownMinutes;
-        private System.Windows.Forms.NumericUpDown numericUpDownHours;
         private System.Windows.Forms.ComboBox comboBoxAction;
         private System.Windows.Forms.Button buttonStartTimer;
         private System.Windows.Forms.Button buttonStopTimer;
@@ -873,7 +762,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
         private System.Windows.Forms.ToolStripMenuItem powerOffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sleepToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hibernateToolStripMenuItem;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelActionStart;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelActionType;
         private CustomGroupBox groupBoxActionTime;
@@ -885,6 +773,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
         private System.Windows.Forms.CheckBox checkBoxDisplayActionWarning;
         private FixedDateControl fixedDateControl1;
         private StatusControl statusControl1;
+        private DelayTimeControl delayTimeControl1;
     }
 }
 

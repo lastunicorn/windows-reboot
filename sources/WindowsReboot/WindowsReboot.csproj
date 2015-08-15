@@ -78,6 +78,13 @@
     <Compile Include="Presentation\CustomGroupBox.Designer.cs">
       <DependentUpon>CustomGroupBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\DelayTimeControlViewModel.cs" />
+    <Compile Include="Presentation\DelayTimeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Presentation\DelayTimeControl.Designer.cs">
+      <DependentUpon>DelayTimeControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\FixedDateControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -126,6 +133,9 @@
     <Compile Include="Presentation\IWindowsRebootView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Presentation\DelayTimeControl.resx">
+      <DependentUpon>DelayTimeControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentation\FixedDateControl.resx">
       <DependentUpon>FixedDateControl.cs</DependentUpon>
     </EmbeddedResource>

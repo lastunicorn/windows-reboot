@@ -18,48 +18,52 @@ using System;
 
 namespace DustInTheWind.WindowsReboot.Presentation
 {
-    class FixedDateControlViewModel : ViewModelBase
+    class DelayTimeControlViewModel : ViewModelBase
     {
-        private DateTime date;
-        private DateTime time;
+        private int hours;
+        private int seconds;
+        private int minutes;
 
-        public DateTime Date
+        public int Hours
         {
-            get { return date; }
+            get { return hours; }
             set
             {
-                date = value;
-                OnPropertyChanged("Date");
+                hours = value;
+                OnPropertyChanged("Hours");
             }
         }
 
-        public DateTime Time
+        public int Minutes
         {
-            get { return time; }
+            get { return minutes; }
             set
             {
-                time = value;
-                OnPropertyChanged("Time");
+                minutes = value;
+                OnPropertyChanged("Minutes");
             }
         }
 
-        public FixedDateControlViewModel()
+        public int Seconds
         {
-            date = DateTime.Today;
-            time = DateTime.Now;
+            get { return seconds; }
+            set
+            {
+                seconds = value;
+                OnPropertyChanged("Seconds");
+            }
         }
 
-        public DateTime GetFullTime()
+        public TimeSpan GetTime()
         {
-            return Date.Add(Time.TimeOfDay);
+            return new TimeSpan(Hours, Minutes, Seconds);
         }
 
         public void Clear()
         {
-            DateTime now = DateTime.Now;
-
-            Date = now.Date;
-            Time = now;
+            Hours = 0;
+            Minutes = 0;
+            Seconds = 0;
         }
     }
 }

@@ -36,13 +36,14 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
             presenter = new WindowsRebootPresenter(this, userInterface, uiDispatcher);
 
+            this.Bind(x => x.Text, presenter, x => x.Title, false, DataSourceUpdateMode.Never);
+
             comboBoxAction.DataSource = presenter.ActionTypes;
             comboBoxAction.Bind(x => x.SelectedItem, presenter, x => x.SelectedActionType, false, DataSourceUpdateMode.OnPropertyChanged);
 
-            this.Bind(x => x.Text, presenter, x => x.Title, false, DataSourceUpdateMode.Never);
-
             fixedDateControl1.ViewModel = presenter.FixedDateControlViewModel;
             statusControl1.ViewModel = presenter.StatusControlViewModel;
+            delayTimeControl1.ViewModel = presenter.DelayTimeControlViewModel;
         }
 
         private void buttonStartTimer_Click(object sender, EventArgs e)
@@ -237,24 +238,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
             set { tabControlActionTime.SelectedIndex = 2; }
         }
 
-        public int Hours
-        {
-            get { return Convert.ToInt32(numericUpDownHours.Value); }
-            set { numericUpDownHours.Value = value; }
-        }
-
-        public int Minutes
-        {
-            get { return Convert.ToInt32(numericUpDownMinutes.Value); }
-            set { numericUpDownMinutes.Value = value; }
-        }
-
-        public int Seconds
-        {
-            get { return Convert.ToInt32(numericUpDownSeconds.Value); }
-            set { numericUpDownSeconds.Value = value; }
-        }
-
         public string NotifyIconText
         {
             set { notifyIcon1.Text = value; }
@@ -280,12 +263,22 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
         private void comboBoxAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            presenter.OnActionTypeChanged();
+            //presenter.OnActionTypeChanged();
         }
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             presenter.OnMenuItemOptionsClicked();
+        }
+
+        private void comboBoxAction_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            //presenter.OnActionTypeChanged();
+        }
+
+        private void comboBoxAction_SelectedValueChanged(object sender, EventArgs e)
+        {
+            presenter.OnActionTypeChanged();
         }
     }
 }

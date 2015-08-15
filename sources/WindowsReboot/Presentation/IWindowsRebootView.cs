@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Windows.Forms;
 
 namespace DustInTheWind.WindowsReboot.Presentation
@@ -22,23 +21,18 @@ namespace DustInTheWind.WindowsReboot.Presentation
     internal interface IWindowsRebootView
     {
         bool ForceAction { get; set; }
+        
         bool DisplayActionWarning { get; set; }
+        
         bool ActionTimeGroupEnabled { set; }
         bool ActionTypeGroupEnabled { set; }
+        
         bool MenuItem_LoadInitialSettingsEnabled { set; }
         bool MenuItem_LoadDefaultSettingsEnabled { set; }
         bool ForceActionEnabled { set; }
         bool FixedTimeGroupSelected { get; set; }
         bool DelayGroupSelected { get; set; }
         bool ImmediateGroupSelected { get; set; }
-        
-        int Hours { get; set; }
-        int Minutes { get; set; }
-        int Seconds { get; set; }
-        
-        //DateTime FixedDate { get; set; }
-        //TimeSpan FixedTime { get; set; }
-
 
         /// <summary>
         /// Sets the tool tip text displayed by the notify icon.
