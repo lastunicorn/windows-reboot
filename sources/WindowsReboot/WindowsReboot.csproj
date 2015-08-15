@@ -69,56 +69,56 @@
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
     <Compile Include="IUiDispatcher.cs" />
-    <Compile Include="UI\ActionTypeItem.cs" />
-    <Compile Include="UI\CustomGroupBox.cs">
+    <Compile Include="Presentation\ActionTypeItem.cs" />
+    <Compile Include="Presentation\CustomGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\CustomGroupBox.Designer.cs">
+    <Compile Include="Presentation\CustomGroupBox.Designer.cs">
       <DependentUpon>CustomGroupBox.cs</DependentUpon>
     </Compile>
     <Compile Include="UiDispatcher.cs" />
     <Compile Include="UserInterface.cs" />
-    <Compile Include="UI\LicenseForm.cs">
+    <Compile Include="Presentation\LicenseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\LicenseForm.Designer.cs">
+    <Compile Include="Presentation\LicenseForm.Designer.cs">
       <DependentUpon>LicenseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\OptionsForm.cs">
+    <Compile Include="Presentation\OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\OptionsForm.Designer.cs">
+    <Compile Include="Presentation\OptionsForm.Designer.cs">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\WindowsRebootForm.cs">
+    <Compile Include="Presentation\WindowsRebootForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\WindowsRebootForm.Designer.cs">
+    <Compile Include="Presentation\WindowsRebootForm.Designer.cs">
       <DependentUpon>WindowsRebootForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\FormAbout.cs">
+    <Compile Include="Presentation\FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\FormAbout.Designer.cs">
+    <Compile Include="Presentation\FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\IWindowsRebootView.cs" />
+    <Compile Include="Presentation\IWindowsRebootView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="UI\LicenseForm.resx">
+    <EmbeddedResource Include="Presentation\LicenseForm.resx">
       <DependentUpon>LicenseForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Resources\License.txt" />
-    <EmbeddedResource Include="UI\OptionsForm.resx">
+    <EmbeddedResource Include="Presentation\OptionsForm.resx">
       <DependentUpon>OptionsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\WindowsRebootForm.resx">
+    <EmbeddedResource Include="Presentation\WindowsRebootForm.resx">
       <DependentUpon>WindowsRebootForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\FormAbout.resx">
+    <EmbeddedResource Include="Presentation\FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -141,7 +141,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="UI\WindowsRebootPresenter.cs" />
+    <Compile Include="Presentation\WindowsRebootPresenter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
