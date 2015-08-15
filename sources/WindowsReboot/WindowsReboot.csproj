@@ -78,47 +78,47 @@
     </Compile>
     <Compile Include="UiDispatcher.cs" />
     <Compile Include="UserInterface.cs" />
-    <Compile Include="UI\Views\LicenseForm.cs">
+    <Compile Include="UI\LicenseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Views\LicenseForm.Designer.cs">
+    <Compile Include="UI\LicenseForm.Designer.cs">
       <DependentUpon>LicenseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Views\OptionsForm.cs">
+    <Compile Include="UI\OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Views\OptionsForm.Designer.cs">
+    <Compile Include="UI\OptionsForm.Designer.cs">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Views\WindowsRebootForm.cs">
+    <Compile Include="UI\WindowsRebootForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Views\WindowsRebootForm.Designer.cs">
+    <Compile Include="UI\WindowsRebootForm.Designer.cs">
       <DependentUpon>WindowsRebootForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Views\FormAbout.cs">
+    <Compile Include="UI\FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Views\FormAbout.Designer.cs">
+    <Compile Include="UI\FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\IWindowsRebootView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="UI\Views\LicenseForm.resx">
+    <EmbeddedResource Include="UI\LicenseForm.resx">
       <DependentUpon>LicenseForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Resources\License.txt" />
-    <EmbeddedResource Include="UI\Views\OptionsForm.resx">
+    <EmbeddedResource Include="UI\OptionsForm.resx">
       <DependentUpon>OptionsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Views\WindowsRebootForm.resx">
+    <EmbeddedResource Include="UI\WindowsRebootForm.resx">
       <DependentUpon>WindowsRebootForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Views\FormAbout.resx">
+    <EmbeddedResource Include="UI\FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
