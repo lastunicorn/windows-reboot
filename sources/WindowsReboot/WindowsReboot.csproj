@@ -68,6 +68,8 @@
     <Compile Include="..\AssemblyInfo.shared.cs">
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
+    <Compile Include="BindingExtensions.cs" />
+    <Compile Include="ITicker.cs" />
     <Compile Include="IUiDispatcher.cs" />
     <Compile Include="Presentation\ActionTypeItem.cs" />
     <Compile Include="Presentation\CustomGroupBox.cs">
@@ -76,6 +78,17 @@
     <Compile Include="Presentation\CustomGroupBox.Designer.cs">
       <DependentUpon>CustomGroupBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\FixedDateControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Presentation\FixedDateControl.Designer.cs">
+      <DependentUpon>FixedDateControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\FixedDateControlViewModel.cs" />
+    <Compile Include="Presentation\Performer.cs" />
+    <Compile Include="Presentation\TickEventArgs.cs" />
+    <Compile Include="Presentation\ViewModelBase.cs" />
+    <Compile Include="Ticker100.cs" />
     <Compile Include="UiDispatcher.cs" />
     <Compile Include="UserInterface.cs" />
     <Compile Include="Presentation\LicenseForm.cs">
@@ -105,6 +118,9 @@
     <Compile Include="Presentation\IWindowsRebootView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Presentation\FixedDateControl.resx">
+      <DependentUpon>FixedDateControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentation\LicenseForm.resx">
       <DependentUpon>LicenseForm.cs</DependentUpon>
       <SubType>Designer</SubType>

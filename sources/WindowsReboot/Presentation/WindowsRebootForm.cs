@@ -19,7 +19,7 @@ using System.Windows.Forms;
 
 namespace DustInTheWind.WindowsReboot.Presentation
 {
-    internal partial class WindowsRebootForm : Form, IWindowsRebootView
+    partial class WindowsRebootForm : Form, IWindowsRebootView
     {
         private readonly WindowsRebootPresenter presenter;
 
@@ -35,6 +35,16 @@ namespace DustInTheWind.WindowsReboot.Presentation
             UiDispatcher uiDispatcher = new UiDispatcher();
 
             presenter = new WindowsRebootPresenter(this, userInterface, uiDispatcher);
+
+            comboBoxAction.DataSource = presenter.ActionTypes;
+            comboBoxAction.Bind(x => x.SelectedItem, presenter, x => x.SelectedActionType, false, DataSourceUpdateMode.OnPropertyChanged);
+            
+            this.Bind(x => x.Text, presenter, x => x.Title, false, DataSourceUpdateMode.Never);
+            labelCurrentTime.Bind(x => x.Text, presenter, x => x.LabelCurrentTime, false, DataSourceUpdateMode.Never);
+            labelActionTime.Bind(x => x.Text, presenter, x => x.LabelActionTime, false, DataSourceUpdateMode.Never);
+            labelTimer.Bind(x => x.Text, presenter, x => x.LabelTimer, false, DataSourceUpdateMode.Never);
+
+            fixedDateControl1.ViewModel = presenter.FixedDateControlViewModel;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -159,28 +169,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
         #region IWindowsRebootView Members
 
-        public string Title
-        {
-            get { return Text; }
-            set { Text = value; }
-        }
-
-        public string LabelCurrentTime
-        {
-            set { labelCurrentTime.Text = value; }
-        }
-
-        public string LabelActionTime
-        {
-            set { labelActionTime.Text = value; }
-        }
-
-        public string LabelTimer
-        {
-            get { return labelTimer.Text; }
-            set { labelTimer.Text = value; }
-        }
-
         public ActionTypeItem[] ActionTypes
         {
             set
@@ -272,18 +260,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
         {
             get { return Convert.ToInt32(numericUpDownSeconds.Value); }
             set { numericUpDownSeconds.Value = value; }
-        }
-
-        public DateTime FixedDate
-        {
-            get { return dateTimePickerFixedDate.Value.Date; }
-            set { dateTimePickerFixedDate.Value = value; }
-        }
-
-        public TimeSpan FixedTime
-        {
-            get { return dateTimePickerFixedTime.Value.TimeOfDay; }
-            set { dateTimePickerFixedTime.Value = DateTime.Today.AddTicks(value.Ticks); }
         }
 
         public string NotifyIconText

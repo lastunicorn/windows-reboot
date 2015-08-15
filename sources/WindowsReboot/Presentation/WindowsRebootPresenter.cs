@@ -16,13 +16,14 @@
 
 using System;
 using System.Configuration;
+using System.Linq;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Config;
 
 namespace DustInTheWind.WindowsReboot.Presentation
 {
-    internal class WindowsRebootPresenter
+    internal class WindowsRebootPresenter : ViewModelBase
     {
         /// <summary>
         /// The view used to interact with the user.
@@ -35,27 +36,12 @@ namespace DustInTheWind.WindowsReboot.Presentation
         /// <summary>
         /// The template used to display the time left until action.
         /// </summary>
-        private const string TIME_TEMPLATE = "{0:00} : {1:00} : {2:00} . {3:0}";
+        private const string TimeTemplate = "{0:00} : {1:00} : {2:00} . {3:0}";
 
         /// <summary>
         /// The text displayed when the timer is stopped.
         /// </summary>
-        private const string TIME_TEMPLATE_EMPTY = "--  :  --  :  --  .  -";
-
-        /// <summary>
-        /// Indicates if the timer was started.
-        /// </summary>
-        private volatile bool actionIsSet;
-
-        /// <summary>
-        /// The time when the timer was started.
-        /// </summary>
-        private DateTime startTime;
-
-        /// <summary>
-        /// The time when the action should be executed.
-        /// </summary>
-        private DateTime actionTime;
+        private const string TimeTemplateEmpty = "--  :  --  :  --  .  -";
 
         /// <summary>
         /// A value that specifies if the form should be opened with the timer started or not.
@@ -71,10 +57,94 @@ namespace DustInTheWind.WindowsReboot.Presentation
         /// </summary>
         private bool exitRequested;
 
-        private bool displayWarningMessage;
-        private readonly TimeSpan warningMessageTime = TimeSpan.FromSeconds(30);
-
         private readonly IRebootUtil rebootUtil;
+        private readonly Performer performer;
+        private ActionTypeItem selectedActionType;
+        private string title;
+        private string labelCurrentTime;
+        private string labelActionTime;
+        private string labelTimer;
+        private ActionTypeItem[] actionTypes;
+
+        public FixedDateControlViewModel FixedDateControlViewModel { get; private set; }
+
+        /// <summary>
+        /// Sets the available values that can be chosed for the action type.
+        /// </summary>
+        public ActionTypeItem[] ActionTypes
+        {
+            get { return actionTypes; }
+            set
+            {
+                actionTypes = value;
+                OnPropertyChanged("ActionTypes");
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the action type.
+        /// </summary>
+        public ActionTypeItem SelectedActionType
+        {
+            get { return selectedActionType; }
+            set
+            {
+                selectedActionType = value;
+                OnPropertyChanged("SelectedActionType");
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the title of the window.
+        /// </summary>
+        public string Title
+        {
+            get { return title; }
+            set
+            {
+                title = value;
+                OnPropertyChanged("Title");
+            }
+        }
+
+        /// <summary>
+        /// Sets the label that displays the current time.
+        /// </summary>
+        public string LabelCurrentTime
+        {
+            get { return labelCurrentTime; }
+            set
+            {
+                labelCurrentTime = value;
+                OnPropertyChanged("LabelCurrentTime");
+            }
+        }
+
+        /// <summary>
+        /// Sets the label that displays the time when the action will tace place.
+        /// </summary>
+        public string LabelActionTime
+        {
+            get { return labelActionTime; }
+            set
+            {
+                labelActionTime = value;
+                OnPropertyChanged("LabelActionTime");
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the label that displays the time remained until the action.
+        /// </summary>
+        public string LabelTimer
+        {
+            get { return labelTimer; }
+            set
+            {
+                labelTimer = value;
+                OnPropertyChanged("LabelTimer");
+            }
+        }
 
         #region Constructor
 
@@ -94,68 +164,66 @@ namespace DustInTheWind.WindowsReboot.Presentation
             this.userInterface = userInterface;
             this.uiDispatcher = uiDispatcher;
 
+            FixedDateControlViewModel = new FixedDateControlViewModel();
+
             rebootUtil = new RebootUtil();
 
             config = GetConfiguration();
             configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
+
+            ITicker ticker = new Ticker100();
+
+            performer = new Performer(userInterface, uiDispatcher, ticker);
+            performer.Started += HandlePerformerStarted;
+            performer.Stoped += HandlePerformerStoped;
+            performer.Tick += HandlePerformerTick;
+
+            ActionTypes = Enum.GetValues(typeof(ActionType))
+                .Cast<ActionType>()
+                .Select(x => new ActionTypeItem(x))
+                .ToArray();
+
+            ticker.Tick += HandleTickerTick;
+        }
+
+        private void HandlePerformerTick(object sender, TickEventArgs e)
+        {
+            uiDispatcher.Dispatch(() =>
+            {
+                LabelTimer = ConstructTimerLabel(e.TimeUntilAction);
+            });
+        }
+
+        private void HandlePerformerStarted(object sender, EventArgs eventArgs)
+        {
+            EnableInterface(false);
+            LabelActionTime = performer.ActionTime.ToLongDateString() + "  :  " + performer.ActionTime.ToLongTimeString();
+        }
+
+        private void HandlePerformerStoped(object sender, EventArgs eventArgs)
+        {
+            EnableInterface(true);
+            LabelActionTime = string.Empty;
+            LabelTimer = TimeTemplateEmpty;
         }
 
         #endregion
 
         #region internal void OnTimerElapsed()
 
-        /// <summary>
-        /// Method called by the timer. It updates the interface and, if necesary, it executes the chosen action.
-        /// </summary>
-        internal void OnTimerElapsed()
+        private void HandleTickerTick(object sender, EventArgs e)
         {
             DateTime now = DateTime.Now;
 
             RefreshCurentTimeLabel(now);
-
-            if (actionIsSet)
-            {
-                RefreshTimerLabel(now);
-                DisplayWarningIfNeeded(now);
-                DoActionIfNeeded(now);
-            }
         }
 
         private void RefreshCurentTimeLabel(DateTime now)
         {
-            view.LabelCurrentTime = string.Format("{0}  :  {1}", now.ToLongDateString(), now.ToLongTimeString());
-        }
-
-        private void RefreshTimerLabel(DateTime now)
-        {
-            TimeSpan timeUntilAction = actionTime - now;
-            view.LabelTimer = ConstructTimerLabel(timeUntilAction);
-        }
-
-        private void DisplayWarningIfNeeded(DateTime now)
-        {
-            if (!displayWarningMessage || actionTime - warningMessageTime > now)
-                return;
-
-            displayWarningMessage = false;
-
             uiDispatcher.Dispatch(() =>
             {
-                string message = string.Format("In 30 seconds WindowsReboot will perform {0} action.", view.ActionType);
-                userInterface.DisplayMessage(message);
+                LabelCurrentTime = string.Format("{0}  :  {1}", now.ToLongDateString(), now.ToLongTimeString());
             });
-        }
-
-        private void DoActionIfNeeded(DateTime now)
-        {
-            if (actionTime <= now)
-            {
-                actionIsSet = false;
-                DoAction(view.ActionType.Value);
-                EnableInterface(true);
-                view.LabelActionTime = string.Empty;
-                view.LabelTimer = TIME_TEMPLATE_EMPTY;
-            }
         }
 
         private static string ConstructTimerLabel(TimeSpan timeUntilAction)
@@ -181,57 +249,8 @@ namespace DustInTheWind.WindowsReboot.Presentation
                 tmp = string.Empty;
             }
 
-            tmp += string.Format(TIME_TEMPLATE, h, m, s, f);
+            tmp += string.Format(TimeTemplate, h, m, s, f);
             return tmp;
-        }
-
-        #endregion
-
-        #region private void DoAction(ActionType actionType)
-
-        /// <summary>
-        /// Executes the action.
-        /// </summary>
-        /// <param name="actionType">The action to be executes.</param>
-        private void DoAction(ActionType actionType)
-        {
-            switch (actionType)
-            {
-                case ActionType.Ring:
-                    uiDispatcher.Dispatch(() =>
-                    {
-                        userInterface.DisplayMessage("Ring-ring!");
-                    });
-                    break;
-
-                case ActionType.LockWorkstation:
-                    rebootUtil.Lock();
-                    break;
-
-                case ActionType.LogOff:
-                    rebootUtil.LogOff(view.ForceAction);
-                    break;
-
-                case ActionType.Sleep:
-                    rebootUtil.Sleep(view.ForceAction);
-                    break;
-
-                case ActionType.Hibernate:
-                    rebootUtil.Hibernate(view.ForceAction);
-                    break;
-
-                case ActionType.Reboot:
-                    rebootUtil.Reboot(view.ForceAction);
-                    break;
-
-                case ActionType.ShutDown:
-                    rebootUtil.ShutDown(view.ForceAction);
-                    break;
-
-                case ActionType.PowerOff:
-                    rebootUtil.PowerOff(view.ForceAction);
-                    break;
-            }
         }
 
         #endregion
@@ -249,7 +268,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
             if (view.FixedTimeGroupSelected)
             {
-                time = view.FixedDate.Add(view.FixedTime);
+                time = FixedDateControlViewModel.GetFullTime();
             }
             else if (view.DelayGroupSelected)
             {
@@ -278,29 +297,15 @@ namespace DustInTheWind.WindowsReboot.Presentation
         {
             try
             {
+                if (SelectedActionType == null)
+                    return;
+
                 DateTime now = DateTime.Now;
                 DateTime actionTime = CalculateActionTime(now);
 
-                if (actionTime < now)
-                {
-                    string currentTimeString = now.ToLongDateString() + " : " + now.ToLongTimeString();
-                    string actionTimeString = actionTime.ToLongDateString() + " : " + actionTime.ToLongTimeString();
-
-                    string message = string.Format("The action time already passed.\nPlease specify a time in the future to execute the action.\n\nCurrent time: {0}\nRequested action time: {1}.", currentTimeString, actionTimeString);
-                    userInterface.DisplayErrorMessage(message);
-                }
-                else
-                {
-                    this.actionTime = actionTime;
-                    startTime = now;
-                    EnableInterface(false);
-                    view.LabelActionTime = this.actionTime.ToLongDateString() + "  :  " + this.actionTime.ToLongTimeString();
-
-                    if (view.DisplayActionWarning && actionTime - now > warningMessageTime)
-                        displayWarningMessage = true;
-
-                    actionIsSet = true;
-                }
+                performer.DisplayWarningMessage = view.DisplayActionWarning;
+                performer.ForceAction = view.ForceAction;
+                performer.Start(actionTime, SelectedActionType.Value);
             }
             catch (Exception ex)
             {
@@ -315,10 +320,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
         {
             try
             {
-                actionIsSet = false;
-                EnableInterface(true);
-                view.LabelActionTime = string.Empty;
-                view.LabelTimer = TIME_TEMPLATE_EMPTY;
+                performer.Stop();
             }
             catch (Exception ex)
             {
@@ -337,20 +339,10 @@ namespace DustInTheWind.WindowsReboot.Presentation
         {
             try
             {
-                string title = Application.ProductName + " " + VersionUtil.GetVersionToString();
-                view.Title = title;
+                string title = string.Format("{0} {1}", Application.ProductName, VersionUtil.GetVersionToString());
+
+                Title = title;
                 view.NotifyIconText = title;
-
-                Array values = Enum.GetValues(typeof(ActionType));
-
-                ActionTypeItem[] items = new ActionTypeItem[values.Length];
-
-                for (int i = 0; i < values.Length; i++)
-                {
-                    items[i] = new ActionTypeItem((ActionType)values.GetValue(i));
-                }
-
-                view.ActionTypes = items;
 
                 LoadInitialConfiguration();
             }
@@ -379,7 +371,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
             }
             else
             {
-                allowToCLose = !actionIsSet || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
+                allowToCLose = !performer.IsRunning || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
             }
 
 
@@ -424,9 +416,9 @@ namespace DustInTheWind.WindowsReboot.Presentation
         {
             try
             {
-                view.NotifyIconText = actionIsSet 
-                    ? view.LabelTimer
-                    : view.Title;
+                view.NotifyIconText = performer.IsRunning
+                    ? LabelTimer
+                    : Title;
             }
             catch (Exception ex)
             {
@@ -724,7 +716,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
         {
             try
             {
-                if (actionIsSet)
+                if (performer.IsRunning)
                     userInterface.DisplayErrorMessage("Cannot complete the task while the timer is started.");
                 else
                     ClearInterface();
@@ -742,7 +734,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
         {
             try
             {
-                if (actionIsSet)
+                if (performer.IsRunning)
                     userInterface.DisplayErrorMessage("Cannot complete the task while the timer is started.");
                 else
                     LoadInitialConfiguration();
@@ -810,8 +802,8 @@ namespace DustInTheWind.WindowsReboot.Presentation
         {
             DateTime now = DateTime.Now;
 
-            view.FixedDate = now.Date;
-            view.FixedTime = now.TimeOfDay;
+            FixedDateControlViewModel.Date = now.Date;
+            FixedDateControlViewModel.Time = now;
 
             view.Hours = 0;
             view.Minutes = 0;
@@ -819,7 +811,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
             view.DelayGroupSelected = true;
 
-            view.ActionType = new ActionTypeItem(ActionType.PowerOff);
+            SelectedActionType = new ActionTypeItem(ActionType.PowerOff);
 
             view.ForceAction = true;
         }
@@ -840,8 +832,8 @@ namespace DustInTheWind.WindowsReboot.Presentation
             switch (configSection.ActionTime.Type)
             {
                 case ActionTimeType.FixedDate:
-                    view.FixedDate = this.configSection.ActionTime.DateTime.Date;
-                    view.FixedTime = this.configSection.ActionTime.DateTime.TimeOfDay;
+                    FixedDateControlViewModel.Date = this.configSection.ActionTime.DateTime.Date;
+                    FixedDateControlViewModel.Time = this.configSection.ActionTime.DateTime;
                     view.FixedTimeGroupSelected = true;
                     break;
 
@@ -857,7 +849,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
                     break;
             }
 
-            view.ActionType = new ActionTypeItem(this.configSection.ActionType.Value);
+            SelectedActionType = new ActionTypeItem(this.configSection.ActionType.Value);
 
             view.ForceAction = this.configSection.ForceClosingPrograms.Value;
 
@@ -879,7 +871,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
             if (view.FixedTimeGroupSelected)
             {
                 configSection.ActionTime.Type = ActionTimeType.FixedDate;
-                configSection.ActionTime.DateTime = view.FixedDate.Date.Add(view.FixedTime);
+                configSection.ActionTime.DateTime = FixedDateControlViewModel.GetFullTime();
                 configSection.ActionTime.Hours = 0;
                 configSection.ActionTime.Minutes = 0;
                 configSection.ActionTime.Seconds = 0;
@@ -901,7 +893,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
                 configSection.ActionTime.Seconds = 0;
             }
 
-            configSection.ActionType.Value = view.ActionType.Value;
+            configSection.ActionType.Value = SelectedActionType == null ? ActionType.Ring : SelectedActionType.Value;
 
             configSection.ForceClosingPrograms.Value = view.ForceAction;
 
@@ -928,7 +920,14 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
         internal void OnActionTypeChanged()
         {
-            switch (view.ActionType.Value)
+            if (SelectedActionType == null)
+            {
+                view.ForceActionEnabled = false;
+                view.ForceAction = false;
+                return;
+            }
+
+            switch (SelectedActionType.Value)
             {
                 case ActionType.LogOff:
                 case ActionType.Sleep:
