@@ -21,6 +21,9 @@ namespace DustInTheWind.WindowsReboot.Core
     /// </summary>
     public enum TaskType
     {
+        /// <summary>
+        /// Displays a message box to aunce the time has past.
+        /// </summary>
         Ring,
 
         /// <summary>

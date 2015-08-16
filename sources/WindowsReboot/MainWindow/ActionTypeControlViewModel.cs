@@ -1,9 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Windows Reboot
+// Copyright (C) 2009-2012 Dust in the Wind
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+using System;
 using System.Linq;
-using System.Text;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
@@ -13,9 +26,10 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private readonly Task task;
         private ActionTypeItem[] actionTypes;
         private ActionTypeItem selectedActionType;
-        //private bool forceAction;
         private bool forceActionEnabled;
-        //private bool displayWarningMessage;
+        private bool forceActionBackup;
+        private bool forceAction;
+        private bool displayWarningMessage;
 
         /// <summary>
         /// Sets the available values that can be chosed for the action type.
@@ -45,10 +59,10 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         public bool ForceAction
         {
-            get { return task.ForceAction; }
+            get { return forceAction; }
             set
             {
-                task.ForceAction = value;
+                forceAction = value;
                 OnPropertyChanged("ForceAction");
             }
         }
@@ -65,10 +79,10 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         public bool DisplayActionWarning
         {
-            get { return task.DisplayWarningMessage; }
+            get { return displayWarningMessage; }
             set
             {
-                task.DisplayWarningMessage = value;
+                displayWarningMessage = value;
                 OnPropertyChanged("DisplayActionWarning");
             }
         }
@@ -85,9 +99,10 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 .ToArray();
 
             forceActionBackup = true;
-        }
 
-        private bool forceActionBackup;
+            forceAction = true;
+            displayWarningMessage = true;
+        }
 
         public void OnActionTypeChanged()
         {
