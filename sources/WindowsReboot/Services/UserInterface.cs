@@ -23,7 +23,20 @@ namespace DustInTheWind.WindowsReboot.Services
 {
     internal class UserInterface
     {
+        private readonly IUiDispatcher uiDispatcher;
         public Form MainForm { get; set; }
+
+        public UserInterface(IUiDispatcher uiDispatcher)
+        {
+            if (uiDispatcher == null) throw new ArgumentNullException("uiDispatcher");
+
+            this.uiDispatcher = uiDispatcher;
+        }
+
+        public void Dispatch(Action action)
+        {
+            uiDispatcher.Dispatch(action);
+        }
 
         public void DisplayAbout()
         {

@@ -82,24 +82,20 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.groupBoxActionTime = new DustInTheWind.WindowsReboot.Presentation.CustomGroupBox(this.components);
             this.tabControlActionTime = new System.Windows.Forms.TabControl();
             this.tabPageFixedDate = new System.Windows.Forms.TabPage();
-            this.fixedDateControl1 = new FixedDateControl();
+            this.fixedDateControl1 = new DustInTheWind.WindowsReboot.MainWindow.FixedDateControl();
             this.tabPageDelay = new System.Windows.Forms.TabPage();
-            this.delayTimeControl1 = new DelayTimeControl();
+            this.delayTimeControl1 = new DustInTheWind.WindowsReboot.MainWindow.DelayTimeControl();
             this.tabPageImmediate = new System.Windows.Forms.TabPage();
             this.labelImmediate = new System.Windows.Forms.Label();
             this.customGroupBoxStatusInfo = new DustInTheWind.WindowsReboot.Presentation.CustomGroupBox(this.components);
-            this.statusControl1 = new StatusControl();
+            this.statusControl1 = new DustInTheWind.WindowsReboot.MainWindow.StatusControl();
             this.groupBoxActionType = new DustInTheWind.WindowsReboot.Presentation.CustomGroupBox(this.components);
-            this.tableLayoutPanelActionType = new System.Windows.Forms.TableLayoutPanel();
-            this.checkBoxForceAction = new System.Windows.Forms.CheckBox();
-            this.comboBoxAction = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.checkBoxDisplayActionWarning = new System.Windows.Forms.CheckBox();
             this.groupBoxActionStart = new DustInTheWind.WindowsReboot.Presentation.CustomGroupBox(this.components);
             this.tableLayoutPanelActionStart = new System.Windows.Forms.TableLayoutPanel();
             this.buttonStopTimer = new System.Windows.Forms.Button();
             this.buttonStartTimer = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.actionTypeControl1 = new DustInTheWind.WindowsReboot.MainWindow.ActionTypeControl();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStripTrayIcon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHeader)).BeginInit();
@@ -111,7 +107,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.tabPageImmediate.SuspendLayout();
             this.customGroupBoxStatusInfo.SuspendLayout();
             this.groupBoxActionType.SuspendLayout();
-            this.tableLayoutPanelActionType.SuspendLayout();
             this.groupBoxActionStart.SuspendLayout();
             this.tableLayoutPanelActionStart.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -516,7 +511,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxActionType.BorderColor = System.Drawing.SystemColors.ActiveBorder;
-            this.groupBoxActionType.Controls.Add(this.tableLayoutPanelActionType);
+            this.groupBoxActionType.Controls.Add(this.actionTypeControl1);
             this.groupBoxActionType.Location = new System.Drawing.Point(0, 141);
             this.groupBoxActionType.Margin = new System.Windows.Forms.Padding(0, 4, 4, 4);
             this.groupBoxActionType.Name = "groupBoxActionType";
@@ -528,75 +523,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.groupBoxActionType.TitleColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxActionType.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.groupBoxActionType.TitlePadding = new System.Windows.Forms.Padding(3, 0, 5, 0);
-            // 
-            // tableLayoutPanelActionType
-            // 
-            this.tableLayoutPanelActionType.AutoSize = true;
-            this.tableLayoutPanelActionType.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanelActionType.ColumnCount = 2;
-            this.tableLayoutPanelActionType.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanelActionType.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelActionType.Controls.Add(this.checkBoxForceAction, 1, 1);
-            this.tableLayoutPanelActionType.Controls.Add(this.comboBoxAction, 1, 0);
-            this.tableLayoutPanelActionType.Controls.Add(this.label6, 0, 0);
-            this.tableLayoutPanelActionType.Controls.Add(this.checkBoxDisplayActionWarning, 1, 2);
-            this.tableLayoutPanelActionType.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanelActionType.Location = new System.Drawing.Point(3, 21);
-            this.tableLayoutPanelActionType.Name = "tableLayoutPanelActionType";
-            this.tableLayoutPanelActionType.RowCount = 3;
-            this.tableLayoutPanelActionType.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanelActionType.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanelActionType.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanelActionType.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelActionType.Size = new System.Drawing.Size(230, 73);
-            this.tableLayoutPanelActionType.TabIndex = 18;
-            // 
-            // checkBoxForceAction
-            // 
-            this.checkBoxForceAction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxForceAction.AutoSize = true;
-            this.checkBoxForceAction.Checked = true;
-            this.checkBoxForceAction.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxForceAction.Location = new System.Drawing.Point(72, 30);
-            this.checkBoxForceAction.Name = "checkBoxForceAction";
-            this.checkBoxForceAction.Size = new System.Drawing.Size(155, 17);
-            this.checkBoxForceAction.TabIndex = 5;
-            this.checkBoxForceAction.Text = "Force action";
-            this.checkBoxForceAction.UseVisualStyleBackColor = true;
-            // 
-            // comboBoxAction
-            // 
-            this.comboBoxAction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxAction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxAction.FormattingEnabled = true;
-            this.comboBoxAction.Location = new System.Drawing.Point(72, 3);
-            this.comboBoxAction.Name = "comboBoxAction";
-            this.comboBoxAction.Size = new System.Drawing.Size(155, 21);
-            this.comboBoxAction.TabIndex = 3;
-            this.comboBoxAction.SelectedIndexChanged += new System.EventHandler(this.comboBoxAction_SelectedIndexChanged);
-            // 
-            // label6
-            // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 7);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 13);
-            this.label6.TabIndex = 14;
-            this.label6.Text = "Action type:";
-            // 
-            // checkBoxDisplayActionWarning
-            // 
-            this.checkBoxDisplayActionWarning.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxDisplayActionWarning.AutoSize = true;
-            this.checkBoxDisplayActionWarning.Location = new System.Drawing.Point(72, 53);
-            this.checkBoxDisplayActionWarning.Name = "checkBoxDisplayActionWarning";
-            this.checkBoxDisplayActionWarning.Size = new System.Drawing.Size(155, 17);
-            this.checkBoxDisplayActionWarning.TabIndex = 15;
-            this.checkBoxDisplayActionWarning.Text = "Display warning";
-            this.checkBoxDisplayActionWarning.UseVisualStyleBackColor = true;
             // 
             // groupBoxActionStart
             // 
@@ -674,6 +600,16 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.panel1.Size = new System.Drawing.Size(409, 375);
             this.panel1.TabIndex = 22;
             // 
+            // actionTypeControl1
+            // 
+            this.actionTypeControl1.AutoSize = true;
+            this.actionTypeControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.actionTypeControl1.Location = new System.Drawing.Point(3, 21);
+            this.actionTypeControl1.Name = "actionTypeControl1";
+            this.actionTypeControl1.Size = new System.Drawing.Size(230, 73);
+            this.actionTypeControl1.TabIndex = 0;
+            this.actionTypeControl1.ViewModel = null;
+            // 
             // WindowsRebootForm
             // 
             this.AcceptButton = this.buttonStartTimer;
@@ -710,8 +646,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.customGroupBoxStatusInfo.ResumeLayout(false);
             this.groupBoxActionType.ResumeLayout(false);
             this.groupBoxActionType.PerformLayout();
-            this.tableLayoutPanelActionType.ResumeLayout(false);
-            this.tableLayoutPanelActionType.PerformLayout();
             this.groupBoxActionStart.ResumeLayout(false);
             this.tableLayoutPanelActionStart.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -728,10 +662,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ComboBox comboBoxAction;
         private System.Windows.Forms.Button buttonStartTimer;
         private System.Windows.Forms.Button buttonStopTimer;
-        private System.Windows.Forms.CheckBox checkBoxForceAction;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.PictureBox pictureBoxHeader;
         private System.Windows.Forms.Label labelBlackLine1;
@@ -740,7 +672,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private System.Windows.Forms.TabPage tabPageFixedDate;
         private System.Windows.Forms.TabPage tabPageDelay;
         private System.Windows.Forms.TabPage tabPageImmediate;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label labelImmediate;
         private System.Windows.Forms.ToolStripMenuItem licenseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configurationToolStripMenuItem;
@@ -763,17 +694,16 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private System.Windows.Forms.ToolStripMenuItem sleepToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hibernateToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelActionStart;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelActionType;
         private CustomGroupBox groupBoxActionTime;
         private CustomGroupBox groupBoxActionType;
         private CustomGroupBox groupBoxActionStart;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Panel panel1;
         private CustomGroupBox customGroupBoxStatusInfo;
-        private System.Windows.Forms.CheckBox checkBoxDisplayActionWarning;
         private FixedDateControl fixedDateControl1;
         private StatusControl statusControl1;
         private DelayTimeControl delayTimeControl1;
+        private ActionTypeControl actionTypeControl1;
     }
 }
 

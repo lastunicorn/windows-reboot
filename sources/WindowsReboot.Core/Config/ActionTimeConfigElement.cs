@@ -28,9 +28,9 @@ namespace DustInTheWind.WindowsReboot.Core.Config
         /// Gets or sets the way in which the action time is specified or how it will be calculated.
         /// </summary>
         [ConfigurationProperty("type", IsRequired = true)]
-        public ActionTimeType Type
+        public JobTimeType Type
         {
-            get { return (ActionTimeType)this["type"]; }
+            get { return (JobTimeType)this["type"]; }
             set { this["type"] = value; }
         }
 

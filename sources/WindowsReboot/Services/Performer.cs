@@ -22,7 +22,6 @@ namespace DustInTheWind.WindowsReboot.Services
     class Performer
     {
         private readonly UserInterface userInterface;
-        private readonly UiDispatcher uiDispatcher;
         private readonly ITicker ticker;
 
         private readonly IRebootUtil rebootUtil;
@@ -32,18 +31,10 @@ namespace DustInTheWind.WindowsReboot.Services
         /// </summary>
         private volatile bool isRunning;
 
-        private ActionType actionType;
-
-        /// <summary>
-        /// The time when the action should be executed.
-        /// </summary>
-        public DateTime ActionTime { get; private set; }
-
-        public bool DisplayWarningMessage { get; set; }
-
-        public bool ForceAction { get; set; }
+        private Task task;
 
         private readonly TimeSpan warningMessageTime = TimeSpan.FromSeconds(30);
+        private DateTime taskRunTime;
         public TimeSpan TimeUntilAction { get; private set; }
 
         public event EventHandler Started;
@@ -58,38 +49,47 @@ namespace DustInTheWind.WindowsReboot.Services
             get { return isRunning; }
         }
 
-        public Performer(UserInterface userInterface, UiDispatcher uiDispatcher, ITicker ticker)
+        public DateTime? ActionTime
+        {
+            get
+            {
+                return task == null
+                    ? (DateTime?)null
+                    : task.CalculateTimeToRun(DateTime.Now);
+            }
+        }
+
+        public Performer(UserInterface userInterface, ITicker ticker)
         {
             if (userInterface == null) throw new ArgumentNullException("userInterface");
-            if (uiDispatcher == null) throw new ArgumentNullException("uiDispatcher");
             if (ticker == null) throw new ArgumentNullException("ticker");
 
             this.userInterface = userInterface;
-            this.uiDispatcher = uiDispatcher;
             this.ticker = ticker;
 
             rebootUtil = new RebootUtil();
         }
 
-        public void Start(DateTime actionTime, ActionType actionType)
+        public void Start(Task newTask)
         {
             DateTime now = DateTime.Now;
+            DateTime runTime = newTask.CalculateTimeToRun(now);
 
-            if (actionTime < now)
+            if (runTime < now)
             {
                 string currentTimeString = string.Format("{0} : {1}", now.ToLongDateString(), now.ToLongTimeString());
-                string actionTimeString = string.Format("{0} : {1}", actionTime.ToLongDateString(), actionTime.ToLongTimeString());
+                string actionTimeString = string.Format("{0} : {1}", runTime.ToLongDateString(), runTime.ToLongTimeString());
 
                 string message = string.Format("The action time already passed.\nPlease specify a time in the future to execute the action.\n\nCurrent time: {0}\nRequested action time: {1}.", currentTimeString, actionTimeString);
                 userInterface.DisplayErrorMessage(message);
             }
             else
             {
-                ActionTime = actionTime;
-                this.actionType = actionType;
+                taskRunTime = runTime;
+                task = newTask;
 
-                if (DisplayWarningMessage && actionTime - now < warningMessageTime)
-                    DisplayWarningMessage = false;
+                if (task.DisplayWarningMessage && runTime - now < warningMessageTime)
+                    task.DisplayWarningMessage = false;
 
                 isRunning = true;
 
@@ -113,73 +113,71 @@ namespace DustInTheWind.WindowsReboot.Services
 
         private void CalculateRemainingTime(DateTime now)
         {
-            TimeUntilAction = ActionTime - now;
+            TimeUntilAction = taskRunTime - now;
 
             OnTick(new TickEventArgs(TimeUntilAction));
         }
 
         private void DisplayWarningIfNeeded(DateTime now)
         {
-            if (!DisplayWarningMessage || ActionTime - warningMessageTime > now)
+            if (!task.DisplayWarningMessage || taskRunTime - warningMessageTime > now)
                 return;
 
-            DisplayWarningMessage = false;
+            task.DisplayWarningMessage = false;
 
-            uiDispatcher.Dispatch(() =>
+            userInterface.Dispatch(() =>
             {
-                string message = string.Format("In 30 seconds WindowsReboot will perform {0} action.", actionType);
+                string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.", task.Type);
                 userInterface.DisplayMessage(message);
             });
         }
 
         private void DoActionIfNeeded(DateTime now)
         {
-            if (ActionTime <= now)
-            {
-                isRunning = false;
-                DoAction();
+            if (taskRunTime > now)
+                return;
 
-                OnStoped();
-            }
+            Stop();
+            DoAction();
         }
 
         private void DoAction()
         {
-            switch (actionType)
+            switch (task.Type)
             {
-                case ActionType.Ring:
-                    uiDispatcher.Dispatch(() =>
+                case TaskType.Ring:
+                    userInterface.Dispatch(() =>
                     {
                         userInterface.DisplayMessage("Ring-ring!");
                     });
                     break;
 
-                case ActionType.LockWorkstation:
+                case TaskType.LockWorkstation:
                     rebootUtil.Lock();
                     break;
 
-                case ActionType.LogOff:
-                    rebootUtil.LogOff(ForceAction);
+                case TaskType.LogOff:
+                    rebootUtil.LogOff(task.ForceAction);
                     break;
 
-                case ActionType.Sleep:
-                    rebootUtil.Sleep(ForceAction);
+                case TaskType.Sleep:
+                    rebootUtil.Sleep(task.ForceAction);
                     break;
 
-                case ActionType.Hibernate:
-                    rebootUtil.Hibernate(ForceAction);
+                case TaskType.Hibernate:
+                    rebootUtil.Hibernate(task.ForceAction);
                     break;
 
-                case ActionType.Reboot:
-                    rebootUtil.Reboot(ForceAction);
+                case TaskType.Reboot:
+                    rebootUtil.Reboot(task.ForceAction);
                     break;
 
-                case ActionType.ShutDown:
-                    rebootUtil.ShutDown(ForceAction);
+                case TaskType.ShutDown:
+                    rebootUtil.ShutDown(task.ForceAction);
                     break;
 
-                case ActionType.PowerOff:
-                    rebootUtil.PowerOff(ForceAction);
+                case TaskType.PowerOff:
+                    rebootUtil.PowerOff(task.ForceAction);
                     break;
             }
         }

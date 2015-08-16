@@ -23,7 +23,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
     class StatusControlViewModel : ViewModelBase
     {
         private readonly Performer performer;
-        private readonly UiDispatcher uiDispatcher;
+        private readonly UserInterface userInterface;
         private DateTime currentTime;
         private DateTime? actionTime;
         private TimeSpan? timerTime;
@@ -58,14 +58,14 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        public StatusControlViewModel(ITicker ticker, Performer performer, UiDispatcher uiDispatcher)
+        public StatusControlViewModel(ITicker ticker, Performer performer, UserInterface userInterface)
         {
             if (ticker == null) throw new ArgumentNullException("ticker");
             if (performer == null) throw new ArgumentNullException("performer");
-            if (uiDispatcher == null) throw new ArgumentNullException("uiDispatcher");
+            if (userInterface == null) throw new ArgumentNullException("userInterface");
 
             this.performer = performer;
-            this.uiDispatcher = uiDispatcher;
+            this.userInterface = userInterface;
 
             ticker.Tick += HandleTickerTick;
 
@@ -76,7 +76,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         private void HandleTickerTick(object sender, EventArgs eventArgs)
         {
-            uiDispatcher.Dispatch(() =>
+            userInterface.Dispatch(() =>
             {
                 CurrentTime = DateTime.Now;
             });
@@ -84,7 +84,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         private void HandlePerformerStarted(object sender, EventArgs eventArgs)
         {
-            uiDispatcher.Dispatch(() =>
+            userInterface.Dispatch(() =>
             {
                 ActionTime = performer.ActionTime;
             });
@@ -92,7 +92,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         private void HandlePerformerStoped(object sender, EventArgs eventArgs)
         {
-            uiDispatcher.Dispatch(() =>
+            userInterface.Dispatch(() =>
             {
                 ActionTime = null;
                 TimerTime = null;
@@ -101,7 +101,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         private void HandlePerformerTick(object sender, TickEventArgs e)
         {
-            uiDispatcher.Dispatch(() =>
+            userInterface.Dispatch(() =>
             {
                 TimerTime = e.TimeUntilAction;
             });

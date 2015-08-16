@@ -19,7 +19,7 @@ namespace DustInTheWind.WindowsReboot.Core
     /// <summary>
     /// Indicates an action that can be executed when the timer elapses.
     /// </summary>
-    public enum ActionType
+    public enum TaskType
     {
         Ring,
 

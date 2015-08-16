@@ -19,7 +19,7 @@ using System.Timers;
 
 namespace DustInTheWind.WindowsReboot.Services
 {
-    class Ticker100 : IDisposable, ITicker
+    public class Ticker100 : IDisposable, ITicker
     {
         private bool isDisposed;
         private readonly Timer timer;

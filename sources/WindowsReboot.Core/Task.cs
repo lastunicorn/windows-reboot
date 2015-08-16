@@ -14,26 +14,32 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+
 namespace DustInTheWind.WindowsReboot.Core
 {
-    /// <summary>
-    /// The way in which the action time is specified.
-    /// </summary>
-    public enum ActionTimeType
+    public class Task
     {
-        /// <summary>
-        /// The action time is specified as a fixed date and time.
-        /// </summary>
-        FixedDate,
+        public TaskType Type { get; set; }
+        public TaskTime Time { get; set; }
 
-        /// <summary>
-        /// The action time is specified as a delay from the time when the timer is started.
-        /// </summary>
-        Delay,
+        public bool ForceAction { get; set; }
+        public bool DisplayWarningMessage { get; set; }
 
-        /// <summary>
-        /// The action time is exactly the time when the timer is started.
-        /// </summary>
-        Immediate
+        public Task()
+        {
+            ForceAction = true;
+            DisplayWarningMessage = true;
+        }
+
+        public DateTime CalculateTimeToRun(DateTime now)
+        {
+            return Time.CalculateTimeFrom(now);
+        }
+
+        public TimeSpan CalculateTimeUntilRun(DateTime now)
+        {
+            return Time.CalculateIntervalFrom(now);
+        }
     }
 }

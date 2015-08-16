@@ -18,7 +18,7 @@ using System;
 
 namespace DustInTheWind.WindowsReboot.Services
 {
-    internal interface ITicker
+    public interface ITicker
     {
         event EventHandler Tick;
     }

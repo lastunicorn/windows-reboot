@@ -20,16 +20,12 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 {
     internal interface IWindowsRebootView
     {
-        bool ForceAction { get; set; }
-        
-        bool DisplayActionWarning { get; set; }
-        
         bool ActionTimeGroupEnabled { set; }
         bool ActionTypeGroupEnabled { set; }
-        
+
         bool MenuItem_LoadInitialSettingsEnabled { set; }
         bool MenuItem_LoadDefaultSettingsEnabled { set; }
-        bool ForceActionEnabled { set; }
+
         bool FixedTimeGroupSelected { get; set; }
         bool DelayGroupSelected { get; set; }
         bool ImmediateGroupSelected { get; set; }

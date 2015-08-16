@@ -27,14 +27,14 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// <summary>
         /// Gets the type of the action to be executed.
         /// </summary>
-        public ActionType Value { get; private set; }
+        public TaskType Value { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ActionTypeItem"/> class with
         /// the type of the action to be executed.
         /// </summary>
         /// <param name="value">The type of the action to be executed.</param>
-        public ActionTypeItem(ActionType value)
+        public ActionTypeItem(TaskType value)
         {
             Value = value;
         }
@@ -47,25 +47,25 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             switch (Value)
             {
-                case ActionType.LockWorkstation:
+                case TaskType.LockWorkstation:
                     return "Lock Computer";
 
-                case ActionType.LogOff:
+                case TaskType.LogOff:
                     return "Log Off";
 
-                case ActionType.Sleep:
+                case TaskType.Sleep:
                     return "Sleep";
 
-                case ActionType.Hibernate:
+                case TaskType.Hibernate:
                     return "Hibernate";
 
-                case ActionType.Reboot:
+                case TaskType.Reboot:
                     return "Reboot";
 
-                case ActionType.ShutDown:
+                case TaskType.ShutDown:
                     return "Shut Down";
 
-                case ActionType.PowerOff:
+                case TaskType.PowerOff:
                     return "Power Off";
 
                 default:

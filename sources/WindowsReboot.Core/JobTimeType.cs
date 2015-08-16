@@ -14,29 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Configuration;
-
-namespace DustInTheWind.WindowsReboot.Core.Config
+namespace DustInTheWind.WindowsReboot.Core
 {
     /// <summary>
-    /// The configurtion element that specifies the initial value of the action type.
+    /// The way in which the action time is specified.
     /// </summary>
-    public class ActionTypeConfigElement : ConfigurationElement
+    public enum JobTimeType
     {
         /// <summary>
-        /// Gets or sets the initial value of the action type.
+        /// The action time is specified as a fixed date and time.
         /// </summary>
-        [ConfigurationProperty("value", IsRequired = true)]
-        public TaskType Value
-        {
-            get
-            {
-                return (TaskType)this["value"];
-            }
-            set
-            {
-                this["value"] = value;
-            }
-        }
+        FixedDate,
+
+        /// <summary>
+        /// The action time is specified as a delay from the time when the timer is started.
+        /// </summary>
+        Delay,
+
+        /// <summary>
+        /// The action time is exactly the time when the timer is started.
+        /// </summary>
+        Immediate
     }
 }

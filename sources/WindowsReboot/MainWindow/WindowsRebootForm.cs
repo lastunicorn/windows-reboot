@@ -16,6 +16,7 @@
 
 using System;
 using System.Windows.Forms;
+using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Services;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
@@ -28,23 +29,24 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             InitializeComponent();
 
-            UserInterface userInterface = new UserInterface
+            UiDispatcher uiDispatcher = new UiDispatcher();
+
+            UserInterface userInterface = new UserInterface(uiDispatcher)
             {
                 MainForm = this
             };
 
-            UiDispatcher uiDispatcher = new UiDispatcher();
-
-            presenter = new WindowsRebootPresenter(this, userInterface, uiDispatcher);
+            ITicker ticker = new Ticker100();
+            Performer performer = new Performer(userInterface, ticker);
+            IRebootUtil rebootUtil = new RebootUtil();
+            presenter = new WindowsRebootPresenter(this, userInterface, ticker, performer, rebootUtil);
 
             this.Bind(x => x.Text, presenter, x => x.Title, false, DataSourceUpdateMode.Never);
-
-            comboBoxAction.DataSource = presenter.ActionTypes;
-            comboBoxAction.Bind(x => x.SelectedItem, presenter, x => x.SelectedActionType, false, DataSourceUpdateMode.OnPropertyChanged);
 
             fixedDateControl1.ViewModel = presenter.FixedDateControlViewModel;
             statusControl1.ViewModel = presenter.StatusControlViewModel;
             delayTimeControl1.ViewModel = presenter.DelayTimeControlViewModel;
+            actionTypeControl1.ViewModel = presenter.ActionTypeControlViewModel;
         }
 
         private void buttonStartTimer_Click(object sender, EventArgs e)
@@ -164,33 +166,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         #region IWindowsRebootView Members
 
-        public ActionTypeItem[] ActionTypes
-        {
-            set
-            {
-                comboBoxAction.Items.Clear();
-                comboBoxAction.Items.AddRange(value);
-            }
-        }
-
-        public ActionTypeItem ActionType
-        {
-            get { return (ActionTypeItem)comboBoxAction.SelectedItem; }
-            set { comboBoxAction.SelectedItem = value; }
-        }
-
-        public bool ForceAction
-        {
-            get { return checkBoxForceAction.Checked; }
-            set { checkBoxForceAction.Checked = value; }
-        }
-
-        public bool DisplayActionWarning
-        {
-            get { return checkBoxDisplayActionWarning.Checked; }
-            set { checkBoxDisplayActionWarning.Checked = value; }
-        }
-
         public bool ActionTimeGroupEnabled
         {
             set { groupBoxActionTime.Enabled = value; }
@@ -209,16 +184,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         public bool MenuItem_LoadDefaultSettingsEnabled
         {
             set { loadDefaultSettingsToolStripMenuItem.Enabled = value; }
-        }
-
-        public bool ActionTypeEnabled
-        {
-            set { comboBoxAction.Enabled = value; }
-        }
-
-        public bool ForceActionEnabled
-        {
-            set { checkBoxForceAction.Enabled = value; }
         }
 
         public bool FixedTimeGroupSelected
@@ -260,11 +225,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             if (WindowState == FormWindowState.Minimized)
                 presenter.OnFormMinimized();
-        }
-
-        private void comboBoxAction_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            presenter.OnActionTypeChanged(comboBoxAction.SelectedItem as ActionTypeItem);
         }
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)

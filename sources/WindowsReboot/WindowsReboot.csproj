@@ -69,7 +69,13 @@
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
     <Compile Include="BindingExtensions.cs" />
-    <Compile Include="Services\ITicker.cs" />
+    <Compile Include="MainWindow\ActionTypeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainWindow\ActionTypeControl.Designer.cs">
+      <DependentUpon>ActionTypeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\ActionTypeControlViewModel.cs" />
     <Compile Include="Services\IUiDispatcher.cs" />
     <Compile Include="Services\Performer.cs" />
     <Compile Include="MainWindow\ActionTypeItem.cs" />
@@ -103,7 +109,6 @@
     <Compile Include="Services\TickEventArgs.cs" />
     <Compile Include="Services\TimerFormatter.cs" />
     <Compile Include="Presentation\ViewModelBase.cs" />
-    <Compile Include="Services\Ticker100.cs" />
     <Compile Include="Services\UiDispatcher.cs" />
     <Compile Include="Services\UserInterface.cs" />
     <Compile Include="Presentation\LicenseForm.cs">
@@ -133,6 +138,9 @@
     <Compile Include="MainWindow\IWindowsRebootView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="MainWindow\ActionTypeControl.resx">
+      <DependentUpon>ActionTypeControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\DelayTimeControl.resx">
       <DependentUpon>DelayTimeControl.cs</DependentUpon>
     </EmbeddedResource>
