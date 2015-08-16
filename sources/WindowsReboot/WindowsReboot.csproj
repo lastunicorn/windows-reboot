@@ -69,43 +69,43 @@
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
     <Compile Include="BindingExtensions.cs" />
-    <Compile Include="ITicker.cs" />
-    <Compile Include="IUiDispatcher.cs" />
-    <Compile Include="Presentation\ActionTypeItem.cs" />
+    <Compile Include="Services\ITicker.cs" />
+    <Compile Include="Services\IUiDispatcher.cs" />
+    <Compile Include="Services\Performer.cs" />
+    <Compile Include="MainWindow\ActionTypeItem.cs" />
     <Compile Include="Presentation\CustomGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Presentation\CustomGroupBox.Designer.cs">
       <DependentUpon>CustomGroupBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\DelayTimeControlViewModel.cs" />
-    <Compile Include="Presentation\DelayTimeControl.cs">
+    <Compile Include="MainWindow\DelayTimeControlViewModel.cs" />
+    <Compile Include="MainWindow\DelayTimeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Presentation\DelayTimeControl.Designer.cs">
+    <Compile Include="MainWindow\DelayTimeControl.Designer.cs">
       <DependentUpon>DelayTimeControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\FixedDateControl.cs">
+    <Compile Include="MainWindow\FixedDateControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Presentation\FixedDateControl.Designer.cs">
+    <Compile Include="MainWindow\FixedDateControl.Designer.cs">
       <DependentUpon>FixedDateControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\FixedDateControlViewModel.cs" />
-    <Compile Include="Presentation\Performer.cs" />
-    <Compile Include="Presentation\StatusControl.cs">
+    <Compile Include="MainWindow\FixedDateControlViewModel.cs" />
+    <Compile Include="MainWindow\StatusControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Presentation\StatusControl.Designer.cs">
+    <Compile Include="MainWindow\StatusControl.Designer.cs">
       <DependentUpon>StatusControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\StatusControlViewModel.cs" />
-    <Compile Include="Presentation\TickEventArgs.cs" />
-    <Compile Include="Presentation\TimerFormatter.cs" />
+    <Compile Include="MainWindow\StatusControlViewModel.cs" />
+    <Compile Include="Services\TickEventArgs.cs" />
+    <Compile Include="Services\TimerFormatter.cs" />
     <Compile Include="Presentation\ViewModelBase.cs" />
-    <Compile Include="Ticker100.cs" />
-    <Compile Include="UiDispatcher.cs" />
-    <Compile Include="UserInterface.cs" />
+    <Compile Include="Services\Ticker100.cs" />
+    <Compile Include="Services\UiDispatcher.cs" />
+    <Compile Include="Services\UserInterface.cs" />
     <Compile Include="Presentation\LicenseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,10 +118,10 @@
     <Compile Include="Presentation\OptionsForm.Designer.cs">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\WindowsRebootForm.cs">
+    <Compile Include="MainWindow\WindowsRebootForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\WindowsRebootForm.Designer.cs">
+    <Compile Include="MainWindow\WindowsRebootForm.Designer.cs">
       <DependentUpon>WindowsRebootForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentation\FormAbout.cs">
@@ -130,13 +130,13 @@
     <Compile Include="Presentation\FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\IWindowsRebootView.cs" />
+    <Compile Include="MainWindow\IWindowsRebootView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Presentation\DelayTimeControl.resx">
+    <EmbeddedResource Include="MainWindow\DelayTimeControl.resx">
       <DependentUpon>DelayTimeControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\FixedDateControl.resx">
+    <EmbeddedResource Include="MainWindow\FixedDateControl.resx">
       <DependentUpon>FixedDateControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\LicenseForm.resx">
@@ -148,10 +148,10 @@
       <DependentUpon>OptionsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\StatusControl.resx">
+    <EmbeddedResource Include="MainWindow\StatusControl.resx">
       <DependentUpon>StatusControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\WindowsRebootForm.resx">
+    <EmbeddedResource Include="MainWindow\WindowsRebootForm.resx">
       <DependentUpon>WindowsRebootForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -178,7 +178,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Presentation\WindowsRebootPresenter.cs" />
+    <Compile Include="MainWindow\WindowsRebootPresenter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />

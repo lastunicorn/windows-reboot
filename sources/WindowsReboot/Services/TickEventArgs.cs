@@ -15,23 +15,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.MainWindow;
-using DustInTheWind.WindowsReboot.Presentation;
 
-namespace DustInTheWind.WindowsReboot
+namespace DustInTheWind.WindowsReboot.Services
 {
-    static class Program
+    class TickEventArgs : EventArgs
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
+        public TimeSpan TimeUntilAction { get; private set; }
+
+        public TickEventArgs(TimeSpan timeUntilAction)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new WindowsRebootForm());
+            TimeUntilAction = timeUntilAction;
         }
     }
 }

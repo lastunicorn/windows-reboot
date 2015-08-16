@@ -15,23 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.MainWindow;
-using DustInTheWind.WindowsReboot.Presentation;
+using System.Threading;
 
-namespace DustInTheWind.WindowsReboot
+namespace DustInTheWind.WindowsReboot.Services
 {
-    static class Program
+    class UiDispatcher : IUiDispatcher
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
+        private readonly SynchronizationContext synchronizationContext;
+
+        public UiDispatcher()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new WindowsRebootForm());
+            synchronizationContext = SynchronizationContext.Current;
+        }
+
+        public void Dispatch(Action action)
+        {
+            synchronizationContext.Post(o => action(), null);
         }
     }
 }

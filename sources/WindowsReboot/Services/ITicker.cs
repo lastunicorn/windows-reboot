@@ -1,4 +1,4 @@
-﻿// Windows Reboot
+// Windows Reboot
 // Copyright (C) 2009-2012 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -15,23 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.MainWindow;
-using DustInTheWind.WindowsReboot.Presentation;
 
-namespace DustInTheWind.WindowsReboot
+namespace DustInTheWind.WindowsReboot.Services
 {
-    static class Program
+    internal interface ITicker
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new WindowsRebootForm());
-        }
+        event EventHandler Tick;
     }
 }

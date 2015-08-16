@@ -22,7 +22,7 @@ using System.Windows.Forms;
 namespace DustInTheWind.WindowsReboot.Presentation
 {
     [ToolboxItem(true)]
-    public partial class CustomGroupBox : System.Windows.Forms.GroupBox
+    public partial class CustomGroupBox : GroupBox
     {
         private Font titleFont;
 
@@ -30,7 +30,11 @@ namespace DustInTheWind.WindowsReboot.Presentation
         public Font TitleFont
         {
             get { return titleFont; }
-            set { titleFont = value; this.Invalidate(); }
+            set
+            {
+                titleFont = value;
+                Invalidate();
+            }
         }
 
         private Color titleColor;
@@ -42,8 +46,8 @@ namespace DustInTheWind.WindowsReboot.Presentation
             set
             {
                 titleColor = value;
-                this.invalidPaintResources = true;
-                this.Invalidate();
+                invalidPaintResources = true;
+                Invalidate();
             }
         }
 
@@ -53,7 +57,11 @@ namespace DustInTheWind.WindowsReboot.Presentation
         public HorizontalAlignment TitleAlignment
         {
             get { return titleAlignment; }
-            set { titleAlignment = value; this.Invalidate(); }
+            set
+            {
+                titleAlignment = value;
+                Invalidate();
+            }
         }
 
         private Color borderColor;
@@ -65,8 +73,8 @@ namespace DustInTheWind.WindowsReboot.Presentation
             set
             {
                 borderColor = value;
-                this.invalidPaintResources = true;
-                this.Invalidate();
+                invalidPaintResources = true;
+                Invalidate();
             }
         }
 
@@ -76,7 +84,11 @@ namespace DustInTheWind.WindowsReboot.Presentation
         public int CornerRadius
         {
             get { return cornerRadius; }
-            set { cornerRadius = value; this.Invalidate(); }
+            set
+            {
+                cornerRadius = value;
+                Invalidate();
+            }
         }
 
         private Padding titlePadding;
@@ -85,7 +97,11 @@ namespace DustInTheWind.WindowsReboot.Presentation
         public Padding TitlePadding
         {
             get { return titlePadding; }
-            set { titlePadding = value; this.Invalidate(); }
+            set
+            {
+                titlePadding = value;
+                Invalidate();
+            }
         }
 
         private Padding titleMargin;
@@ -94,7 +110,11 @@ namespace DustInTheWind.WindowsReboot.Presentation
         public Padding TitleMargin
         {
             get { return titleMargin; }
-            set { titleMargin = value; this.Invalidate(); }
+            set
+            {
+                titleMargin = value;
+                Invalidate();
+            }
         }
 
         #region Constructors
@@ -115,15 +135,15 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
         private void AdditionalInitialization()
         {
-            this.titleFont = (Font)this.Font.Clone();
-            this.titleColor = this.ForeColor;
-            this.titleAlignment = HorizontalAlignment.Left;
-            this.borderColor = SystemColors.ActiveBorder;
-            this.cornerRadius = 5;
-            this.titlePadding = new Padding(3, 0, 3, 0);
-            this.titleMargin = new Padding(2, 0, 2, 0);
+            titleFont = (Font)Font.Clone();
+            titleColor = ForeColor;
+            titleAlignment = HorizontalAlignment.Left;
+            borderColor = SystemColors.ActiveBorder;
+            cornerRadius = 5;
+            titlePadding = new Padding(3, 0, 3, 0);
+            titleMargin = new Padding(2, 0, 2, 0);
 
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
         }
 
         #endregion
@@ -132,10 +152,11 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
         protected override void OnTextChanged(EventArgs e)
         {
-            using (Graphics g = this.CreateGraphics())
+            using (Graphics g = CreateGraphics())
             {
-                this.titleSize = g.MeasureString(this.Text, this.titleFont);
+                titleSize = g.MeasureString(Text, titleFont);
             }
+
             base.OnTextChanged(e);
         }
 
@@ -195,8 +216,8 @@ namespace DustInTheWind.WindowsReboot.Presentation
         private volatile bool invalidLayoutRectangles = true;
 
         private Rectangle cornerTopLeftRectangle = Rectangle.Empty;
-        private Rectangle cornerTopRightRectangle  = Rectangle.Empty;
-        private Rectangle cornerBottomRightRectangle  = Rectangle.Empty;
+        private Rectangle cornerTopRightRectangle = Rectangle.Empty;
+        private Rectangle cornerBottomRightRectangle = Rectangle.Empty;
         private Rectangle cornerBottomLeftRectangle = Rectangle.Empty;
 
         private void CreateLayoutRectangles()
