@@ -18,7 +18,7 @@ using System;
 using System.Linq.Expressions;
 using System.Windows.Forms;
 
-namespace DustInTheWind.WindowsReboot
+namespace DustInTheWind.WindowsReboot.UiCommon
 {
     internal static class BindingExtensions
     {

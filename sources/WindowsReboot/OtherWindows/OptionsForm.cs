@@ -18,7 +18,7 @@ using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core.Config;
 
-namespace DustInTheWind.WindowsReboot.Presentation
+namespace DustInTheWind.WindowsReboot.OtherWindows
 {
     /// <summary>
     /// Displaies some options that the user can set.

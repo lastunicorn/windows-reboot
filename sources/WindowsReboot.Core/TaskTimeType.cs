@@ -19,7 +19,7 @@ namespace DustInTheWind.WindowsReboot.Core
     /// <summary>
     /// The way in which the action time is specified.
     /// </summary>
-    public enum JobTimeType
+    public enum TaskTimeType
     {
         /// <summary>
         /// The action time is specified as a fixed date and time.

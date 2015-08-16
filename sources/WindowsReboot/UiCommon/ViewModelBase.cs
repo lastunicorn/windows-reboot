@@ -14,17 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+using System.ComponentModel;
 
-namespace DustInTheWind.WindowsReboot.Services
+namespace DustInTheWind.WindowsReboot.UiCommon
 {
-    class TickEventArgs : EventArgs
+    class ViewModelBase : INotifyPropertyChanged
     {
-        public TimeSpan TimeUntilAction { get; private set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public TickEventArgs(TimeSpan timeUntilAction)
+        protected virtual void OnPropertyChanged(string propertyName)
         {
-            TimeUntilAction = timeUntilAction;
+            PropertyChangedEventHandler handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

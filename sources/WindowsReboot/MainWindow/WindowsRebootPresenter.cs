@@ -19,8 +19,9 @@ using System.Configuration;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Config;
-using DustInTheWind.WindowsReboot.Presentation;
+using DustInTheWind.WindowsReboot.Core.Services;
 using DustInTheWind.WindowsReboot.Services;
+using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
@@ -48,7 +49,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private bool exitRequested;
 
         private readonly IRebootUtil rebootUtil;
-        private readonly Performer performer;
+        private readonly Task task;
         private string title;
 
         public FixedDateControlViewModel FixedDateControlViewModel { get; private set; }
@@ -76,28 +77,28 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// the view used to interact with the user.
         /// </summary>
         public WindowsRebootPresenter(IWindowsRebootView view, UserInterface userInterface,
-            ITicker ticker, Performer performer, IRebootUtil rebootUtil)
+            ITicker ticker, Task task, IRebootUtil rebootUtil)
         {
             if (view == null) throw new ArgumentNullException("view");
             if (userInterface == null) throw new ArgumentNullException("userInterface");
-            if (performer == null) throw new ArgumentNullException("performer");
+            if (task == null) throw new ArgumentNullException("task");
             if (rebootUtil == null) throw new ArgumentNullException("rebootUtil");
 
             this.view = view;
             this.userInterface = userInterface;
-            this.performer = performer;
+            this.task = task;
             this.rebootUtil = rebootUtil;
 
             FixedDateControlViewModel = new FixedDateControlViewModel();
             DelayTimeControlViewModel = new DelayTimeControlViewModel();
-            StatusControlViewModel = new StatusControlViewModel(ticker, performer, userInterface);
-            ActionTypeControlViewModel = new ActionTypeControlViewModel(performer);
+            StatusControlViewModel = new StatusControlViewModel(ticker, task, userInterface);
+            ActionTypeControlViewModel = new ActionTypeControlViewModel(task);
 
             config = GetConfiguration();
             configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
 
-            performer.Started += HandlePerformerStarted;
-            performer.Stoped += HandlePerformerStoped;
+            task.Started += HandlePerformerStarted;
+            task.Stoped += HandlePerformerStoped;
         }
 
         private void HandlePerformerStarted(object sender, EventArgs eventArgs)
@@ -115,40 +116,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         #endregion
 
-        #region private DateTime CalculateActionTime(DateTime now)
-
-        ///// <summary>
-        ///// Calculates the time of the action based on the values provided by the user.
-        ///// </summary>
-        ///// <param name="now">The current time.</param>
-        ///// <returns>The time of the action.</returns>
-        //private DateTime CalculateActionTime(DateTime now)
-        //{
-        //    DateTime actionTime;
-
-        //    if (view.FixedTimeGroupSelected)
-        //    {
-        //        actionTime = FixedDateControlViewModel.GetFullTime();
-        //    }
-        //    else if (view.DelayGroupSelected)
-        //    {
-        //        TimeSpan time = DelayTimeControlViewModel.GetTime();
-        //        actionTime = now.Add(time);
-        //    }
-        //    else if (view.ImmediateGroupSelected)
-        //    {
-        //        actionTime = now;
-        //    }
-        //    else
-        //    {
-        //        throw new Exception("No action time was chosen.");
-        //    }
-
-        //    return actionTime;
-        //}
-
-        #endregion
-
         #region Start/Stop timer
 
         /// <summary>
@@ -163,17 +130,11 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
                 TaskTime taskTime = GetActionTime();
 
-                Task task = new Task
-                {
-                    Time = taskTime,
-                    Type = ActionTypeControlViewModel.SelectedActionType.Value,
-                    DisplayWarningMessage = ActionTypeControlViewModel.DisplayActionWarning,
-                    ForceAction = ActionTypeControlViewModel.ForceAction
-                };
-
-                //performer.DisplayWarningMessage = ActionTypeControlViewModel.DisplayActionWarning;
-                //performer.ForceAction = ActionTypeControlViewModel.ForceAction;
-                performer.Start(task);
+                task.Time = taskTime;
+                task.Type = ActionTypeControlViewModel.SelectedActionType.Value;
+                task.DisplayWarningMessage = ActionTypeControlViewModel.DisplayActionWarning;
+                task.ForceAction = ActionTypeControlViewModel.ForceAction;
+                task.Start();
             }
             catch (Exception ex)
             {
@@ -187,7 +148,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 return new TaskTime
                 {
-                    Type = JobTimeType.FixedDate,
+                    Type = TaskTimeType.FixedDate,
                     DateTime = FixedDateControlViewModel.GetFullTime()
                 };
             }
@@ -196,21 +157,21 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 return new TaskTime
                 {
-                    Type = JobTimeType.Delay,
+                    Type = TaskTimeType.Delay,
                     Hours = DelayTimeControlViewModel.Hours,
                     Minutes = DelayTimeControlViewModel.Minutes,
                     Seconds = DelayTimeControlViewModel.Seconds
                 };
             }
-            
+
             if (view.ImmediateGroupSelected)
             {
                 return new TaskTime
                 {
-                    Type = JobTimeType.Immediate
+                    Type = TaskTimeType.Immediate
                 };
             }
-            
+
             throw new Exception("No action time was chosen.");
         }
 
@@ -221,7 +182,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             try
             {
-                performer.Stop();
+                task.Stop();
             }
             catch (Exception ex)
             {
@@ -272,7 +233,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
             else
             {
-                allowToCLose = !performer.IsRunning || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
+                allowToCLose = !task.IsRunning || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
             }
 
 
@@ -317,8 +278,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             try
             {
-                view.NotifyIconText = performer.IsRunning
-                    ? TimerFormatter.Format(performer.TimeUntilAction)
+                view.NotifyIconText = task.IsRunning
+                    ? TimerFormatter.Format(task.TimeUntilAction)
                     : Title;
             }
             catch (Exception ex)
@@ -617,7 +578,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             try
             {
-                if (performer.IsRunning)
+                if (task.IsRunning)
                     userInterface.DisplayErrorMessage("Cannot complete the task while the timer is started.");
                 else
                     ClearInterface();
@@ -635,7 +596,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             try
             {
-                if (performer.IsRunning)
+                if (task.IsRunning)
                     userInterface.DisplayErrorMessage("Cannot complete the task while the timer is started.");
                 else
                     LoadInitialConfiguration();
@@ -723,20 +684,20 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
             switch (configSection.ActionTime.Type)
             {
-                case JobTimeType.FixedDate:
+                case TaskTimeType.FixedDate:
                     FixedDateControlViewModel.Date = this.configSection.ActionTime.DateTime.Date;
                     FixedDateControlViewModel.Time = this.configSection.ActionTime.DateTime;
                     view.FixedTimeGroupSelected = true;
                     break;
 
-                case JobTimeType.Delay:
+                case TaskTimeType.Delay:
                     DelayTimeControlViewModel.Hours = this.configSection.ActionTime.Hours;
                     DelayTimeControlViewModel.Minutes = this.configSection.ActionTime.Minutes;
                     DelayTimeControlViewModel.Seconds = this.configSection.ActionTime.Seconds;
                     view.DelayGroupSelected = true;
                     break;
 
-                case JobTimeType.Immediate:
+                case TaskTimeType.Immediate:
                     view.ImmediateGroupSelected = true;
                     break;
             }
@@ -762,7 +723,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
             if (view.FixedTimeGroupSelected)
             {
-                configSection.ActionTime.Type = JobTimeType.FixedDate;
+                configSection.ActionTime.Type = TaskTimeType.FixedDate;
                 configSection.ActionTime.DateTime = FixedDateControlViewModel.GetFullTime();
                 configSection.ActionTime.Hours = 0;
                 configSection.ActionTime.Minutes = 0;
@@ -770,7 +731,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
             else if (view.DelayGroupSelected)
             {
-                configSection.ActionTime.Type = JobTimeType.Delay;
+                configSection.ActionTime.Type = TaskTimeType.Delay;
                 configSection.ActionTime.Hours = DelayTimeControlViewModel.Hours;
                 configSection.ActionTime.Minutes = DelayTimeControlViewModel.Minutes;
                 configSection.ActionTime.Seconds = DelayTimeControlViewModel.Seconds;
@@ -778,7 +739,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
             else if (view.ImmediateGroupSelected)
             {
-                configSection.ActionTime.Type = JobTimeType.Immediate;
+                configSection.ActionTime.Type = TaskTimeType.Immediate;
                 configSection.ActionTime.DateTime = DateTime.Now;
                 configSection.ActionTime.Hours = 0;
                 configSection.ActionTime.Minutes = 0;

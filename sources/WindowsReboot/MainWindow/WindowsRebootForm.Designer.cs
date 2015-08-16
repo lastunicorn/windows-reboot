@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.WindowsReboot.Presentation;
+using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
@@ -79,7 +79,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.labelBlackLine2 = new System.Windows.Forms.Label();
             this.pictureBoxHeader = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBoxActionTime = new DustInTheWind.WindowsReboot.Presentation.CustomGroupBox(this.components);
+            this.groupBoxActionTime = new CustomGroupBox(this.components);
             this.tabControlActionTime = new System.Windows.Forms.TabControl();
             this.tabPageFixedDate = new System.Windows.Forms.TabPage();
             this.fixedDateControl1 = new DustInTheWind.WindowsReboot.MainWindow.FixedDateControl();
@@ -87,10 +87,10 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.delayTimeControl1 = new DustInTheWind.WindowsReboot.MainWindow.DelayTimeControl();
             this.tabPageImmediate = new System.Windows.Forms.TabPage();
             this.labelImmediate = new System.Windows.Forms.Label();
-            this.customGroupBoxStatusInfo = new DustInTheWind.WindowsReboot.Presentation.CustomGroupBox(this.components);
+            this.customGroupBoxStatusInfo = new CustomGroupBox(this.components);
             this.statusControl1 = new DustInTheWind.WindowsReboot.MainWindow.StatusControl();
-            this.groupBoxActionType = new DustInTheWind.WindowsReboot.Presentation.CustomGroupBox(this.components);
-            this.groupBoxActionStart = new DustInTheWind.WindowsReboot.Presentation.CustomGroupBox(this.components);
+            this.groupBoxActionType = new CustomGroupBox(this.components);
+            this.groupBoxActionStart = new CustomGroupBox(this.components);
             this.tableLayoutPanelActionStart = new System.Windows.Forms.TableLayoutPanel();
             this.buttonStopTimer = new System.Windows.Forms.Button();
             this.buttonStartTimer = new System.Windows.Forms.Button();

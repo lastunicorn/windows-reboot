@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.WindowsReboot.Services
+namespace DustInTheWind.WindowsReboot.Core.Services
 {
     public interface ITicker
     {

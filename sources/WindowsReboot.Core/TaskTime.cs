@@ -20,7 +20,7 @@ namespace DustInTheWind.WindowsReboot.Core
 {
     public class TaskTime
     {
-        public JobTimeType Type { get; set; }
+        public TaskTimeType Type { get; set; }
 
         public DateTime DateTime { get; set; }
 
@@ -32,13 +32,13 @@ namespace DustInTheWind.WindowsReboot.Core
         {
             switch (Type)
             {
-                case JobTimeType.FixedDate:
+                case TaskTimeType.FixedDate:
                     return DateTime;
 
-                case JobTimeType.Delay:
+                case TaskTimeType.Delay:
                     return now + new TimeSpan(Hours, Minutes, Seconds);
 
-                case JobTimeType.Immediate:
+                case TaskTimeType.Immediate:
                     return now;
 
                 default:
@@ -50,13 +50,13 @@ namespace DustInTheWind.WindowsReboot.Core
         {
             switch (Type)
             {
-                case JobTimeType.FixedDate:
+                case TaskTimeType.FixedDate:
                     return now - DateTime;
 
-                case JobTimeType.Delay:
+                case TaskTimeType.Delay:
                     return new TimeSpan(Hours, Minutes, Seconds);
 
-                case JobTimeType.Immediate:
+                case TaskTimeType.Immediate:
                     return TimeSpan.Zero;
 
                 default:

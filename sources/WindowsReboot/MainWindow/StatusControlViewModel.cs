@@ -15,14 +15,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Presentation;
+using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Core.Services;
 using DustInTheWind.WindowsReboot.Services;
+using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
     class StatusControlViewModel : ViewModelBase
     {
-        private readonly Performer performer;
+        private readonly Task task;
         private readonly UserInterface userInterface;
         private DateTime currentTime;
         private DateTime? actionTime;
@@ -58,20 +60,20 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        public StatusControlViewModel(ITicker ticker, Performer performer, UserInterface userInterface)
+        public StatusControlViewModel(ITicker ticker, Task task, UserInterface userInterface)
         {
             if (ticker == null) throw new ArgumentNullException("ticker");
-            if (performer == null) throw new ArgumentNullException("performer");
+            if (task == null) throw new ArgumentNullException("task");
             if (userInterface == null) throw new ArgumentNullException("userInterface");
 
-            this.performer = performer;
+            this.task = task;
             this.userInterface = userInterface;
 
             ticker.Tick += HandleTickerTick;
 
-            performer.Started += HandlePerformerStarted;
-            performer.Stoped += HandlePerformerStoped;
-            performer.Tick += HandlePerformerTick;
+            task.Started += HandlePerformerStarted;
+            task.Stoped += HandlePerformerStoped;
+            task.Tick += HandlePerformerTick;
         }
 
         private void HandleTickerTick(object sender, EventArgs eventArgs)
@@ -86,7 +88,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             userInterface.Dispatch(() =>
             {
-                ActionTime = performer.ActionTime;
+                ActionTime = task.ActionTime;
             });
         }
 

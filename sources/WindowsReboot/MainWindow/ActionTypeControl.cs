@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {

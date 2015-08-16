@@ -16,12 +16,13 @@
 
 using System;
 using System.Windows.Forms;
+using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Config;
-using DustInTheWind.WindowsReboot.Presentation;
+using DustInTheWind.WindowsReboot.OtherWindows;
 
 namespace DustInTheWind.WindowsReboot.Services
 {
-    internal class UserInterface
+    internal class UserInterface : IUserInterface
     {
         private readonly IUiDispatcher uiDispatcher;
         public Form MainForm { get; set; }

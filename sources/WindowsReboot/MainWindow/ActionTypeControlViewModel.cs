@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Presentation;
 using DustInTheWind.WindowsReboot.Services;
+using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
     class ActionTypeControlViewModel : ViewModelBase
     {
-        private readonly Performer performer;
+        private readonly Task task;
         private ActionTypeItem[] actionTypes;
         private ActionTypeItem selectedActionType;
-        private bool forceAction;
+        //private bool forceAction;
         private bool forceActionEnabled;
-        private bool displayWarningMessage;
+        //private bool displayWarningMessage;
 
         /// <summary>
         /// Sets the available values that can be chosed for the action type.
@@ -45,10 +45,10 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         public bool ForceAction
         {
-            get { return forceAction; }
+            get { return task.ForceAction; }
             set
             {
-                forceAction = value;
+                task.ForceAction = value;
                 OnPropertyChanged("ForceAction");
             }
         }
@@ -65,19 +65,19 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         public bool DisplayActionWarning
         {
-            get { return displayWarningMessage; }
+            get { return task.DisplayWarningMessage; }
             set
             {
-                displayWarningMessage = value;
+                task.DisplayWarningMessage = value;
                 OnPropertyChanged("DisplayActionWarning");
             }
         }
 
-        public ActionTypeControlViewModel(Performer performer)
+        public ActionTypeControlViewModel(Task task)
         {
-            if (performer == null) throw new ArgumentNullException("performer");
+            if (task == null) throw new ArgumentNullException("task");
 
-            this.performer = performer;
+            this.task = task;
 
             ActionTypes = Enum.GetValues(typeof(TaskType))
                 .Cast<TaskType>()

@@ -44,9 +44,10 @@
     <Compile Include="..\AssemblyInfo.shared.cs">
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
+    <Compile Include="IUserInterface.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="TaskTime.cs" />
-    <Compile Include="JobTimeType.cs" />
+    <Compile Include="TaskTimeType.cs" />
     <Compile Include="TaskType.cs" />
     <Compile Include="Config\ActionTimeConfigElement.cs" />
     <Compile Include="Config\ActionTypeConfigElement.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="RebootUtil.cs" />
     <Compile Include="Services\ITicker.cs" />
     <Compile Include="Services\Ticker100.cs" />
+    <Compile Include="TickEventArgs.cs" />
     <Compile Include="VersionUtil.cs" />
     <Compile Include="WinApi\LUID.cs" />
     <Compile Include="WinApi\TOKEN_PRIVILEGES.cs" />

@@ -17,6 +17,7 @@
 using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Services;
+using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {

@@ -17,7 +17,9 @@
 using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Core.Services;
 using DustInTheWind.WindowsReboot.Services;
+using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
@@ -37,9 +39,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             };
 
             ITicker ticker = new Ticker100();
-            Performer performer = new Performer(userInterface, ticker);
             IRebootUtil rebootUtil = new RebootUtil();
-            presenter = new WindowsRebootPresenter(this, userInterface, ticker, performer, rebootUtil);
+            Task task = new Task(userInterface, ticker, rebootUtil);
+            presenter = new WindowsRebootPresenter(this, userInterface, ticker, task, rebootUtil);
 
             this.Bind(x => x.Text, presenter, x => x.Title, false, DataSourceUpdateMode.Never);
 

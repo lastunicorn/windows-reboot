@@ -19,7 +19,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core;
 
-namespace DustInTheWind.WindowsReboot.Presentation
+namespace DustInTheWind.WindowsReboot.OtherWindows
 {
     /// <summary>
     /// Displayes information about the author, the version, etc.

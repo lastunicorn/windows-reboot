@@ -68,7 +68,7 @@
     <Compile Include="..\AssemblyInfo.shared.cs">
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
-    <Compile Include="BindingExtensions.cs" />
+    <Compile Include="UiCommon\BindingExtensions.cs" />
     <Compile Include="MainWindow\ActionTypeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -77,12 +77,11 @@
     </Compile>
     <Compile Include="MainWindow\ActionTypeControlViewModel.cs" />
     <Compile Include="Services\IUiDispatcher.cs" />
-    <Compile Include="Services\Performer.cs" />
     <Compile Include="MainWindow\ActionTypeItem.cs" />
-    <Compile Include="Presentation\CustomGroupBox.cs">
+    <Compile Include="UiCommon\CustomGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Presentation\CustomGroupBox.Designer.cs">
+    <Compile Include="UiCommon\CustomGroupBox.Designer.cs">
       <DependentUpon>CustomGroupBox.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\DelayTimeControlViewModel.cs" />
@@ -106,21 +105,20 @@
       <DependentUpon>StatusControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\StatusControlViewModel.cs" />
-    <Compile Include="Services\TickEventArgs.cs" />
     <Compile Include="Services\TimerFormatter.cs" />
-    <Compile Include="Presentation\ViewModelBase.cs" />
+    <Compile Include="UiCommon\ViewModelBase.cs" />
     <Compile Include="Services\UiDispatcher.cs" />
     <Compile Include="Services\UserInterface.cs" />
-    <Compile Include="Presentation\LicenseForm.cs">
+    <Compile Include="OtherWindows\LicenseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\LicenseForm.Designer.cs">
+    <Compile Include="OtherWindows\LicenseForm.Designer.cs">
       <DependentUpon>LicenseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\OptionsForm.cs">
+    <Compile Include="OtherWindows\OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\OptionsForm.Designer.cs">
+    <Compile Include="OtherWindows\OptionsForm.Designer.cs">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\WindowsRebootForm.cs">
@@ -129,10 +127,10 @@
     <Compile Include="MainWindow\WindowsRebootForm.Designer.cs">
       <DependentUpon>WindowsRebootForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\FormAbout.cs">
+    <Compile Include="OtherWindows\FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\FormAbout.Designer.cs">
+    <Compile Include="OtherWindows\FormAbout.Designer.cs">
       <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\IWindowsRebootView.cs" />
@@ -147,12 +145,12 @@
     <EmbeddedResource Include="MainWindow\FixedDateControl.resx">
       <DependentUpon>FixedDateControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\LicenseForm.resx">
+    <EmbeddedResource Include="OtherWindows\LicenseForm.resx">
       <DependentUpon>LicenseForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Resources\License.txt" />
-    <EmbeddedResource Include="Presentation\OptionsForm.resx">
+    <EmbeddedResource Include="OtherWindows\OptionsForm.resx">
       <DependentUpon>OptionsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -163,7 +161,7 @@
       <DependentUpon>WindowsRebootForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\FormAbout.resx">
+    <EmbeddedResource Include="OtherWindows\FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

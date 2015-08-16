@@ -31,16 +31,6 @@
             Gets or sets the action type.
             </summary>
         </member>
-        <member name="F:DustInTheWind.WindowsReboot.Services.Performer.isRunning">
-            <summary>
-            Indicates if the timer was started.
-            </summary>
-        </member>
-        <member name="P:DustInTheWind.WindowsReboot.Services.Performer.IsRunning">
-            <summary>
-            Indicates if the timer was started.
-            </summary>
-        </member>
         <member name="T:DustInTheWind.WindowsReboot.MainWindow.ActionTypeItem">
             <summary>
             Class used to associate the action type with a text displayed to the user.
@@ -427,7 +417,7 @@
             A value indicationg if the exit of the application was requested chosing the menu item.
             </summary>
         </member>
-        <member name="M:DustInTheWind.WindowsReboot.MainWindow.WindowsRebootPresenter.#ctor(DustInTheWind.WindowsReboot.MainWindow.IWindowsRebootView,DustInTheWind.WindowsReboot.Services.UserInterface,DustInTheWind.WindowsReboot.Services.ITicker,DustInTheWind.WindowsReboot.Services.Performer,DustInTheWind.WindowsReboot.Core.IRebootUtil)">
+        <member name="M:DustInTheWind.WindowsReboot.MainWindow.WindowsRebootPresenter.#ctor(DustInTheWind.WindowsReboot.MainWindow.IWindowsRebootView,DustInTheWind.WindowsReboot.Services.UserInterface,DustInTheWind.WindowsReboot.Services.ITicker,DustInTheWind.WindowsReboot.Services.Task,DustInTheWind.WindowsReboot.Core.IRebootUtil)">
             <summary>
             Initializes a new instance of the <see cref="T:DustInTheWind.WindowsReboot.MainWindow.WindowsRebootPresenter"/> class with
             the view used to interact with the user.

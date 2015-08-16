@@ -17,7 +17,7 @@
 using System;
 using System.Timers;
 
-namespace DustInTheWind.WindowsReboot.Services
+namespace DustInTheWind.WindowsReboot.Core.Services
 {
     public class Ticker100 : IDisposable, ITicker
     {
