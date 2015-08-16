@@ -49,6 +49,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             statusControl1.ViewModel = presenter.StatusControlViewModel;
             delayTimeControl1.ViewModel = presenter.DelayTimeControlViewModel;
             actionTypeControl1.ViewModel = presenter.ActionTypeControlViewModel;
+            dailyControl1.ViewModel = presenter.DailyControlViewModel;
         }
 
         private void buttonStartTimer_Click(object sender, EventArgs e)
@@ -194,16 +195,22 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             set { tabControlActionTime.SelectedIndex = 0; }
         }
 
-        public bool DelayGroupSelected
+        public bool DailyGroupSelected
         {
             get { return tabControlActionTime.SelectedIndex == 1; }
             set { tabControlActionTime.SelectedIndex = 1; }
         }
 
-        public bool ImmediateGroupSelected
+        public bool DelayGroupSelected
         {
             get { return tabControlActionTime.SelectedIndex == 2; }
             set { tabControlActionTime.SelectedIndex = 2; }
+        }
+
+        public bool ImmediateGroupSelected
+        {
+            get { return tabControlActionTime.SelectedIndex == 3; }
+            set { tabControlActionTime.SelectedIndex = 3; }
         }
 
         public string NotifyIconText

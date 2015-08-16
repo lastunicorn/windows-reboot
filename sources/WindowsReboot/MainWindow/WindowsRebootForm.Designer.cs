@@ -79,23 +79,25 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.labelBlackLine2 = new System.Windows.Forms.Label();
             this.pictureBoxHeader = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBoxActionTime = new CustomGroupBox(this.components);
+            this.groupBoxActionTime = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
             this.tabControlActionTime = new System.Windows.Forms.TabControl();
             this.tabPageFixedDate = new System.Windows.Forms.TabPage();
             this.fixedDateControl1 = new DustInTheWind.WindowsReboot.MainWindow.FixedDateControl();
+            this.tabPageDaily = new System.Windows.Forms.TabPage();
+            this.dailyControl1 = new DustInTheWind.WindowsReboot.MainWindow.DailyControl();
             this.tabPageDelay = new System.Windows.Forms.TabPage();
             this.delayTimeControl1 = new DustInTheWind.WindowsReboot.MainWindow.DelayTimeControl();
             this.tabPageImmediate = new System.Windows.Forms.TabPage();
             this.labelImmediate = new System.Windows.Forms.Label();
-            this.customGroupBoxStatusInfo = new CustomGroupBox(this.components);
+            this.customGroupBoxStatusInfo = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
             this.statusControl1 = new DustInTheWind.WindowsReboot.MainWindow.StatusControl();
-            this.groupBoxActionType = new CustomGroupBox(this.components);
-            this.groupBoxActionStart = new CustomGroupBox(this.components);
+            this.groupBoxActionType = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
+            this.actionTypeControl1 = new DustInTheWind.WindowsReboot.MainWindow.ActionTypeControl();
+            this.groupBoxActionStart = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
             this.tableLayoutPanelActionStart = new System.Windows.Forms.TableLayoutPanel();
             this.buttonStopTimer = new System.Windows.Forms.Button();
             this.buttonStartTimer = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.actionTypeControl1 = new DustInTheWind.WindowsReboot.MainWindow.ActionTypeControl();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStripTrayIcon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHeader)).BeginInit();
@@ -103,6 +105,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.groupBoxActionTime.SuspendLayout();
             this.tabControlActionTime.SuspendLayout();
             this.tabPageFixedDate.SuspendLayout();
+            this.tabPageDaily.SuspendLayout();
             this.tabPageDelay.SuspendLayout();
             this.tabPageImmediate.SuspendLayout();
             this.customGroupBoxStatusInfo.SuspendLayout();
@@ -389,6 +392,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.groupBoxActionTime.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.tableLayoutPanel6.SetColumnSpan(this.groupBoxActionTime, 2);
             this.groupBoxActionTime.Controls.Add(this.tabControlActionTime);
+            this.groupBoxActionTime.CornerRadius = 0;
             this.groupBoxActionTime.Location = new System.Drawing.Point(0, 0);
             this.groupBoxActionTime.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
             this.groupBoxActionTime.Name = "groupBoxActionTime";
@@ -399,11 +403,13 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.groupBoxActionTime.Text = "1) Choose when";
             this.groupBoxActionTime.TitleColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxActionTime.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.groupBoxActionTime.TitleMargin = new System.Windows.Forms.Padding(0);
             this.groupBoxActionTime.TitlePadding = new System.Windows.Forms.Padding(3, 0, 5, 0);
             // 
             // tabControlActionTime
             // 
             this.tabControlActionTime.Controls.Add(this.tabPageFixedDate);
+            this.tabControlActionTime.Controls.Add(this.tabPageDaily);
             this.tabControlActionTime.Controls.Add(this.tabPageDelay);
             this.tabControlActionTime.Controls.Add(this.tabPageImmediate);
             this.tabControlActionTime.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -435,6 +441,27 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.fixedDateControl1.Size = new System.Drawing.Size(349, 52);
             this.fixedDateControl1.TabIndex = 5;
             this.fixedDateControl1.ViewModel = null;
+            // 
+            // tabPageDaily
+            // 
+            this.tabPageDaily.Controls.Add(this.dailyControl1);
+            this.tabPageDaily.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDaily.Name = "tabPageDaily";
+            this.tabPageDaily.Padding = new System.Windows.Forms.Padding(8);
+            this.tabPageDaily.Size = new System.Drawing.Size(365, 76);
+            this.tabPageDaily.TabIndex = 3;
+            this.tabPageDaily.Text = "Daily";
+            this.tabPageDaily.UseVisualStyleBackColor = true;
+            // 
+            // dailyControl1
+            // 
+            this.dailyControl1.AutoSize = true;
+            this.dailyControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dailyControl1.Location = new System.Drawing.Point(8, 8);
+            this.dailyControl1.Name = "dailyControl1";
+            this.dailyControl1.Size = new System.Drawing.Size(349, 26);
+            this.dailyControl1.TabIndex = 0;
+            this.dailyControl1.ViewModel = null;
             // 
             // tabPageDelay
             // 
@@ -486,6 +513,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.customGroupBoxStatusInfo.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.tableLayoutPanel6.SetColumnSpan(this.customGroupBoxStatusInfo, 2);
             this.customGroupBoxStatusInfo.Controls.Add(this.statusControl1);
+            this.customGroupBoxStatusInfo.CornerRadius = 0;
             this.customGroupBoxStatusInfo.Location = new System.Drawing.Point(0, 251);
             this.customGroupBoxStatusInfo.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.customGroupBoxStatusInfo.Name = "customGroupBoxStatusInfo";
@@ -495,13 +523,15 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.customGroupBoxStatusInfo.TabStop = false;
             this.customGroupBoxStatusInfo.TitleColor = System.Drawing.SystemColors.ControlText;
             this.customGroupBoxStatusInfo.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customGroupBoxStatusInfo.TitleMargin = new System.Windows.Forms.Padding(0);
+            this.customGroupBoxStatusInfo.TitlePadding = new System.Windows.Forms.Padding(0);
             // 
             // statusControl1
             // 
             this.statusControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusControl1.Location = new System.Drawing.Point(8, 9);
+            this.statusControl1.Location = new System.Drawing.Point(3, 4);
             this.statusControl1.Name = "statusControl1";
-            this.statusControl1.Size = new System.Drawing.Size(373, 82);
+            this.statusControl1.Size = new System.Drawing.Size(383, 92);
             this.statusControl1.TabIndex = 16;
             this.statusControl1.ViewModel = null;
             // 
@@ -512,6 +542,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxActionType.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.groupBoxActionType.Controls.Add(this.actionTypeControl1);
+            this.groupBoxActionType.CornerRadius = 0;
             this.groupBoxActionType.Location = new System.Drawing.Point(0, 141);
             this.groupBoxActionType.Margin = new System.Windows.Forms.Padding(0, 4, 4, 4);
             this.groupBoxActionType.Name = "groupBoxActionType";
@@ -522,7 +553,18 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.groupBoxActionType.Text = "2) Choose what";
             this.groupBoxActionType.TitleColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxActionType.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.groupBoxActionType.TitleMargin = new System.Windows.Forms.Padding(0);
             this.groupBoxActionType.TitlePadding = new System.Windows.Forms.Padding(3, 0, 5, 0);
+            // 
+            // actionTypeControl1
+            // 
+            this.actionTypeControl1.AutoSize = true;
+            this.actionTypeControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.actionTypeControl1.Location = new System.Drawing.Point(3, 21);
+            this.actionTypeControl1.Name = "actionTypeControl1";
+            this.actionTypeControl1.Size = new System.Drawing.Size(230, 73);
+            this.actionTypeControl1.TabIndex = 0;
+            this.actionTypeControl1.ViewModel = null;
             // 
             // groupBoxActionStart
             // 
@@ -531,6 +573,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxActionStart.BorderColor = System.Drawing.SystemColors.ActiveBorder;
             this.groupBoxActionStart.Controls.Add(this.tableLayoutPanelActionStart);
+            this.groupBoxActionStart.CornerRadius = 0;
             this.groupBoxActionStart.Location = new System.Drawing.Point(244, 141);
             this.groupBoxActionStart.Margin = new System.Windows.Forms.Padding(4, 4, 0, 4);
             this.groupBoxActionStart.Name = "groupBoxActionStart";
@@ -541,6 +584,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.groupBoxActionStart.Text = "3) Do it";
             this.groupBoxActionStart.TitleColor = System.Drawing.SystemColors.ControlText;
             this.groupBoxActionStart.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.groupBoxActionStart.TitleMargin = new System.Windows.Forms.Padding(0);
             this.groupBoxActionStart.TitlePadding = new System.Windows.Forms.Padding(3, 0, 5, 0);
             // 
             // tableLayoutPanelActionStart
@@ -600,16 +644,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.panel1.Size = new System.Drawing.Size(409, 375);
             this.panel1.TabIndex = 22;
             // 
-            // actionTypeControl1
-            // 
-            this.actionTypeControl1.AutoSize = true;
-            this.actionTypeControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.actionTypeControl1.Location = new System.Drawing.Point(3, 21);
-            this.actionTypeControl1.Name = "actionTypeControl1";
-            this.actionTypeControl1.Size = new System.Drawing.Size(230, 73);
-            this.actionTypeControl1.TabIndex = 0;
-            this.actionTypeControl1.ViewModel = null;
-            // 
             // WindowsRebootForm
             // 
             this.AcceptButton = this.buttonStartTimer;
@@ -640,6 +674,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.tabControlActionTime.ResumeLayout(false);
             this.tabPageFixedDate.ResumeLayout(false);
             this.tabPageFixedDate.PerformLayout();
+            this.tabPageDaily.ResumeLayout(false);
+            this.tabPageDaily.PerformLayout();
             this.tabPageDelay.ResumeLayout(false);
             this.tabPageDelay.PerformLayout();
             this.tabPageImmediate.ResumeLayout(false);
@@ -704,6 +740,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private StatusControl statusControl1;
         private DelayTimeControl delayTimeControl1;
         private ActionTypeControl actionTypeControl1;
+        private System.Windows.Forms.TabPage tabPageDaily;
+        private DailyControl dailyControl1;
     }
 }
 

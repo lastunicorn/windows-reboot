@@ -56,6 +56,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         public StatusControlViewModel StatusControlViewModel { get; private set; }
         public DelayTimeControlViewModel DelayTimeControlViewModel { get; private set; }
         public ActionTypeControlViewModel ActionTypeControlViewModel { get; private set; }
+        public DailyControlViewModel DailyControlViewModel { get; private set; }
 
         /// <summary>
         /// Gets or sets the title of the window.
@@ -93,6 +94,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             DelayTimeControlViewModel = new DelayTimeControlViewModel();
             StatusControlViewModel = new StatusControlViewModel(ticker, task, userInterface);
             ActionTypeControlViewModel = new ActionTypeControlViewModel(task);
+            DailyControlViewModel = new DailyControlViewModel();
 
             config = GetConfiguration();
             configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
@@ -150,6 +152,15 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 {
                     Type = TaskTimeType.FixedDate,
                     DateTime = FixedDateControlViewModel.GetFullTime()
+                };
+            }
+
+            if (view.DailyGroupSelected)
+            {
+                return new TaskTime
+                {
+                    Type = TaskTimeType.Daily,
+                    TimeOfDay = DailyControlViewModel.GetTimeOfDay()
                 };
             }
 

@@ -19,29 +19,27 @@ using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    partial class FixedDateControl : UserControl
+    partial class DailyControl : UserControl
     {
-        private FixedDateControlViewModel viewModel;
+        private DailyControlViewModel viewModel;
 
-        public FixedDateControlViewModel ViewModel
+        public DailyControlViewModel ViewModel
         {
             get { return viewModel; }
             set
             {
-                dateTimePickerFixedDate.DataBindings.Clear();
-                dateTimePickerFixedTime.DataBindings.Clear();
+                dateTimePickerDailyTime.DataBindings.Clear();
 
                 viewModel = value;
 
                 if (viewModel != null)
                 {
-                    dateTimePickerFixedDate.Bind(x => x.Value, viewModel, x => x.Date, false, DataSourceUpdateMode.OnPropertyChanged);
-                    dateTimePickerFixedTime.Bind(x => x.Value, viewModel, x => x.Time, false, DataSourceUpdateMode.OnPropertyChanged);
+                    dateTimePickerDailyTime.Bind(x => x.Value, viewModel, x => x.Time, false, DataSourceUpdateMode.OnPropertyChanged);
                 }
             }
         }
 
-        public FixedDateControl()
+        public DailyControl()
         {
             InitializeComponent();
         }

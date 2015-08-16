@@ -27,6 +27,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         bool MenuItem_LoadDefaultSettingsEnabled { set; }
 
         bool FixedTimeGroupSelected { get; set; }
+        bool DailyGroupSelected { get; set; }
         bool DelayGroupSelected { get; set; }
         bool ImmediateGroupSelected { get; set; }
 

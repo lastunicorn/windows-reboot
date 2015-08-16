@@ -38,6 +38,7 @@ namespace DustInTheWind.WindowsReboot.Core
 
         private readonly TimeSpan warningMessageTime = TimeSpan.FromSeconds(30);
         private DateTime taskRunTime;
+        private DateTime startTime;
         public TimeSpan TimeUntilAction { get; private set; }
 
         public event EventHandler Started;
@@ -87,6 +88,7 @@ namespace DustInTheWind.WindowsReboot.Core
             else
             {
                 taskRunTime = runTime;
+                startTime = now;
 
                 if (DisplayWarningMessage && runTime - now < warningMessageTime)
                     DisplayWarningMessage = false;
@@ -137,8 +139,50 @@ namespace DustInTheWind.WindowsReboot.Core
             if (taskRunTime > now)
                 return;
 
-            Stop();
-            Run();
+            DateTime? nextRunTime = CalculateNextRunTime(taskRunTime + TimeSpan.FromTicks(1));
+
+            if (nextRunTime == null)
+            {
+                Stop();
+                Run();
+            }
+            else
+            {
+                taskRunTime = nextRunTime.Value;
+                Run();
+            }
+        }
+
+        private DateTime? CalculateNextRunTime(DateTime now)
+        {
+            switch (Time.Type)
+            {
+                case TaskTimeType.FixedDate:
+                    {
+                        DateTime runTime = Time.CalculateTimeFrom(startTime);
+                        return runTime < now ? null as DateTime? : runTime;
+                    }
+
+                case TaskTimeType.Daily:
+                    {
+                        return Time.CalculateTimeFrom(now);
+                    }
+
+                case TaskTimeType.Delay:
+                    {
+                        DateTime runTime = Time.CalculateTimeFrom(startTime);
+                        return runTime < now ? null as DateTime? : runTime;
+                    }
+
+                case TaskTimeType.Immediate:
+                    {
+                        DateTime runTime = Time.CalculateTimeFrom(startTime);
+                        return runTime < now ? null as DateTime? : runTime;
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void Run()

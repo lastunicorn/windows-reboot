@@ -69,6 +69,13 @@
     <Compile Include="..\AssemblyInfo.shared.cs">
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
+    <Compile Include="MainWindow\DailyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainWindow\DailyControl.Designer.cs">
+      <DependentUpon>DailyControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\DailyControlViewModel.cs" />
     <Compile Include="UiCommon\BindingExtensions.cs" />
     <Compile Include="MainWindow\ActionTypeControl.cs">
       <SubType>UserControl</SubType>
@@ -140,6 +147,9 @@
     <EmbeddedResource Include="MainWindow\ActionTypeControl.resx">
       <DependentUpon>ActionTypeControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\DailyControl.resx">
+      <DependentUpon>DailyControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\DelayTimeControl.resx">
       <DependentUpon>DelayTimeControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -189,7 +199,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="Resources\3.png" />
     <None Include="Resources\2.png" />
     <None Include="Resources\1.png" />

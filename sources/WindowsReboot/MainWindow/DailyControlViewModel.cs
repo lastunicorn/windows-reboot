@@ -14,36 +14,38 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Windows.Forms;
+using System;
 using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    partial class FixedDateControl : UserControl
+    class DailyControlViewModel : ViewModelBase
     {
-        private FixedDateControlViewModel viewModel;
+        private DateTime time;
 
-        public FixedDateControlViewModel ViewModel
+        public DateTime Time
         {
-            get { return viewModel; }
+            get { return time; }
             set
             {
-                dateTimePickerFixedDate.DataBindings.Clear();
-                dateTimePickerFixedTime.DataBindings.Clear();
-
-                viewModel = value;
-
-                if (viewModel != null)
-                {
-                    dateTimePickerFixedDate.Bind(x => x.Value, viewModel, x => x.Date, false, DataSourceUpdateMode.OnPropertyChanged);
-                    dateTimePickerFixedTime.Bind(x => x.Value, viewModel, x => x.Time, false, DataSourceUpdateMode.OnPropertyChanged);
-                }
+                time = value;
+                OnPropertyChanged("Time");
             }
         }
 
-        public FixedDateControl()
+        public DailyControlViewModel()
         {
-            InitializeComponent();
+            time = DateTime.Now;
+        }
+
+        public TimeSpan GetTimeOfDay()
+        {
+            return Time.TimeOfDay;
+        }
+
+        public void Clear()
+        {
+            Time = DateTime.Now;
         }
     }
 }

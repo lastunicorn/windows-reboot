@@ -26,6 +26,8 @@ namespace DustInTheWind.WindowsReboot.Core
         /// </summary>
         FixedDate,
 
+        Daily,
+
         /// <summary>
         /// The action time is specified as a delay from the time when the timer is started.
         /// </summary>

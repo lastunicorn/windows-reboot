@@ -23,6 +23,7 @@ namespace DustInTheWind.WindowsReboot.Core
         public TaskTimeType Type { get; set; }
 
         public DateTime DateTime { get; set; }
+        public TimeSpan TimeOfDay { get; set; }
 
         public int Hours { get; set; }
         public int Minutes { get; set; }
@@ -34,6 +35,18 @@ namespace DustInTheWind.WindowsReboot.Core
             {
                 case TaskTimeType.FixedDate:
                     return DateTime;
+
+                case TaskTimeType.Daily:
+                    {
+                        DateTime potentialTime = now.Date + TimeOfDay;
+
+                        while (potentialTime < now)
+                            potentialTime = potentialTime + TimeSpan.FromDays(1);
+                        
+                        // todo: check if reached DateTime.Max
+
+                        return potentialTime;
+                    }
 
                 case TaskTimeType.Delay:
                     return now + new TimeSpan(Hours, Minutes, Seconds);
@@ -51,7 +64,19 @@ namespace DustInTheWind.WindowsReboot.Core
             switch (Type)
             {
                 case TaskTimeType.FixedDate:
-                    return now - DateTime;
+                    return DateTime - now;
+
+                case TaskTimeType.Daily:
+                    {
+                        DateTime potentialTime = now.Date + TimeOfDay;
+
+                        if (potentialTime < now)
+                            potentialTime = potentialTime + TimeSpan.FromDays(1);
+
+                        // todo: check if reached DateTime.Max
+
+                        return potentialTime - now;
+                    }
 
                 case TaskTimeType.Delay:
                     return new TimeSpan(Hours, Minutes, Seconds);
