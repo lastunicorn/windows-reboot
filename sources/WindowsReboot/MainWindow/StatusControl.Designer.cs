@@ -54,7 +54,7 @@
             this.tableLayoutPanelStatusInfo.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanelStatusInfo.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanelStatusInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelStatusInfo.Size = new System.Drawing.Size(491, 159);
+            this.tableLayoutPanelStatusInfo.Size = new System.Drawing.Size(491, 92);
             this.tableLayoutPanelStatusInfo.TabIndex = 16;
             // 
             // labelActionTime
@@ -112,7 +112,7 @@
             this.labelTimer.Location = new System.Drawing.Point(0, 42);
             this.labelTimer.Margin = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.labelTimer.Name = "labelTimer";
-            this.labelTimer.Size = new System.Drawing.Size(491, 117);
+            this.labelTimer.Size = new System.Drawing.Size(491, 50);
             this.labelTimer.TabIndex = 7;
             this.labelTimer.Text = "--  :  --  :  --  .  -";
             this.labelTimer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -123,7 +123,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanelStatusInfo);
             this.Name = "StatusControl";
-            this.Size = new System.Drawing.Size(491, 159);
+            this.Size = new System.Drawing.Size(491, 92);
             this.tableLayoutPanelStatusInfo.ResumeLayout(false);
             this.tableLayoutPanelStatusInfo.PerformLayout();
             this.ResumeLayout(false);

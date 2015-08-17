@@ -1,5 +1,5 @@
 ﻿// Windows Reboot
-// Copyright (C) 2009-2012 Dust in the Wind
+// Copyright (C) 2009-2015 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -217,7 +217,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 Title = title;
                 view.NotifyIconText = title;
 
-                LoadInitialConfiguration();
+                LoadConfiguration();
             }
             catch (Exception ex)
             {
@@ -610,7 +610,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 if (task.IsRunning)
                     userInterface.DisplayErrorMessage("Cannot complete the task while the timer is started.");
                 else
-                    LoadInitialConfiguration();
+                    LoadConfiguration();
             }
             catch (Exception ex)
             {
@@ -674,6 +674,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private void ClearInterface()
         {
             FixedDateControlViewModel.Clear();
+            DailyControlViewModel.Clear();
             DelayTimeControlViewModel.Clear();
             ActionTypeControlViewModel.Clear();
 
@@ -687,7 +688,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// <summary>
         /// Loads the values from the configuration file and populates the interface with them.
         /// </summary>
-        private void LoadInitialConfiguration()
+        private void LoadConfiguration()
         {
             WindowsRebootConfigSection configSection = GetConfigurationSection();
 
@@ -699,6 +700,11 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                     FixedDateControlViewModel.Date = this.configSection.ActionTime.DateTime.Date;
                     FixedDateControlViewModel.Time = this.configSection.ActionTime.DateTime;
                     view.FixedTimeGroupSelected = true;
+                    break;
+
+                case TaskTimeType.Daily:
+                    DailyControlViewModel.Time = this.configSection.ActionTime.DateTime;
+                    view.DailyGroupSelected = true;
                     break;
 
                 case TaskTimeType.Delay:
@@ -736,6 +742,14 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 configSection.ActionTime.Type = TaskTimeType.FixedDate;
                 configSection.ActionTime.DateTime = FixedDateControlViewModel.GetFullTime();
+                configSection.ActionTime.Hours = 0;
+                configSection.ActionTime.Minutes = 0;
+                configSection.ActionTime.Seconds = 0;
+            }
+            else if (view.DailyGroupSelected)
+            {
+                configSection.ActionTime.Type = TaskTimeType.Daily;
+                configSection.ActionTime.DateTime = DailyControlViewModel.Time;
                 configSection.ActionTime.Hours = 0;
                 configSection.ActionTime.Minutes = 0;
                 configSection.ActionTime.Seconds = 0;
