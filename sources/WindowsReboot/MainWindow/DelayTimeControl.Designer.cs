@@ -90,7 +90,7 @@
             0});
             this.numericUpDownMinutes.Name = "numericUpDownMinutes";
             this.numericUpDownMinutes.Size = new System.Drawing.Size(133, 20);
-            this.numericUpDownMinutes.TabIndex = 2;
+            this.numericUpDownMinutes.TabIndex = 1;
             this.numericUpDownMinutes.ThousandsSeparator = true;
             // 
             // numericUpDownHours
@@ -104,7 +104,7 @@
             0});
             this.numericUpDownHours.Name = "numericUpDownHours";
             this.numericUpDownHours.Size = new System.Drawing.Size(133, 20);
-            this.numericUpDownHours.TabIndex = 2;
+            this.numericUpDownHours.TabIndex = 0;
             this.numericUpDownHours.ThousandsSeparator = true;
             // 
             // label3
@@ -150,7 +150,7 @@
             this.AutoSize = true;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "DelayTimeControl";
-            this.Size = new System.Drawing.Size(419, 0);
+            this.Size = new System.Drawing.Size(419, 39);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSeconds)).EndInit();

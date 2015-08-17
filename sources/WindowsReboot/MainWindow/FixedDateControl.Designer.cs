@@ -65,7 +65,7 @@
             this.dateTimePickerFixedTime.Name = "dateTimePickerFixedTime";
             this.dateTimePickerFixedTime.ShowUpDown = true;
             this.dateTimePickerFixedTime.Size = new System.Drawing.Size(144, 20);
-            this.dateTimePickerFixedTime.TabIndex = 3;
+            this.dateTimePickerFixedTime.TabIndex = 1;
             // 
             // label8
             // 
@@ -85,7 +85,7 @@
             this.dateTimePickerFixedDate.Location = new System.Drawing.Point(42, 3);
             this.dateTimePickerFixedDate.Name = "dateTimePickerFixedDate";
             this.dateTimePickerFixedDate.Size = new System.Drawing.Size(366, 20);
-            this.dateTimePickerFixedDate.TabIndex = 2;
+            this.dateTimePickerFixedDate.TabIndex = 0;
             // 
             // label9
             // 
@@ -105,7 +105,7 @@
             this.AutoSize = true;
             this.Controls.Add(this.tableLayoutPanel2);
             this.Name = "FixedDateControl";
-            this.Size = new System.Drawing.Size(411, 0);
+            this.Size = new System.Drawing.Size(411, 52);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);

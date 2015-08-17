@@ -48,7 +48,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(369, 26);
             this.tableLayoutPanel2.TabIndex = 7;
             // 
@@ -60,7 +60,7 @@
             this.dateTimePickerDailyTime.Name = "dateTimePickerDailyTime";
             this.dateTimePickerDailyTime.ShowUpDown = true;
             this.dateTimePickerDailyTime.Size = new System.Drawing.Size(144, 20);
-            this.dateTimePickerDailyTime.TabIndex = 3;
+            this.dateTimePickerDailyTime.TabIndex = 0;
             // 
             // label9
             // 
@@ -80,7 +80,7 @@
             this.AutoSize = true;
             this.Controls.Add(this.tableLayoutPanel2);
             this.Name = "DailyControl";
-            this.Size = new System.Drawing.Size(369, 0);
+            this.Size = new System.Drawing.Size(369, 26);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);

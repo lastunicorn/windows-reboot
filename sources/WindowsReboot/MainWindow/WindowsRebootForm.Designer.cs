@@ -79,6 +79,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.labelBlackLine2 = new System.Windows.Forms.Label();
             this.pictureBoxHeader = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonStartTimer = new System.Windows.Forms.Button();
             this.groupBoxActionTime = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
             this.tabControlActionTime = new System.Windows.Forms.TabControl();
             this.tabPageFixedDate = new System.Windows.Forms.TabPage();
@@ -96,12 +98,11 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.groupBoxActionStart = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
             this.tableLayoutPanelActionStart = new System.Windows.Forms.TableLayoutPanel();
             this.buttonStopTimer = new System.Windows.Forms.Button();
-            this.buttonStartTimer = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStripTrayIcon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHeader)).BeginInit();
             this.tableLayoutPanel6.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.groupBoxActionTime.SuspendLayout();
             this.tabControlActionTime.SuspendLayout();
             this.tabPageFixedDate.SuspendLayout();
@@ -112,7 +113,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.groupBoxActionType.SuspendLayout();
             this.groupBoxActionStart.SuspendLayout();
             this.tableLayoutPanelActionStart.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -387,6 +387,32 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.tableLayoutPanel6.Size = new System.Drawing.Size(389, 355);
             this.tableLayoutPanel6.TabIndex = 21;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.tableLayoutPanel6);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 87);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(10);
+            this.panel1.Size = new System.Drawing.Size(409, 375);
+            this.panel1.TabIndex = 22;
+            // 
+            // buttonStartTimer
+            // 
+            this.buttonStartTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonStartTimer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.buttonStartTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonStartTimer.Location = new System.Drawing.Point(4, 4);
+            this.buttonStartTimer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 3);
+            this.buttonStartTimer.Name = "buttonStartTimer";
+            this.buttonStartTimer.Size = new System.Drawing.Size(131, 33);
+            this.buttonStartTimer.TabIndex = 2;
+            this.buttonStartTimer.Text = "Start";
+            this.buttonStartTimer.UseVisualStyleBackColor = true;
+            this.buttonStartTimer.Click += new System.EventHandler(this.buttonStartTimer_Click);
+            // 
             // groupBoxActionTime
             // 
             this.groupBoxActionTime.BorderColor = System.Drawing.SystemColors.ActiveBorder;
@@ -418,7 +444,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.tabControlActionTime.Name = "tabControlActionTime";
             this.tabControlActionTime.SelectedIndex = 0;
             this.tabControlActionTime.Size = new System.Drawing.Size(373, 102);
-            this.tabControlActionTime.TabIndex = 11;
+            this.tabControlActionTime.TabIndex = 0;
             // 
             // tabPageFixedDate
             // 
@@ -459,7 +485,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.dailyControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.dailyControl1.Location = new System.Drawing.Point(8, 8);
             this.dailyControl1.Name = "dailyControl1";
-            this.dailyControl1.Size = new System.Drawing.Size(349, 26);
+            this.dailyControl1.Size = new System.Drawing.Size(176, 26);
             this.dailyControl1.TabIndex = 0;
             this.dailyControl1.ViewModel = null;
             // 
@@ -480,7 +506,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.delayTimeControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.delayTimeControl1.Location = new System.Drawing.Point(12, 12);
             this.delayTimeControl1.Name = "delayTimeControl1";
-            this.delayTimeControl1.Size = new System.Drawing.Size(341, 39);
+            this.delayTimeControl1.Size = new System.Drawing.Size(168, 39);
             this.delayTimeControl1.TabIndex = 0;
             this.delayTimeControl1.ViewModel = null;
             // 
@@ -500,7 +526,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.labelImmediate.Location = new System.Drawing.Point(0, 0);
             this.labelImmediate.Margin = new System.Windows.Forms.Padding(4);
             this.labelImmediate.Name = "labelImmediate";
-            this.labelImmediate.Size = new System.Drawing.Size(365, 76);
+            this.labelImmediate.Size = new System.Drawing.Size(192, 74);
             this.labelImmediate.TabIndex = 0;
             this.labelImmediate.Text = "The action will be executed as soon as you press the\r\n\"Start timer\" button.";
             this.labelImmediate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -533,6 +559,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.statusControl1.Name = "statusControl1";
             this.statusControl1.Size = new System.Drawing.Size(383, 92);
             this.statusControl1.TabIndex = 16;
+            this.statusControl1.TabStop = false;
             this.statusControl1.ViewModel = null;
             // 
             // groupBoxActionType
@@ -563,7 +590,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.actionTypeControl1.Location = new System.Drawing.Point(3, 21);
             this.actionTypeControl1.Name = "actionTypeControl1";
             this.actionTypeControl1.Size = new System.Drawing.Size(230, 73);
-            this.actionTypeControl1.TabIndex = 0;
+            this.actionTypeControl1.TabIndex = 1;
             this.actionTypeControl1.ViewModel = null;
             // 
             // groupBoxActionStart
@@ -613,36 +640,10 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.buttonStopTimer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 4);
             this.buttonStopTimer.Name = "buttonStopTimer";
             this.buttonStopTimer.Size = new System.Drawing.Size(131, 33);
-            this.buttonStopTimer.TabIndex = 4;
+            this.buttonStopTimer.TabIndex = 3;
             this.buttonStopTimer.Text = "Stop";
             this.buttonStopTimer.UseVisualStyleBackColor = true;
             this.buttonStopTimer.Click += new System.EventHandler(this.buttonStopTimer_Click);
-            // 
-            // buttonStartTimer
-            // 
-            this.buttonStartTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonStartTimer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonStartTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonStartTimer.Location = new System.Drawing.Point(4, 4);
-            this.buttonStartTimer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 3);
-            this.buttonStartTimer.Name = "buttonStartTimer";
-            this.buttonStartTimer.Size = new System.Drawing.Size(131, 33);
-            this.buttonStartTimer.TabIndex = 0;
-            this.buttonStartTimer.Text = "Start";
-            this.buttonStartTimer.UseVisualStyleBackColor = true;
-            this.buttonStartTimer.Click += new System.EventHandler(this.buttonStartTimer_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.tableLayoutPanel6);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 87);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(10);
-            this.panel1.Size = new System.Drawing.Size(409, 375);
-            this.panel1.TabIndex = 22;
             // 
             // WindowsRebootForm
             // 
@@ -670,6 +671,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.contextMenuStripTrayIcon.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHeader)).EndInit();
             this.tableLayoutPanel6.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.groupBoxActionTime.ResumeLayout(false);
             this.tabControlActionTime.ResumeLayout(false);
             this.tabPageFixedDate.ResumeLayout(false);
@@ -684,7 +686,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.groupBoxActionType.PerformLayout();
             this.groupBoxActionStart.ResumeLayout(false);
             this.tableLayoutPanelActionStart.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -66,7 +66,7 @@
             this.checkBoxForceAction.Location = new System.Drawing.Point(72, 30);
             this.checkBoxForceAction.Name = "checkBoxForceAction";
             this.checkBoxForceAction.Size = new System.Drawing.Size(161, 17);
-            this.checkBoxForceAction.TabIndex = 5;
+            this.checkBoxForceAction.TabIndex = 1;
             this.checkBoxForceAction.Text = "Force action";
             this.checkBoxForceAction.UseVisualStyleBackColor = true;
             // 
@@ -78,7 +78,7 @@
             this.comboBoxAction.Location = new System.Drawing.Point(72, 3);
             this.comboBoxAction.Name = "comboBoxAction";
             this.comboBoxAction.Size = new System.Drawing.Size(161, 21);
-            this.comboBoxAction.TabIndex = 3;
+            this.comboBoxAction.TabIndex = 0;
             this.comboBoxAction.SelectedIndexChanged += new System.EventHandler(this.comboBoxAction_SelectedIndexChanged);
             // 
             // label6
@@ -99,7 +99,7 @@
             this.checkBoxDisplayActionWarning.Location = new System.Drawing.Point(72, 53);
             this.checkBoxDisplayActionWarning.Name = "checkBoxDisplayActionWarning";
             this.checkBoxDisplayActionWarning.Size = new System.Drawing.Size(161, 17);
-            this.checkBoxDisplayActionWarning.TabIndex = 15;
+            this.checkBoxDisplayActionWarning.TabIndex = 2;
             this.checkBoxDisplayActionWarning.Text = "Display warning";
             this.checkBoxDisplayActionWarning.UseVisualStyleBackColor = true;
             // 
