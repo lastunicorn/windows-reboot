@@ -1,6 +1,12 @@
 WindowsReboot Change Log
 ========================
 
+Version 1.5
+-----------
+
+- [core] Added a new scheduling type: "Daily". This will help you shut down your computer at the same time every day. (For this to work you will also need to put Windows Reboot in the Windows start up directory and then configure it in Options window to start the timer at start time.)
+- [core] Added the Ring action that is just displaying a "Ring-Ring" message when the time elapses. Good when you want to be reminded to go to sleep :P.
+
 Version 1.4
 -----------
 
