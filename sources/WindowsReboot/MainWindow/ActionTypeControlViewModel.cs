@@ -52,8 +52,13 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             get { return selectedActionType; }
             set
             {
+                if (selectedActionType == value)
+                    return;
+
                 selectedActionType = value;
                 OnPropertyChanged("SelectedActionType");
+
+                UpdateForceAction();
             }
         }
 
@@ -104,7 +109,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             displayWarningMessage = true;
         }
 
-        public void OnActionTypeChanged()
+        private void UpdateForceAction()
         {
             if (SelectedActionType == null)
             {

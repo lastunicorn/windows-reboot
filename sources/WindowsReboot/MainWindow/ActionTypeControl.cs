@@ -14,12 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    partial class ActionTypeControl : UserControl
+    internal partial class ActionTypeControl : UserControl
     {
         private ActionTypeControlViewModel viewModel;
 
@@ -52,13 +53,12 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             InitializeComponent();
         }
 
-        private void comboBoxAction_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void comboBoxAction_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            // hack: the ComboBox control does not write the binded values before the SelectedIndex event is raised. so, i force it to write.
+            // hack: The ComboBox control updates the object bounded to the SelectedItem property only after it looses focus.
+            // I need to force the update when user selects an item.
             foreach (Binding dataBinding in comboBoxAction.DataBindings)
                 dataBinding.WriteValue();
-
-            viewModel.OnActionTypeChanged();
         }
     }
 }

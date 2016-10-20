@@ -79,7 +79,7 @@
             this.comboBoxAction.Name = "comboBoxAction";
             this.comboBoxAction.Size = new System.Drawing.Size(161, 21);
             this.comboBoxAction.TabIndex = 0;
-            this.comboBoxAction.SelectedIndexChanged += new System.EventHandler(this.comboBoxAction_SelectedIndexChanged);
+            this.comboBoxAction.SelectionChangeCommitted += new System.EventHandler(this.comboBoxAction_SelectionChangeCommitted);
             // 
             // label6
             // 
