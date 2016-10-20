@@ -101,11 +101,11 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             });
         }
 
-        private void HandlePerformerTick(object sender, TickEventArgs e)
+        private void HandlePerformerTick(object sender, EventArgs e)
         {
             userInterface.Dispatch(() =>
             {
-                TimerTime = e.TimeUntilAction;
+                TimerTime = task.TimeUntilAction;
             });
         }
     }

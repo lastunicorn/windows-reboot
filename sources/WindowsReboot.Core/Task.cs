@@ -43,7 +43,7 @@ namespace DustInTheWind.WindowsReboot.Core
 
         public event EventHandler Started;
         public event EventHandler Stoped;
-        public event EventHandler<TickEventArgs> Tick;
+        public event EventHandler Tick;
 
         /// <summary>
         /// Indicates if the timer was started.
@@ -117,7 +117,7 @@ namespace DustInTheWind.WindowsReboot.Core
         {
             TimeUntilAction = taskRunTime - now;
 
-            OnTick(new TickEventArgs(TimeUntilAction));
+            OnTick();
         }
 
         private void DisplayWarningIfNeeded(DateTime now)
@@ -251,12 +251,12 @@ namespace DustInTheWind.WindowsReboot.Core
                 handler(this, EventArgs.Empty);
         }
 
-        protected virtual void OnTick(TickEventArgs e)
+        protected virtual void OnTick()
         {
-            EventHandler<TickEventArgs> handler = Tick;
+            EventHandler handler = Tick;
 
             if (handler != null)
-                handler(this, e);
+                handler(this, EventArgs.Empty);
         }
     }
 }

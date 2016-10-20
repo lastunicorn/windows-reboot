@@ -62,7 +62,6 @@
     <Compile Include="RebootUtil.cs" />
     <Compile Include="Services\ITicker.cs" />
     <Compile Include="Services\Ticker100.cs" />
-    <Compile Include="TickEventArgs.cs" />
     <Compile Include="VersionUtil.cs" />
     <Compile Include="WinApi\LUID.cs" />
     <Compile Include="WinApi\TOKEN_PRIVILEGES.cs" />
