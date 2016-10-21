@@ -22,12 +22,12 @@ namespace DustInTheWind.WindowsReboot.Core.Services
     public class Ticker100 : IDisposable, ITicker
     {
         private bool isDisposed;
-        private readonly Timer timer;
+        private readonly System.Timers.Timer timer;
         public event EventHandler Tick;
 
         public Ticker100()
         {
-            timer = new Timer(100);
+            timer = new System.Timers.Timer(100);
             timer.Elapsed += HandleTimerElapsed;
             timer.Start();
         }

@@ -22,6 +22,8 @@ using DustInTheWind.WindowsReboot.Core.Config;
 using DustInTheWind.WindowsReboot.Core.Services;
 using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.UiCommon;
+using Action = DustInTheWind.WindowsReboot.Core.Action;
+using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
@@ -33,6 +35,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private readonly IWindowsRebootView view;
 
         private readonly UserInterface userInterface;
+        private readonly Action action;
 
         /// <summary>
         /// A value that specifies if the form should be opened with the timer started or not.
@@ -49,7 +52,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private bool exitRequested;
 
         private readonly IRebootUtil rebootUtil;
-        private readonly Task task;
+        private readonly Timer timer;
         private string title;
 
         public FixedDateControlViewModel FixedDateControlViewModel { get; private set; }
@@ -77,38 +80,49 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// Initializes a new instance of the <see cref="WindowsRebootPresenter"/> class with
         /// the view used to interact with the user.
         /// </summary>
-        public WindowsRebootPresenter(IWindowsRebootView view, UserInterface userInterface,
-            ITicker ticker, Task task, IRebootUtil rebootUtil)
+        public WindowsRebootPresenter(IWindowsRebootView view, UserInterface userInterface, ITicker ticker, Action action, Timer timer, IRebootUtil rebootUtil)
         {
             if (view == null) throw new ArgumentNullException("view");
             if (userInterface == null) throw new ArgumentNullException("userInterface");
-            if (task == null) throw new ArgumentNullException("task");
+            if (action == null) throw new ArgumentNullException("action");
+            if (timer == null) throw new ArgumentNullException("timer");
             if (rebootUtil == null) throw new ArgumentNullException("rebootUtil");
 
             this.view = view;
             this.userInterface = userInterface;
-            this.task = task;
+            this.action = action;
+            this.timer = timer;
             this.rebootUtil = rebootUtil;
 
             FixedDateControlViewModel = new FixedDateControlViewModel();
             DelayTimeControlViewModel = new DelayTimeControlViewModel();
-            StatusControlViewModel = new StatusControlViewModel(ticker, task, userInterface);
-            ActionTypeControlViewModel = new ActionTypeControlViewModel(task);
+            StatusControlViewModel = new StatusControlViewModel(ticker, timer, userInterface);
+            ActionTypeControlViewModel = new ActionTypeControlViewModel(timer);
             DailyControlViewModel = new DailyControlViewModel();
 
             config = GetConfiguration();
             configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
 
-            task.Started += HandlePerformerStarted;
-            task.Stoped += HandlePerformerStoped;
+            timer.Started += HandlePerformerStarted;
+            timer.Stoped += HandlePerformerStoped;
+            timer.Warning += HandleTimerWarning;
         }
 
-        private void HandlePerformerStarted(object sender, EventArgs eventArgs)
+        private void HandleTimerWarning(object sender, EventArgs e)
+        {
+            userInterface.Dispatch(() =>
+            {
+                string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.",  action.Type);
+                userInterface.DisplayMessage(message);
+            });
+        }
+
+        private void HandlePerformerStarted(object sender, EventArgs e)
         {
             EnableInterface(false);
         }
 
-        private void HandlePerformerStoped(object sender, EventArgs eventArgs)
+        private void HandlePerformerStoped(object sender, EventArgs e)
         {
             userInterface.Dispatch(() =>
             {
@@ -130,13 +144,14 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 if (ActionTypeControlViewModel.SelectedActionType == null)
                     throw new WindowsRebootException("Select an action to be performed.");
 
-                TaskTime taskTime = GetActionTime();
+                ScheduleTime scheduleTime = GetActionTime();
 
-                task.Time = taskTime;
-                task.Type = ActionTypeControlViewModel.SelectedActionType.Value;
-                task.DisplayWarningMessage = ActionTypeControlViewModel.DisplayActionWarning;
-                task.ForceAction = ActionTypeControlViewModel.ForceAction;
-                task.Start();
+                action.Type = ActionTypeControlViewModel.SelectedActionType.Value;
+                action.Force = ActionTypeControlViewModel.ForceAction;
+
+                timer.Time = scheduleTime;
+                timer.WarningTime = ActionTypeControlViewModel.DisplayActionWarning ? TimeSpan.FromSeconds(30) : null as TimeSpan?;
+                timer.Start();
             }
             catch (Exception ex)
             {
@@ -144,11 +159,11 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        private TaskTime GetActionTime()
+        private ScheduleTime GetActionTime()
         {
             if (view.FixedTimeGroupSelected)
             {
-                return new TaskTime
+                return new ScheduleTime
                 {
                     Type = TaskTimeType.FixedDate,
                     DateTime = FixedDateControlViewModel.GetFullTime()
@@ -157,7 +172,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
             if (view.DailyGroupSelected)
             {
-                return new TaskTime
+                return new ScheduleTime
                 {
                     Type = TaskTimeType.Daily,
                     TimeOfDay = DailyControlViewModel.GetTimeOfDay()
@@ -166,7 +181,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
             if (view.DelayGroupSelected)
             {
-                return new TaskTime
+                return new ScheduleTime
                 {
                     Type = TaskTimeType.Delay,
                     Hours = DelayTimeControlViewModel.Hours,
@@ -177,7 +192,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
             if (view.ImmediateGroupSelected)
             {
-                return new TaskTime
+                return new ScheduleTime
                 {
                     Type = TaskTimeType.Immediate
                 };
@@ -193,7 +208,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             try
             {
-                task.Stop();
+                timer.Stop();
             }
             catch (Exception ex)
             {
@@ -244,7 +259,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
             else
             {
-                allowToCLose = !task.IsRunning || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
+                allowToCLose = !timer.IsRunning || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
             }
 
 
@@ -289,8 +304,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             try
             {
-                view.NotifyIconText = task.IsRunning
-                    ? TimerFormatter.Format(task.TimeUntilAction)
+                view.NotifyIconText = timer.IsRunning
+                    ? TimerFormatter.Format(timer.TimeUntilAction)
                     : Title;
             }
             catch (Exception ex)
@@ -589,8 +604,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             try
             {
-                if (task.IsRunning)
-                    userInterface.DisplayErrorMessage("Cannot complete the task while the timer is started.");
+                if (timer.IsRunning)
+                    userInterface.DisplayError("Cannot complete the task while the timer is started.");
                 else
                     ClearInterface();
             }
@@ -607,8 +622,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             try
             {
-                if (task.IsRunning)
-                    userInterface.DisplayErrorMessage("Cannot complete the task while the timer is started.");
+                if (timer.IsRunning)
+                    userInterface.DisplayError("Cannot complete the task while the timer is started.");
                 else
                     LoadConfiguration();
             }

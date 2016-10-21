@@ -19,6 +19,7 @@ using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Config;
 using DustInTheWind.WindowsReboot.OtherWindows;
+using Action = System.Action;
 
 namespace DustInTheWind.WindowsReboot.Services
 {
@@ -76,7 +77,7 @@ namespace DustInTheWind.WindowsReboot.Services
         /// Displays an error message to the user.
         /// </summary>
         /// <param name="message">The message text to be displayed.</param>
-        public void DisplayErrorMessage(string message)
+        public void DisplayError(string message)
         {
             MessageBox.Show(MainForm, message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }

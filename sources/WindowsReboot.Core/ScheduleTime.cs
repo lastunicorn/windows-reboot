@@ -18,7 +18,7 @@ using System;
 
 namespace DustInTheWind.WindowsReboot.Core
 {
-    public class TaskTime
+    public class ScheduleTime
     {
         public TaskTimeType Type { get; set; }
 
@@ -53,36 +53,6 @@ namespace DustInTheWind.WindowsReboot.Core
 
                 case TaskTimeType.Immediate:
                     return now;
-
-                default:
-                    throw new Exception("Invalid action type.");
-            }
-        }
-
-        public TimeSpan CalculateIntervalFrom(DateTime now)
-        {
-            switch (Type)
-            {
-                case TaskTimeType.FixedDate:
-                    return DateTime - now;
-
-                case TaskTimeType.Daily:
-                    {
-                        DateTime potentialTime = now.Date + TimeOfDay;
-
-                        if (potentialTime < now)
-                            potentialTime = potentialTime + TimeSpan.FromDays(1);
-
-                        // todo: check if reached DateTime.Max
-
-                        return potentialTime - now;
-                    }
-
-                case TaskTimeType.Delay:
-                    return new TimeSpan(Hours, Minutes, Seconds);
-
-                case TaskTimeType.Immediate:
-                    return TimeSpan.Zero;
 
                 default:
                     throw new Exception("Invalid action type.");

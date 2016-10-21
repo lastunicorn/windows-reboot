@@ -45,8 +45,9 @@
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
     <Compile Include="IUserInterface.cs" />
-    <Compile Include="Task.cs" />
-    <Compile Include="TaskTime.cs" />
+    <Compile Include="Action.cs" />
+    <Compile Include="Timer.cs" />
+    <Compile Include="ScheduleTime.cs" />
     <Compile Include="TaskTimeType.cs" />
     <Compile Include="TaskType.cs" />
     <Compile Include="Config\ActionTimeConfigElement.cs" />

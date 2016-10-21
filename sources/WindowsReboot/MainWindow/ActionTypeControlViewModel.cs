@@ -23,7 +23,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 {
     class ActionTypeControlViewModel : ViewModelBase
     {
-        private readonly Task task;
+        private readonly Timer timer;
         private ActionTypeItem[] actionTypes;
         private ActionTypeItem selectedActionType;
         private bool forceActionEnabled;
@@ -92,11 +92,11 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        public ActionTypeControlViewModel(Task task)
+        public ActionTypeControlViewModel(Timer timer)
         {
-            if (task == null) throw new ArgumentNullException("task");
+            if (timer == null) throw new ArgumentNullException("timer");
 
-            this.task = task;
+            this.timer = timer;
 
             ActionTypes = Enum.GetValues(typeof(TaskType))
                 .Cast<TaskType>()

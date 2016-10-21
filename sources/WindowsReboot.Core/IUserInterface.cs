@@ -21,7 +21,7 @@ namespace DustInTheWind.WindowsReboot.Core
 {
     public interface IUserInterface
     {
-        void Dispatch(Action action);
+        void Dispatch(System.Action action);
         void DisplayAbout();
         void DisplayLicense();
         bool DisplayOptions(WindowsRebootConfigSection configSection);
@@ -36,7 +36,7 @@ namespace DustInTheWind.WindowsReboot.Core
         /// Displays an error message to the user.
         /// </summary>
         /// <param name="message">The message text to be displayed.</param>
-        void DisplayErrorMessage(string message);
+        void DisplayError(string message);
 
         /// <summary>
         /// Displays the exception in a frendlly way for the user.

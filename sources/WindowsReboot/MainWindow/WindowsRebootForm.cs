@@ -20,6 +20,8 @@ using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Services;
 using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.UiCommon;
+using Action = DustInTheWind.WindowsReboot.Core.Action;
+using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
@@ -40,8 +42,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
             ITicker ticker = new Ticker100();
             IRebootUtil rebootUtil = new RebootUtil();
-            Task task = new Task(userInterface, ticker, rebootUtil);
-            presenter = new WindowsRebootPresenter(this, userInterface, ticker, task, rebootUtil);
+            Timer timer = new Timer(ticker);
+            Action action = new Action(timer, userInterface, rebootUtil);
+            presenter = new WindowsRebootPresenter(this, userInterface, ticker, action, timer, rebootUtil);
 
             this.Bind(x => x.Text, presenter, x => x.Title, false, DataSourceUpdateMode.Never);
 

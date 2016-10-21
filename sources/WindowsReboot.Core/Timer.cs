@@ -19,31 +19,25 @@ using DustInTheWind.WindowsReboot.Core.Services;
 
 namespace DustInTheWind.WindowsReboot.Core
 {
-    public class Task
+    public class Timer
     {
-        private readonly IUserInterface userInterface;
         private readonly ITicker ticker;
-        private readonly IRebootUtil rebootUtil;
 
-        /// <summary>
-        /// Indicates if the timer was started.
-        /// </summary>
         private volatile bool isRunning;
 
-        public TaskType Type { get; set; }
-        public TaskTime Time { get; set; }
+        public ScheduleTime Time { get; set; }
 
-        public bool ForceAction { get; set; }
-        public bool DisplayWarningMessage { get; set; }
+        private bool warningWasRaised;
 
-        private readonly TimeSpan warningMessageTime = TimeSpan.FromSeconds(30);
-        private DateTime taskRunTime;
         private DateTime startTime;
+        private TimeSpan? warningTime;
         public TimeSpan TimeUntilAction { get; private set; }
 
         public event EventHandler Started;
         public event EventHandler Stoped;
         public event EventHandler Tick;
+        public event EventHandler Warning;
+        public event EventHandler Ring;
 
         /// <summary>
         /// Indicates if the timer was started.
@@ -53,46 +47,45 @@ namespace DustInTheWind.WindowsReboot.Core
             get { return isRunning; }
         }
 
-        public DateTime? ActionTime
+        public TimeSpan? WarningTime
         {
-            get { return taskRunTime; }
+            get { return warningTime; }
+            set
+            {
+                if (isRunning)
+                    throw new InvalidOperationException();
+
+                warningTime = value;
+            }
         }
 
-        public Task(IUserInterface userInterface, ITicker ticker, IRebootUtil rebootUtil)
+        public DateTime ActionTime { get; private set; }
+
+        public Timer(ITicker ticker)
         {
-            if (userInterface == null) throw new ArgumentNullException("userInterface");
             if (ticker == null) throw new ArgumentNullException("ticker");
-            if (rebootUtil == null) throw new ArgumentNullException("rebootUtil");
 
-            this.userInterface = userInterface;
             this.ticker = ticker;
-            this.rebootUtil = rebootUtil;
 
-            ForceAction = true;
-            DisplayWarningMessage = true;
+            WarningTime = TimeSpan.FromSeconds(30);
         }
 
         public void Start()
         {
-            DateTime now = DateTime.Now;
-            DateTime runTime = Time.CalculateTimeFrom(now);
+            startTime = DateTime.Now;
+            ActionTime = Time.CalculateTimeFrom(startTime);
 
-            if (runTime < now)
+            if (ActionTime < startTime)
             {
-                string currentTimeString = string.Format("{0} : {1}", now.ToLongDateString(), now.ToLongTimeString());
-                string actionTimeString = string.Format("{0} : {1}", runTime.ToLongDateString(), runTime.ToLongTimeString());
+                string currentTimeString = string.Format("{0} : {1}", startTime.ToLongDateString(), startTime.ToLongTimeString());
+                string actionTimeString = string.Format("{0} : {1}", ActionTime.ToLongDateString(), ActionTime.ToLongTimeString());
 
                 string message = string.Format("The action time already passed.\nPlease specify a time in the future to execute the action.\n\nCurrent time: {0}\nRequested action time: {1}.", currentTimeString, actionTimeString);
-                userInterface.DisplayErrorMessage(message);
+                throw new Exception(message);
             }
             else
             {
-                taskRunTime = runTime;
-                startTime = now;
-
-                if (DisplayWarningMessage && runTime - now < warningMessageTime)
-                    DisplayWarningMessage = false;
-
+                warningWasRaised = warningTime == null || warningTime > ActionTime - startTime;
                 isRunning = true;
 
                 ticker.Tick += HandleTickerTick;
@@ -109,48 +102,44 @@ namespace DustInTheWind.WindowsReboot.Core
             DateTime now = DateTime.Now;
 
             CalculateRemainingTime(now);
-            DisplayWarningIfNeeded(now);
+            RaiseWarningIfNeeded(now);
             DoActionIfNeeded(now);
         }
 
         private void CalculateRemainingTime(DateTime now)
         {
-            TimeUntilAction = taskRunTime - now;
+            TimeUntilAction = ActionTime - now;
 
             OnTick();
         }
 
-        private void DisplayWarningIfNeeded(DateTime now)
+        private void RaiseWarningIfNeeded(DateTime now)
         {
-            if (!DisplayWarningMessage || taskRunTime - warningMessageTime > now)
+            if (warningTime == null || warningWasRaised || warningTime < ActionTime - now)
                 return;
 
-            DisplayWarningMessage = false;
+            warningWasRaised = true;
 
-            userInterface.Dispatch(() =>
-            {
-                string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.", Type);
-                userInterface.DisplayMessage(message);
-            });
+            OnWarning();
         }
 
         private void DoActionIfNeeded(DateTime now)
         {
-            if (taskRunTime > now)
+            if (ActionTime > now)
                 return;
 
-            DateTime? nextRunTime = CalculateNextRunTime(taskRunTime + TimeSpan.FromTicks(1));
+            DateTime? nextRunTime = CalculateNextRunTime(ActionTime + TimeSpan.FromTicks(1));
 
             if (nextRunTime == null)
             {
                 Stop();
-                Run();
             }
             else
             {
-                taskRunTime = nextRunTime.Value;
-                Run();
+                ActionTime = nextRunTime.Value;
             }
+
+            OnRing();
         }
 
         private DateTime? CalculateNextRunTime(DateTime now)
@@ -185,47 +174,6 @@ namespace DustInTheWind.WindowsReboot.Core
             }
         }
 
-        private void Run()
-        {
-            switch (Type)
-            {
-                case TaskType.Ring:
-                    userInterface.Dispatch(() =>
-                    {
-                        userInterface.DisplayMessage("Ring-ring!");
-                    });
-                    break;
-
-                case TaskType.LockWorkstation:
-                    rebootUtil.Lock();
-                    break;
-
-                case TaskType.LogOff:
-                    rebootUtil.LogOff(ForceAction);
-                    break;
-
-                case TaskType.Sleep:
-                    rebootUtil.Sleep(ForceAction);
-                    break;
-
-                case TaskType.Hibernate:
-                    rebootUtil.Hibernate(ForceAction);
-                    break;
-
-                case TaskType.Reboot:
-                    rebootUtil.Reboot(ForceAction);
-                    break;
-
-                case TaskType.ShutDown:
-                    rebootUtil.ShutDown(ForceAction);
-                    break;
-
-                case TaskType.PowerOff:
-                    rebootUtil.PowerOff(ForceAction);
-                    break;
-            }
-        }
-
         public void Stop()
         {
             ticker.Tick -= HandleTickerTick;
@@ -254,6 +202,22 @@ namespace DustInTheWind.WindowsReboot.Core
         protected virtual void OnTick()
         {
             EventHandler handler = Tick;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnWarning()
+        {
+            EventHandler handler = Warning;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnRing()
+        {
+            EventHandler handler = Ring;
 
             if (handler != null)
                 handler(this, EventArgs.Empty);
