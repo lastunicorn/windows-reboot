@@ -38,6 +38,7 @@ namespace DustInTheWind.WindowsReboot.Core
         public event EventHandler Tick;
         public event EventHandler Warning;
         public event EventHandler Ring;
+        public event EventHandler WarningTimeChanged;
 
         /// <summary>
         /// Indicates if the timer was started.
@@ -56,10 +57,14 @@ namespace DustInTheWind.WindowsReboot.Core
                     throw new InvalidOperationException();
 
                 warningTime = value;
+
+                OnWarningTimeChanged();
             }
         }
 
         public DateTime ActionTime { get; private set; }
+
+        public readonly TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
 
         public Timer(ITicker ticker)
         {
@@ -81,7 +86,7 @@ namespace DustInTheWind.WindowsReboot.Core
                 string actionTimeString = string.Format("{0} : {1}", ActionTime.ToLongDateString(), ActionTime.ToLongTimeString());
 
                 string message = string.Format("The action time already passed.\nPlease specify a time in the future to execute the action.\n\nCurrent time: {0}\nRequested action time: {1}.", currentTimeString, actionTimeString);
-                throw new Exception(message);
+                throw new WindowsRebootException(message);
             }
             else
             {
@@ -218,6 +223,14 @@ namespace DustInTheWind.WindowsReboot.Core
         protected virtual void OnRing()
         {
             EventHandler handler = Ring;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnWarningTimeChanged()
+        {
+            EventHandler handler = WarningTimeChanged;
 
             if (handler != null)
                 handler(this, EventArgs.Empty);

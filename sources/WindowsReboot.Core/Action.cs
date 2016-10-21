@@ -20,13 +20,36 @@ namespace DustInTheWind.WindowsReboot.Core
 {
     public class Action
     {
-        private readonly Timer timer;
         private readonly IUserInterface userInterface;
         private readonly IRebootUtil rebootUtil;
+        private TaskType type;
+        private bool force;
 
-        public TaskType Type { get; set; }
+        public event EventHandler ForceChanged;
+        public event EventHandler TypeChanged;
 
-        public bool Force { get; set; }
+        public TaskType Type
+        {
+            get { return type; }
+            set
+            {
+                if (!Enum.IsDefined(typeof(TaskType), value))
+                    throw new ArgumentException("Invalid action type value");
+
+                type = value;
+                OnTypeChanged();
+            }
+        }
+
+        public bool Force
+        {
+            get { return force; }
+            set
+            {
+                force = value;
+                OnForceChanged();
+            }
+        }
 
         public Action(Timer timer, IUserInterface userInterface, IRebootUtil rebootUtil)
         {
@@ -34,21 +57,16 @@ namespace DustInTheWind.WindowsReboot.Core
             if (userInterface == null) throw new ArgumentNullException("userInterface");
             if (rebootUtil == null) throw new ArgumentNullException("rebootUtil");
 
-            this.timer = timer;
             this.userInterface = userInterface;
             this.rebootUtil = rebootUtil;
 
+            Type = TaskType.Ring;
             Force = true;
 
-            this.timer.Ring += HandleTimerRing;
+            timer.Ring += HandleTimerRing;
         }
 
         private void HandleTimerRing(object sender, EventArgs eventArgs)
-        {
-            Run();
-        }
-
-        private void Run()
         {
             switch (Type)
             {
@@ -87,6 +105,22 @@ namespace DustInTheWind.WindowsReboot.Core
                     rebootUtil.PowerOff(Force);
                     break;
             }
+        }
+
+        protected virtual void OnForceChanged()
+        {
+            EventHandler handler = ForceChanged;
+
+            if (handler != null) 
+                handler(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnTypeChanged()
+        {
+            EventHandler handler = TypeChanged;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
         }
     }
 }

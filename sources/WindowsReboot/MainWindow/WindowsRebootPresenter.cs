@@ -97,7 +97,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             FixedDateControlViewModel = new FixedDateControlViewModel();
             DelayTimeControlViewModel = new DelayTimeControlViewModel();
             StatusControlViewModel = new StatusControlViewModel(ticker, timer, userInterface);
-            ActionTypeControlViewModel = new ActionTypeControlViewModel(timer);
+            ActionTypeControlViewModel = new ActionTypeControlViewModel(timer, action);
             DailyControlViewModel = new DailyControlViewModel();
 
             config = GetConfiguration();
@@ -141,16 +141,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             try
             {
-                if (ActionTypeControlViewModel.SelectedActionType == null)
-                    throw new WindowsRebootException("Select an action to be performed.");
-
-                ScheduleTime scheduleTime = GetActionTime();
-
-                action.Type = ActionTypeControlViewModel.SelectedActionType.Value;
-                action.Force = ActionTypeControlViewModel.ForceAction;
-
-                timer.Time = scheduleTime;
-                timer.WarningTime = ActionTypeControlViewModel.DisplayActionWarning ? TimeSpan.FromSeconds(30) : null as TimeSpan?;
+                timer.Time = GetActionTime();
                 timer.Start();
             }
             catch (Exception ex)
@@ -691,7 +682,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             FixedDateControlViewModel.Clear();
             DailyControlViewModel.Clear();
             DelayTimeControlViewModel.Clear();
-            ActionTypeControlViewModel.Clear();
+            
+            action.Type = TaskType.PowerOff;
+            action.Force = true;
 
             view.DelayGroupSelected = true;
         }
@@ -734,9 +727,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                     break;
             }
 
-            ActionTypeControlViewModel.SelectedActionType = new ActionTypeItem(this.configSection.ActionType.Value);
-
-            ActionTypeControlViewModel.ForceAction = this.configSection.ForceClosingPrograms.Value;
+            action.Type = this.configSection.ActionType.Value;
+            action.Force = this.configSection.ForceClosingPrograms.Value;
 
             startAtStartUp = this.configSection.StartTimerAtApplicationStart.Value;
         }
@@ -786,11 +778,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 configSection.ActionTime.Seconds = 0;
             }
 
-            configSection.ActionType.Value = ActionTypeControlViewModel.SelectedActionType == null
-                ? TaskType.Ring
-                : ActionTypeControlViewModel.SelectedActionType.Value;
-
-            configSection.ForceClosingPrograms.Value = ActionTypeControlViewModel.ForceAction;
+            configSection.ActionType.Value = action.Type;
+            configSection.ForceClosingPrograms.Value = action.Force;
 
             //config.Save();
             config.Save(ConfigurationSaveMode.Modified);

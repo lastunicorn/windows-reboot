@@ -18,18 +18,22 @@ using System;
 using System.Linq;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.UiCommon;
+using Action = DustInTheWind.WindowsReboot.Core.Action;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    class ActionTypeControlViewModel : ViewModelBase
+    internal class ActionTypeControlViewModel : ViewModelBase
     {
         private readonly Timer timer;
+        private readonly Action action;
         private ActionTypeItem[] actionTypes;
         private ActionTypeItem selectedActionType;
         private bool forceActionEnabled;
         private bool forceActionBackup;
         private bool forceAction;
         private bool displayWarningMessage;
+
+        private bool updateFromBusiness;
 
         /// <summary>
         /// Sets the available values that can be chosed for the action type.
@@ -58,7 +62,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 selectedActionType = value;
                 OnPropertyChanged("SelectedActionType");
 
-                UpdateForceAction();
+                if (!updateFromBusiness)
+                    action.Type = value.Value;
             }
         }
 
@@ -69,6 +74,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 forceAction = value;
                 OnPropertyChanged("ForceAction");
+
+                if (!updateFromBusiness)
+                    action.Force = value;
             }
         }
 
@@ -89,14 +97,19 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 displayWarningMessage = value;
                 OnPropertyChanged("DisplayActionWarning");
+
+                if (!updateFromBusiness)
+                    timer.WarningTime = value ? timer.DefaultWarningTime : null;
             }
         }
 
-        public ActionTypeControlViewModel(Timer timer)
+        public ActionTypeControlViewModel(Timer timer, Action action)
         {
             if (timer == null) throw new ArgumentNullException("timer");
+            if (action == null) throw new ArgumentNullException("action");
 
             this.timer = timer;
+            this.action = action;
 
             ActionTypes = Enum.GetValues(typeof(TaskType))
                 .Cast<TaskType>()
@@ -104,9 +117,54 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 .ToArray();
 
             forceActionBackup = true;
+            forceAction = action.Force;
+            displayWarningMessage = timer.WarningTime != null;
 
-            forceAction = true;
-            displayWarningMessage = true;
+            timer.WarningTimeChanged += HandleTimerWarningTimeChanged;
+            action.ForceChanged += HandleActionForceChanged;
+            action.TypeChanged += HandleActionTypeChanged;
+        }
+
+        private void HandleActionTypeChanged(object sender, EventArgs eventArgs)
+        {
+            updateFromBusiness = true;
+            try
+            {
+                SelectedActionType = ActionTypes
+                    .First(x => x.Value == action.Type);
+
+                UpdateForceAction();
+            }
+            finally
+            {
+                updateFromBusiness = false;
+            }
+        }
+
+        private void HandleActionForceChanged(object sender, EventArgs eventArgs)
+        {
+            updateFromBusiness = true;
+            try
+            {
+                ForceAction = action.Force;
+            }
+            finally
+            {
+                updateFromBusiness = false;
+            }
+        }
+
+        private void HandleTimerWarningTimeChanged(object sender, EventArgs e)
+        {
+            updateFromBusiness = true;
+            try
+            {
+                DisplayActionWarning = timer.WarningTime != null;
+            }
+            finally
+            {
+                updateFromBusiness = false;
+            }
         }
 
         private void UpdateForceAction()
@@ -150,12 +208,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 ForceAction = forceActionBackup;
 
             ForceActionEnabled = true;
-        }
-
-        public void Clear()
-        {
-            SelectedActionType = new ActionTypeItem(TaskType.PowerOff);
-            ForceAction = true;
         }
     }
 }
