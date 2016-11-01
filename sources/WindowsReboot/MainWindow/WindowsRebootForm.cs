@@ -50,17 +50,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
             actionTimeControl1.ViewModel = presenter.ActionTimeControlViewModel;
             actionTypeControl1.ViewModel = presenter.ActionTypeControlViewModel;
+            actionControl1.ViewModel = presenter.ActionControlViewModel;
             statusControl1.ViewModel = presenter.StatusControlViewModel;
-        }
-
-        private void buttonStartTimer_Click(object sender, EventArgs e)
-        {
-            presenter.OnStartTimerClicked();
-        }
-
-        private void buttonStopTimer_Click(object sender, EventArgs e)
-        {
-            presenter.OnStopTimerClicked();
         }
 
         private void Form1_Load(object sender, EventArgs e)

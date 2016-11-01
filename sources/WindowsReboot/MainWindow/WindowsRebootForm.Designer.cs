@@ -86,10 +86,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.groupBoxActionType = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
             this.actionTypeControl1 = new DustInTheWind.WindowsReboot.MainWindow.ActionTypeControl();
             this.groupBoxActionStart = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
-            this.tableLayoutPanelActionStart = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonStopTimer = new System.Windows.Forms.Button();
-            this.buttonStartTimer = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.actionControl1 = new DustInTheWind.WindowsReboot.MainWindow.ActionControl();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStripTrayIcon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHeader)).BeginInit();
@@ -98,7 +96,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.customGroupBoxStatusInfo.SuspendLayout();
             this.groupBoxActionType.SuspendLayout();
             this.groupBoxActionStart.SuspendLayout();
-            this.tableLayoutPanelActionStart.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -470,7 +467,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxActionStart.BorderColor = System.Drawing.SystemColors.ActiveBorder;
-            this.groupBoxActionStart.Controls.Add(this.tableLayoutPanelActionStart);
+            this.groupBoxActionStart.Controls.Add(this.actionControl1);
             this.groupBoxActionStart.CornerRadius = 0;
             this.groupBoxActionStart.Location = new System.Drawing.Point(244, 141);
             this.groupBoxActionStart.Margin = new System.Windows.Forms.Padding(4, 4, 0, 4);
@@ -485,53 +482,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.groupBoxActionStart.TitleMargin = new System.Windows.Forms.Padding(0);
             this.groupBoxActionStart.TitlePadding = new System.Windows.Forms.Padding(3, 0, 5, 0);
             // 
-            // tableLayoutPanelActionStart
-            // 
-            this.tableLayoutPanelActionStart.ColumnCount = 1;
-            this.tableLayoutPanelActionStart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelActionStart.Controls.Add(this.buttonStopTimer, 0, 1);
-            this.tableLayoutPanelActionStart.Controls.Add(this.buttonStartTimer, 0, 0);
-            this.tableLayoutPanelActionStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelActionStart.Location = new System.Drawing.Point(3, 19);
-            this.tableLayoutPanelActionStart.Name = "tableLayoutPanelActionStart";
-            this.tableLayoutPanelActionStart.RowCount = 2;
-            this.tableLayoutPanelActionStart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelActionStart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelActionStart.Size = new System.Drawing.Size(139, 80);
-            this.tableLayoutPanelActionStart.TabIndex = 5;
-            // 
-            // buttonStopTimer
-            // 
-            this.buttonStopTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonStopTimer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonStopTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonStopTimer.Location = new System.Drawing.Point(4, 43);
-            this.buttonStopTimer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 4);
-            this.buttonStopTimer.Name = "buttonStopTimer";
-            this.buttonStopTimer.Size = new System.Drawing.Size(131, 33);
-            this.buttonStopTimer.TabIndex = 3;
-            this.buttonStopTimer.Text = "Stop";
-            this.buttonStopTimer.UseVisualStyleBackColor = true;
-            this.buttonStopTimer.Click += new System.EventHandler(this.buttonStopTimer_Click);
-            // 
-            // buttonStartTimer
-            // 
-            this.buttonStartTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonStartTimer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.buttonStartTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonStartTimer.Location = new System.Drawing.Point(4, 4);
-            this.buttonStartTimer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 3);
-            this.buttonStartTimer.Name = "buttonStartTimer";
-            this.buttonStartTimer.Size = new System.Drawing.Size(131, 33);
-            this.buttonStartTimer.TabIndex = 2;
-            this.buttonStartTimer.Text = "Start";
-            this.buttonStartTimer.UseVisualStyleBackColor = true;
-            this.buttonStartTimer.Click += new System.EventHandler(this.buttonStartTimer_Click);
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.tableLayoutPanel6);
@@ -542,9 +492,17 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.panel1.Size = new System.Drawing.Size(409, 375);
             this.panel1.TabIndex = 22;
             // 
+            // actionControl1
+            // 
+            this.actionControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.actionControl1.Location = new System.Drawing.Point(3, 19);
+            this.actionControl1.Name = "actionControl1";
+            this.actionControl1.Size = new System.Drawing.Size(139, 80);
+            this.actionControl1.TabIndex = 0;
+            this.actionControl1.ViewModel = null;
+            // 
             // WindowsRebootForm
             // 
-            this.AcceptButton = this.buttonStartTimer;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(409, 462);
@@ -573,7 +531,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.groupBoxActionType.ResumeLayout(false);
             this.groupBoxActionType.PerformLayout();
             this.groupBoxActionStart.ResumeLayout(false);
-            this.tableLayoutPanelActionStart.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -588,8 +545,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.Button buttonStartTimer;
-        private System.Windows.Forms.Button buttonStopTimer;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.PictureBox pictureBoxHeader;
         private System.Windows.Forms.Label labelBlackLine1;
@@ -614,7 +569,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private System.Windows.Forms.ToolStripMenuItem powerOffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sleepToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hibernateToolStripMenuItem;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelActionStart;
         private CustomGroupBox groupBoxActionTime;
         private CustomGroupBox groupBoxActionType;
         private CustomGroupBox groupBoxActionStart;
@@ -624,6 +578,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private StatusControl statusControl1;
         private ActionTypeControl actionTypeControl1;
         private ActionTimeControl actionTimeControl1;
+        private ActionControl actionControl1;
     }
 }
 

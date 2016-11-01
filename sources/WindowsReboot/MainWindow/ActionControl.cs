@@ -14,41 +14,39 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Windows.Forms;
+using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    internal partial class DailyControl : UserControl
+    internal partial class ActionControl : UserControl
     {
-        public TimeSpan Time
+        private ActionControlViewModel viewModel;
+
+        public ActionControlViewModel ViewModel
         {
-            get { return dateTimePickerDailyTime.Value.TimeOfDay; }
+            get { return viewModel; }
             set
             {
-                dateTimePickerDailyTime.Value = DateTime.Today.Add(value);
-                OnTimeChanged();
+                if (viewModel != null)
+                {
+                    buttonStartTimer.Command = null;
+                    buttonStopTimer.Command = null;
+                }
+
+                viewModel = value;
+
+                if (viewModel != null)
+                {
+                    buttonStartTimer.Command = viewModel.StartTimerCommand;
+                    buttonStopTimer.Command = viewModel.StopTimerCommand;
+                }
             }
         }
 
-        public event EventHandler TimeChanged;
-
-        public DailyControl()
+        public ActionControl()
         {
             InitializeComponent();
-        }
-
-        protected virtual void OnTimeChanged()
-        {
-            EventHandler handler = TimeChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
-        }
-
-        private void dateTimePickerDailyTime_ValueChanged(object sender, EventArgs e)
-        {
-            OnTimeChanged();
         }
     }
 }

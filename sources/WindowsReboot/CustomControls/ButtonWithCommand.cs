@@ -17,38 +17,43 @@
 using System;
 using System.Windows.Forms;
 
-namespace DustInTheWind.WindowsReboot.MainWindow
+namespace DustInTheWind.WindowsReboot.CustomControls
 {
-    internal partial class DailyControl : UserControl
+    public partial class ButtonWithCommand : Button
     {
-        public TimeSpan Time
+        private ICommand command;
+
+        public ICommand Command
         {
-            get { return dateTimePickerDailyTime.Value.TimeOfDay; }
+            get { return command; }
             set
             {
-                dateTimePickerDailyTime.Value = DateTime.Today.Add(value);
-                OnTimeChanged();
+                if (command != null)
+                    command.CanExecuteChanged -= HandleCommandCanExecuteChanged;
+
+                command = value;
+
+                if (command != null)
+                    command.CanExecuteChanged += HandleCommandCanExecuteChanged;
+
+                Enabled = command == null || command.CanExecute;
             }
         }
 
-        public event EventHandler TimeChanged;
+        private void HandleCommandCanExecuteChanged(object sender, EventArgs eventArgs)
+        {
+            Enabled = command == null || command.CanExecute;
+        }
 
-        public DailyControl()
+        public ButtonWithCommand()
         {
             InitializeComponent();
         }
 
-        protected virtual void OnTimeChanged()
+        private void ButtonWithCommand_Click(object sender, EventArgs e)
         {
-            EventHandler handler = TimeChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
-        }
-
-        private void dateTimePickerDailyTime_ValueChanged(object sender, EventArgs e)
-        {
-            OnTimeChanged();
+            if (command != null)
+                command.Execute();
         }
     }
 }

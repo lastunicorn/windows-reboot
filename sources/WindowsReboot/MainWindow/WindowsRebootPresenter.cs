@@ -49,6 +49,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         public ActionTimeControlViewModel ActionTimeControlViewModel { get; private set; }
         public ActionTypeControlViewModel ActionTypeControlViewModel { get; private set; }
+        public ActionControlViewModel ActionControlViewModel { get; private set; }
         public StatusControlViewModel StatusControlViewModel { get; private set; }
 
         /// <summary>
@@ -84,6 +85,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
             ActionTimeControlViewModel = new ActionTimeControlViewModel(timer, userInterface);
             ActionTypeControlViewModel = new ActionTypeControlViewModel(timer, action, userInterface);
+            ActionControlViewModel = new ActionControlViewModel(timer, userInterface);
             StatusControlViewModel = new StatusControlViewModel(ticker, timer, userInterface);
 
             configuration = new WindowsRebootConfiguration();
@@ -115,41 +117,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             });
         }
 
-        #region Start/Stop timer
-
-        /// <summary>
-        /// Method called when the "Start timer" button is clicked.
-        /// </summary>
-        internal void OnStartTimerClicked()
-        {
-            try
-            {
-                //timer.Time = GetActionTime();
-                timer.Start();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        /// <summary>
-        /// Method called when the "Stop timer" button is clicked.
-        /// </summary>
-        internal void OnStopTimerClicked()
-        {
-            try
-            {
-                timer.Stop();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        #endregion
-
         #region Load/Close Form events
 
         /// <summary>
@@ -165,14 +132,14 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 view.NotifyIconText = title;
 
                 LoadConfiguration();
+
+                if (configuration.StartTimerAtApplicationStart)
+                    timer.Start();
             }
             catch (Exception ex)
             {
                 userInterface.DisplayError(ex);
             }
-
-            if (configuration.StartTimerAtApplicationStart)
-                OnStartTimerClicked();
         }
 
         /// <summary>
