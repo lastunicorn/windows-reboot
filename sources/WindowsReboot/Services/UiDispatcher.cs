@@ -19,7 +19,7 @@ using System.Threading;
 
 namespace DustInTheWind.WindowsReboot.Services
 {
-    class UiDispatcher : IUiDispatcher
+    internal class UiDispatcher : IUiDispatcher
     {
         private readonly SynchronizationContext synchronizationContext;
 

@@ -14,36 +14,102 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    partial class FixedDateControl : UserControl
+    internal partial class FixedDateControl : UserControl
     {
-        private FixedDateControlViewModel viewModel;
-
-        public FixedDateControlViewModel ViewModel
+        public DateTime Date
         {
-            get { return viewModel; }
+            get { return dateTimePickerFixedDate.Value; }
             set
             {
-                dateTimePickerFixedDate.DataBindings.Clear();
-                dateTimePickerFixedTime.DataBindings.Clear();
-
-                viewModel = value;
-
-                if (viewModel != null)
-                {
-                    dateTimePickerFixedDate.Bind(x => x.Value, viewModel, x => x.Date, false, DataSourceUpdateMode.OnPropertyChanged);
-                    dateTimePickerFixedTime.Bind(x => x.Value, viewModel, x => x.Time, false, DataSourceUpdateMode.OnPropertyChanged);
-                }
+                dateTimePickerFixedDate.Value = value;
+                OnDateChanged();
+                OnFullTimeChanged();
             }
         }
+
+        public DateTime Time
+        {
+            get { return dateTimePickerFixedTime.Value; }
+            set
+            {
+                dateTimePickerFixedTime.Value = value;
+                OnTimeChanged();
+                OnFullTimeChanged();
+            }
+        }
+
+        public DateTime FullTime
+        {
+            get
+            {
+                return Date.Add(Time.TimeOfDay);
+            }
+            set
+            {
+                dateTimePickerFixedDate.Value = value.Date;
+                dateTimePickerFixedTime.Value = value;
+                OnDateChanged();
+                OnTimeChanged();
+                OnFullTimeChanged();
+            }
+        }
+
+        public event EventHandler DateChanged;
+        public event EventHandler TimeChanged;
+        public event EventHandler FullTimeChanged;
 
         public FixedDateControl()
         {
             InitializeComponent();
+        }
+
+        public void Clear()
+        {
+            DateTime now = DateTime.Now;
+
+            Date = now.Date;
+            Time = now;
+        }
+
+        protected virtual void OnDateChanged()
+        {
+            EventHandler handler = DateChanged;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnTimeChanged()
+        {
+            EventHandler handler = TimeChanged;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnFullTimeChanged()
+        {
+            EventHandler handler = FullTimeChanged;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        private void dateTimePickerFixedDate_ValueChanged(object sender, EventArgs e)
+        {
+            OnDateChanged();
+            OnFullTimeChanged();
+        }
+
+        private void dateTimePickerFixedTime_ValueChanged(object sender, EventArgs e)
+        {
+            OnTimeChanged();
+            OnFullTimeChanged();
         }
     }
 }

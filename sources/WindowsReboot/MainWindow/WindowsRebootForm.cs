@@ -48,11 +48,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
             this.Bind(x => x.Text, presenter, x => x.Title, false, DataSourceUpdateMode.Never);
 
-            fixedDateControl1.ViewModel = presenter.FixedDateControlViewModel;
-            statusControl1.ViewModel = presenter.StatusControlViewModel;
-            delayTimeControl1.ViewModel = presenter.DelayTimeControlViewModel;
+            actionTimeControl1.ViewModel = presenter.ActionTimeControlViewModel;
             actionTypeControl1.ViewModel = presenter.ActionTypeControlViewModel;
-            dailyControl1.ViewModel = presenter.DailyControlViewModel;
+            statusControl1.ViewModel = presenter.StatusControlViewModel;
         }
 
         private void buttonStartTimer_Click(object sender, EventArgs e)
@@ -190,30 +188,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         public bool MenuItem_LoadDefaultSettingsEnabled
         {
             set { loadDefaultSettingsToolStripMenuItem.Enabled = value; }
-        }
-
-        public bool FixedTimeGroupSelected
-        {
-            get { return tabControlActionTime.SelectedIndex == 0; }
-            set { tabControlActionTime.SelectedIndex = 0; }
-        }
-
-        public bool DailyGroupSelected
-        {
-            get { return tabControlActionTime.SelectedIndex == 1; }
-            set { tabControlActionTime.SelectedIndex = 1; }
-        }
-
-        public bool DelayGroupSelected
-        {
-            get { return tabControlActionTime.SelectedIndex == 2; }
-            set { tabControlActionTime.SelectedIndex = 2; }
-        }
-
-        public bool ImmediateGroupSelected
-        {
-            get { return tabControlActionTime.SelectedIndex == 3; }
-            set { tabControlActionTime.SelectedIndex = 3; }
         }
 
         public string NotifyIconText

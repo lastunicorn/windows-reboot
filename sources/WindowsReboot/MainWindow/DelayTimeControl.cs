@@ -14,38 +14,89 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
     partial class DelayTimeControl : UserControl
     {
-        private DelayTimeControlViewModel viewModel;
-
-        public DelayTimeControlViewModel ViewModel
+        public int Hours
         {
-            get { return viewModel; }
+            get { return (int)numericUpDownHours.Value; }
             set
             {
-                numericUpDownHours.DataBindings.Clear();
-                numericUpDownMinutes.DataBindings.Clear();
-                numericUpDownSeconds.DataBindings.Clear();
-
-                viewModel = value;
-
-                if (viewModel != null)
-                {
-                    numericUpDownHours.Bind(x => x.Value, viewModel, x => x.Hours, false, DataSourceUpdateMode.OnPropertyChanged);
-                    numericUpDownMinutes.Bind(x => x.Value, viewModel, x => x.Minutes, false, DataSourceUpdateMode.OnPropertyChanged);
-                    numericUpDownSeconds.Bind(x => x.Value, viewModel, x => x.Seconds, false, DataSourceUpdateMode.OnPropertyChanged);
-                }
+                numericUpDownHours.Value = value;
+                OnHoursChanged();
             }
         }
+
+        public int Minutes
+        {
+            get { return (int)numericUpDownMinutes.Value; }
+            set
+            {
+                numericUpDownMinutes.Value = value;
+                OnMinutesChanged();
+            }
+        }
+        
+        public int Seconds
+        {
+            get { return (int)numericUpDownSeconds.Value; }
+            set
+            {
+                numericUpDownSeconds.Value = value;
+                OnSecondsChanged();
+            }
+        }
+
+        public event EventHandler HoursChanged;
+        public event EventHandler MinutesChanged;
+        public event EventHandler SecondsChanged;
 
         public DelayTimeControl()
         {
             InitializeComponent();
+        }
+        
+        protected virtual void OnHoursChanged()
+        {
+            EventHandler handler = HoursChanged;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnMinutesChanged()
+        {
+            EventHandler handler = MinutesChanged;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnSecondsChanged()
+        {
+            EventHandler handler = SecondsChanged;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        private void numericUpDownHours_ValueChanged(object sender, EventArgs e)
+        {
+            OnHoursChanged();
+        }
+
+        private void numericUpDownMinutes_ValueChanged(object sender, EventArgs e)
+        {
+            OnMinutesChanged();
+        }
+
+        private void numericUpDownSeconds_ValueChanged(object sender, EventArgs e)
+        {
+            OnSecondsChanged();
         }
     }
 }

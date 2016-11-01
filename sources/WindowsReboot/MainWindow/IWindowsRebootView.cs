@@ -26,11 +26,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         bool MenuItem_LoadInitialSettingsEnabled { set; }
         bool MenuItem_LoadDefaultSettingsEnabled { set; }
 
-        bool FixedTimeGroupSelected { get; set; }
-        bool DailyGroupSelected { get; set; }
-        bool DelayGroupSelected { get; set; }
-        bool ImmediateGroupSelected { get; set; }
-
         /// <summary>
         /// Sets the tool tip text displayed by the notify icon.
         /// </summary>

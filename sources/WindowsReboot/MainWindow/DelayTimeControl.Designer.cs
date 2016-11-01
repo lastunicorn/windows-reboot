@@ -78,6 +78,7 @@
             this.numericUpDownSeconds.Size = new System.Drawing.Size(135, 20);
             this.numericUpDownSeconds.TabIndex = 2;
             this.numericUpDownSeconds.ThousandsSeparator = true;
+            this.numericUpDownSeconds.ValueChanged += new System.EventHandler(this.numericUpDownSeconds_ValueChanged);
             // 
             // numericUpDownMinutes
             // 
@@ -92,6 +93,7 @@
             this.numericUpDownMinutes.Size = new System.Drawing.Size(133, 20);
             this.numericUpDownMinutes.TabIndex = 1;
             this.numericUpDownMinutes.ThousandsSeparator = true;
+            this.numericUpDownMinutes.ValueChanged += new System.EventHandler(this.numericUpDownMinutes_ValueChanged);
             // 
             // numericUpDownHours
             // 
@@ -106,6 +108,7 @@
             this.numericUpDownHours.Size = new System.Drawing.Size(133, 20);
             this.numericUpDownHours.TabIndex = 0;
             this.numericUpDownHours.ThousandsSeparator = true;
+            this.numericUpDownHours.ValueChanged += new System.EventHandler(this.numericUpDownHours_ValueChanged);
             // 
             // label3
             // 

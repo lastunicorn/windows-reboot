@@ -18,7 +18,7 @@ using System;
 
 namespace DustInTheWind.WindowsReboot.Services
 {
-    static class TimerFormatter
+    internal static class TimerFormatter
     {
         /// <summary>
         /// The template used to display the time left until action.
@@ -39,29 +39,22 @@ namespace DustInTheWind.WindowsReboot.Services
 
         private static string FormatTime(TimeSpan time)
         {
-            string tmp;
-
             int d = time.Days;
             int h = time.Hours;
             int m = time.Minutes;
             int s = time.Seconds;
             int f = Convert.ToInt32(Math.Round((double)(time.Milliseconds / 100)));
 
-            if (d == 1)
-            {
-                tmp = "1 day . ";
-            }
-            else if (d > 1)
-            {
-                tmp = d + " days . ";
-            }
-            else
-            {
-                tmp = string.Empty;
-            }
+            string daysText;
 
-            tmp += string.Format(TimeTemplate, h, m, s, f);
-            return tmp;
+            if (d == 1)
+                daysText = "1 day . ";
+            else if (d > 1)
+                daysText = d + " days . ";
+            else
+                daysText = string.Empty;
+
+            return daysText + string.Format(TimeTemplate, h, m, s, f);
         }
     }
 }

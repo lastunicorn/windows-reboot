@@ -55,11 +55,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private readonly Timer timer;
         private string title;
 
-        public FixedDateControlViewModel FixedDateControlViewModel { get; private set; }
-        public StatusControlViewModel StatusControlViewModel { get; private set; }
-        public DelayTimeControlViewModel DelayTimeControlViewModel { get; private set; }
+        public ActionTimeControlViewModel ActionTimeControlViewModel { get; private set; }
         public ActionTypeControlViewModel ActionTypeControlViewModel { get; private set; }
-        public DailyControlViewModel DailyControlViewModel { get; private set; }
+        public StatusControlViewModel StatusControlViewModel { get; private set; }
 
         /// <summary>
         /// Gets or sets the title of the window.
@@ -94,11 +92,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.timer = timer;
             this.rebootUtil = rebootUtil;
 
-            FixedDateControlViewModel = new FixedDateControlViewModel();
-            DelayTimeControlViewModel = new DelayTimeControlViewModel();
-            StatusControlViewModel = new StatusControlViewModel(ticker, timer, userInterface);
+            ActionTimeControlViewModel = new ActionTimeControlViewModel();
             ActionTypeControlViewModel = new ActionTypeControlViewModel(timer, action);
-            DailyControlViewModel = new DailyControlViewModel();
+            StatusControlViewModel = new StatusControlViewModel(ticker, timer, userInterface);
 
             config = GetConfiguration();
             configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
@@ -112,7 +108,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             userInterface.Dispatch(() =>
             {
-                string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.",  action.Type);
+                string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.", action.Type);
                 userInterface.DisplayMessage(message);
             });
         }
@@ -152,44 +148,40 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         private ScheduleTime GetActionTime()
         {
-            if (view.FixedTimeGroupSelected)
+            switch (ActionTimeControlViewModel.TaskTimeType)
             {
-                return new ScheduleTime
-                {
-                    Type = TaskTimeType.FixedDate,
-                    DateTime = FixedDateControlViewModel.GetFullTime()
-                };
-            }
+                case TaskTimeType.FixedDate:
+                    return new ScheduleTime
+                    {
+                        Type = TaskTimeType.FixedDate,
+                        DateTime = ActionTimeControlViewModel.FixedDateTime
+                    };
 
-            if (view.DailyGroupSelected)
-            {
-                return new ScheduleTime
-                {
-                    Type = TaskTimeType.Daily,
-                    TimeOfDay = DailyControlViewModel.GetTimeOfDay()
-                };
-            }
+                case TaskTimeType.Daily:
+                    return new ScheduleTime
+                    {
+                        Type = TaskTimeType.Daily,
+                        TimeOfDay = ActionTimeControlViewModel.DailyTime
+                    };
 
-            if (view.DelayGroupSelected)
-            {
-                return new ScheduleTime
-                {
-                    Type = TaskTimeType.Delay,
-                    Hours = DelayTimeControlViewModel.Hours,
-                    Minutes = DelayTimeControlViewModel.Minutes,
-                    Seconds = DelayTimeControlViewModel.Seconds
-                };
-            }
+                case TaskTimeType.Delay:
+                    return new ScheduleTime
+                    {
+                        Type = TaskTimeType.Delay,
+                        Hours = ActionTimeControlViewModel.DelayHours,
+                        Minutes = ActionTimeControlViewModel.DelayMinutes,
+                        Seconds = ActionTimeControlViewModel.DelaySeconds
+                    };
 
-            if (view.ImmediateGroupSelected)
-            {
-                return new ScheduleTime
-                {
-                    Type = TaskTimeType.Immediate
-                };
-            }
+                case TaskTimeType.Immediate:
+                    return new ScheduleTime
+                    {
+                        Type = TaskTimeType.Immediate
+                    };
 
-            throw new Exception("No action time was chosen.");
+                default:
+                    throw new WindowsRebootException("No action time was chosen.");
+            }
         }
 
         /// <summary>
@@ -679,14 +671,12 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// </summary>
         private void ClearInterface()
         {
-            FixedDateControlViewModel.Clear();
-            DailyControlViewModel.Clear();
-            DelayTimeControlViewModel.Clear();
-            
+            ActionTimeControlViewModel.Clear();
+
             action.Type = TaskType.PowerOff;
             action.Force = true;
 
-            view.DelayGroupSelected = true;
+            ActionTimeControlViewModel.TaskTimeType = TaskTimeType.Delay;
         }
 
         #endregion
@@ -705,25 +695,24 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             switch (configSection.ActionTime.Type)
             {
                 case TaskTimeType.FixedDate:
-                    FixedDateControlViewModel.Date = this.configSection.ActionTime.DateTime.Date;
-                    FixedDateControlViewModel.Time = this.configSection.ActionTime.DateTime;
-                    view.FixedTimeGroupSelected = true;
+                    ActionTimeControlViewModel.FixedDateTime = this.configSection.ActionTime.DateTime;
+                    ActionTimeControlViewModel.TaskTimeType = TaskTimeType.FixedDate;
                     break;
 
                 case TaskTimeType.Daily:
-                    DailyControlViewModel.Time = this.configSection.ActionTime.DateTime;
-                    view.DailyGroupSelected = true;
+                    ActionTimeControlViewModel.DailyTime = this.configSection.ActionTime.DateTime.TimeOfDay;
+                    ActionTimeControlViewModel.TaskTimeType = TaskTimeType.Daily;
                     break;
 
                 case TaskTimeType.Delay:
-                    DelayTimeControlViewModel.Hours = this.configSection.ActionTime.Hours;
-                    DelayTimeControlViewModel.Minutes = this.configSection.ActionTime.Minutes;
-                    DelayTimeControlViewModel.Seconds = this.configSection.ActionTime.Seconds;
-                    view.DelayGroupSelected = true;
+                    ActionTimeControlViewModel.DelayHours = this.configSection.ActionTime.Hours;
+                    ActionTimeControlViewModel.DelayMinutes = this.configSection.ActionTime.Minutes;
+                    ActionTimeControlViewModel.DelaySeconds = this.configSection.ActionTime.Seconds;
+                    ActionTimeControlViewModel.TaskTimeType = TaskTimeType.Delay;
                     break;
 
                 case TaskTimeType.Immediate:
-                    view.ImmediateGroupSelected = true;
+                    ActionTimeControlViewModel.TaskTimeType = TaskTimeType.Immediate;
                     break;
             }
 
@@ -745,37 +734,38 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             //Configuration config = this.GetConfiguration();
             //WindowsRebootConfigSection configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
 
-            if (view.FixedTimeGroupSelected)
+            switch (ActionTimeControlViewModel.TaskTimeType)
             {
-                configSection.ActionTime.Type = TaskTimeType.FixedDate;
-                configSection.ActionTime.DateTime = FixedDateControlViewModel.GetFullTime();
-                configSection.ActionTime.Hours = 0;
-                configSection.ActionTime.Minutes = 0;
-                configSection.ActionTime.Seconds = 0;
-            }
-            else if (view.DailyGroupSelected)
-            {
-                configSection.ActionTime.Type = TaskTimeType.Daily;
-                configSection.ActionTime.DateTime = DailyControlViewModel.Time;
-                configSection.ActionTime.Hours = 0;
-                configSection.ActionTime.Minutes = 0;
-                configSection.ActionTime.Seconds = 0;
-            }
-            else if (view.DelayGroupSelected)
-            {
-                configSection.ActionTime.Type = TaskTimeType.Delay;
-                configSection.ActionTime.Hours = DelayTimeControlViewModel.Hours;
-                configSection.ActionTime.Minutes = DelayTimeControlViewModel.Minutes;
-                configSection.ActionTime.Seconds = DelayTimeControlViewModel.Seconds;
-                configSection.ActionTime.DateTime = DateTime.Now;
-            }
-            else if (view.ImmediateGroupSelected)
-            {
-                configSection.ActionTime.Type = TaskTimeType.Immediate;
-                configSection.ActionTime.DateTime = DateTime.Now;
-                configSection.ActionTime.Hours = 0;
-                configSection.ActionTime.Minutes = 0;
-                configSection.ActionTime.Seconds = 0;
+                case TaskTimeType.FixedDate:
+                    configSection.ActionTime.Type = TaskTimeType.FixedDate;
+                    configSection.ActionTime.DateTime = ActionTimeControlViewModel.FixedDateTime;
+                    configSection.ActionTime.Hours = 0;
+                    configSection.ActionTime.Minutes = 0;
+                    configSection.ActionTime.Seconds = 0;
+                    break;
+                case TaskTimeType.Daily:
+                    configSection.ActionTime.Type = TaskTimeType.Daily;
+                    configSection.ActionTime.DateTime = DateTime.Now.Add(ActionTimeControlViewModel.DailyTime);
+                    configSection.ActionTime.Hours = 0;
+                    configSection.ActionTime.Minutes = 0;
+                    configSection.ActionTime.Seconds = 0;
+                    break;
+                case TaskTimeType.Delay:
+                    configSection.ActionTime.Type = TaskTimeType.Delay;
+                    configSection.ActionTime.Hours = ActionTimeControlViewModel.DelayHours;
+                    configSection.ActionTime.Minutes = ActionTimeControlViewModel.DelayMinutes;
+                    configSection.ActionTime.Seconds = ActionTimeControlViewModel.DelaySeconds;
+                    configSection.ActionTime.DateTime = DateTime.Now;
+                    break;
+                case TaskTimeType.Immediate:
+                    configSection.ActionTime.Type = TaskTimeType.Immediate;
+                    configSection.ActionTime.DateTime = DateTime.Now;
+                    configSection.ActionTime.Hours = 0;
+                    configSection.ActionTime.Minutes = 0;
+                    configSection.ActionTime.Seconds = 0;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             configSection.ActionType.Value = action.Type;

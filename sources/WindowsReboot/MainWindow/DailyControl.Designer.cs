@@ -61,6 +61,7 @@
             this.dateTimePickerDailyTime.ShowUpDown = true;
             this.dateTimePickerDailyTime.Size = new System.Drawing.Size(144, 20);
             this.dateTimePickerDailyTime.TabIndex = 0;
+            this.dateTimePickerDailyTime.ValueChanged += new System.EventHandler(this.dateTimePickerDailyTime_ValueChanged);
             // 
             // label9
             // 

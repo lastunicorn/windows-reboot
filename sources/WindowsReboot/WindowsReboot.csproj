@@ -69,13 +69,19 @@
     <Compile Include="..\AssemblyInfo.shared.cs">
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
+    <Compile Include="MainWindow\ActionTimeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainWindow\ActionTimeControl.Designer.cs">
+      <DependentUpon>ActionTimeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\ActionTimeControlViewModel.cs" />
     <Compile Include="MainWindow\DailyControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MainWindow\DailyControl.Designer.cs">
       <DependentUpon>DailyControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\DailyControlViewModel.cs" />
     <Compile Include="UiCommon\BindingExtensions.cs" />
     <Compile Include="MainWindow\ActionTypeControl.cs">
       <SubType>UserControl</SubType>
@@ -92,7 +98,6 @@
     <Compile Include="UiCommon\CustomGroupBox.Designer.cs">
       <DependentUpon>CustomGroupBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\DelayTimeControlViewModel.cs" />
     <Compile Include="MainWindow\DelayTimeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -105,7 +110,6 @@
     <Compile Include="MainWindow\FixedDateControl.Designer.cs">
       <DependentUpon>FixedDateControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\FixedDateControlViewModel.cs" />
     <Compile Include="MainWindow\StatusControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -144,6 +148,9 @@
     <Compile Include="MainWindow\IWindowsRebootView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="MainWindow\ActionTimeControl.resx">
+      <DependentUpon>ActionTimeControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\ActionTypeControl.resx">
       <DependentUpon>ActionTypeControl.cs</DependentUpon>
     </EmbeddedResource>

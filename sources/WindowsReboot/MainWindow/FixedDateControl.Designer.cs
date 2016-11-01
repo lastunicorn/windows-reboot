@@ -66,6 +66,7 @@
             this.dateTimePickerFixedTime.ShowUpDown = true;
             this.dateTimePickerFixedTime.Size = new System.Drawing.Size(144, 20);
             this.dateTimePickerFixedTime.TabIndex = 1;
+            this.dateTimePickerFixedTime.ValueChanged += new System.EventHandler(this.dateTimePickerFixedTime_ValueChanged);
             // 
             // label8
             // 
@@ -86,6 +87,7 @@
             this.dateTimePickerFixedDate.Name = "dateTimePickerFixedDate";
             this.dateTimePickerFixedDate.Size = new System.Drawing.Size(366, 20);
             this.dateTimePickerFixedDate.TabIndex = 0;
+            this.dateTimePickerFixedDate.ValueChanged += new System.EventHandler(this.dateTimePickerFixedDate_ValueChanged);
             // 
             // label9
             // 
