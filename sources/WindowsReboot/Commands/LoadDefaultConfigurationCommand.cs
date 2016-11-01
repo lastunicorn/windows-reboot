@@ -21,40 +21,44 @@ using Action = DustInTheWind.WindowsReboot.Core.Action;
 
 namespace DustInTheWind.WindowsReboot.Commands
 {
-    internal class LoadDefaultConfigurationCommand
+    internal class LoadDefaultConfigurationCommand : CommandBase
     {
-        private readonly UserInterface userInterface;
         private readonly Timer timer;
         private readonly Action action;
 
-        public LoadDefaultConfigurationCommand(UserInterface userInterface, Timer timer, Action action)
+        public override bool CanExecute
         {
-            if (userInterface == null) throw new ArgumentNullException("userInterface");
+            get { return !timer.IsRunning; }
+        }
+
+        public LoadDefaultConfigurationCommand(IUserInterface userInterface, Timer timer, Action action)
+            : base(userInterface)
+        {
             if (timer == null) throw new ArgumentNullException("timer");
             if (action == null) throw new ArgumentNullException("action");
 
-            this.userInterface = userInterface;
             this.timer = timer;
             this.action = action;
+
+            timer.Started += HandleTimerStarted;
+            timer.Stoped += HandleTimerStoped;
         }
 
-        public void Execute()
+        private void HandleTimerStarted(object sender, EventArgs e)
         {
-            try
-            {
-                if (timer.IsRunning)
-                    throw new WindowsRebootException("Cannot complete the task while the timer is started.");
-
-                LoadDefaultConfiguration();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
+            OnCanExecuteChanged();
         }
 
-        private void LoadDefaultConfiguration()
+        private void HandleTimerStoped(object sender, EventArgs e)
         {
+            userInterface.Dispatch(OnCanExecuteChanged);
+        }
+
+        protected override void DoExecute()
+        {
+            if (timer.IsRunning)
+                throw new WindowsRebootException("Cannot complete the task while the timer is started.");
+
             timer.Time = new ScheduleTime
             {
                 Type = TaskTimeType.Delay

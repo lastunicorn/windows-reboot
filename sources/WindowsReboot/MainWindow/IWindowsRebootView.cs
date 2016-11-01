@@ -20,9 +20,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 {
     internal interface IWindowsRebootView
     {
-        bool MenuItem_LoadInitialSettingsEnabled { set; }
-        bool MenuItem_LoadDefaultSettingsEnabled { set; }
-
         /// <summary>
         /// Sets the tool tip text displayed by the notify icon.
         /// </summary>

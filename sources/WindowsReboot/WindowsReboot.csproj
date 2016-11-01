@@ -69,8 +69,10 @@
     <Compile Include="..\AssemblyInfo.shared.cs">
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
+    <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\LoadConfigurationCommand.cs" />
     <Compile Include="Commands\LoadDefaultConfigurationCommand.cs" />
+    <Compile Include="Commands\OptionsCommand.cs" />
     <Compile Include="Commands\SaveConfigurationCommand.cs" />
     <Compile Include="Commands\StopTimerCommand.cs" />
     <Compile Include="Commands\StartTimerCommand.cs" />
@@ -81,6 +83,12 @@
       <DependentUpon>ButtonWithCommand.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomControls\ICommand.cs" />
+    <Compile Include="CustomControls\ToolStripMenuItemWithCommand.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomControls\ToolStripMenuItemWithCommand.Designer.cs">
+      <DependentUpon>ToolStripMenuItemWithCommand.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow\ActionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -169,6 +177,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CustomControls\ButtonWithCommand.resx">
       <DependentUpon>ButtonWithCommand.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\ToolStripMenuItemWithCommand.resx">
+      <DependentUpon>ToolStripMenuItemWithCommand.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\ActionControl.resx">
       <DependentUpon>ActionControl.cs</DependentUpon>

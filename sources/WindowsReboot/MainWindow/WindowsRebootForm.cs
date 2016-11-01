@@ -52,6 +52,11 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             actionTypeControl1.ViewModel = presenter.ActionTypeControlViewModel;
             actionControl1.ViewModel = presenter.ActionControlViewModel;
             statusControl1.ViewModel = presenter.StatusControlViewModel;
+
+            loadDefaultSettingsToolStripMenuItem.Command = presenter.LoadDefaultConfigurationCommand;
+            loadInitialSettingsToolStripMenuItem.Command = presenter.LoadConfigurationCommand;
+            saveCurrentSettingsToolStripMenuItem.Command = presenter.SaveConfigurationCommand;
+            optionsToolStripMenuItem.Command = presenter.OptionsCommand;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -75,21 +80,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             presenter.OnMenuItemAboutClicked();
-        }
-
-        private void loadInitialSettingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            presenter.OnMenuItemLoadInitialSettingsClicked();
-        }
-
-        private void saveCurrentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            presenter.OnMenuItemSaveCurrentSettingsClicked();
-        }
-
-        private void loadDefaultSettingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            presenter.OnMenuItemLoadDefaultSettingsClicked();
         }
 
         private void licenseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -161,16 +151,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         #region IWindowsRebootView Members
 
-        public bool MenuItem_LoadInitialSettingsEnabled
-        {
-            set { loadInitialSettingsToolStripMenuItem.Enabled = value; }
-        }
-
-        public bool MenuItem_LoadDefaultSettingsEnabled
-        {
-            set { loadDefaultSettingsToolStripMenuItem.Enabled = value; }
-        }
-
         public string NotifyIconText
         {
             set { notifyIcon1.Text = value; }
@@ -192,11 +172,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             if (WindowState == FormWindowState.Minimized)
                 presenter.OnFormMinimized();
-        }
-
-        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            presenter.OnMenuItemOptionsClicked();
         }
     }
 }

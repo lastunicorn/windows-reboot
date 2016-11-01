@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using DustInTheWind.WindowsReboot.CustomControls;
 using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
@@ -49,32 +50,32 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WindowsRebootForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.programToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.goToTrayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadInitialSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveCurrentSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.programToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.goToTrayToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.exitToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.configurationToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.loadInitialSettingsToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.saveCurrentSettingsToolStripMenuItem = new ToolStripMenuItemWithCommand();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.loadDefaultSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadDefaultSettingsToolStripMenuItem = new ToolStripMenuItemWithCommand();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.licenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.helpToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.licenseToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.aboutToolStripMenuItem = new ToolStripMenuItemWithCommand();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStripTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.actionNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lockComputerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.logOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sleepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hibernateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rebootToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.shutDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.powerOffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new ToolStripMenuItemWithCommand();
+            this.actionNowToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.lockComputerToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.logOffToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.sleepToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.hibernateToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.rebootToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.shutDownToolStripMenuItem = new ToolStripMenuItemWithCommand();
+            this.powerOffToolStripMenuItem = new ToolStripMenuItemWithCommand();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new ToolStripMenuItemWithCommand();
             this.labelBlackLine1 = new System.Windows.Forms.Label();
             this.labelBlackLine2 = new System.Windows.Forms.Label();
             this.pictureBoxHeader = new System.Windows.Forms.PictureBox();
@@ -156,7 +157,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.loadInitialSettingsToolStripMenuItem.Name = "loadInitialSettingsToolStripMenuItem";
             this.loadInitialSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.loadInitialSettingsToolStripMenuItem.Text = "&Load Settings";
-            this.loadInitialSettingsToolStripMenuItem.Click += new System.EventHandler(this.loadInitialSettingsToolStripMenuItem_Click);
             // 
             // saveCurrentSettingsToolStripMenuItem
             // 
@@ -164,7 +164,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.saveCurrentSettingsToolStripMenuItem.Name = "saveCurrentSettingsToolStripMenuItem";
             this.saveCurrentSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.saveCurrentSettingsToolStripMenuItem.Text = "&Save Settings";
-            this.saveCurrentSettingsToolStripMenuItem.Click += new System.EventHandler(this.saveCurrentSettingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -177,7 +176,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.loadDefaultSettingsToolStripMenuItem.Name = "loadDefaultSettingsToolStripMenuItem";
             this.loadDefaultSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.loadDefaultSettingsToolStripMenuItem.Text = "Load &Default Settings";
-            this.loadDefaultSettingsToolStripMenuItem.Click += new System.EventHandler(this.loadDefaultSettingsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -189,7 +187,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.optionsToolStripMenuItem.Text = "&Options...";
-            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -540,35 +537,35 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem programToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem goToTrayToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private ToolStripMenuItemWithCommand programToolStripMenuItem;
+        private ToolStripMenuItemWithCommand goToTrayToolStripMenuItem;
+        private ToolStripMenuItemWithCommand exitToolStripMenuItem;
+        private ToolStripMenuItemWithCommand helpToolStripMenuItem;
+        private ToolStripMenuItemWithCommand aboutToolStripMenuItem;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.PictureBox pictureBoxHeader;
         private System.Windows.Forms.Label labelBlackLine1;
         private System.Windows.Forms.Label labelBlackLine2;
-        private System.Windows.Forms.ToolStripMenuItem licenseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem configurationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveCurrentSettingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadDefaultSettingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadInitialSettingsToolStripMenuItem;
+        private ToolStripMenuItemWithCommand licenseToolStripMenuItem;
+        private ToolStripMenuItemWithCommand configurationToolStripMenuItem;
+        private ToolStripMenuItemWithCommand saveCurrentSettingsToolStripMenuItem;
+        private ToolStripMenuItemWithCommand loadDefaultSettingsToolStripMenuItem;
+        private ToolStripMenuItemWithCommand loadInitialSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private ToolStripMenuItemWithCommand optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripTrayIcon;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private ToolStripMenuItemWithCommand toolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem actionNowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem lockComputerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem logOffToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rebootToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem shutDownToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem powerOffToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sleepToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem hibernateToolStripMenuItem;
+        private ToolStripMenuItemWithCommand toolStripMenuItem2;
+        private ToolStripMenuItemWithCommand actionNowToolStripMenuItem;
+        private ToolStripMenuItemWithCommand lockComputerToolStripMenuItem;
+        private ToolStripMenuItemWithCommand logOffToolStripMenuItem;
+        private ToolStripMenuItemWithCommand rebootToolStripMenuItem;
+        private ToolStripMenuItemWithCommand shutDownToolStripMenuItem;
+        private ToolStripMenuItemWithCommand powerOffToolStripMenuItem;
+        private ToolStripMenuItemWithCommand sleepToolStripMenuItem;
+        private ToolStripMenuItemWithCommand hibernateToolStripMenuItem;
         private CustomGroupBox groupBoxActionTime;
         private CustomGroupBox groupBoxActionType;
         private CustomGroupBox groupBoxActionStart;

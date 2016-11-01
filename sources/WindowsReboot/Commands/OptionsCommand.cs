@@ -16,42 +16,30 @@
 
 using System;
 using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Core.Config;
 
 namespace DustInTheWind.WindowsReboot.Commands
 {
-    internal class StopTimerCommand : CommandBase
+    internal class OptionsCommand : CommandBase
     {
-        private readonly Timer timer;
+        private readonly WindowsRebootConfiguration configuration;
 
         public override bool CanExecute
         {
-            get { return timer.IsRunning; }
+            get { return true; }
         }
 
-        public StopTimerCommand(Timer timer, IUserInterface userInterface)
+        public OptionsCommand(IUserInterface userInterface, WindowsRebootConfiguration configuration)
             : base(userInterface)
         {
-            if (timer == null) throw new ArgumentNullException("timer");
+            if (configuration == null) throw new ArgumentNullException("configuration");
 
-            this.timer = timer;
-
-            timer.Started += HandleTimerStarted;
-            timer.Stoped += HandleTimerStoped;
-        }
-
-        private void HandleTimerStarted(object sender, EventArgs e)
-        {
-            OnCanExecuteChanged();
-        }
-
-        private void HandleTimerStoped(object sender, EventArgs e)
-        {
-            userInterface.Dispatch(OnCanExecuteChanged);
+            this.configuration = configuration;
         }
 
         protected override void DoExecute()
         {
-            timer.Stop();
+            userInterface.DisplayOptions(configuration);
         }
     }
 }

@@ -16,29 +16,24 @@
 
 using System;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.CustomControls;
 
 namespace DustInTheWind.WindowsReboot.Commands
 {
-    internal class StartTimerCommand : ICommand
+    internal class StartTimerCommand : CommandBase
     {
         private readonly Timer timer;
-        private readonly IUserInterface userInterface;
 
-        public bool CanExecute
+        public override bool CanExecute
         {
             get { return !timer.IsRunning; }
         }
 
-        public event EventHandler CanExecuteChanged;
-
         public StartTimerCommand(Timer timer, IUserInterface userInterface)
+            : base(userInterface)
         {
             if (timer == null) throw new ArgumentNullException("timer");
-            if (userInterface == null) throw new ArgumentNullException("userInterface");
 
             this.timer = timer;
-            this.userInterface = userInterface;
 
             timer.Started += HandleTimerStarted;
             timer.Stoped += HandleTimerStoped;
@@ -54,24 +49,9 @@ namespace DustInTheWind.WindowsReboot.Commands
             userInterface.Dispatch(OnCanExecuteChanged);
         }
 
-        public void Execute()
+        protected override void DoExecute()
         {
-            try
-            {
-                timer.Start();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        protected virtual void OnCanExecuteChanged()
-        {
-            EventHandler handler = CanExecuteChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            timer.Start();
         }
     }
 }

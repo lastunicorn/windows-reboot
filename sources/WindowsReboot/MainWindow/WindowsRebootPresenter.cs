@@ -20,6 +20,7 @@ using DustInTheWind.WindowsReboot.Commands;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Config;
 using DustInTheWind.WindowsReboot.Core.Services;
+using DustInTheWind.WindowsReboot.CustomControls;
 using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.UiCommon;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
@@ -46,6 +47,11 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private readonly Timer timer;
         private string title;
         private readonly WindowsRebootConfiguration configuration;
+
+        public LoadDefaultConfigurationCommand LoadDefaultConfigurationCommand { get; private set; }
+        public LoadConfigurationCommand LoadConfigurationCommand { get; private set; }
+        public SaveConfigurationCommand SaveConfigurationCommand { get; private set; }
+        public OptionsCommand OptionsCommand { get; private set; }
 
         public ActionTimeControlViewModel ActionTimeControlViewModel { get; private set; }
         public ActionTypeControlViewModel ActionTypeControlViewModel { get; private set; }
@@ -90,8 +96,11 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
             configuration = new WindowsRebootConfiguration();
 
-            timer.Started += HandlePerformerStarted;
-            timer.Stoped += HandlePerformerStoped;
+            LoadDefaultConfigurationCommand = new LoadDefaultConfigurationCommand(userInterface, timer, action);
+            LoadConfigurationCommand = new LoadConfigurationCommand(userInterface, timer, action, configuration);
+            SaveConfigurationCommand = new SaveConfigurationCommand(userInterface, timer, action, configuration);
+            OptionsCommand = new OptionsCommand(userInterface, configuration);
+
             timer.Warning += HandleTimerWarning;
         }
 
@@ -101,19 +110,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.", action.Type);
                 userInterface.DisplayMessage(message);
-            });
-        }
-
-        private void HandlePerformerStarted(object sender, EventArgs e)
-        {
-            EnableInterface(false);
-        }
-
-        private void HandlePerformerStoped(object sender, EventArgs e)
-        {
-            userInterface.Dispatch(() =>
-            {
-                EnableInterface(true);
             });
         }
 
@@ -445,41 +441,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         }
 
         /// <summary>
-        /// Method called when the "Options" item from the "Configuration" menu is clicked.
-        /// </summary>
-        internal void OnMenuItemOptionsClicked()
-        {
-            userInterface.DisplayOptions(configuration);
-        }
-
-        /// <summary>
-        /// Method called when the "Save Current Settings" item from the "Configuration" menu is clicked.
-        /// </summary>
-        internal void OnMenuItemSaveCurrentSettingsClicked()
-        {
-            SaveConfigurationCommand command = new SaveConfigurationCommand(userInterface, timer, action, configuration);
-            command.Execute();
-        }
-
-        /// <summary>
-        /// Method called when the "Load Default Settings" item from the "Configuration" menu is clicked.
-        /// </summary>
-        internal void OnMenuItemLoadDefaultSettingsClicked()
-        {
-            LoadDefaultConfigurationCommand command = new LoadDefaultConfigurationCommand(userInterface, timer, action);
-            command.Execute();
-        }
-
-        /// <summary>
-        /// Method called when the "Load Initial Settings" item from the "Configuration" menu is clicked.
-        /// </summary>
-        internal void OnMenuItemLoadInitialSettingsClicked()
-        {
-            LoadConfigurationCommand command = new LoadConfigurationCommand(userInterface, timer, action, configuration);
-            command.Execute();
-        }
-
-        /// <summary>
         /// Method called when the "License" item from the "Help" menu is clicked.
         /// </summary>
         internal void OnMenuItemLicenseClicked()
@@ -510,16 +471,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         }
 
         #endregion
-
-        /// <summary>
-        /// Enables or disables the interface.
-        /// </summary>
-        /// <param name="value">A value that specifies if the interface should be enabled or disabled.</param>
-        private void EnableInterface(bool value)
-        {
-            view.MenuItem_LoadInitialSettingsEnabled = value;
-            view.MenuItem_LoadDefaultSettingsEnabled = value;
-        }
 
         /// <summary>
         /// Clears the interface and displayed the default values.

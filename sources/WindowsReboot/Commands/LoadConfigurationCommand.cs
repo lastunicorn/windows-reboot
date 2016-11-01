@@ -17,48 +17,51 @@
 using System;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Config;
-using DustInTheWind.WindowsReboot.Services;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
 
 namespace DustInTheWind.WindowsReboot.Commands
 {
-    internal class LoadConfigurationCommand
+    internal class LoadConfigurationCommand : CommandBase
     {
-        private readonly UserInterface userInterface;
         private readonly Timer timer;
         private readonly Action action;
         private readonly WindowsRebootConfiguration configuration;
 
-        public LoadConfigurationCommand(UserInterface userInterface, Timer timer, Action action, WindowsRebootConfiguration configuration)
+        public override bool CanExecute
         {
-            if (userInterface == null) throw new ArgumentNullException("userInterface");
+            get { return !timer.IsRunning; }
+        }
+
+        public LoadConfigurationCommand(IUserInterface userInterface, Timer timer, Action action, WindowsRebootConfiguration configuration)
+            : base(userInterface)
+        {
             if (timer == null) throw new ArgumentNullException("timer");
             if (action == null) throw new ArgumentNullException("action");
             if (configuration == null) throw new ArgumentNullException("configuration");
 
-            this.userInterface = userInterface;
             this.timer = timer;
             this.action = action;
             this.configuration = configuration;
+
+            timer.Started += HandleTimerStarted;
+            timer.Stoped += HandleTimerStoped;
         }
 
-        public void Execute()
+        private void HandleTimerStarted(object sender, EventArgs e)
         {
-            try
-            {
-                if (timer.IsRunning)
-                    throw new WindowsRebootException("Cannot complete the task while the timer is started.");
-                
-                LoadConfiguration();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
+            OnCanExecuteChanged();
         }
 
-        private void LoadConfiguration()
+        private void HandleTimerStoped(object sender, EventArgs e)
         {
+            userInterface.Dispatch(OnCanExecuteChanged);
+        }
+
+        protected override void DoExecute()
+        {
+            if (timer.IsRunning)
+                throw new WindowsRebootException("Cannot complete the task while the timer is started.");
+
             timer.Time = configuration.ActionTime;
             action.Type = configuration.ActionType;
             action.Force = configuration.ForceClosingPrograms;
