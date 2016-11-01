@@ -57,6 +57,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             loadInitialSettingsToolStripMenuItem.Command = presenter.LoadConfigurationCommand;
             saveCurrentSettingsToolStripMenuItem.Command = presenter.SaveConfigurationCommand;
             optionsToolStripMenuItem.Command = presenter.OptionsCommand;
+            licenseToolStripMenuItem.Command = presenter.LicenseCommand;
+            aboutToolStripMenuItem.Command = presenter.AboutCommand;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -75,16 +77,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             presenter.OnMenuItemExitClicked();
-        }
-
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            presenter.OnMenuItemAboutClicked();
-        }
-
-        private void licenseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            presenter.OnMenuItemLicenseClicked();
         }
 
         private void showToolStripMenuItem_Click(object sender, EventArgs e)

@@ -20,7 +20,6 @@ using DustInTheWind.WindowsReboot.Commands;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Config;
 using DustInTheWind.WindowsReboot.Core.Services;
-using DustInTheWind.WindowsReboot.CustomControls;
 using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.UiCommon;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
@@ -52,6 +51,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         public LoadConfigurationCommand LoadConfigurationCommand { get; private set; }
         public SaveConfigurationCommand SaveConfigurationCommand { get; private set; }
         public OptionsCommand OptionsCommand { get; private set; }
+        public LicenseCommand LicenseCommand { get; private set; }
+        public AboutCommand AboutCommand { get; private set; }
 
         public ActionTimeControlViewModel ActionTimeControlViewModel { get; private set; }
         public ActionTypeControlViewModel ActionTypeControlViewModel { get; private set; }
@@ -100,6 +101,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             LoadConfigurationCommand = new LoadConfigurationCommand(userInterface, timer, action, configuration);
             SaveConfigurationCommand = new SaveConfigurationCommand(userInterface, timer, action, configuration);
             OptionsCommand = new OptionsCommand(userInterface, configuration);
+            LicenseCommand = new LicenseCommand(userInterface);
+            AboutCommand = new AboutCommand(userInterface);
 
             timer.Warning += HandleTimerWarning;
         }
@@ -136,6 +139,16 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 userInterface.DisplayError(ex);
             }
+        }
+
+        /// <summary>
+        /// Loads the values from the configuration file and populates the interface with them.
+        /// </summary>
+        private void LoadConfiguration()
+        {
+            timer.Time = configuration.ActionTime;
+            action.Type = configuration.ActionType;
+            action.Force = configuration.ForceClosingPrograms;
         }
 
         /// <summary>
@@ -440,61 +453,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        /// <summary>
-        /// Method called when the "License" item from the "Help" menu is clicked.
-        /// </summary>
-        internal void OnMenuItemLicenseClicked()
-        {
-            try
-            {
-                userInterface.DisplayLicense();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        /// <summary>
-        /// Method called when the "About" item from the "Help" menu is clicked.
-        /// </summary>
-        internal void OnMenuItemAboutClicked()
-        {
-            try
-            {
-                userInterface.DisplayAbout();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
         #endregion
-
-        /// <summary>
-        /// Clears the interface and displayed the default values.
-        /// </summary>
-        private void ClearInterface()
-        {
-            timer.Time = new ScheduleTime();
-
-            action.Type = TaskType.PowerOff;
-            action.Force = true;
-
-            ActionTimeControlViewModel.TaskTimeType = TaskTimeType.Delay;
-        }
-
-        /// <summary>
-        /// Loads the values from the configuration file and populates the interface with them.
-        /// </summary>
-        private void LoadConfiguration()
-        {
-            ClearInterface();
-
-            timer.Time = configuration.ActionTime;
-            action.Type = configuration.ActionType;
-            action.Force = configuration.ForceClosingPrograms;
-        }
     }
 }

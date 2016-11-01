@@ -69,7 +69,9 @@
     <Compile Include="..\AssemblyInfo.shared.cs">
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
+    <Compile Include="Commands\AboutCommand.cs" />
     <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Commands\LicenseCommand.cs" />
     <Compile Include="Commands\LoadConfigurationCommand.cs" />
     <Compile Include="Commands\LoadDefaultConfigurationCommand.cs" />
     <Compile Include="Commands\OptionsCommand.cs" />
