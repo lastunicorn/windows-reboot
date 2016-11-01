@@ -23,37 +23,36 @@ namespace DustInTheWind.WindowsReboot.OtherWindows
     /// <summary>
     /// Displaies some options that the user can set.
     /// </summary>
-    public partial class OptionsForm : Form
+    internal partial class OptionsForm : Form
     {
-        private readonly WindowsRebootConfigSection configSection;
+        private readonly WindowsRebootConfiguration configSection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OptionsForm"/> class with
         /// the configurationn object.
         /// </summary>
         /// <param name="configSection">An instance of <see cref="WindowsRebootConfigSection"/> class that contains the values that should be displaied.</param>
-        public OptionsForm(WindowsRebootConfigSection configSection)
+        public OptionsForm(WindowsRebootConfiguration configSection)
         {
-            InitializeComponent();
+            if (configSection == null) throw new ArgumentNullException("configSection");
 
-            if (configSection == null)
-                configSection = new WindowsRebootConfigSection();
+            InitializeComponent();
 
             this.configSection = configSection;
         }
 
         private void OptionsForm_Shown(object sender, EventArgs e)
         {
-            checkBoxCloseToTray.Checked = configSection.CloseToTray.Value;
-            checkBoxMinimizeToTray.Checked = configSection.MinimizeToTray.Value;
-            checkBoxStartTimerAtApplicationStart.Checked = configSection.StartTimerAtApplicationStart.Value;
+            checkBoxCloseToTray.Checked = configSection.CloseToTray;
+            checkBoxMinimizeToTray.Checked = configSection.MinimizeToTray;
+            checkBoxStartTimerAtApplicationStart.Checked = configSection.StartTimerAtApplicationStart;
         }
 
         private void HandleButtonOkayClick(object sender, EventArgs e)
         {
-            configSection.CloseToTray.Value = checkBoxCloseToTray.Checked;
-            configSection.MinimizeToTray.Value = checkBoxMinimizeToTray.Checked;
-            configSection.StartTimerAtApplicationStart.Value = checkBoxStartTimerAtApplicationStart.Checked;
+            configSection.CloseToTray = checkBoxCloseToTray.Checked;
+            configSection.MinimizeToTray = checkBoxMinimizeToTray.Checked;
+            configSection.StartTimerAtApplicationStart = checkBoxStartTimerAtApplicationStart.Checked;
         }
     }
 }

@@ -17,6 +17,7 @@
 using System;
 using System.Linq;
 using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.UiCommon;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
 
@@ -26,12 +27,14 @@ namespace DustInTheWind.WindowsReboot.MainWindow
     {
         private readonly Timer timer;
         private readonly Action action;
+        private readonly UserInterface userInterface;
         private ActionTypeItem[] actionTypes;
         private ActionTypeItem selectedActionType;
         private bool forceActionEnabled;
         private bool forceActionBackup;
         private bool forceAction;
         private bool displayWarningMessage;
+        private bool enabled;
 
         private bool updateFromBusiness;
 
@@ -103,13 +106,25 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        public ActionTypeControlViewModel(Timer timer, Action action)
+        public bool Enabled
+        {
+            get { return enabled; }
+            set
+            {
+                enabled = value;
+                OnPropertyChanged("Enabled");
+            }
+        }
+
+        public ActionTypeControlViewModel(Timer timer, Action action, UserInterface userInterface)
         {
             if (timer == null) throw new ArgumentNullException("timer");
             if (action == null) throw new ArgumentNullException("action");
+            if (userInterface == null) throw new ArgumentNullException("userInterface");
 
             this.timer = timer;
             this.action = action;
+            this.userInterface = userInterface;
 
             ActionTypes = Enum.GetValues(typeof(TaskType))
                 .Cast<TaskType>()
@@ -121,8 +136,24 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             displayWarningMessage = timer.WarningTime != null;
 
             timer.WarningTimeChanged += HandleTimerWarningTimeChanged;
+            timer.Started += HandleTimerStarted;
+            timer.Stoped += HandleTimerStoped;
+
             action.ForceChanged += HandleActionForceChanged;
             action.TypeChanged += HandleActionTypeChanged;
+        }
+
+        private void HandleTimerStarted(object sender, EventArgs e)
+        {
+            Enabled = false;
+        }
+
+        private void HandleTimerStoped(object sender, EventArgs e)
+        {
+            userInterface.Dispatch(() =>
+            {
+                Enabled = true;
+            });
         }
 
         private void HandleActionTypeChanged(object sender, EventArgs eventArgs)

@@ -29,6 +29,12 @@ namespace DustInTheWind.WindowsReboot.Core
         public int Minutes { get; set; }
         public int Seconds { get; set; }
 
+        public ScheduleTime()
+        {
+            Type = TaskTimeType.Immediate;
+            DateTime = DateTime.Now;
+        }
+
         public DateTime CalculateTimeFrom(DateTime now)
         {
             switch (Type)

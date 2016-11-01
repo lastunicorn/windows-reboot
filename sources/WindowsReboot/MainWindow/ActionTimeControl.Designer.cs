@@ -55,7 +55,7 @@
             this.tabControlActionTime.Margin = new System.Windows.Forms.Padding(4);
             this.tabControlActionTime.Name = "tabControlActionTime";
             this.tabControlActionTime.SelectedIndex = 0;
-            this.tabControlActionTime.Size = new System.Drawing.Size(567, 180);
+            this.tabControlActionTime.Size = new System.Drawing.Size(436, 123);
             this.tabControlActionTime.TabIndex = 1;
             this.tabControlActionTime.SelectedIndexChanged += new System.EventHandler(this.tabControlActionTime_SelectedIndexChanged);
             // 
@@ -65,7 +65,7 @@
             this.tabPageFixedDate.Location = new System.Drawing.Point(4, 22);
             this.tabPageFixedDate.Name = "tabPageFixedDate";
             this.tabPageFixedDate.Padding = new System.Windows.Forms.Padding(8);
-            this.tabPageFixedDate.Size = new System.Drawing.Size(559, 154);
+            this.tabPageFixedDate.Size = new System.Drawing.Size(428, 97);
             this.tabPageFixedDate.TabIndex = 0;
             this.tabPageFixedDate.Text = "Fixed Date";
             this.tabPageFixedDate.UseVisualStyleBackColor = true;
@@ -76,7 +76,7 @@
             this.tabPageDaily.Location = new System.Drawing.Point(4, 22);
             this.tabPageDaily.Name = "tabPageDaily";
             this.tabPageDaily.Padding = new System.Windows.Forms.Padding(8);
-            this.tabPageDaily.Size = new System.Drawing.Size(559, 154);
+            this.tabPageDaily.Size = new System.Drawing.Size(428, 97);
             this.tabPageDaily.TabIndex = 3;
             this.tabPageDaily.Text = "Daily";
             this.tabPageDaily.UseVisualStyleBackColor = true;
@@ -87,7 +87,7 @@
             this.tabPageDelay.Location = new System.Drawing.Point(4, 22);
             this.tabPageDelay.Name = "tabPageDelay";
             this.tabPageDelay.Padding = new System.Windows.Forms.Padding(8);
-            this.tabPageDelay.Size = new System.Drawing.Size(559, 154);
+            this.tabPageDelay.Size = new System.Drawing.Size(428, 97);
             this.tabPageDelay.TabIndex = 1;
             this.tabPageDelay.Text = "Delay";
             this.tabPageDelay.UseVisualStyleBackColor = true;
@@ -97,7 +97,7 @@
             this.tabPageImmediate.Controls.Add(this.labelImmediate);
             this.tabPageImmediate.Location = new System.Drawing.Point(4, 22);
             this.tabPageImmediate.Name = "tabPageImmediate";
-            this.tabPageImmediate.Size = new System.Drawing.Size(559, 154);
+            this.tabPageImmediate.Size = new System.Drawing.Size(428, 97);
             this.tabPageImmediate.TabIndex = 2;
             this.tabPageImmediate.Text = "Immediate";
             this.tabPageImmediate.UseVisualStyleBackColor = true;
@@ -108,7 +108,7 @@
             this.labelImmediate.Location = new System.Drawing.Point(0, 0);
             this.labelImmediate.Margin = new System.Windows.Forms.Padding(4);
             this.labelImmediate.Name = "labelImmediate";
-            this.labelImmediate.Size = new System.Drawing.Size(559, 154);
+            this.labelImmediate.Size = new System.Drawing.Size(428, 97);
             this.labelImmediate.TabIndex = 0;
             this.labelImmediate.Text = "The action will be executed as soon as you press the\r\n\"Start timer\" button.";
             this.labelImmediate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -122,7 +122,7 @@
             this.fixedDateControl1.FullTime = new System.DateTime(2016, 11, 2, 16, 45, 15, 379);
             this.fixedDateControl1.Location = new System.Drawing.Point(8, 8);
             this.fixedDateControl1.Name = "fixedDateControl1";
-            this.fixedDateControl1.Size = new System.Drawing.Size(543, 138);
+            this.fixedDateControl1.Size = new System.Drawing.Size(412, 81);
             this.fixedDateControl1.TabIndex = 5;
             this.fixedDateControl1.Time = new System.DateTime(2016, 11, 1, 16, 45, 15, 379);
             // 
@@ -132,16 +132,20 @@
             this.dailyControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dailyControl1.Location = new System.Drawing.Point(8, 8);
             this.dailyControl1.Name = "dailyControl1";
-            this.dailyControl1.Size = new System.Drawing.Size(543, 138);
+            this.dailyControl1.Size = new System.Drawing.Size(412, 81);
             this.dailyControl1.TabIndex = 0;
+            this.dailyControl1.Time = System.TimeSpan.Parse("18:21:01.7806729");
             // 
             // delayTimeControl1
             // 
             this.delayTimeControl1.AutoSize = true;
             this.delayTimeControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.delayTimeControl1.Hours = 0;
             this.delayTimeControl1.Location = new System.Drawing.Point(8, 8);
+            this.delayTimeControl1.Minutes = 0;
             this.delayTimeControl1.Name = "delayTimeControl1";
-            this.delayTimeControl1.Size = new System.Drawing.Size(543, 138);
+            this.delayTimeControl1.Seconds = 0;
+            this.delayTimeControl1.Size = new System.Drawing.Size(412, 81);
             this.delayTimeControl1.TabIndex = 0;
             // 
             // ActionTimeControl
@@ -150,7 +154,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tabControlActionTime);
             this.Name = "ActionTimeControl";
-            this.Size = new System.Drawing.Size(567, 180);
+            this.Size = new System.Drawing.Size(436, 123);
             this.tabControlActionTime.ResumeLayout(false);
             this.tabPageFixedDate.ResumeLayout(false);
             this.tabPageFixedDate.PerformLayout();

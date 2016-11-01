@@ -170,16 +170,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         #region IWindowsRebootView Members
 
-        public bool ActionTimeGroupEnabled
-        {
-            set { groupBoxActionTime.Enabled = value; }
-        }
-
-        public bool ActionTypeGroupEnabled
-        {
-            set { groupBoxActionType.Enabled = value; }
-        }
-
         public bool MenuItem_LoadInitialSettingsEnabled
         {
             set { loadInitialSettingsToolStripMenuItem.Enabled = value; }

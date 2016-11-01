@@ -25,7 +25,15 @@ namespace DustInTheWind.WindowsReboot.Core
 
         private volatile bool isRunning;
 
-        public ScheduleTime Time { get; set; }
+        public ScheduleTime Time
+        {
+            get { return time; }
+            set
+            {
+                time = value;
+                OnTimeChanged();
+            }
+        }
 
         private bool warningWasRaised;
 
@@ -39,6 +47,7 @@ namespace DustInTheWind.WindowsReboot.Core
         public event EventHandler Warning;
         public event EventHandler Ring;
         public event EventHandler WarningTimeChanged;
+        public event EventHandler TimeChanged;
 
         /// <summary>
         /// Indicates if the timer was started.
@@ -65,6 +74,7 @@ namespace DustInTheWind.WindowsReboot.Core
         public DateTime ActionTime { get; private set; }
 
         public readonly TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
+        private ScheduleTime time;
 
         public Timer(ITicker ticker)
         {
@@ -231,6 +241,14 @@ namespace DustInTheWind.WindowsReboot.Core
         protected virtual void OnWarningTimeChanged()
         {
             EventHandler handler = WarningTimeChanged;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnTimeChanged()
+        {
+            EventHandler handler = TimeChanged;
 
             if (handler != null)
                 handler(this, EventArgs.Empty);

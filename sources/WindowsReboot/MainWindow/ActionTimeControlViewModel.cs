@@ -16,18 +16,24 @@
 
 using System;
 using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
     internal class ActionTimeControlViewModel : ViewModelBase
     {
+        private readonly Timer timer;
+        private readonly UserInterface userInterface;
+        private bool updateFromBusiness;
+
         private TaskTimeType taskTimeType;
         private DateTime fixedDateTime;
         private int delayHours;
         private int delayMinutes;
         private int delaySeconds;
         private TimeSpan dailyTime;
+        private bool enabled;
 
         public TaskTimeType TaskTimeType
         {
@@ -36,6 +42,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 taskTimeType = value;
                 OnPropertyChanged("TaskTimeType");
+
+                if (!updateFromBusiness)
+                    timer.Time = GetActionTime();
             }
         }
 
@@ -46,6 +55,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 fixedDateTime = value;
                 OnPropertyChanged("FixedDateTime");
+
+                if (!updateFromBusiness)
+                    timer.Time = GetActionTime();
             }
         }
 
@@ -56,6 +68,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 delayHours = value;
                 OnPropertyChanged("DelayHours");
+
+                if (!updateFromBusiness)
+                    timer.Time = GetActionTime();
             }
         }
 
@@ -66,6 +81,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 delayMinutes = value;
                 OnPropertyChanged("DelayMinutes");
+
+                if (!updateFromBusiness)
+                    timer.Time = GetActionTime();
             }
         }
 
@@ -76,6 +94,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 delaySeconds = value;
                 OnPropertyChanged("DelaySeconds");
+
+                if (!updateFromBusiness)
+                    timer.Time = GetActionTime();
             }
         }
 
@@ -86,25 +107,98 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 dailyTime = value;
                 OnPropertyChanged("DailyTime");
+
+                if (!updateFromBusiness)
+                    timer.Time = GetActionTime();
             }
         }
 
-        public ActionTimeControlViewModel()
+        public bool Enabled
         {
-            fixedDateTime = DateTime.Now;
-            delayHours = 0;
-            delayMinutes = 0;
-            delaySeconds = 0;
-            dailyTime = TimeSpan.Zero;
+            get { return enabled; }
+            set
+            {
+                enabled = value;
+                OnPropertyChanged("Enabled");
+            }
         }
 
-        public void Clear()
+        public ActionTimeControlViewModel(Timer timer, UserInterface userInterface)
+        {
+            if (timer == null) throw new ArgumentNullException("timer");
+            if (userInterface == null) throw new ArgumentNullException("userInterface");
+
+            this.timer = timer;
+            this.userInterface = userInterface;
+
+            Enabled = true;
+            Clear();
+
+            timer.TimeChanged += HandleTimerTimeChanged;
+            timer.Started += HandleTimerStarted;
+            timer.Stoped += HandleTimerStoped;
+        }
+
+        private void HandleTimerStarted(object sender, EventArgs eventArgs)
+        {
+            Enabled = false;
+        }
+
+        private void HandleTimerStoped(object sender, EventArgs eventArgs)
+        {
+            userInterface.Dispatch(() => Enabled = true);
+        }
+
+        private void HandleTimerTimeChanged(object sender, EventArgs e)
+        {
+
+            updateFromBusiness = true;
+
+            try
+            {
+                if (timer.Time == null)
+                {
+                    Clear();
+                }
+                else
+                {
+                    FixedDateTime = timer.Time.DateTime;
+                    DelayHours = timer.Time.Hours;
+                    DelayMinutes = timer.Time.Minutes;
+                    DelaySeconds = timer.Time.Seconds;
+                    DailyTime = timer.Time.TimeOfDay;
+
+                    TaskTimeType = timer.Time.Type;
+                }
+            }
+            finally
+            {
+                updateFromBusiness = false;
+            }
+        }
+
+        private void Clear()
         {
             FixedDateTime = DateTime.Now;
             DelayHours = 0;
             DelayMinutes = 0;
             DelaySeconds = 0;
             DailyTime = TimeSpan.Zero;
+
+            TaskTimeType = TaskTimeType.Immediate;
+        }
+
+        private ScheduleTime GetActionTime()
+        {
+            return new ScheduleTime
+            {
+                Type = taskTimeType,
+                DateTime = fixedDateTime,
+                TimeOfDay = dailyTime,
+                Hours = delayHours,
+                Minutes = delayMinutes,
+                Seconds = delaySeconds
+            };
         }
     }
 }

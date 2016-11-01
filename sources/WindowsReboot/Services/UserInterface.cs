@@ -56,11 +56,12 @@ namespace DustInTheWind.WindowsReboot.Services
             }
         }
 
-        public bool DisplayOptions(WindowsRebootConfigSection configSection)
+        public void DisplayOptions(WindowsRebootConfiguration configuration)
         {
-            using (OptionsForm form = new OptionsForm(configSection))
+            using (OptionsForm form = new OptionsForm(configuration))
             {
-                return (form.ShowDialog(MainForm) == DialogResult.OK);
+                if (form.ShowDialog(MainForm) == DialogResult.OK)
+                    configuration.Save();
             }
         }
 

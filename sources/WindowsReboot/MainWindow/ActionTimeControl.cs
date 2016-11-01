@@ -33,6 +33,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 if (viewModel != null)
                 {
+                    this.DataBindings.Clear();
                     fixedDateControl1.DataBindings.Clear();
                     delayTimeControl1.DataBindings.Clear();
                     dailyControl1.DataBindings.Clear();
@@ -44,11 +45,13 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
                 if (viewModel != null)
                 {
+                    this.Bind(x => x.Enabled, viewModel, x => x.Enabled, false, DataSourceUpdateMode.Never);
+
                     fixedDateControl1.Bind(x => x.FullTime, viewModel, x => x.FixedDateTime, false, DataSourceUpdateMode.OnPropertyChanged);
+                    dailyControl1.Bind(x => x.Time, viewModel, x => x.DailyTime, false, DataSourceUpdateMode.OnPropertyChanged);
                     delayTimeControl1.Bind(x => x.Hours, viewModel, x => x.DelayHours, false, DataSourceUpdateMode.OnPropertyChanged);
                     delayTimeControl1.Bind(x => x.Minutes, viewModel, x => x.DelayMinutes, false, DataSourceUpdateMode.OnPropertyChanged);
                     delayTimeControl1.Bind(x => x.Seconds, viewModel, x => x.DelaySeconds, false, DataSourceUpdateMode.OnPropertyChanged);
-                    dailyControl1.Bind(x => x.Time, viewModel, x => x.DailyTime, false, DataSourceUpdateMode.OnPropertyChanged);
 
                     viewModel.PropertyChanged += HandleViewModelPropertyChanged;
                 }

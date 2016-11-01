@@ -24,7 +24,7 @@ namespace DustInTheWind.WindowsReboot.Core
         void Dispatch(System.Action action);
         void DisplayAbout();
         void DisplayLicense();
-        bool DisplayOptions(WindowsRebootConfigSection configSection);
+        void DisplayOptions(WindowsRebootConfiguration configSection);
 
         /// <summary>
         /// Displays a message to the user.

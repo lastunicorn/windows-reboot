@@ -15,8 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Configuration;
 using System.Windows.Forms;
+using DustInTheWind.WindowsReboot.Commands;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Config;
 using DustInTheWind.WindowsReboot.Core.Services;
@@ -38,15 +38,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private readonly Action action;
 
         /// <summary>
-        /// A value that specifies if the form should be opened with the timer started or not.
-        /// </summary>
-        private bool startAtStartUp;
-
-        private readonly Configuration config;
-
-        private readonly WindowsRebootConfigSection configSection;
-
-        /// <summary>
         /// A value indicationg if the exit of the application was requested chosing the menu item.
         /// </summary>
         private bool exitRequested;
@@ -54,6 +45,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private readonly IRebootUtil rebootUtil;
         private readonly Timer timer;
         private string title;
+        private readonly WindowsRebootConfiguration configuration;
 
         public ActionTimeControlViewModel ActionTimeControlViewModel { get; private set; }
         public ActionTypeControlViewModel ActionTypeControlViewModel { get; private set; }
@@ -71,8 +63,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 OnPropertyChanged("Title");
             }
         }
-
-        #region Constructor
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowsRebootPresenter"/> class with
@@ -92,12 +82,11 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.timer = timer;
             this.rebootUtil = rebootUtil;
 
-            ActionTimeControlViewModel = new ActionTimeControlViewModel();
-            ActionTypeControlViewModel = new ActionTypeControlViewModel(timer, action);
+            ActionTimeControlViewModel = new ActionTimeControlViewModel(timer, userInterface);
+            ActionTypeControlViewModel = new ActionTypeControlViewModel(timer, action, userInterface);
             StatusControlViewModel = new StatusControlViewModel(ticker, timer, userInterface);
 
-            config = GetConfiguration();
-            configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
+            configuration = new WindowsRebootConfiguration();
 
             timer.Started += HandlePerformerStarted;
             timer.Stoped += HandlePerformerStoped;
@@ -126,8 +115,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             });
         }
 
-        #endregion
-
         #region Start/Stop timer
 
         /// <summary>
@@ -137,50 +124,12 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             try
             {
-                timer.Time = GetActionTime();
+                //timer.Time = GetActionTime();
                 timer.Start();
             }
             catch (Exception ex)
             {
                 userInterface.DisplayError(ex);
-            }
-        }
-
-        private ScheduleTime GetActionTime()
-        {
-            switch (ActionTimeControlViewModel.TaskTimeType)
-            {
-                case TaskTimeType.FixedDate:
-                    return new ScheduleTime
-                    {
-                        Type = TaskTimeType.FixedDate,
-                        DateTime = ActionTimeControlViewModel.FixedDateTime
-                    };
-
-                case TaskTimeType.Daily:
-                    return new ScheduleTime
-                    {
-                        Type = TaskTimeType.Daily,
-                        TimeOfDay = ActionTimeControlViewModel.DailyTime
-                    };
-
-                case TaskTimeType.Delay:
-                    return new ScheduleTime
-                    {
-                        Type = TaskTimeType.Delay,
-                        Hours = ActionTimeControlViewModel.DelayHours,
-                        Minutes = ActionTimeControlViewModel.DelayMinutes,
-                        Seconds = ActionTimeControlViewModel.DelaySeconds
-                    };
-
-                case TaskTimeType.Immediate:
-                    return new ScheduleTime
-                    {
-                        Type = TaskTimeType.Immediate
-                    };
-
-                default:
-                    throw new WindowsRebootException("No action time was chosen.");
             }
         }
 
@@ -222,7 +171,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 userInterface.DisplayError(ex);
             }
 
-            if (startAtStartUp)
+            if (configuration.StartTimerAtApplicationStart)
                 OnStartTimerClicked();
         }
 
@@ -234,7 +183,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             bool allowToCLose = false;
 
-            if (!exitRequested && configSection.CloseToTray.Value)
+            if (!exitRequested && configuration.CloseToTray)
             {
                 // Minimize to tray
                 view.Hide();
@@ -262,7 +211,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             try
             {
-                if (configSection.MinimizeToTray.Value)
+                if (configuration.MinimizeToTray)
                 {
                     view.Hide();
                     view.NotifyIconVisible = true;
@@ -277,8 +226,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         #endregion
 
         #region Notify icon events
-
-        #region internal void OnNotifyIconMouseMove()
 
         /// <summary>
         /// Method called when the mouse is moved over the notify icon.
@@ -297,10 +244,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        #endregion
-
-        #region internal void OnNotifyIconMouseClicked()
-
         /// <summary>
         /// Method called when the notify icon is clicked with the left mouse button.
         /// </summary>
@@ -317,10 +260,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 userInterface.DisplayError(ex);
             }
         }
-
-        #endregion
-
-        #region internal void OnNotifyIconShowClicked()
 
         /// <summary>
         /// Method called when the "Show" item of the notify icon menu was clicked.
@@ -339,10 +278,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        #endregion
-
-        #region internal void OnNotifyIconLockComputerClicked()
-
         /// <summary>
         /// Method called when the tray icon is clicked by the user.
         /// </summary>
@@ -360,10 +295,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 userInterface.DisplayError(ex);
             }
         }
-
-        #endregion
-
-        #region internal void OnNotifyIconLogOffClicked()
 
         /// <summary>
         /// Method clicked when the user choose "Log Off" from the tray icon menu.
@@ -384,10 +315,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        #endregion
-
-        #region internal void OnNotifyIconSleepClicked()
-
         /// <summary>
         /// Method clicked when the user choose "Sleep" from the tray icon menu.
         /// </summary>
@@ -405,8 +332,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 userInterface.DisplayError(ex);
             }
         }
-
-        #endregion
 
         #region internal void OnNotifyIconHibernateClicked()
 
@@ -557,11 +482,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// </summary>
         internal void OnMenuItemOptionsClicked()
         {
-            if (userInterface.DisplayOptions(configSection))
-            {
-                // Save the option to the file.
-                config.Save(ConfigurationSaveMode.Modified);
-            }
+            userInterface.DisplayOptions(configuration);
         }
 
         /// <summary>
@@ -569,15 +490,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// </summary>
         internal void OnMenuItemSaveCurrentSettingsClicked()
         {
-            try
-            {
-                SaveConfiguration();
-                userInterface.DisplayMessage("The configuration was saved.");
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
+            SaveConfigurationCommand command = new SaveConfigurationCommand(userInterface, timer, action, configuration);
+            command.Execute();
         }
 
         /// <summary>
@@ -585,17 +499,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// </summary>
         internal void OnMenuItemLoadDefaultSettingsClicked()
         {
-            try
-            {
-                if (timer.IsRunning)
-                    userInterface.DisplayError("Cannot complete the task while the timer is started.");
-                else
-                    ClearInterface();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
+            LoadDefaultConfigurationCommand command = new LoadDefaultConfigurationCommand(userInterface, timer, action);
+            command.Execute();
         }
 
         /// <summary>
@@ -603,17 +508,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// </summary>
         internal void OnMenuItemLoadInitialSettingsClicked()
         {
-            try
-            {
-                if (timer.IsRunning)
-                    userInterface.DisplayError("Cannot complete the task while the timer is started.");
-                else
-                    LoadConfiguration();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
+            LoadConfigurationCommand command = new LoadConfigurationCommand(userInterface, timer, action, configuration);
+            command.Execute();
         }
 
         /// <summary>
@@ -648,30 +544,22 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         #endregion
 
-        #region private void EnableInterface(bool value)
-
         /// <summary>
         /// Enables or disables the interface.
         /// </summary>
         /// <param name="value">A value that specifies if the interface should be enabled or disabled.</param>
         private void EnableInterface(bool value)
         {
-            view.ActionTimeGroupEnabled = value;
-            view.ActionTypeGroupEnabled = value;
             view.MenuItem_LoadInitialSettingsEnabled = value;
             view.MenuItem_LoadDefaultSettingsEnabled = value;
         }
-
-        #endregion
-
-        #region private void ClearInterface()
 
         /// <summary>
         /// Clears the interface and displayed the default values.
         /// </summary>
         private void ClearInterface()
         {
-            ActionTimeControlViewModel.Clear();
+            timer.Time = new ScheduleTime();
 
             action.Type = TaskType.PowerOff;
             action.Force = true;
@@ -679,117 +567,16 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             ActionTimeControlViewModel.TaskTimeType = TaskTimeType.Delay;
         }
 
-        #endregion
-
-        #region private void LoadInitialConfiguration()
-
         /// <summary>
         /// Loads the values from the configuration file and populates the interface with them.
         /// </summary>
         private void LoadConfiguration()
         {
-            WindowsRebootConfigSection configSection = GetConfigurationSection();
-
             ClearInterface();
 
-            switch (configSection.ActionTime.Type)
-            {
-                case TaskTimeType.FixedDate:
-                    ActionTimeControlViewModel.FixedDateTime = this.configSection.ActionTime.DateTime;
-                    ActionTimeControlViewModel.TaskTimeType = TaskTimeType.FixedDate;
-                    break;
-
-                case TaskTimeType.Daily:
-                    ActionTimeControlViewModel.DailyTime = this.configSection.ActionTime.DateTime.TimeOfDay;
-                    ActionTimeControlViewModel.TaskTimeType = TaskTimeType.Daily;
-                    break;
-
-                case TaskTimeType.Delay:
-                    ActionTimeControlViewModel.DelayHours = this.configSection.ActionTime.Hours;
-                    ActionTimeControlViewModel.DelayMinutes = this.configSection.ActionTime.Minutes;
-                    ActionTimeControlViewModel.DelaySeconds = this.configSection.ActionTime.Seconds;
-                    ActionTimeControlViewModel.TaskTimeType = TaskTimeType.Delay;
-                    break;
-
-                case TaskTimeType.Immediate:
-                    ActionTimeControlViewModel.TaskTimeType = TaskTimeType.Immediate;
-                    break;
-            }
-
-            action.Type = this.configSection.ActionType.Value;
-            action.Force = this.configSection.ForceClosingPrograms.Value;
-
-            startAtStartUp = this.configSection.StartTimerAtApplicationStart.Value;
+            timer.Time = configuration.ActionTime;
+            action.Type = configuration.ActionType;
+            action.Force = configuration.ForceClosingPrograms;
         }
-
-        #endregion
-
-        #region private void SaveConfiguration()
-
-        /// <summary>
-        /// Saves the current values from the interface into the configuration file.
-        /// </summary>
-        private void SaveConfiguration()
-        {
-            //Configuration config = this.GetConfiguration();
-            //WindowsRebootConfigSection configSection = WindowsRebootConfigSection.GetOrCreateSection(config);
-
-            switch (ActionTimeControlViewModel.TaskTimeType)
-            {
-                case TaskTimeType.FixedDate:
-                    configSection.ActionTime.Type = TaskTimeType.FixedDate;
-                    configSection.ActionTime.DateTime = ActionTimeControlViewModel.FixedDateTime;
-                    configSection.ActionTime.Hours = 0;
-                    configSection.ActionTime.Minutes = 0;
-                    configSection.ActionTime.Seconds = 0;
-                    break;
-                case TaskTimeType.Daily:
-                    configSection.ActionTime.Type = TaskTimeType.Daily;
-                    configSection.ActionTime.DateTime = DateTime.Now.Add(ActionTimeControlViewModel.DailyTime);
-                    configSection.ActionTime.Hours = 0;
-                    configSection.ActionTime.Minutes = 0;
-                    configSection.ActionTime.Seconds = 0;
-                    break;
-                case TaskTimeType.Delay:
-                    configSection.ActionTime.Type = TaskTimeType.Delay;
-                    configSection.ActionTime.Hours = ActionTimeControlViewModel.DelayHours;
-                    configSection.ActionTime.Minutes = ActionTimeControlViewModel.DelayMinutes;
-                    configSection.ActionTime.Seconds = ActionTimeControlViewModel.DelaySeconds;
-                    configSection.ActionTime.DateTime = DateTime.Now;
-                    break;
-                case TaskTimeType.Immediate:
-                    configSection.ActionTime.Type = TaskTimeType.Immediate;
-                    configSection.ActionTime.DateTime = DateTime.Now;
-                    configSection.ActionTime.Hours = 0;
-                    configSection.ActionTime.Minutes = 0;
-                    configSection.ActionTime.Seconds = 0;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            configSection.ActionType.Value = action.Type;
-            configSection.ForceClosingPrograms.Value = action.Force;
-
-            //config.Save();
-            config.Save(ConfigurationSaveMode.Modified);
-        }
-
-        #endregion
-
-        #region Configuration
-
-        private static Configuration GetConfiguration()
-        {
-            return ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-        }
-
-        private static WindowsRebootConfigSection GetConfigurationSection()
-        {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            return WindowsRebootConfigSection.GetOrCreateSection(config);
-        }
-
-        #endregion
     }
 }
