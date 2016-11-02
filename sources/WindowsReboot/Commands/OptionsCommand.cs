@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.WindowsReboot.CommandModel;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Config;
 
@@ -23,11 +24,6 @@ namespace DustInTheWind.WindowsReboot.Commands
     internal class OptionsCommand : CommandBase
     {
         private readonly WindowsRebootConfiguration configuration;
-
-        public override bool CanExecute
-        {
-            get { return true; }
-        }
 
         public OptionsCommand(IUserInterface userInterface, WindowsRebootConfiguration configuration)
             : base(userInterface)

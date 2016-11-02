@@ -42,7 +42,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// </summary>
         private bool exitRequested;
 
-        private readonly IRebootUtil rebootUtil;
         private readonly Timer timer;
         private string title;
         private readonly WindowsRebootConfiguration configuration;
@@ -53,6 +52,14 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         public OptionsCommand OptionsCommand { get; private set; }
         public LicenseCommand LicenseCommand { get; private set; }
         public AboutCommand AboutCommand { get; private set; }
+
+        public LockComputerCommand LockComputerCommand { get; private set; }
+        public LogOffCommand LogOffCommand { get; private set; }
+        public SleepCommand SleepCommand { get; private set; }
+        public HibernateCommand HibernateCommand { get; private set; }
+        public RebootCommand RebootCommand { get; private set; }
+        public ShutDownCommand ShutDownCommand { get; private set; }
+        public PowerOffCommand PowerOffCommand { get; private set; }
 
         public ActionTimeControlViewModel ActionTimeControlViewModel { get; private set; }
         public ActionTypeControlViewModel ActionTypeControlViewModel { get; private set; }
@@ -88,7 +95,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.userInterface = userInterface;
             this.action = action;
             this.timer = timer;
-            this.rebootUtil = rebootUtil;
 
             ActionTimeControlViewModel = new ActionTimeControlViewModel(timer, userInterface);
             ActionTypeControlViewModel = new ActionTypeControlViewModel(timer, action, userInterface);
@@ -104,16 +110,13 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             LicenseCommand = new LicenseCommand(userInterface);
             AboutCommand = new AboutCommand(userInterface);
 
-            timer.Warning += HandleTimerWarning;
-        }
-
-        private void HandleTimerWarning(object sender, EventArgs e)
-        {
-            userInterface.Dispatch(() =>
-            {
-                string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.", action.Type);
-                userInterface.DisplayMessage(message);
-            });
+            LockComputerCommand = new LockComputerCommand(userInterface, rebootUtil);
+            LogOffCommand = new LogOffCommand(userInterface, rebootUtil);
+            SleepCommand = new SleepCommand(userInterface, rebootUtil);
+            HibernateCommand = new HibernateCommand(userInterface, rebootUtil);
+            RebootCommand = new RebootCommand(userInterface,rebootUtil);
+            ShutDownCommand = new ShutDownCommand(userInterface, rebootUtil);
+            PowerOffCommand = new PowerOffCommand(userInterface, rebootUtil);
         }
 
         #region Load/Close Form events
@@ -253,149 +256,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 userInterface.DisplayError(ex);
             }
         }
-
-        /// <summary>
-        /// Method called when the tray icon is clicked by the user.
-        /// </summary>
-        internal void OnNotifyIconLockComputerClicked()
-        {
-            try
-            {
-                bool allowToContinue = userInterface.Confirm("Do you want to lock the workstation?");
-
-                if (allowToContinue)
-                    rebootUtil.Lock();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        /// <summary>
-        /// Method clicked when the user choose "Log Off" from the tray icon menu.
-        /// </summary>
-        internal void OnNotifyIconLogOffClicked()
-        {
-            try
-            {
-                string question = string.Format("Do you want to log off the current user?\nThe current logged in user is '{0}'", Environment.UserDomainName);
-                bool allowToContinue = userInterface.Confirm(question);
-
-                if (allowToContinue)
-                    rebootUtil.LogOff(false);
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        /// <summary>
-        /// Method clicked when the user choose "Sleep" from the tray icon menu.
-        /// </summary>
-        internal void OnNotifyIconSleepClicked()
-        {
-            try
-            {
-                bool allowToContinue = userInterface.Confirm("Do you want to put the system in 'Stand By' state?");
-
-                if (allowToContinue)
-                    rebootUtil.Sleep(false);
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        #region internal void OnNotifyIconHibernateClicked()
-
-        /// <summary>
-        /// Method clicked when the user choose "Hibernate" from the tray icon menu.
-        /// </summary>
-        internal void OnNotifyIconHibernateClicked()
-        {
-            try
-            {
-                bool allowToContinue = userInterface.Confirm("Do you want to put the system in 'Hibernate' state?");
-
-                if (allowToContinue)
-                    rebootUtil.Hibernate(false);
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        #endregion
-
-        #region internal void OnNotifyIconRebootClicked()
-
-        /// <summary>
-        /// Method clicked when the user choose "Reboot" from the tray icon menu.
-        /// </summary>
-        internal void OnNotifyIconRebootClicked()
-        {
-            try
-            {
-                bool allowToContinue = userInterface.Confirm("Do you want to reboot the system?");
-
-                if (allowToContinue)
-                    rebootUtil.Reboot(false);
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        #endregion
-
-        #region internal void OnNotifyIconShutDownClicked()
-
-        /// <summary>
-        /// Method clicked when the user choose "Shut Down" from the tray icon menu.
-        /// </summary>
-        internal void OnNotifyIconShutDownClicked()
-        {
-            try
-            {
-                bool allowToContinue = userInterface.Confirm("Do you want to shut down the sysyem?\n\nObs! From WinXP SP1 this command will also power off the system.");
-
-                if (allowToContinue)
-                    rebootUtil.ShutDown(false);
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        #endregion
-
-        #region internal void OnNotifyIconPowerOffClicked()
-
-        /// <summary>
-        /// Method clicked when the user choose "Power Off" from the tray icon menu.
-        /// </summary>
-        internal void OnNotifyIconPowerOffClicked()
-        {
-            try
-            {
-                bool allowToContinue = userInterface.Confirm("Do you want to power off the system?\n\nObs! Only if the hardware supports 'Power Off'. Otherwise just a 'Shut Down' will be performed.");
-
-                if (allowToContinue)
-                    rebootUtil.PowerOff(false);
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        #endregion
 
         #region internal void OnNotifyIconExitClicked()
 

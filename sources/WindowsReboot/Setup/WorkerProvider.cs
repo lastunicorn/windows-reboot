@@ -15,46 +15,34 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.CustomControls;
+using DustInTheWind.WindowsReboot.WorkerModel;
+using DustInTheWind.WindowsReboot.Workers;
+using Action = DustInTheWind.WindowsReboot.Core.Action;
 
-namespace DustInTheWind.WindowsReboot.Commands
+namespace DustInTheWind.WindowsReboot.Setup
 {
-    internal abstract class CommandBase : ICommand
+    internal class WorkerProvider : IWorkerProvider
     {
-        protected readonly IUserInterface userInterface;
+        private readonly IUserInterface userInterface;
+        private readonly Timer timer;
+        private readonly Action action;
 
-        public abstract bool CanExecute { get; }
-
-        public event EventHandler CanExecuteChanged;
-
-        protected CommandBase(IUserInterface userInterface)
+        public WorkerProvider(IUserInterface userInterface, Timer timer, Action action)
         {
             if (userInterface == null) throw new ArgumentNullException("userInterface");
+            if (timer == null) throw new ArgumentNullException("timer");
+            if (action == null) throw new ArgumentNullException("action");
 
             this.userInterface = userInterface;
+            this.timer = timer;
+            this.action = action;
         }
 
-        public void Execute()
+        public IEnumerable<IWorker> GetNewWorkers()
         {
-            try
-            {
-                DoExecute();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        protected abstract void DoExecute();
-
-        protected virtual void OnCanExecuteChanged()
-        {
-            EventHandler handler = CanExecuteChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            yield return new WarningWorker(userInterface, timer, action);
         }
     }
 }

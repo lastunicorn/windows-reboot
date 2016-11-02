@@ -70,12 +70,19 @@
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
     <Compile Include="Commands\AboutCommand.cs" />
-    <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="CommandModel\CommandBase.cs" />
+    <Compile Include="Commands\HibernateCommand.cs" />
     <Compile Include="Commands\LicenseCommand.cs" />
     <Compile Include="Commands\LoadConfigurationCommand.cs" />
     <Compile Include="Commands\LoadDefaultConfigurationCommand.cs" />
+    <Compile Include="Commands\LockComputerCommand.cs" />
+    <Compile Include="Commands\LogOffCommand.cs" />
     <Compile Include="Commands\OptionsCommand.cs" />
+    <Compile Include="Commands\PowerOffCommand.cs" />
+    <Compile Include="Commands\RebootCommand.cs" />
     <Compile Include="Commands\SaveConfigurationCommand.cs" />
+    <Compile Include="Commands\ShutDownCommand.cs" />
+    <Compile Include="Commands\SleepCommand.cs" />
     <Compile Include="Commands\StopTimerCommand.cs" />
     <Compile Include="Commands\StartTimerCommand.cs" />
     <Compile Include="CustomControls\ButtonWithCommand.cs">
@@ -84,7 +91,7 @@
     <Compile Include="CustomControls\ButtonWithCommand.Designer.cs">
       <DependentUpon>ButtonWithCommand.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomControls\ICommand.cs" />
+    <Compile Include="CommandModel\ICommand.cs" />
     <Compile Include="CustomControls\ToolStripMenuItemWithCommand.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -177,6 +184,11 @@
     <Compile Include="MainWindow\IWindowsRebootView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkerModel\IWorker.cs" />
+    <Compile Include="WorkerModel\IWorkerProvider.cs" />
+    <Compile Include="Workers\WarningWorker.cs" />
+    <Compile Include="WorkerModel\Workers.cs" />
+    <Compile Include="Setup\WorkerProvider.cs" />
     <EmbeddedResource Include="CustomControls\ButtonWithCommand.resx">
       <DependentUpon>ButtonWithCommand.cs</DependentUpon>
     </EmbeddedResource>

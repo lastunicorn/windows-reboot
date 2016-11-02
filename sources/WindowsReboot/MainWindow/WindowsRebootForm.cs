@@ -15,19 +15,23 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Services;
 using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.UiCommon;
+using DustInTheWind.WindowsReboot.WorkerModel;
+using DustInTheWind.WindowsReboot.Workers;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
 using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    partial class WindowsRebootForm : Form, IWindowsRebootView
+    internal partial class WindowsRebootForm : Form, IWindowsRebootView
     {
         private readonly WindowsRebootPresenter presenter;
+        private readonly WorkerModel.Workers workers;
 
         public WindowsRebootForm()
         {
@@ -44,6 +48,10 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             IRebootUtil rebootUtil = new RebootUtil();
             Timer timer = new Timer(ticker);
             Action action = new Action(timer, userInterface, rebootUtil);
+            workers = new WorkerModel.Workers(new List<IWorker>
+            {
+                new WarningWorker(userInterface, timer, action)
+            });
             presenter = new WindowsRebootPresenter(this, userInterface, ticker, action, timer, rebootUtil);
 
             this.Bind(x => x.Text, presenter, x => x.Title, false, DataSourceUpdateMode.Never);
@@ -59,11 +67,20 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             optionsToolStripMenuItem.Command = presenter.OptionsCommand;
             licenseToolStripMenuItem.Command = presenter.LicenseCommand;
             aboutToolStripMenuItem.Command = presenter.AboutCommand;
+
+            lockComputerToolStripMenuItem.Command = presenter.LockComputerCommand;
+            logOffToolStripMenuItem.Command = presenter.LogOffCommand;
+            sleepToolStripMenuItem.Command = presenter.SleepCommand;
+            hibernateToolStripMenuItem.Command = presenter.HibernateCommand;
+            rebootToolStripMenuItem.Command = presenter.RebootCommand;
+            shutDownToolStripMenuItem.Command = presenter.ShutDownCommand;
+            powerOffToolStripMenuItem.Command = presenter.PowerOffCommand;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             presenter.OnFormLoad();
+            workers.Start();
         }
 
 
@@ -82,41 +99,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
             presenter.OnNotifyIconShowClicked();
-        }
-
-        private void lockComputerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            presenter.OnNotifyIconLockComputerClicked();
-        }
-
-        private void logOffToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            presenter.OnNotifyIconLogOffClicked();
-        }
-
-        private void sleepToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            presenter.OnNotifyIconSleepClicked();
-        }
-
-        private void hibernateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            presenter.OnNotifyIconHibernateClicked();
-        }
-
-        private void rebootToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            presenter.OnNotifyIconRebootClicked();
-        }
-
-        private void shutDownToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            presenter.OnNotifyIconShutDownClicked();
-        }
-
-        private void powerOffToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            presenter.OnNotifyIconPowerOffClicked();
         }
 
         private void exitToolStripMenuItem1_Click(object sender, EventArgs e)

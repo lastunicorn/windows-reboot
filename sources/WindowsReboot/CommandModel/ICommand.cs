@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.WindowsReboot.CustomControls
+namespace DustInTheWind.WindowsReboot.CommandModel
 {
     public interface ICommand
     {

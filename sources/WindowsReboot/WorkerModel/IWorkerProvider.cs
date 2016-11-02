@@ -1,5 +1,5 @@
-﻿// Windows Reboot
-// Copyright (C) 2009-2015 Dust in the Wind
+﻿// Lisimba
+// Copyright (C) 2007-2016 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,21 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.WindowsReboot.CommandModel;
-using DustInTheWind.WindowsReboot.Core;
+using System.Collections.Generic;
+using DustInTheWind.WindowsReboot.Workers;
 
-namespace DustInTheWind.WindowsReboot.Commands
+namespace DustInTheWind.WindowsReboot.WorkerModel
 {
-    internal class AboutCommand : CommandBase
+    public interface IWorkerProvider
     {
-        public AboutCommand(IUserInterface userInterface)
-            : base(userInterface)
-        {
-        }
-
-        protected override void DoExecute()
-        {
-            userInterface.DisplayAbout();
-        }
+        IEnumerable<IWorker> GetNewWorkers();
     }
 }

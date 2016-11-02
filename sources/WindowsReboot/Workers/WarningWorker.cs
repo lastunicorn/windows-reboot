@@ -15,41 +15,46 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.CommandModel;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Core.Config;
+using DustInTheWind.WindowsReboot.WorkerModel;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
 
-namespace DustInTheWind.WindowsReboot.Commands
+namespace DustInTheWind.WindowsReboot.Workers
 {
-    internal class SaveConfigurationCommand : CommandBase
+    internal class WarningWorker : IWorker
     {
+        private readonly IUserInterface userInterface;
         private readonly Timer timer;
         private readonly Action action;
-        private readonly WindowsRebootConfiguration configuration;
 
-        public SaveConfigurationCommand(IUserInterface userInterface, Timer timer, Action action, WindowsRebootConfiguration configuration)
-            : base(userInterface)
+        public WarningWorker(IUserInterface userInterface, Timer timer, Action action)
         {
+            if (userInterface == null) throw new ArgumentNullException("userInterface");
             if (timer == null) throw new ArgumentNullException("timer");
             if (action == null) throw new ArgumentNullException("action");
-            if (configuration == null) throw new ArgumentNullException("configuration");
 
+            this.userInterface = userInterface;
             this.timer = timer;
             this.action = action;
-            this.configuration = configuration;
         }
 
-        protected override void DoExecute()
+        public void Start()
         {
-            configuration.ActionTime = timer.Time;
+            timer.Warning += HandleTimerWarning;
+        }
 
-            configuration.ActionType = action.Type;
-            configuration.ForceClosingPrograms = action.Force;
+        public void Stop()
+        {
+            timer.Warning -= HandleTimerWarning;
+        }
 
-            configuration.Save();
-
-            userInterface.DisplayMessage("The configuration was saved.");
+        private void HandleTimerWarning(object sender, EventArgs e)
+        {
+            userInterface.Dispatch(() =>
+            {
+                string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.", action.Type);
+                userInterface.DisplayMessage(message);
+            });
         }
     }
 }

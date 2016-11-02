@@ -14,22 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.WindowsReboot.CommandModel;
-using DustInTheWind.WindowsReboot.Commands;
-using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.CustomControls;
-
-namespace DustInTheWind.WindowsReboot.MainWindow
+namespace DustInTheWind.WindowsReboot.WorkerModel
 {
-    internal class ActionControlViewModel
+    /// <summary>
+    /// A worker is a peace of code that runs continously until is stopped.
+    /// It may be an observer that subscvribes itself to an event and does something when the event is triggered.
+    /// It may also be a loop that processes some data from a queue.
+    /// </summary>
+    public interface IWorker
     {
-        public ICommand StartTimerCommand { get; set; }
-        public ICommand StopTimerCommand { get; set; }
-
-        public ActionControlViewModel(Timer timer, IUserInterface userInterface)
-        {
-            StartTimerCommand = new StartTimerCommand(timer, userInterface);
-            StopTimerCommand = new StopTimerCommand(timer, userInterface);
-        }
+        void Start();
+        void Stop();
     }
 }

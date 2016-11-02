@@ -14,22 +14,30 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using DustInTheWind.WindowsReboot.CommandModel;
-using DustInTheWind.WindowsReboot.Commands;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.CustomControls;
 
-namespace DustInTheWind.WindowsReboot.MainWindow
+namespace DustInTheWind.WindowsReboot.Commands
 {
-    internal class ActionControlViewModel
+    internal class SleepCommand : CommandBase
     {
-        public ICommand StartTimerCommand { get; set; }
-        public ICommand StopTimerCommand { get; set; }
+        private readonly IRebootUtil rebootUtil;
 
-        public ActionControlViewModel(Timer timer, IUserInterface userInterface)
+        public SleepCommand(IUserInterface userInterface, IRebootUtil rebootUtil)
+            : base(userInterface)
         {
-            StartTimerCommand = new StartTimerCommand(timer, userInterface);
-            StopTimerCommand = new StopTimerCommand(timer, userInterface);
+            if (rebootUtil == null) throw new ArgumentNullException("rebootUtil");
+
+            this.rebootUtil = rebootUtil;
+        }
+
+        protected override void DoExecute()
+        {
+            bool allowToContinue = userInterface.Confirm("Do you want to put the system in 'Stand By' state?");
+
+            if (allowToContinue)
+                rebootUtil.Sleep(false);
         }
     }
 }

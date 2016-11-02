@@ -256,7 +256,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.lockComputerToolStripMenuItem.Name = "lockComputerToolStripMenuItem";
             this.lockComputerToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.lockComputerToolStripMenuItem.Text = "Lock Computer";
-            this.lockComputerToolStripMenuItem.Click += new System.EventHandler(this.lockComputerToolStripMenuItem_Click);
             // 
             // logOffToolStripMenuItem
             // 
@@ -264,7 +263,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.logOffToolStripMenuItem.Name = "logOffToolStripMenuItem";
             this.logOffToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.logOffToolStripMenuItem.Text = "Log Off";
-            this.logOffToolStripMenuItem.Click += new System.EventHandler(this.logOffToolStripMenuItem_Click);
             // 
             // sleepToolStripMenuItem
             // 
@@ -272,7 +270,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.sleepToolStripMenuItem.Name = "sleepToolStripMenuItem";
             this.sleepToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.sleepToolStripMenuItem.Text = "Sleep";
-            this.sleepToolStripMenuItem.Click += new System.EventHandler(this.sleepToolStripMenuItem_Click);
             // 
             // hibernateToolStripMenuItem
             // 
@@ -280,7 +277,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.hibernateToolStripMenuItem.Name = "hibernateToolStripMenuItem";
             this.hibernateToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.hibernateToolStripMenuItem.Text = "Hibernate";
-            this.hibernateToolStripMenuItem.Click += new System.EventHandler(this.hibernateToolStripMenuItem_Click);
             // 
             // rebootToolStripMenuItem
             // 
@@ -288,7 +284,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.rebootToolStripMenuItem.Name = "rebootToolStripMenuItem";
             this.rebootToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.rebootToolStripMenuItem.Text = "Reboot";
-            this.rebootToolStripMenuItem.Click += new System.EventHandler(this.rebootToolStripMenuItem_Click);
             // 
             // shutDownToolStripMenuItem
             // 
@@ -296,7 +291,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.shutDownToolStripMenuItem.Name = "shutDownToolStripMenuItem";
             this.shutDownToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.shutDownToolStripMenuItem.Text = "Shut Down";
-            this.shutDownToolStripMenuItem.Click += new System.EventHandler(this.shutDownToolStripMenuItem_Click);
             // 
             // powerOffToolStripMenuItem
             // 
@@ -304,7 +298,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.powerOffToolStripMenuItem.Name = "powerOffToolStripMenuItem";
             this.powerOffToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.powerOffToolStripMenuItem.Text = "Power Off";
-            this.powerOffToolStripMenuItem.Click += new System.EventHandler(this.powerOffToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
