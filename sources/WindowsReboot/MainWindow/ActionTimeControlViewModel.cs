@@ -16,7 +16,6 @@
 
 using System;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
@@ -24,7 +23,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
     internal class ActionTimeControlViewModel : ViewModelBase
     {
         private readonly Timer timer;
-        private readonly UserInterface userInterface;
+        private readonly IUserInterface userInterface;
         private bool updateFromBusiness;
 
         private TaskTimeType taskTimeType;
@@ -123,7 +122,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        public ActionTimeControlViewModel(Timer timer, UserInterface userInterface)
+        public ActionTimeControlViewModel(Timer timer, IUserInterface userInterface)
         {
             if (timer == null) throw new ArgumentNullException("timer");
             if (userInterface == null) throw new ArgumentNullException("userInterface");

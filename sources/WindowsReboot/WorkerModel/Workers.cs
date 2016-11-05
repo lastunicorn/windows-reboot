@@ -33,9 +33,9 @@ namespace DustInTheWind.WindowsReboot.WorkerModel
 
         public Workers(IEnumerable<IWorker> workers)
         {
-            if (workerProvider == null) throw new ArgumentNullException("workers");
+            if (workers == null) throw new ArgumentNullException("workers");
 
-            workers = new List<IWorker>(workers);
+            this.workers = new List<IWorker>(workers);
         }
 
         public void Start()

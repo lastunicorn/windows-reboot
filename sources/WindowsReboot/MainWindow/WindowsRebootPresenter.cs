@@ -16,6 +16,7 @@
 
 using System;
 using System.Windows.Forms;
+using DustInTheWind.WindowsReboot.CommandModel;
 using DustInTheWind.WindowsReboot.Commands;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Config;
@@ -34,7 +35,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// </summary>
         private readonly IWindowsRebootView view;
 
-        private readonly UserInterface userInterface;
+        private readonly IUserInterface userInterface;
         private readonly Action action;
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// Initializes a new instance of the <see cref="WindowsRebootPresenter"/> class with
         /// the view used to interact with the user.
         /// </summary>
-        public WindowsRebootPresenter(IWindowsRebootView view, UserInterface userInterface, ITicker ticker, Action action, Timer timer, IRebootUtil rebootUtil)
+        public WindowsRebootPresenter(IWindowsRebootView view, IUserInterface userInterface, ITicker ticker, Action action, Timer timer, IRebootUtil rebootUtil)
         {
             if (view == null) throw new ArgumentNullException("view");
             if (userInterface == null) throw new ArgumentNullException("userInterface");

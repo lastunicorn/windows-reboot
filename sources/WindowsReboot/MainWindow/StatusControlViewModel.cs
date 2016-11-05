@@ -17,7 +17,6 @@
 using System;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Services;
-using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
@@ -25,7 +24,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
     internal class StatusControlViewModel : ViewModelBase
     {
         private readonly Timer timer;
-        private readonly UserInterface userInterface;
+        private readonly IUserInterface userInterface;
         private DateTime currentTime;
         private DateTime? actionTime;
         private TimeSpan? timerTime;
@@ -60,7 +59,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        public StatusControlViewModel(ITicker ticker, Timer timer, UserInterface userInterface)
+        public StatusControlViewModel(ITicker ticker, Timer timer, IUserInterface userInterface)
         {
             if (ticker == null) throw new ArgumentNullException("ticker");
             if (timer == null) throw new ArgumentNullException("timer");

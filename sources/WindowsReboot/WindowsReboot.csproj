@@ -118,6 +118,13 @@
     <Compile Include="MainWindow\DailyControl.Designer.cs">
       <DependentUpon>DailyControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow\TrayIcon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MainWindow\TrayIcon.Designer.cs">
+      <DependentUpon>TrayIcon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\TrayIconViewModel.cs" />
     <Compile Include="UiCommon\BindingExtensions.cs" />
     <Compile Include="MainWindow\ActionTypeControl.cs">
       <SubType>UserControl</SubType>
@@ -212,6 +219,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\FixedDateControl.resx">
       <DependentUpon>FixedDateControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\TrayIcon.resx">
+      <DependentUpon>TrayIcon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OtherWindows\LicenseForm.resx">
       <DependentUpon>LicenseForm.cs</DependentUpon>

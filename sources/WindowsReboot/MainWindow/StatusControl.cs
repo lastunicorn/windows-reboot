@@ -21,7 +21,7 @@ using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    partial class StatusControl : UserControl
+    internal partial class StatusControl : UserControl
     {
         private StatusControlViewModel viewModel;
 
@@ -30,6 +30,13 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             get { return viewModel; }
             set
             {
+                if (viewModel != null)
+                {
+                    labelCurrentTime.DataBindings.Clear();
+                    labelActionTime.DataBindings.Clear();
+                    labelTimer.DataBindings.Clear();
+                }
+
                 viewModel = value;
 
                 if (viewModel != null)

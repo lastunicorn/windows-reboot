@@ -17,7 +17,6 @@
 using System;
 using System.Linq;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.UiCommon;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
 
@@ -27,7 +26,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
     {
         private readonly Timer timer;
         private readonly Action action;
-        private readonly UserInterface userInterface;
+        private readonly IUserInterface userInterface;
         private ActionTypeItem[] actionTypes;
         private ActionTypeItem selectedActionType;
         private bool forceActionEnabled;
@@ -116,7 +115,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        public ActionTypeControlViewModel(Timer timer, Action action, UserInterface userInterface)
+        public ActionTypeControlViewModel(Timer timer, Action action, IUserInterface userInterface)
         {
             if (timer == null) throw new ArgumentNullException("timer");
             if (action == null) throw new ArgumentNullException("action");
