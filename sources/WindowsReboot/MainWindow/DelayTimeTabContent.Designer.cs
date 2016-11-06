@@ -1,6 +1,6 @@
 ﻿namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    partial class DelayTimeControl
+    partial class DelayTimeTabContent
     {
         /// <summary> 
         /// Required designer variable.
@@ -146,13 +146,13 @@
             this.label2.Text = "Minutes:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // DelayTimeControl
+            // DelayTimeTabContent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "DelayTimeControl";
+            this.Name = "DelayTimeTabContent";
             this.Size = new System.Drawing.Size(419, 39);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

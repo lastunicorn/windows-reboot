@@ -34,9 +34,9 @@
             this.tabPageDelay = new System.Windows.Forms.TabPage();
             this.tabPageImmediate = new System.Windows.Forms.TabPage();
             this.labelImmediate = new System.Windows.Forms.Label();
-            this.fixedDateControl1 = new DustInTheWind.WindowsReboot.MainWindow.FixedDateControl();
-            this.dailyControl1 = new DustInTheWind.WindowsReboot.MainWindow.DailyControl();
-            this.delayTimeControl1 = new DustInTheWind.WindowsReboot.MainWindow.DelayTimeControl();
+            this.fixedDateControl1 = new DustInTheWind.WindowsReboot.MainWindow.FixedDateTabContent();
+            this.dailyControl1 = new DustInTheWind.WindowsReboot.MainWindow.DailyTabContent();
+            this.delayTimeControl1 = new DustInTheWind.WindowsReboot.MainWindow.DelayTimeTabContent();
             this.tabControlActionTime.SuspendLayout();
             this.tabPageFixedDate.SuspendLayout();
             this.tabPageDaily.SuspendLayout();
@@ -169,11 +169,11 @@
 
         private System.Windows.Forms.TabControl tabControlActionTime;
         private System.Windows.Forms.TabPage tabPageFixedDate;
-        private FixedDateControl fixedDateControl1;
+        private FixedDateTabContent fixedDateControl1;
         private System.Windows.Forms.TabPage tabPageDaily;
-        private DailyControl dailyControl1;
+        private DailyTabContent dailyControl1;
         private System.Windows.Forms.TabPage tabPageDelay;
-        private DelayTimeControl delayTimeControl1;
+        private DelayTimeTabContent delayTimeControl1;
         private System.Windows.Forms.TabPage tabPageImmediate;
         private System.Windows.Forms.Label labelImmediate;
     }

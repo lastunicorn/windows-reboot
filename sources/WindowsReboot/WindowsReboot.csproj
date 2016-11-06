@@ -115,11 +115,11 @@
       <DependentUpon>ActionTimeControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\ActionTimeControlViewModel.cs" />
-    <Compile Include="MainWindow\DailyControl.cs">
+    <Compile Include="MainWindow\DailyTabContent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainWindow\DailyControl.Designer.cs">
-      <DependentUpon>DailyControl.cs</DependentUpon>
+    <Compile Include="MainWindow\DailyTabContent.Designer.cs">
+      <DependentUpon>DailyTabContent.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\TrayIcon.cs">
       <SubType>Component</SubType>
@@ -145,17 +145,17 @@
     <Compile Include="UiCommon\CustomGroupBox.Designer.cs">
       <DependentUpon>CustomGroupBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\DelayTimeControl.cs">
+    <Compile Include="MainWindow\DelayTimeTabContent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainWindow\DelayTimeControl.Designer.cs">
-      <DependentUpon>DelayTimeControl.cs</DependentUpon>
+    <Compile Include="MainWindow\DelayTimeTabContent.Designer.cs">
+      <DependentUpon>DelayTimeTabContent.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\FixedDateControl.cs">
+    <Compile Include="MainWindow\FixedDateTabContent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainWindow\FixedDateControl.Designer.cs">
-      <DependentUpon>FixedDateControl.cs</DependentUpon>
+    <Compile Include="MainWindow\FixedDateTabContent.Designer.cs">
+      <DependentUpon>FixedDateTabContent.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\StatusControl.cs">
       <SubType>UserControl</SubType>
@@ -217,14 +217,14 @@
     <EmbeddedResource Include="MainWindow\ActionTypeControl.resx">
       <DependentUpon>ActionTypeControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\DailyControl.resx">
-      <DependentUpon>DailyControl.cs</DependentUpon>
+    <EmbeddedResource Include="MainWindow\DailyTabContent.resx">
+      <DependentUpon>DailyTabContent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\DelayTimeControl.resx">
-      <DependentUpon>DelayTimeControl.cs</DependentUpon>
+    <EmbeddedResource Include="MainWindow\DelayTimeTabContent.resx">
+      <DependentUpon>DelayTimeTabContent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\FixedDateControl.resx">
-      <DependentUpon>FixedDateControl.cs</DependentUpon>
+    <EmbeddedResource Include="MainWindow\FixedDateTabContent.resx">
+      <DependentUpon>FixedDateTabContent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\TrayIcon.resx">
       <DependentUpon>TrayIcon.cs</DependentUpon>

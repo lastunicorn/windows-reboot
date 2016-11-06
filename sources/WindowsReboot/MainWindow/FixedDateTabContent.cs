@@ -19,7 +19,7 @@ using System.Windows.Forms;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    internal partial class FixedDateControl : UserControl
+    internal partial class FixedDateTabContent : UserControl
     {
         public DateTime Date
         {
@@ -44,7 +44,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         public event EventHandler DateChanged;
         public event EventHandler TimeChanged;
 
-        public FixedDateControl()
+        public FixedDateTabContent()
         {
             InitializeComponent();
         }

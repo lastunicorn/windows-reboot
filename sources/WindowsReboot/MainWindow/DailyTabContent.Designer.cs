@@ -1,6 +1,6 @@
 ﻿namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    partial class DailyControl
+    partial class DailyTabContent
     {
         /// <summary> 
         /// Required designer variable.
@@ -74,13 +74,13 @@
             this.label9.Text = "Time:";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // DailyControl
+            // DailyTabContent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.Controls.Add(this.tableLayoutPanel2);
-            this.Name = "DailyControl";
+            this.Name = "DailyTabContent";
             this.Size = new System.Drawing.Size(369, 26);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();

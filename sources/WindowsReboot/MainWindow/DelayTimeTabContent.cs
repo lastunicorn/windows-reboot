@@ -19,7 +19,7 @@ using System.Windows.Forms;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    internal partial class DelayTimeControl : UserControl
+    internal partial class DelayTimeTabContent : UserControl
     {
         public int Hours
         {
@@ -55,7 +55,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         public event EventHandler MinutesChanged;
         public event EventHandler SecondsChanged;
 
-        public DelayTimeControl()
+        public DelayTimeTabContent()
         {
             InitializeComponent();
         }

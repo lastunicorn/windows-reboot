@@ -19,7 +19,7 @@ using System.Windows.Forms;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    internal partial class DailyControl : UserControl
+    internal partial class DailyTabContent : UserControl
     {
         public TimeSpan Time
         {
@@ -33,7 +33,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         public event EventHandler TimeChanged;
 
-        public DailyControl()
+        public DailyTabContent()
         {
             InitializeComponent();
         }
