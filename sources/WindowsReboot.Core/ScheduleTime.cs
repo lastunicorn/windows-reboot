@@ -20,7 +20,7 @@ namespace DustInTheWind.WindowsReboot.Core
 {
     public class ScheduleTime
     {
-        public TaskTimeType Type { get; set; }
+        public ScheduleTimeType Type { get; set; }
 
         public DateTime DateTime { get; set; }
         public TimeSpan TimeOfDay { get; set; }
@@ -31,7 +31,7 @@ namespace DustInTheWind.WindowsReboot.Core
 
         public ScheduleTime()
         {
-            Type = TaskTimeType.Immediate;
+            Type = ScheduleTimeType.Immediate;
             DateTime = DateTime.Now;
         }
 
@@ -39,10 +39,10 @@ namespace DustInTheWind.WindowsReboot.Core
         {
             switch (Type)
             {
-                case TaskTimeType.FixedDate:
+                case ScheduleTimeType.FixedDate:
                     return DateTime;
 
-                case TaskTimeType.Daily:
+                case ScheduleTimeType.Daily:
                     {
                         DateTime potentialTime = now.Date + TimeOfDay;
 
@@ -54,10 +54,10 @@ namespace DustInTheWind.WindowsReboot.Core
                         return potentialTime;
                     }
 
-                case TaskTimeType.Delay:
+                case ScheduleTimeType.Delay:
                     return now + new TimeSpan(Hours, Minutes, Seconds);
 
-                case TaskTimeType.Immediate:
+                case ScheduleTimeType.Immediate:
                     return now;
 
                 default:

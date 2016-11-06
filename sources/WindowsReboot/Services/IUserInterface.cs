@@ -21,7 +21,7 @@ namespace DustInTheWind.WindowsReboot.Services
 {
     public interface IUserInterface
     {
-        void Dispatch(System.Action action);
+        void Dispatch(Action action);
         void DisplayAbout();
         void DisplayLicense();
         void DisplayOptions(WindowsRebootConfiguration configSection);

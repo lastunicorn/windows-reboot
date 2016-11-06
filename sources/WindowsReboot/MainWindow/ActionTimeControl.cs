@@ -60,9 +60,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         private void HandleViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "TaskTimeType")
+            if (e.PropertyName == "ScheduleTimeType")
             {
-                tabControlActionTime.SelectedIndex = ToTabIndex(viewModel.TaskTimeType);
+                tabControlActionTime.SelectedIndex = ToTabIndex(viewModel.ScheduleTimeType);
             }
         }
 
@@ -73,23 +73,23 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         private void tabControlActionTime_SelectedIndexChanged(object sender, EventArgs e)
         {
-            viewModel.TaskTimeType = FromTabIndex(tabControlActionTime.SelectedIndex);
+            viewModel.ScheduleTimeType = FromTabIndex(tabControlActionTime.SelectedIndex);
         }
 
-        private static int ToTabIndex(TaskTimeType taskTimeType)
+        private static int ToTabIndex(ScheduleTimeType scheduleTimeType)
         {
-            switch (taskTimeType)
+            switch (scheduleTimeType)
             {
-                case TaskTimeType.FixedDate:
+                case ScheduleTimeType.FixedDate:
                     return 0;
 
-                case TaskTimeType.Daily:
+                case ScheduleTimeType.Daily:
                     return 1;
 
-                case TaskTimeType.Delay:
+                case ScheduleTimeType.Delay:
                     return 2;
 
-                case TaskTimeType.Immediate:
+                case ScheduleTimeType.Immediate:
                     return 3;
 
                 default:
@@ -97,21 +97,21 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        private static TaskTimeType FromTabIndex(int tabIndex)
+        private static ScheduleTimeType FromTabIndex(int tabIndex)
         {
             switch (tabIndex)
             {
                 case 0:
-                    return TaskTimeType.FixedDate;
+                    return ScheduleTimeType.FixedDate;
 
                 case 1:
-                    return TaskTimeType.Daily;
+                    return ScheduleTimeType.Daily;
 
                 case 2:
-                    return TaskTimeType.Delay;
+                    return ScheduleTimeType.Delay;
 
                 case 3:
-                    return TaskTimeType.Immediate;
+                    return ScheduleTimeType.Immediate;
 
                 default:
                     throw new ArgumentOutOfRangeException();

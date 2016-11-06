@@ -27,7 +27,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private readonly IUserInterface userInterface;
         private bool updateFromBusiness;
 
-        private TaskTimeType taskTimeType;
+        private ScheduleTimeType scheduleTimeType;
         private DateTime fixedDateTime;
         private int delayHours;
         private int delayMinutes;
@@ -35,13 +35,13 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private TimeSpan dailyTime;
         private bool enabled;
 
-        public TaskTimeType TaskTimeType
+        public ScheduleTimeType ScheduleTimeType
         {
-            get { return taskTimeType; }
+            get { return scheduleTimeType; }
             set
             {
-                taskTimeType = value;
-                OnPropertyChanged("TaskTimeType");
+                scheduleTimeType = value;
+                OnPropertyChanged("ScheduleTimeType");
 
                 if (!updateFromBusiness)
                     timer.Time = GetActionTime();
@@ -168,7 +168,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                     DelaySeconds = timer.Time.Seconds;
                     DailyTime = timer.Time.TimeOfDay;
 
-                    TaskTimeType = timer.Time.Type;
+                    ScheduleTimeType = timer.Time.Type;
                 }
             }
             finally
@@ -185,14 +185,14 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             DelaySeconds = 0;
             DailyTime = TimeSpan.Zero;
 
-            TaskTimeType = TaskTimeType.Immediate;
+            ScheduleTimeType = ScheduleTimeType.Immediate;
         }
 
         private ScheduleTime GetActionTime()
         {
             return new ScheduleTime
             {
-                Type = taskTimeType,
+                Type = scheduleTimeType,
                 DateTime = fixedDateTime,
                 TimeOfDay = dailyTime,
                 Hours = delayHours,

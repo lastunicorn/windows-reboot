@@ -19,7 +19,7 @@ namespace DustInTheWind.WindowsReboot.Core
     /// <summary>
     /// Indicates an action that can be executed when the timer elapses.
     /// </summary>
-    public enum TaskType
+    public enum ActionType
     {
         /// <summary>
         /// Displays a message box to aunce the time has past.

@@ -62,10 +62,10 @@ namespace DustInTheWind.WindowsReboot.Commands
 
             timer.Time = new ScheduleTime
             {
-                Type = TaskTimeType.Delay
+                Type = ScheduleTimeType.Delay
             };
 
-            action.Type = TaskType.PowerOff;
+            action.Type = ActionType.PowerOff;
             action.Force = true;
         }
     }

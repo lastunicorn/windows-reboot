@@ -14,25 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-
 namespace DustInTheWind.WindowsReboot.Core
 {
-    internal class RingNotification
+    /// <summary>
+    /// The way in which the action time is specified.
+    /// </summary>
+    public enum ScheduleTimeType
     {
-        public event EventHandler NotificationRaised;
+        /// <summary>
+        /// The action time is specified as a fixed date and time.
+        /// </summary>
+        FixedDate,
 
-        public void RaiseNotification()
-        {
-            OnNotificationRaised();
-        }
+        /// <summary>
+        /// The action will be executed every day at a specific hour.
+        /// </summary>
+        Daily,
 
-        protected virtual void OnNotificationRaised()
-        {
-            EventHandler handler = NotificationRaised;
+        /// <summary>
+        /// The action time is specified as a delay from the time when the timer is started.
+        /// </summary>
+        Delay,
 
-            if (handler != null)
-                handler(this, EventArgs.Empty);
-        }
+        /// <summary>
+        /// The action time is exactly the time when the timer is started.
+        /// </summary>
+        Immediate
     }
 }

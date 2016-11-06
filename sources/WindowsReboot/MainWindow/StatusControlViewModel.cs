@@ -16,14 +16,14 @@
 
 using System;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Core.Services;
 using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    internal class StatusControlViewModel : ViewModelBase
+    internal class StatusControlViewModel : ViewModelBase, IDisposable
     {
+        private readonly System.Threading.Timer ticker;
         private readonly Timer timer;
         private readonly IUserInterface userInterface;
         private DateTime currentTime;
@@ -60,27 +60,28 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        public StatusControlViewModel(ITicker ticker, Timer timer, IUserInterface userInterface)
+        public StatusControlViewModel(Timer timer, IUserInterface userInterface)
         {
-            if (ticker == null) throw new ArgumentNullException("ticker");
             if (timer == null) throw new ArgumentNullException("timer");
             if (userInterface == null) throw new ArgumentNullException("userInterface");
 
             this.timer = timer;
             this.userInterface = userInterface;
 
-            ticker.Tick += HandleTickerTick;
+            ticker = new System.Threading.Timer(HandleTickerTick, null, 0, 100);
 
             timer.Started += HandleTimerStarted;
             timer.Stoped += HandleTimerStoped;
-            timer.Tick += HandleTimerTick;
         }
 
-        private void HandleTickerTick(object sender, EventArgs eventArgs)
+        private void HandleTickerTick(object state)
         {
             userInterface.Dispatch(() =>
             {
                 CurrentTime = DateTime.Now;
+
+                if (timer.IsRunning)
+                    TimerTime = timer.TimeUntilAction;
             });
         }
 
@@ -101,12 +102,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             });
         }
 
-        private void HandleTimerTick(object sender, EventArgs e)
+        public void Dispose()
         {
-            userInterface.Dispatch(() =>
-            {
-                TimerTime = timer.TimeUntilAction;
-            });
+            ticker.Dispose();
         }
     }
 }

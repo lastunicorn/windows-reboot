@@ -41,14 +41,14 @@ namespace DustInTheWind.WindowsReboot.Core.Config
             set
             {
                 configSection.ActionTime.Type = value.Type;
-                configSection.ActionTime.DateTime = value.Type == TaskTimeType.Daily ? DateTime.Today.Add(value.TimeOfDay) : value.DateTime;
+                configSection.ActionTime.DateTime = value.Type == ScheduleTimeType.Daily ? DateTime.Today.Add(value.TimeOfDay) : value.DateTime;
                 configSection.ActionTime.Hours = value.Hours;
                 configSection.ActionTime.Minutes = value.Minutes;
                 configSection.ActionTime.Seconds = value.Seconds;
             }
         }
 
-        public TaskType ActionType
+        public ActionType ActionType
         {
             get { return configSection.ActionType.Value; }
             set { configSection.ActionType.Value = value; }

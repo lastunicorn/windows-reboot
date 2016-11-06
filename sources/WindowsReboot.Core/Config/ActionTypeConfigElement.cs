@@ -27,11 +27,11 @@ namespace DustInTheWind.WindowsReboot.Core.Config
         /// Gets or sets the initial value of the action type.
         /// </summary>
         [ConfigurationProperty("value", IsRequired = true)]
-        public TaskType Value
+        public ActionType Value
         {
             get
             {
-                return (TaskType)this["value"];
+                return (ActionType)this["value"];
             }
             set
             {

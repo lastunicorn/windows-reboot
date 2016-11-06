@@ -15,35 +15,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Core.Services;
 
 namespace DustInTheWind.WindowsReboot.Core
 {
-    public class Timer
+    public class Timer : IDisposable
     {
-        private readonly ITicker ticker;
+        private readonly System.Threading.Timer timer;
 
+        public readonly TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
         private volatile bool isRunning;
-
-        public ScheduleTime Time
-        {
-            get { return time; }
-            set
-            {
-                time = value;
-                OnTimeChanged();
-            }
-        }
-
-        private bool warningWasRaised;
-
-        private DateTime startTime;
+        private ScheduleTime time;
         private TimeSpan? warningTime;
-        public TimeSpan TimeUntilAction { get; private set; }
+        private bool shouldRaiseWarning;
+        private DateTime startTime;
 
         public event EventHandler Started;
         public event EventHandler Stoped;
-        public event EventHandler Tick;
         public event EventHandler Warning;
         public event EventHandler Ring;
         public event EventHandler WarningTimeChanged;
@@ -55,6 +42,16 @@ namespace DustInTheWind.WindowsReboot.Core
         public bool IsRunning
         {
             get { return isRunning; }
+        }
+
+        public ScheduleTime Time
+        {
+            get { return time; }
+            set
+            {
+                time = value;
+                OnTimeChanged();
+            }
         }
 
         public TimeSpan? WarningTime
@@ -71,26 +68,51 @@ namespace DustInTheWind.WindowsReboot.Core
             }
         }
 
+        public TimeSpan TimeUntilAction
+        {
+            get { return ActionTime - DateTime.Now; }
+        }
+
         public DateTime ActionTime { get; private set; }
 
-        public readonly TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
-        private ScheduleTime time;
-
-        public Timer(ITicker ticker)
+        public Timer()
         {
-            if (ticker == null) throw new ArgumentNullException("ticker");
-
-            this.ticker = ticker;
+            timer = new System.Threading.Timer(TimerElapsed);
 
             WarningTime = TimeSpan.FromSeconds(30);
+        }
+
+        private void TimerElapsed(object state)
+        {
+            if (shouldRaiseWarning)
+            {
+                shouldRaiseWarning = false;
+
+                TimeSpan interval = ActionTime - DateTime.Now;
+
+                StartTimer(interval);
+
+                OnWarning();
+            }
+            else
+            {
+                DateTime? nextRunTime = CalculateNextRunTime(ActionTime + TimeSpan.FromTicks(1));
+
+                if (nextRunTime == null)
+                    Stop();
+                else
+                    RestartInternal(nextRunTime.Value);
+
+                OnRing();
+            }
         }
 
         public void Start()
         {
             startTime = DateTime.Now;
-            ActionTime = Time.CalculateTimeFrom(startTime);
+            DateTime? nextRunTime = CalculateNextRunTime(startTime);
 
-            if (ActionTime < startTime)
+            if (nextRunTime == null)
             {
                 string currentTimeString = string.Format("{0} : {1}", startTime.ToLongDateString(), startTime.ToLongTimeString());
                 string actionTimeString = string.Format("{0} : {1}", ActionTime.ToLongDateString(), ActionTime.ToLongTimeString());
@@ -98,87 +120,62 @@ namespace DustInTheWind.WindowsReboot.Core
                 string message = string.Format("The action time already passed.\nPlease specify a time in the future to execute the action.\n\nCurrent time: {0}\nRequested action time: {1}.", currentTimeString, actionTimeString);
                 throw new WindowsRebootException(message);
             }
-            
-            warningWasRaised = warningTime == null || warningTime > ActionTime - startTime;
-            isRunning = true;
 
-            ticker.Tick += HandleTickerTick;
+            RestartInternal(nextRunTime.Value);
 
             OnStarted();
         }
 
-        private void HandleTickerTick(object sender, EventArgs eventArgs)
+        private void RestartInternal(DateTime nextRunTime)
         {
-            if (!isRunning)
-                return;
+            ActionTime = nextRunTime;
 
-            DateTime now = DateTime.Now;
+            shouldRaiseWarning = warningTime != null && warningTime < ActionTime - startTime;
 
-            // todo: refactor this to get rid of the ticker and use instead the system timer.
+            TimeSpan interval = shouldRaiseWarning
+                ? ActionTime - DateTime.Now - warningTime.Value
+                : ActionTime - DateTime.Now;
 
-            CalculateRemainingTime(now);
-            RaiseWarningIfNeeded(now);
-            DoActionIfNeeded(now);
+            isRunning = true;
+
+            StartTimer(interval);
         }
 
-        private void CalculateRemainingTime(DateTime now)
+        private void StartTimer(TimeSpan interval)
         {
-            TimeUntilAction = ActionTime - now;
+            if (interval < TimeSpan.Zero)
+                interval = TimeSpan.Zero;
 
-            OnTick();
+            timer.Change(interval, TimeSpan.FromTicks(-1));
         }
 
-        private void RaiseWarningIfNeeded(DateTime now)
+        private void StopTimer()
         {
-            if (warningTime == null || warningWasRaised || warningTime < ActionTime - now)
-                return;
-
-            warningWasRaised = true;
-
-            OnWarning();
-        }
-
-        private void DoActionIfNeeded(DateTime now)
-        {
-            if (ActionTime > now)
-                return;
-
-            DateTime? nextRunTime = CalculateNextRunTime(ActionTime + TimeSpan.FromTicks(1));
-
-            if (nextRunTime == null)
-            {
-                Stop();
-            }
-            else
-            {
-                ActionTime = nextRunTime.Value;
-            }
-
-            OnRing();
+            timer.Change(-1, -1);
         }
 
         private DateTime? CalculateNextRunTime(DateTime now)
         {
             switch (Time.Type)
             {
-                case TaskTimeType.FixedDate:
+                case ScheduleTimeType.FixedDate:
                     {
                         DateTime runTime = Time.CalculateTimeFrom(startTime);
                         return runTime < now ? null as DateTime? : runTime;
                     }
 
-                case TaskTimeType.Daily:
+                case ScheduleTimeType.Daily:
                     {
                         return Time.CalculateTimeFrom(now);
                     }
 
-                case TaskTimeType.Delay:
+                case ScheduleTimeType.Delay:
                     {
                         DateTime runTime = Time.CalculateTimeFrom(startTime);
                         return runTime < now ? null as DateTime? : runTime;
                     }
 
-                case TaskTimeType.Immediate:
+                case ScheduleTimeType.Immediate:
                     {
                         DateTime runTime = Time.CalculateTimeFrom(startTime);
                         return runTime < now ? null as DateTime? : runTime;
@@ -191,8 +188,7 @@ namespace DustInTheWind.WindowsReboot.Core
 
         public void Stop()
         {
-            ticker.Tick -= HandleTickerTick;
-
+            StopTimer();
             isRunning = false;
 
             OnStoped();
@@ -209,14 +205,6 @@ namespace DustInTheWind.WindowsReboot.Core
         protected virtual void OnStoped()
         {
             EventHandler handler = Stoped;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
-        }
-
-        protected virtual void OnTick()
-        {
-            EventHandler handler = Tick;
 
             if (handler != null)
                 handler(this, EventArgs.Empty);
@@ -252,6 +240,11 @@ namespace DustInTheWind.WindowsReboot.Core
 
             if (handler != null)
                 handler(this, EventArgs.Empty);
+        }
+
+        public void Dispose()
+        {
+            timer.Dispose();
         }
     }
 }

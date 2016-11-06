@@ -126,8 +126,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.action = action;
             this.userInterface = userInterface;
 
-            ActionTypes = Enum.GetValues(typeof(TaskType))
-                .Cast<TaskType>()
+            ActionTypes = Enum.GetValues(typeof(ActionType))
+                .Cast<ActionType>()
                 .Select(x => new ActionTypeItem(x))
                 .ToArray();
 
@@ -209,12 +209,12 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
             switch (SelectedActionType.Value)
             {
-                case TaskType.LogOff:
-                case TaskType.Sleep:
-                case TaskType.Hibernate:
-                case TaskType.Reboot:
-                case TaskType.ShutDown:
-                case TaskType.PowerOff:
+                case ActionType.LogOff:
+                case ActionType.Sleep:
+                case ActionType.Hibernate:
+                case ActionType.Reboot:
+                case ActionType.ShutDown:
+                case ActionType.PowerOff:
                     EnableForceAction();
                     break;
 

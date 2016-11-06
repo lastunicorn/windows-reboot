@@ -16,10 +16,8 @@
 
 using System;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Config;
 using DustInTheWind.WindowsReboot.OtherWindows;
-using Action = System.Action;
 
 namespace DustInTheWind.WindowsReboot.Services
 {

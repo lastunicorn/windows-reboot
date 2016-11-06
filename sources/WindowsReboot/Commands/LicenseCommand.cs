@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.WindowsReboot.CommandModel;
-using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Services;
 
 namespace DustInTheWind.WindowsReboot.Commands

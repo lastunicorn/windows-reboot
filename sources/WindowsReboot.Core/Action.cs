@@ -21,19 +21,19 @@ namespace DustInTheWind.WindowsReboot.Core
     public class Action
     {
         private readonly IRebootUtil rebootUtil;
-        private TaskType type;
+        private ActionType type;
         private bool force;
 
         public event EventHandler ForceChanged;
         public event EventHandler TypeChanged;
         public event EventHandler NotificationRaised;
 
-        public TaskType Type
+        public ActionType Type
         {
             get { return type; }
             set
             {
-                if (!Enum.IsDefined(typeof(TaskType), value))
+                if (!Enum.IsDefined(typeof(ActionType), value))
                     throw new ArgumentException("Invalid action type value");
 
                 type = value;
@@ -58,7 +58,7 @@ namespace DustInTheWind.WindowsReboot.Core
 
             this.rebootUtil = rebootUtil;
 
-            Type = TaskType.Ring;
+            Type = ActionType.Ring;
             Force = true;
 
             timer.Ring += HandleTimerRing;
@@ -68,35 +68,35 @@ namespace DustInTheWind.WindowsReboot.Core
         {
             switch (Type)
             {
-                case TaskType.Ring:
+                case ActionType.Ring:
                     OnNotificationRaised();
                     break;
 
-                case TaskType.LockWorkstation:
+                case ActionType.LockWorkstation:
                     rebootUtil.Lock();
                     break;
 
-                case TaskType.LogOff:
+                case ActionType.LogOff:
                     rebootUtil.LogOff(Force);
                     break;
 
-                case TaskType.Sleep:
+                case ActionType.Sleep:
                     rebootUtil.Sleep(Force);
                     break;
 
-                case TaskType.Hibernate:
+                case ActionType.Hibernate:
                     rebootUtil.Hibernate(Force);
                     break;
 
-                case TaskType.Reboot:
+                case ActionType.Reboot:
                     rebootUtil.Reboot(Force);
                     break;
 
-                case TaskType.ShutDown:
+                case ActionType.ShutDown:
                     rebootUtil.ShutDown(Force);
                     break;
 
-                case TaskType.PowerOff:
+                case ActionType.PowerOff:
                     rebootUtil.PowerOff(Force);
                     break;
                 
