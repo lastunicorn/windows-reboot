@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 
 namespace DustInTheWind.WindowsReboot.Core
 {
@@ -146,7 +147,7 @@ namespace DustInTheWind.WindowsReboot.Core
             if (interval < TimeSpan.Zero)
                 interval = TimeSpan.Zero;
 
-            timer.Change(interval, TimeSpan.FromTicks(-1));
+            timer.Change((long)interval.TotalMilliseconds, -1);
         }
 
         private void StopTimer()

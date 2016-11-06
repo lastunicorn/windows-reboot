@@ -17,15 +17,28 @@
 using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Core.Config;
 using DustInTheWind.WindowsReboot.MainWindow;
 using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.Setup;
 using DustInTheWind.WindowsReboot.WorkerModel;
+using Action = DustInTheWind.WindowsReboot.Core.Action;
+using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 
 namespace DustInTheWind.WindowsReboot
 {
     internal static class Program
     {
+        private static UiDispatcher uiDispatcher;
+        private static UserInterface userInterface;
+        private static WindowsRebootConfiguration windowsRebootConfiguration;
+        private static IRebootUtil rebootUtil;
+        private static Timer timer;
+        private static Action action;
+        private static WorkerModel.Workers workers;
+        private static ApplicationEnvironment applicationEnvironment;
+        private static MainWindowCloseBehaviour mainWindowCloseBehaviour;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -50,21 +63,28 @@ namespace DustInTheWind.WindowsReboot
 
         private static WindowsRebootPresenter CreatePresenter(WindowsRebootForm mainWindow)
         {
-            UiDispatcher uiDispatcher = new UiDispatcher();
+            uiDispatcher = new UiDispatcher();
 
-            UserInterface userInterface = new UserInterface(uiDispatcher)
+            userInterface = new UserInterface(uiDispatcher)
             {
                 MainForm = mainWindow
             };
 
-            IRebootUtil rebootUtil = new RebootUtil();
-            Core.Timer timer = new Core.Timer();
-            Core.Action action = new Core.Action(timer, rebootUtil);
+            windowsRebootConfiguration = new WindowsRebootConfiguration();
+
+            rebootUtil = new RebootUtil();
+            timer = new Core.Timer();
+            action = new Core.Action(timer, rebootUtil);
 
             IWorkerProvider workerProvider = new WorkerProvider(userInterface, timer, action);
-            WorkerModel.Workers workers = new WorkerModel.Workers(workerProvider);
+            workers = new WorkerModel.Workers(workerProvider);
 
-            return new WindowsRebootPresenter(mainWindow, userInterface, action, timer, rebootUtil, workers);
+            applicationEnvironment = new ApplicationEnvironment(action, timer, workers, windowsRebootConfiguration);
+            applicationEnvironment.Initialize();
+
+            mainWindowCloseBehaviour = new MainWindowCloseBehaviour(mainWindow, applicationEnvironment, windowsRebootConfiguration, timer, userInterface);
+
+            return new WindowsRebootPresenter(mainWindow, userInterface, action, timer, rebootUtil, windowsRebootConfiguration, applicationEnvironment);
         }
     }
 }

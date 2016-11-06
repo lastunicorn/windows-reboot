@@ -44,6 +44,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 optionsToolStripMenuItem.Command = presenter.OptionsCommand;
                 licenseToolStripMenuItem.Command = presenter.LicenseCommand;
                 aboutToolStripMenuItem.Command = presenter.AboutCommand;
+                exitToolStripMenuItem.Command = presenter.ExitCommand;
 
                 lockComputerToolStripMenuItem.Command = presenter.LockComputerCommand;
                 logOffToolStripMenuItem.Command = presenter.LogOffCommand;
@@ -52,6 +53,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 rebootToolStripMenuItem.Command = presenter.RebootCommand;
                 shutDownToolStripMenuItem.Command = presenter.ShutDownCommand;
                 powerOffToolStripMenuItem.Command = presenter.PowerOffCommand;
+                toolStripMenuItem2.Command = presenter.ExitCommand;
             }
         }
 
@@ -72,19 +74,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             Presenter.OnMenuItemGoToTrayClicked();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Presenter.OnMenuItemExitClicked();
-        }
-
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Presenter.OnNotifyIconShowClicked();
-        }
-
-        private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Presenter.OnNotifyIconExitClicked();
         }
 
         #endregion
@@ -117,11 +109,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         }
 
         #endregion
-
-        private void WindowsRebootForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = !Presenter.OnFormClosing();
-        }
 
         private void WindowsRebootForm_SizeChanged(object sender, EventArgs e)
         {

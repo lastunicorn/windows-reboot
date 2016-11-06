@@ -119,12 +119,10 @@
             this.fixedDateControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.fixedDateControl1.Date = new System.DateTime(2016, 11, 2, 0, 0, 0, 0);
             this.fixedDateControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fixedDateControl1.FullTime = new System.DateTime(2016, 11, 2, 16, 45, 15, 379);
             this.fixedDateControl1.Location = new System.Drawing.Point(8, 8);
             this.fixedDateControl1.Name = "fixedDateControl1";
             this.fixedDateControl1.Size = new System.Drawing.Size(412, 81);
             this.fixedDateControl1.TabIndex = 5;
-            this.fixedDateControl1.Time = new System.DateTime(2016, 11, 1, 16, 45, 15, 379);
             // 
             // dailyControl1
             // 

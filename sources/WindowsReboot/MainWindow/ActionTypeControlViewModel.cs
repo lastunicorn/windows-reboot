@@ -135,6 +135,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             forceAction = action.Force;
             displayWarningMessage = timer.WarningTime != null;
 
+            UpdateFromBusiness();
+
             timer.WarningTimeChanged += HandleTimerWarningTimeChanged;
             timer.Started += HandleTimerStarted;
             timer.Stoped += HandleTimerStoped;
@@ -157,6 +159,11 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         }
 
         private void HandleActionTypeChanged(object sender, EventArgs eventArgs)
+        {
+            UpdateFromBusiness();
+        }
+
+        private void UpdateFromBusiness()
         {
             updateFromBusiness = true;
             try

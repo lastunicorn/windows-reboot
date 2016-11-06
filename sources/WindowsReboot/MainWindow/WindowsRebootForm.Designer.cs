@@ -341,7 +341,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // configurationToolStripMenuItem
             // 
@@ -509,7 +508,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(137, 22);
             this.toolStripMenuItem2.Text = "Exit";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.exitToolStripMenuItem1_Click);
             // 
             // WindowsRebootForm
             // 
@@ -528,7 +526,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.Name = "WindowsRebootForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Windows Reboot";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WindowsRebootForm_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.SizeChanged += new System.EventHandler(this.WindowsRebootForm_SizeChanged);
             this.menuStrip1.ResumeLayout(false);

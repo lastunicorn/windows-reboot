@@ -47,12 +47,14 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 {
                     this.Bind(x => x.Enabled, viewModel, x => x.Enabled, false, DataSourceUpdateMode.Never);
 
-                    fixedDateControl1.Bind(x => x.FullTime, viewModel, x => x.FixedDateTime, false, DataSourceUpdateMode.OnPropertyChanged);
+                    fixedDateControl1.Bind(x => x.Date, viewModel, x => x.FixedDate, false, DataSourceUpdateMode.OnPropertyChanged);
+                    fixedDateControl1.Bind(x => x.Time, viewModel, x => x.FixedTime, false, DataSourceUpdateMode.OnPropertyChanged);
                     dailyControl1.Bind(x => x.Time, viewModel, x => x.DailyTime, false, DataSourceUpdateMode.OnPropertyChanged);
                     delayTimeControl1.Bind(x => x.Hours, viewModel, x => x.DelayHours, false, DataSourceUpdateMode.OnPropertyChanged);
                     delayTimeControl1.Bind(x => x.Minutes, viewModel, x => x.DelayMinutes, false, DataSourceUpdateMode.OnPropertyChanged);
                     delayTimeControl1.Bind(x => x.Seconds, viewModel, x => x.DelaySeconds, false, DataSourceUpdateMode.OnPropertyChanged);
 
+                    tabControlActionTime.SelectedIndex = ToTabIndex(viewModel.ScheduleTimeType);
                     viewModel.PropertyChanged += HandleViewModelPropertyChanged;
                 }
             }

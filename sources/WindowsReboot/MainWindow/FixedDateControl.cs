@@ -28,40 +28,21 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 dateTimePickerFixedDate.Value = value;
                 OnDateChanged();
-                OnFullTimeChanged();
             }
         }
 
-        public DateTime Time
+        public TimeSpan Time
         {
-            get { return dateTimePickerFixedTime.Value; }
+            get { return dateTimePickerFixedTime.Value.TimeOfDay; }
             set
             {
-                dateTimePickerFixedTime.Value = value;
+                dateTimePickerFixedTime.Value = DateTime.Today.Add(value);
                 OnTimeChanged();
-                OnFullTimeChanged();
-            }
-        }
-
-        public DateTime FullTime
-        {
-            get
-            {
-                return Date.Add(Time.TimeOfDay);
-            }
-            set
-            {
-                dateTimePickerFixedDate.Value = value.Date;
-                dateTimePickerFixedTime.Value = value;
-                OnDateChanged();
-                OnTimeChanged();
-                OnFullTimeChanged();
             }
         }
 
         public event EventHandler DateChanged;
         public event EventHandler TimeChanged;
-        public event EventHandler FullTimeChanged;
 
         public FixedDateControl()
         {
@@ -73,7 +54,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             DateTime now = DateTime.Now;
 
             Date = now.Date;
-            Time = now;
+            Time = now.TimeOfDay;
         }
 
         protected virtual void OnDateChanged()
@@ -92,24 +73,14 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 handler(this, EventArgs.Empty);
         }
 
-        protected virtual void OnFullTimeChanged()
-        {
-            EventHandler handler = FullTimeChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
-        }
-
         private void dateTimePickerFixedDate_ValueChanged(object sender, EventArgs e)
         {
             OnDateChanged();
-            OnFullTimeChanged();
         }
 
         private void dateTimePickerFixedTime_ValueChanged(object sender, EventArgs e)
         {
             OnTimeChanged();
-            OnFullTimeChanged();
         }
     }
 }

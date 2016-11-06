@@ -28,7 +28,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private bool updateFromBusiness;
 
         private ScheduleTimeType scheduleTimeType;
-        private DateTime fixedDateTime;
+        private DateTime fixedDate;
+        private TimeSpan fixedTime;
         private int delayHours;
         private int delayMinutes;
         private int delaySeconds;
@@ -48,13 +49,26 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        public DateTime FixedDateTime
+        public DateTime FixedDate
         {
-            get { return fixedDateTime; }
+            get { return fixedDate; }
             set
             {
-                fixedDateTime = value;
-                OnPropertyChanged("FixedDateTime");
+                fixedDate = value;
+                OnPropertyChanged("FixedDate");
+
+                if (!updateFromBusiness)
+                    timer.Time = GetActionTime();
+            }
+        }
+
+        public TimeSpan FixedTime
+        {
+            get { return fixedTime; }
+            set
+            {
+                fixedTime = value;
+                OnPropertyChanged("FixedTime");
 
                 if (!updateFromBusiness)
                     timer.Time = GetActionTime();
@@ -132,8 +146,9 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.userInterface = userInterface;
 
             Enabled = true;
-            Clear();
 
+            UpdateFromTimer();
+            
             timer.TimeChanged += HandleTimerTimeChanged;
             timer.Started += HandleTimerStarted;
             timer.Stoped += HandleTimerStoped;
@@ -151,18 +166,21 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         private void HandleTimerTimeChanged(object sender, EventArgs e)
         {
+            UpdateFromTimer();
+        }
 
+        private void UpdateFromTimer()
+        {
             updateFromBusiness = true;
 
             try
             {
                 if (timer.Time == null)
-                {
                     Clear();
-                }
                 else
                 {
-                    FixedDateTime = timer.Time.DateTime;
+                    FixedDate = timer.Time.DateTime.Date;
+                    FixedTime = timer.Time.DateTime.TimeOfDay;
                     DelayHours = timer.Time.Hours;
                     DelayMinutes = timer.Time.Minutes;
                     DelaySeconds = timer.Time.Seconds;
@@ -179,7 +197,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         private void Clear()
         {
-            FixedDateTime = DateTime.Now;
+            FixedDate = DateTime.Today;
+            FixedTime = DateTime.Now.TimeOfDay;
             DelayHours = 0;
             DelayMinutes = 0;
             DelaySeconds = 0;
@@ -193,7 +212,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             return new ScheduleTime
             {
                 Type = scheduleTimeType,
-                DateTime = fixedDateTime,
+                DateTime = fixedDate.Date + fixedTime,
                 TimeOfDay = dailyTime,
                 Hours = delayHours,
                 Minutes = delayMinutes,

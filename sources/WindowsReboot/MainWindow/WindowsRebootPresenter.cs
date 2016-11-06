@@ -34,17 +34,16 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private readonly IWindowsRebootView view;
 
         private readonly IUserInterface userInterface;
-        private readonly Action action;
 
         /// <summary>
         /// A value indicationg if the exit of the application was requested chosing the menu item.
         /// </summary>
-        private bool exitRequested;
+        //private bool exitRequested;
 
         private readonly Timer timer;
-        private readonly WorkerModel.Workers workers;
         private string title;
         private readonly WindowsRebootConfiguration configuration;
+        private readonly ApplicationEnvironment applicationEnvironment;
 
         public LoadDefaultConfigurationCommand LoadDefaultConfigurationCommand { get; private set; }
         public LoadConfigurationCommand LoadConfigurationCommand { get; private set; }
@@ -52,6 +51,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         public OptionsCommand OptionsCommand { get; private set; }
         public LicenseCommand LicenseCommand { get; private set; }
         public AboutCommand AboutCommand { get; private set; }
+        public ExitCommand ExitCommand { get; private set; }
 
         public LockComputerCommand LockComputerCommand { get; private set; }
         public LogOffCommand LogOffCommand { get; private set; }
@@ -83,27 +83,27 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// Initializes a new instance of the <see cref="WindowsRebootPresenter"/> class with
         /// the view used to interact with the user.
         /// </summary>
-        public WindowsRebootPresenter(IWindowsRebootView view, IUserInterface userInterface, Action action, Timer timer, IRebootUtil rebootUtil, WorkerModel.Workers workers)
+        public WindowsRebootPresenter(IWindowsRebootView view, IUserInterface userInterface, Action action, Timer timer,
+            IRebootUtil rebootUtil, WindowsRebootConfiguration windowsRebootConfiguration, ApplicationEnvironment applicationEnvironment)
         {
             if (view == null) throw new ArgumentNullException("view");
             if (userInterface == null) throw new ArgumentNullException("userInterface");
             if (action == null) throw new ArgumentNullException("action");
             if (timer == null) throw new ArgumentNullException("timer");
             if (rebootUtil == null) throw new ArgumentNullException("rebootUtil");
-            if (workers == null) throw new ArgumentNullException("workers");
+            if (windowsRebootConfiguration == null) throw new ArgumentNullException("windowsRebootConfiguration");
+            if (applicationEnvironment == null) throw new ArgumentNullException("applicationEnvironment");
 
             this.view = view;
             this.userInterface = userInterface;
-            this.action = action;
             this.timer = timer;
-            this.workers = workers;
+            this.configuration = windowsRebootConfiguration;
+            this.applicationEnvironment = applicationEnvironment;
 
             ActionTimeControlViewModel = new ActionTimeControlViewModel(timer, userInterface);
             ActionTypeControlViewModel = new ActionTypeControlViewModel(timer, action, userInterface);
             ActionControlViewModel = new ActionControlViewModel(timer, userInterface);
             StatusControlViewModel = new StatusControlViewModel(timer, userInterface);
-
-            configuration = new WindowsRebootConfiguration();
 
             LoadDefaultConfigurationCommand = new LoadDefaultConfigurationCommand(userInterface, timer, action);
             LoadConfigurationCommand = new LoadConfigurationCommand(userInterface, timer, action, configuration);
@@ -111,17 +111,16 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             OptionsCommand = new OptionsCommand(userInterface, configuration);
             LicenseCommand = new LicenseCommand(userInterface);
             AboutCommand = new AboutCommand(userInterface);
+            ExitCommand = new ExitCommand(userInterface, applicationEnvironment);
 
             LockComputerCommand = new LockComputerCommand(userInterface, rebootUtil);
             LogOffCommand = new LogOffCommand(userInterface, rebootUtil);
             SleepCommand = new SleepCommand(userInterface, rebootUtil);
             HibernateCommand = new HibernateCommand(userInterface, rebootUtil);
-            RebootCommand = new RebootCommand(userInterface,rebootUtil);
+            RebootCommand = new RebootCommand(userInterface, rebootUtil);
             ShutDownCommand = new ShutDownCommand(userInterface, rebootUtil);
             PowerOffCommand = new PowerOffCommand(userInterface, rebootUtil);
         }
-
-        #region Load/Close Form events
 
         /// <summary>
         /// Method called when the form is loaded.
@@ -134,57 +133,11 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
                 Title = title;
                 view.NotifyIconText = title;
-
-                LoadConfiguration();
-
-                if (configuration.StartTimerAtApplicationStart)
-                    timer.Start();
-
-                workers.Start();
             }
             catch (Exception ex)
             {
                 userInterface.DisplayError(ex);
             }
-        }
-
-        /// <summary>
-        /// Loads the values from the configuration file and populates the interface with them.
-        /// </summary>
-        private void LoadConfiguration()
-        {
-            timer.Time = configuration.ActionTime;
-            action.Type = configuration.ActionType;
-            action.Force = configuration.ForceClosingPrograms;
-        }
-
-        /// <summary>
-        /// Method called before the form is closed. It has to decide if the form is allowed to be closed or not.
-        /// </summary>
-        /// <returns>true if the form is allowed to be closed; false otherwise.</returns>
-        internal bool OnFormClosing()
-        {
-            bool allowToCLose = false;
-
-            if (!exitRequested && configuration.CloseToTray)
-            {
-                // Minimize to tray
-                view.Hide();
-                view.NotifyIconVisible = true;
-            }
-            else
-            {
-                allowToCLose = !timer.IsRunning || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
-            }
-
-
-            if (allowToCLose)
-                view.NotifyIconVisible = false;
-
-
-            exitRequested = false;
-
-            return allowToCLose;
         }
 
         /// <summary>
@@ -205,10 +158,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 userInterface.DisplayError(ex);
             }
         }
-
-        #endregion
-
-        #region Notify icon events
 
         /// <summary>
         /// Method called when the mouse is moved over the notify icon.
@@ -261,30 +210,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             }
         }
 
-        #region internal void OnNotifyIconExitClicked()
-
-        /// <summary>
-        /// Method called when the "Exit" item of the notify icon menu was clicked.
-        /// </summary>
-        internal void OnNotifyIconExitClicked()
-        {
-            try
-            {
-                exitRequested = true;
-                view.Close();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Menu item events
-
         /// <summary>
         /// Method called when the "Go To Tray" item from the "File" menu is clicked.
         /// </summary>
@@ -300,23 +225,5 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 userInterface.DisplayError(ex);
             }
         }
-
-        /// <summary>
-        /// Method called when the "Exit" item from the "File" menu is clicked.
-        /// </summary>
-        internal void OnMenuItemExitClicked()
-        {
-            try
-            {
-                exitRequested = true;
-                view.Close();
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        #endregion
     }
 }

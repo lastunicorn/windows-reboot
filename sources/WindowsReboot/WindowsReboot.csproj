@@ -69,8 +69,10 @@
     <Compile Include="..\AssemblyInfo.shared.cs">
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
+    <Compile Include="ApplicationEnvironment.cs" />
     <Compile Include="Commands\AboutCommand.cs" />
     <Compile Include="CommandModel\CommandBase.cs" />
+    <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\HibernateCommand.cs" />
     <Compile Include="Commands\LicenseCommand.cs" />
     <Compile Include="Commands\LoadConfigurationCommand.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="CustomControls\ToolStripMenuItemWithCommand.Designer.cs">
       <DependentUpon>ToolStripMenuItemWithCommand.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainWindowCloseBehaviour.cs" />
     <Compile Include="MainWindow\ActionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -194,6 +197,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerModel\IWorker.cs" />
     <Compile Include="WorkerModel\IWorkerProvider.cs" />
+    <Compile Include="Workers\ApplicationClosingGuardWorker.cs" />
     <Compile Include="Workers\NotificationWorker.cs" />
     <Compile Include="Workers\WarningWorker.cs" />
     <Compile Include="WorkerModel\Workers.cs" />
