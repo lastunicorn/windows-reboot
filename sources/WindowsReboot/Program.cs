@@ -15,8 +15,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Core.Services;
 using DustInTheWind.WindowsReboot.MainWindow;
+using DustInTheWind.WindowsReboot.Services;
+using DustInTheWind.WindowsReboot.WorkerModel;
+using DustInTheWind.WindowsReboot.Workers;
 
 namespace DustInTheWind.WindowsReboot
 {
@@ -30,7 +36,40 @@ namespace DustInTheWind.WindowsReboot
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new WindowsRebootForm());
+
+            WindowsRebootForm mainWindow = CreateMainWindow();
+            WindowsRebootPresenter presenter = CreatePresenter(mainWindow);
+
+            mainWindow.Presenter = presenter;
+
+            Application.Run(mainWindow);
+        }
+
+        private static WindowsRebootForm CreateMainWindow()
+        {
+            return new WindowsRebootForm();
+        }
+
+        private static WindowsRebootPresenter CreatePresenter(WindowsRebootForm mainWindow)
+        {
+            UiDispatcher uiDispatcher = new UiDispatcher();
+
+            UserInterface userInterface = new UserInterface(uiDispatcher)
+            {
+                MainForm = mainWindow
+            };
+
+            ITicker ticker = new Ticker100();
+            IRebootUtil rebootUtil = new RebootUtil();
+            Core.Timer timer = new Core.Timer(ticker);
+            Core.Action action = new Core.Action(timer, rebootUtil);
+            
+            WorkerModel.Workers workers = new WorkerModel.Workers(new List<IWorker>
+            {
+                new WarningWorker(userInterface, timer, action)
+            });
+
+            return new WindowsRebootPresenter(mainWindow, userInterface, ticker, action, timer, rebootUtil, workers);
         }
     }
 }

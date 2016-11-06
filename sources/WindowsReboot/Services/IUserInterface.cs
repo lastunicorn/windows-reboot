@@ -17,7 +17,7 @@
 using System;
 using DustInTheWind.WindowsReboot.Core.Config;
 
-namespace DustInTheWind.WindowsReboot.Core
+namespace DustInTheWind.WindowsReboot.Services
 {
     public interface IUserInterface
     {

@@ -16,7 +16,6 @@
 
 using System;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.CommandModel;
 using DustInTheWind.WindowsReboot.Commands;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Config;
@@ -44,6 +43,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private bool exitRequested;
 
         private readonly Timer timer;
+        private readonly WorkerModel.Workers workers;
         private string title;
         private readonly WindowsRebootConfiguration configuration;
 
@@ -84,18 +84,20 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// Initializes a new instance of the <see cref="WindowsRebootPresenter"/> class with
         /// the view used to interact with the user.
         /// </summary>
-        public WindowsRebootPresenter(IWindowsRebootView view, IUserInterface userInterface, ITicker ticker, Action action, Timer timer, IRebootUtil rebootUtil)
+        public WindowsRebootPresenter(IWindowsRebootView view, IUserInterface userInterface, ITicker ticker, Action action, Timer timer, IRebootUtil rebootUtil, WorkerModel.Workers workers)
         {
             if (view == null) throw new ArgumentNullException("view");
             if (userInterface == null) throw new ArgumentNullException("userInterface");
             if (action == null) throw new ArgumentNullException("action");
             if (timer == null) throw new ArgumentNullException("timer");
             if (rebootUtil == null) throw new ArgumentNullException("rebootUtil");
+            if (workers == null) throw new ArgumentNullException("workers");
 
             this.view = view;
             this.userInterface = userInterface;
             this.action = action;
             this.timer = timer;
+            this.workers = workers;
 
             ActionTimeControlViewModel = new ActionTimeControlViewModel(timer, userInterface);
             ActionTypeControlViewModel = new ActionTypeControlViewModel(timer, action, userInterface);
@@ -138,6 +140,8 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
                 if (configuration.StartTimerAtApplicationStart)
                     timer.Start();
+
+                workers.Start();
             }
             catch (Exception ex)
             {

@@ -22,20 +22,6 @@ namespace DustInTheWind.WindowsReboot.UiCommon
 {
     internal static class BindingExtensions
     {
-        //public static Binding Bind<TControl, TData, TProp1, TProp2>(this TControl control, Expression<Func<TControl, TProp1>> property, TData dataSource, Expression<Func<TData, TProp2>> dataSourceProperty, bool formattingEnabled)
-        //    where TControl : IBindableComponent
-        //{
-        //    if (control == null) throw new ArgumentNullException("control");
-
-        //    string controlPropertyName = GetControlPropertyName(property);
-        //    string dataSourcePropertyName = GetControlPropertyName(dataSourceProperty);
-
-        //    Binding binding = new Binding(controlPropertyName, dataSource, dataSourcePropertyName, formattingEnabled);
-        //    control.DataBindings.Add(binding);
-
-        //    return binding;
-        //}
-
         public static Binding Bind<TControl, TData, TProp1, TProp2>(this TControl control, Expression<Func<TControl, TProp1>> property, TData dataSource, Expression<Func<TData, TProp2>> dataSourceProperty, bool formattingEnabled, DataSourceUpdateMode updateMode)
             where TControl : IBindableComponent
         {

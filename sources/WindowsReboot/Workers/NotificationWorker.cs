@@ -22,39 +22,35 @@ using Action = DustInTheWind.WindowsReboot.Core.Action;
 
 namespace DustInTheWind.WindowsReboot.Workers
 {
-    internal class WarningWorker : IWorker
+    internal class NotificationWorker : IWorker
     {
         private readonly IUserInterface userInterface;
-        private readonly Timer timer;
         private readonly Action action;
 
-        public WarningWorker(IUserInterface userInterface, Timer timer, Action action)
+        public NotificationWorker(IUserInterface userInterface, Action action)
         {
             if (userInterface == null) throw new ArgumentNullException("userInterface");
-            if (timer == null) throw new ArgumentNullException("timer");
             if (action == null) throw new ArgumentNullException("action");
 
             this.userInterface = userInterface;
-            this.timer = timer;
             this.action = action;
         }
 
         public void Start()
         {
-            timer.Warning += HandleTimerWarning;
+            action.NotificationRaised += HandleActionNotificationRaised;
         }
 
         public void Stop()
         {
-            timer.Warning -= HandleTimerWarning;
+            action.NotificationRaised -= HandleActionNotificationRaised;
         }
 
-        private void HandleTimerWarning(object sender, EventArgs e)
+        private void HandleActionNotificationRaised(object sender, EventArgs e)
         {
             userInterface.Dispatch(() =>
             {
-                string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.", action.Type);
-                userInterface.DisplayMessage(message);
+                userInterface.DisplayMessage("Ring-ring!");
             });
         }
     }

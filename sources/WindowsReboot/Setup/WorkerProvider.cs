@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.WorkerModel;
 using DustInTheWind.WindowsReboot.Workers;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
@@ -43,6 +44,7 @@ namespace DustInTheWind.WindowsReboot.Setup
         public IEnumerable<IWorker> GetNewWorkers()
         {
             yield return new WarningWorker(userInterface, timer, action);
+            yield return new NotificationWorker(userInterface, action);
         }
     }
 }

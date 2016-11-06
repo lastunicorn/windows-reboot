@@ -14,9 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot.Core.Config
+using System;
+
+namespace DustInTheWind.WindowsReboot.Core
 {
-    class WrConfiguration
+    internal class RingNotification
     {
+        public event EventHandler NotificationRaised;
+
+        public void RaiseNotification()
+        {
+            OnNotificationRaised();
+        }
+
+        protected virtual void OnNotificationRaised()
+        {
+            EventHandler handler = NotificationRaised;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
     }
 }

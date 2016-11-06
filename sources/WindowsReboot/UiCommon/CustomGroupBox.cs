@@ -117,8 +117,6 @@ namespace DustInTheWind.WindowsReboot.UiCommon
             }
         }
 
-        #region Constructors
-
         public CustomGroupBox()
         {
             InitializeComponent();
@@ -135,7 +133,7 @@ namespace DustInTheWind.WindowsReboot.UiCommon
 
         private void AdditionalInitialization()
         {
-            titleFont = (Font)Font.Clone();
+            titleFont = (Font) Font.Clone();
             titleColor = ForeColor;
             titleAlignment = HorizontalAlignment.Left;
             borderColor = SystemColors.ActiveBorder;
@@ -146,16 +144,12 @@ namespace DustInTheWind.WindowsReboot.UiCommon
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
         }
 
-        #endregion
-
         private SizeF titleSize = SizeF.Empty;
 
         protected override void OnTextChanged(EventArgs e)
         {
             using (Graphics g = CreateGraphics())
-            {
                 titleSize = g.MeasureString(Text, titleFont);
-            }
 
             base.OnTextChanged(e);
         }
@@ -164,15 +158,15 @@ namespace DustInTheWind.WindowsReboot.UiCommon
         {
             get
             {
-                if (this.Text.Length == 0)
-                {
-                    return new Rectangle(this.cornerRadius + this.Padding.Left, this.cornerRadius + this.Padding.Top, this.Width - 2 * this.cornerRadius - this.Padding.Left - this.Padding.Right, this.Height - 2 * this.cornerRadius - this.Padding.Top - this.Padding.Bottom);
-                }
-                else
-                {
+                if (Text.Length != 0)
                     return base.DisplayRectangle;
-                    //return new Rectangle((int)this.titleSize.Height + this.titleMargin.Top + this.titlePadding.Top, this.cornerRadius, this.Width - 2 * this.cornerRadius, this.Height - 2 * this.cornerRadius);
-                }
+
+                int x = cornerRadius + Padding.Left;
+                int y = cornerRadius + Padding.Top;
+                int width = Width - 2 * cornerRadius - Padding.Left - Padding.Right;
+                int height = Height - 2 * cornerRadius - Padding.Top - Padding.Bottom;
+
+                return new Rectangle(x, y, width, height);
             }
         }
 
@@ -180,33 +174,33 @@ namespace DustInTheWind.WindowsReboot.UiCommon
         {
             base.OnSystemColorsChanged(e);
 
-            this.invalidPaintResources = true;
-            this.Invalidate();
+            invalidPaintResources = true;
+            Invalidate();
         }
 
         #region Paint Resources
 
-        private Pen borderPen = null;
-        private Brush titleBrush = null;
+        private Pen borderPen;
+        private Brush titleBrush;
         private volatile bool invalidPaintResources = true;
 
         private void CreatePaintResources()
         {
-            this.titleBrush = new SolidBrush(this.titleColor);
-            this.borderPen = new Pen(this.borderColor);
+            titleBrush = new SolidBrush(titleColor);
+            borderPen = new Pen(borderColor);
 
-            this.invalidPaintResources = false;
+            invalidPaintResources = false;
         }
 
         private void CleanUpPaintResources()
         {
-            if (this.titleBrush != null)
-                this.titleBrush.Dispose();
+            if (titleBrush != null)
+                titleBrush.Dispose();
 
-            if (this.borderPen != null)
-                this.borderPen.Dispose();
+            if (borderPen != null)
+                borderPen.Dispose();
 
-            this.invalidPaintResources = true;
+            invalidPaintResources = true;
         }
 
         #endregion
@@ -231,34 +225,34 @@ namespace DustInTheWind.WindowsReboot.UiCommon
 
         private Size Ceiling(SizeF size)
         {
-            return new Size((int)Math.Ceiling(size.Width), (int)Math.Ceiling(size.Height));
+            return new Size((int) Math.Ceiling(size.Width), (int) Math.Ceiling(size.Height));
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
 
-            if (this.invalidPaintResources)
-                this.CreatePaintResources();
+            if (invalidPaintResources)
+                CreatePaintResources();
 
             StringFormat titleStringFormat = new StringFormat();
             titleStringFormat.Trimming = StringTrimming.EllipsisCharacter;
             titleStringFormat.FormatFlags = StringFormatFlags.NoWrap;
 
-            Size cornerSize = new Size(this.cornerRadius, this.cornerRadius);
+            Size cornerSize = new Size(cornerRadius, cornerRadius);
 
             // The corners
             Rectangle cornerTopLeftRectangle = new Rectangle(new Point(0, 0), cornerSize);
-            Rectangle cornerTopRightRectangle = new Rectangle(new Point(this.Width - cornerSize.Width - 1, 0), cornerSize);
-            Rectangle cornerBottomRightRectangle = new Rectangle(new Point(this.Width - cornerSize.Width - 1, this.Height - cornerSize.Height - 1), cornerSize);
-            Rectangle cornerBottomLeftRectangle = new Rectangle(new Point(0, this.Height - cornerSize.Height - 1), cornerSize);
+            Rectangle cornerTopRightRectangle = new Rectangle(new Point(Width - cornerSize.Width - 1, 0), cornerSize);
+            Rectangle cornerBottomRightRectangle = new Rectangle(new Point(Width - cornerSize.Width - 1, Height - cornerSize.Height - 1), cornerSize);
+            Rectangle cornerBottomLeftRectangle = new Rectangle(new Point(0, Height - cornerSize.Height - 1), cornerSize);
 
             // Measure the title.
-            int titleTextMaxWidth = cornerTopRightRectangle.Left - this.titleMargin.Right - this.titleMargin.Left - cornerTopLeftRectangle.Right;
-            Size titleTextSize = this.Ceiling(g.MeasureString(this.Text, this.titleFont, titleTextMaxWidth, titleStringFormat));
+            int titleTextMaxWidth = cornerTopRightRectangle.Left - titleMargin.Right - titleMargin.Left - cornerTopLeftRectangle.Right;
+            Size titleTextSize = Ceiling(g.MeasureString(Text, titleFont, titleTextMaxWidth, titleStringFormat));
 
             // Correct the corners position.
-            int borderTopMargin = this.titleMargin.Top + titleTextSize.Height / 2;
+            int borderTopMargin = titleMargin.Top + titleTextSize.Height / 2;
             cornerTopLeftRectangle.Offset(0, borderTopMargin);
             cornerTopRightRectangle.Offset(0, borderTopMargin);
 
@@ -274,36 +268,36 @@ namespace DustInTheWind.WindowsReboot.UiCommon
             //Rectangle borderLeftBottomRectangle;
             //Rectangle borderLeftTopRectangle;
 
-            switch (this.titleAlignment)
+            switch (titleAlignment)
             {
                 case HorizontalAlignment.Center:
                     titleRectangle = new RectangleF(
-                        cornerTopLeftRectangle.Right + (cornerTopRightRectangle.Left - cornerTopLeftRectangle.Right) / 2 - (this.titlePadding.Left + titleTextSize.Width + this.titlePadding.Right) / 2,
-                        this.titleMargin.Top,
-                        titleTextSize.Width + this.titlePadding.Left + this.titlePadding.Right,
-                        titleTextSize.Height + this.titlePadding.Top + +this.titlePadding.Bottom);
+                        cornerTopLeftRectangle.Right + (cornerTopRightRectangle.Left - cornerTopLeftRectangle.Right) / 2 - (titlePadding.Left + titleTextSize.Width + titlePadding.Right) / 2,
+                        titleMargin.Top,
+                        titleTextSize.Width + titlePadding.Left + titlePadding.Right,
+                        titleTextSize.Height + titlePadding.Top + +titlePadding.Bottom);
                     break;
 
                 default:
                 case HorizontalAlignment.Left:
                     titleRectangle = new RectangleF(
-                        cornerTopLeftRectangle.Right + this.titleMargin.Left,
-                        this.titleMargin.Top,
-                        titleTextSize.Width + this.titlePadding.Left + this.titlePadding.Right,
-                        titleTextSize.Height + this.titlePadding.Top + +this.titlePadding.Bottom);
+                        cornerTopLeftRectangle.Right + titleMargin.Left,
+                        titleMargin.Top,
+                        titleTextSize.Width + titlePadding.Left + titlePadding.Right,
+                        titleTextSize.Height + titlePadding.Top + +titlePadding.Bottom);
                     break;
 
                 case HorizontalAlignment.Right:
                     titleRectangle = new RectangleF(
-                        cornerTopRightRectangle.Left - this.titleMargin.Right - this.titlePadding.Right - titleTextSize.Width - this.titlePadding.Left,
-                        this.titleMargin.Top,
-                        titleTextSize.Width + this.titlePadding.Left + this.titlePadding.Right,
-                        titleTextSize.Height + this.titlePadding.Top + this.titlePadding.Bottom);
+                        cornerTopRightRectangle.Left - titleMargin.Right - titlePadding.Right - titleTextSize.Width - titlePadding.Left,
+                        titleMargin.Top,
+                        titleTextSize.Width + titlePadding.Left + titlePadding.Right,
+                        titleTextSize.Height + titlePadding.Top + titlePadding.Bottom);
                     break;
             }
 
             // Paint the corners.
-            if (this.cornerRadius > 0)
+            if (cornerRadius > 0)
             {
                 // Top Left Corner
                 g.DrawArc(borderPen, new Rectangle(cornerTopLeftRectangle.X, cornerTopLeftRectangle.Y, cornerTopLeftRectangle.Width * 2, cornerTopLeftRectangle.Height * 2), 180, 90);
@@ -319,7 +313,7 @@ namespace DustInTheWind.WindowsReboot.UiCommon
             }
 
             // Top line
-            if (this.Text.Length > 0)
+            if (Text.Length > 0)
             {
                 if (titleRectangle.Left - cornerTopLeftRectangle.Right > 0)
                 {
@@ -347,13 +341,13 @@ namespace DustInTheWind.WindowsReboot.UiCommon
 
             // Create the title text rectangle.
             RectangleF titleTextRectangle = new RectangleF(
-                titleRectangle.X + this.titlePadding.Left,
-                titleRectangle.Y + this.titlePadding.Top,
-                titleRectangle.Width - this.titlePadding.Left - this.titlePadding.Right,
-                titleRectangle.Height - this.titlePadding.Top - this.titlePadding.Bottom);
+                titleRectangle.X + titlePadding.Left,
+                titleRectangle.Y + titlePadding.Top,
+                titleRectangle.Width - titlePadding.Left - titlePadding.Right,
+                titleRectangle.Height - titlePadding.Top - titlePadding.Bottom);
 
             // Paint the title.
-            g.DrawString(this.Text, this.titleFont, titleBrush, titleTextRectangle, titleStringFormat);
+            g.DrawString(Text, titleFont, titleBrush, titleTextRectangle, titleStringFormat);
         }
 
         #endregion

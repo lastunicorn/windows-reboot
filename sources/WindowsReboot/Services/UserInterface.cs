@@ -43,17 +43,13 @@ namespace DustInTheWind.WindowsReboot.Services
         public void DisplayAbout()
         {
             using (AboutForm form = new AboutForm())
-            {
                 form.ShowDialog(MainForm);
-            }
         }
 
         public void DisplayLicense()
         {
             using (LicenseForm form = new LicenseForm())
-            {
                 form.ShowDialog(MainForm);
-            }
         }
 
         public void DisplayOptions(WindowsRebootConfiguration configuration)

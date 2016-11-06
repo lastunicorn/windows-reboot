@@ -16,6 +16,7 @@
 
 using DustInTheWind.WindowsReboot.CommandModel;
 using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Services;
 
 namespace DustInTheWind.WindowsReboot.Commands
 {

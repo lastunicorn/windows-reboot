@@ -17,6 +17,7 @@
 using System;
 using System.Linq;
 using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.UiCommon;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
 

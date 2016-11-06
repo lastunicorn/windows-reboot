@@ -125,6 +125,7 @@
       <DependentUpon>TrayIcon.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\TrayIconViewModel.cs" />
+    <Compile Include="Services\IUserInterface.cs" />
     <Compile Include="UiCommon\BindingExtensions.cs" />
     <Compile Include="MainWindow\ActionTypeControl.cs">
       <SubType>UserControl</SubType>
@@ -193,6 +194,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerModel\IWorker.cs" />
     <Compile Include="WorkerModel\IWorkerProvider.cs" />
+    <Compile Include="Workers\NotificationWorker.cs" />
     <Compile Include="Workers\WarningWorker.cs" />
     <Compile Include="WorkerModel\Workers.cs" />
     <Compile Include="Setup\WorkerProvider.cs" />

@@ -98,15 +98,13 @@ namespace DustInTheWind.WindowsReboot.Core
                 string message = string.Format("The action time already passed.\nPlease specify a time in the future to execute the action.\n\nCurrent time: {0}\nRequested action time: {1}.", currentTimeString, actionTimeString);
                 throw new WindowsRebootException(message);
             }
-            else
-            {
-                warningWasRaised = warningTime == null || warningTime > ActionTime - startTime;
-                isRunning = true;
+            
+            warningWasRaised = warningTime == null || warningTime > ActionTime - startTime;
+            isRunning = true;
 
-                ticker.Tick += HandleTickerTick;
+            ticker.Tick += HandleTickerTick;
 
-                OnStarted();
-            }
+            OnStarted();
         }
 
         private void HandleTickerTick(object sender, EventArgs eventArgs)
@@ -115,6 +113,8 @@ namespace DustInTheWind.WindowsReboot.Core
                 return;
 
             DateTime now = DateTime.Now;
+
+            // todo: refactor this to get rid of the ticker and use instead the system timer.
 
             CalculateRemainingTime(now);
             RaiseWarningIfNeeded(now);

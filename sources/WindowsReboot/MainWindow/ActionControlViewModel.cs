@@ -17,7 +17,7 @@
 using DustInTheWind.WindowsReboot.CommandModel;
 using DustInTheWind.WindowsReboot.Commands;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.CustomControls;
+using DustInTheWind.WindowsReboot.Services;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {

@@ -45,8 +45,8 @@
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
     <Compile Include="Config\WindowsRebootConfiguration.cs" />
-    <Compile Include="IUserInterface.cs" />
     <Compile Include="Action.cs" />
+    <Compile Include="RingNotification.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="ScheduleTime.cs" />
     <Compile Include="TaskTimeType.cs" />
@@ -58,7 +58,6 @@
     <Compile Include="Config\MinimizeToTrayConfigElement.cs" />
     <Compile Include="Config\StartTimerAtApplicationStartConfigElement.cs" />
     <Compile Include="Config\WindowsRebootConfigSection.cs" />
-    <Compile Include="Config\WrConfiguration.cs" />
     <Compile Include="IRebootUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RebootUtil.cs" />

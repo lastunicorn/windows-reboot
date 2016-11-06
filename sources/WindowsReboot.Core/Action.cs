@@ -20,13 +20,13 @@ namespace DustInTheWind.WindowsReboot.Core
 {
     public class Action
     {
-        private readonly IUserInterface userInterface;
         private readonly IRebootUtil rebootUtil;
         private TaskType type;
         private bool force;
 
         public event EventHandler ForceChanged;
         public event EventHandler TypeChanged;
+        public event EventHandler NotificationRaised;
 
         public TaskType Type
         {
@@ -51,13 +51,11 @@ namespace DustInTheWind.WindowsReboot.Core
             }
         }
 
-        public Action(Timer timer, IUserInterface userInterface, IRebootUtil rebootUtil)
+        public Action(Timer timer, IRebootUtil rebootUtil)
         {
             if (timer == null) throw new ArgumentNullException("timer");
-            if (userInterface == null) throw new ArgumentNullException("userInterface");
             if (rebootUtil == null) throw new ArgumentNullException("rebootUtil");
 
-            this.userInterface = userInterface;
             this.rebootUtil = rebootUtil;
 
             Type = TaskType.Ring;
@@ -71,10 +69,7 @@ namespace DustInTheWind.WindowsReboot.Core
             switch (Type)
             {
                 case TaskType.Ring:
-                    userInterface.Dispatch(() =>
-                    {
-                        userInterface.DisplayMessage("Ring-ring!");
-                    });
+                    OnNotificationRaised();
                     break;
 
                 case TaskType.LockWorkstation:
@@ -104,6 +99,9 @@ namespace DustInTheWind.WindowsReboot.Core
                 case TaskType.PowerOff:
                     rebootUtil.PowerOff(Force);
                     break;
+                
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -118,6 +116,14 @@ namespace DustInTheWind.WindowsReboot.Core
         protected virtual void OnTypeChanged()
         {
             EventHandler handler = TypeChanged;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnNotificationRaised()
+        {
+            EventHandler handler = NotificationRaised;
 
             if (handler != null)
                 handler(this, EventArgs.Empty);
