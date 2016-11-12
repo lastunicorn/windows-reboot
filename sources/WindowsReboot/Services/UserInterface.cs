@@ -24,7 +24,20 @@ namespace DustInTheWind.WindowsReboot.Services
     internal class UserInterface : IUserInterface
     {
         private readonly IUiDispatcher uiDispatcher;
+        private MainWindowState mainWindowState;
         public Form MainForm { get; set; }
+
+        public MainWindowState MainWindowState
+        {
+            get { return mainWindowState; }
+            set
+            {
+                mainWindowState = value;
+                OnMainWindowStateChanged();
+            }
+        }
+
+        public event EventHandler MainWindowStateChanged;
 
         public UserInterface(IUiDispatcher uiDispatcher)
         {
@@ -94,6 +107,14 @@ namespace DustInTheWind.WindowsReboot.Services
         public bool Confirm(string message)
         {
             return MessageBox.Show(MainForm, message, string.Empty, MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK;
+        }
+
+        protected virtual void OnMainWindowStateChanged()
+        {
+            EventHandler handler = MainWindowStateChanged;
+
+            if (handler != null)
+                handler(this, EventArgs.Empty);
         }
     }
 }

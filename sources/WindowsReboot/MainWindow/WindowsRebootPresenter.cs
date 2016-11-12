@@ -35,16 +35,11 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         private readonly IUserInterface userInterface;
 
-        /// <summary>
-        /// A value indicationg if the exit of the application was requested chosing the menu item.
-        /// </summary>
-        //private bool exitRequested;
-
         private readonly Timer timer;
         private string title;
         private readonly WindowsRebootConfiguration configuration;
-        private readonly ApplicationEnvironment applicationEnvironment;
 
+        public GoToTrayCommand GoToTrayCommand { get; private set; }
         public LoadDefaultConfigurationCommand LoadDefaultConfigurationCommand { get; private set; }
         public LoadConfigurationCommand LoadConfigurationCommand { get; private set; }
         public SaveConfigurationCommand SaveConfigurationCommand { get; private set; }
@@ -98,13 +93,13 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.userInterface = userInterface;
             this.timer = timer;
             this.configuration = windowsRebootConfiguration;
-            this.applicationEnvironment = applicationEnvironment;
 
             ActionTimeControlViewModel = new ActionTimeControlViewModel(timer, userInterface);
             ActionTypeControlViewModel = new ActionTypeControlViewModel(timer, action, userInterface);
             ActionControlViewModel = new ActionControlViewModel(timer, userInterface);
             StatusControlViewModel = new StatusControlViewModel(timer, userInterface);
 
+            GoToTrayCommand = new GoToTrayCommand(userInterface);
             LoadDefaultConfigurationCommand = new LoadDefaultConfigurationCommand(userInterface, timer, action);
             LoadConfigurationCommand = new LoadConfigurationCommand(userInterface, timer, action, configuration);
             SaveConfigurationCommand = new SaveConfigurationCommand(userInterface, timer, action, configuration);
@@ -183,9 +178,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             try
             {
-                view.Show();
-                view.WindowState = FormWindowState.Normal;
-                view.NotifyIconVisible = false;
+                userInterface.MainWindowState = MainWindowState.Normal;
             }
             catch (Exception ex)
             {
@@ -200,25 +193,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             try
             {
-                view.Show();
-                view.WindowState = FormWindowState.Normal;
-                view.NotifyIconVisible = false;
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        /// <summary>
-        /// Method called when the "Go To Tray" item from the "File" menu is clicked.
-        /// </summary>
-        internal void OnMenuItemGoToTrayClicked()
-        {
-            try
-            {
-                view.Hide();
-                view.NotifyIconVisible = true;
+                userInterface.MainWindowState = MainWindowState.Normal;
             }
             catch (Exception ex)
             {

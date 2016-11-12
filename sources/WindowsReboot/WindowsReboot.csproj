@@ -73,6 +73,7 @@
     <Compile Include="Commands\AboutCommand.cs" />
     <Compile Include="CommandModel\CommandBase.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
+    <Compile Include="Commands\GoToTrayCommand.cs" />
     <Compile Include="Commands\HibernateCommand.cs" />
     <Compile Include="Commands\LicenseCommand.cs" />
     <Compile Include="Commands\LoadConfigurationCommand.cs" />
@@ -101,6 +102,7 @@
       <DependentUpon>ToolStripMenuItemWithCommand.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindowCloseBehaviour.cs" />
+    <Compile Include="MainWindowStateBehaviour.cs" />
     <Compile Include="MainWindow\ActionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -129,6 +131,7 @@
     </Compile>
     <Compile Include="MainWindow\TrayIconViewModel.cs" />
     <Compile Include="Services\IUserInterface.cs" />
+    <Compile Include="Services\MainWindowState.cs" />
     <Compile Include="UiCommon\BindingExtensions.cs" />
     <Compile Include="MainWindow\ActionTypeControl.cs">
       <SubType>UserControl</SubType>

@@ -38,6 +38,7 @@ namespace DustInTheWind.WindowsReboot
         private static WorkerModel.Workers workers;
         private static ApplicationEnvironment applicationEnvironment;
         private static MainWindowCloseBehaviour mainWindowCloseBehaviour;
+        private static MainWindowStateBehaviour mainWindowStateBehaviour;
 
         /// <summary>
         /// The main entry point for the application.
@@ -73,8 +74,8 @@ namespace DustInTheWind.WindowsReboot
             windowsRebootConfiguration = new WindowsRebootConfiguration();
 
             rebootUtil = new RebootUtil();
-            timer = new Core.Timer();
-            action = new Core.Action(timer, rebootUtil);
+            timer = new Timer();
+            action = new Action(timer, rebootUtil);
 
             IWorkerProvider workerProvider = new WorkerProvider(userInterface, timer, action);
             workers = new WorkerModel.Workers(workerProvider);
@@ -83,6 +84,7 @@ namespace DustInTheWind.WindowsReboot
             applicationEnvironment.Initialize();
 
             mainWindowCloseBehaviour = new MainWindowCloseBehaviour(mainWindow, applicationEnvironment, windowsRebootConfiguration, timer, userInterface);
+            mainWindowStateBehaviour = new MainWindowStateBehaviour(mainWindow, userInterface);
 
             return new WindowsRebootPresenter(mainWindow, userInterface, action, timer, rebootUtil, windowsRebootConfiguration, applicationEnvironment);
         }

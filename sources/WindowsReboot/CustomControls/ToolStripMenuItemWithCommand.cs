@@ -41,7 +41,7 @@ namespace DustInTheWind.WindowsReboot.CustomControls
             }
         }
 
-        private void HandleCommandCanExecuteChanged(object sender, EventArgs eventArgs)
+        private void HandleCommandCanExecuteChanged(object sender, EventArgs e)
         {
             Enabled = command == null || command.CanExecute;
         }

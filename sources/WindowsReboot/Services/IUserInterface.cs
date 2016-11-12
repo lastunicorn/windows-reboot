@@ -19,12 +19,15 @@ using DustInTheWind.WindowsReboot.Core.Config;
 
 namespace DustInTheWind.WindowsReboot.Services
 {
-    public interface IUserInterface
+    internal interface IUserInterface
     {
         void Dispatch(Action action);
         void DisplayAbout();
         void DisplayLicense();
         void DisplayOptions(WindowsRebootConfiguration configSection);
+
+        MainWindowState MainWindowState { get; set; }
+        event EventHandler MainWindowStateChanged;
 
         /// <summary>
         /// Displays a message to the user.

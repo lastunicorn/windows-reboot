@@ -38,6 +38,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 actionControl1.ViewModel = presenter.ActionControlViewModel;
                 statusControl1.ViewModel = presenter.StatusControlViewModel;
 
+                goToTrayToolStripMenuItem.Command = presenter.GoToTrayCommand;
                 loadDefaultSettingsToolStripMenuItem.Command = presenter.LoadDefaultConfigurationCommand;
                 loadInitialSettingsToolStripMenuItem.Command = presenter.LoadConfigurationCommand;
                 saveCurrentSettingsToolStripMenuItem.Command = presenter.SaveConfigurationCommand;
@@ -68,11 +69,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         }
         
         #region Menu Items
-
-        private void goToTrayToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Presenter.OnMenuItemGoToTrayClicked();
-        }
 
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {

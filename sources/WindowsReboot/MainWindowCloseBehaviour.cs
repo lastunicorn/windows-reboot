@@ -66,30 +66,37 @@ namespace DustInTheWind.WindowsReboot
 
         private void HandleMainWindowClosing(object sender, CancelEventArgs e)
         {
-            if (closingFromBusiness)
+            try
             {
-                if (windowsRebootConfiguration.CloseToTray)
+                if (closingFromBusiness)
                 {
-                    // Minimize to tray
-                    mainWindow.Hide();
-                    mainWindow.NotifyIconVisible = true;
-                    e.Cancel = true;
-                }
-                else
-                {
-                    bool allowToCLose = !timer.IsRunning || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
-
-                    if (!allowToCLose)
+                    if (windowsRebootConfiguration.CloseToTray)
+                    {
+                        // Minimize to tray
+                        mainWindow.Hide();
+                        mainWindow.NotifyIconVisible = true;
                         e.Cancel = true;
+                    }
                     else
-                        mainWindow.NotifyIconVisible = false;
+                    {
+                        bool allowToCLose = !timer.IsRunning || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
+
+                        if (!allowToCLose)
+                            e.Cancel = true;
+                        else
+                            mainWindow.NotifyIconVisible = false;
+                    }
+
+                    return;
                 }
 
-                return;
+                e.Cancel = true;
+                applicationEnvironment.Close();
             }
-
-            e.Cancel = true;
-            applicationEnvironment.Close();
+            catch (Exception ex)
+            {
+                userInterface.DisplayError(ex);
+            }
         }
     }
 }
