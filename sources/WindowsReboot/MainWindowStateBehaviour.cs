@@ -16,6 +16,7 @@
 
 using System;
 using System.Windows.Forms;
+using DustInTheWind.WindowsReboot.Core.Config;
 using DustInTheWind.WindowsReboot.MainWindow;
 using DustInTheWind.WindowsReboot.Services;
 
@@ -25,16 +26,32 @@ namespace DustInTheWind.WindowsReboot
     {
         private readonly WindowsRebootForm mainWindow;
         private readonly IUserInterface userInterface;
+        private readonly WindowsRebootConfiguration configuration;
 
-        public MainWindowStateBehaviour(WindowsRebootForm mainWindow, IUserInterface userInterface)
+        public MainWindowStateBehaviour(WindowsRebootForm mainWindow, IUserInterface userInterface, WindowsRebootConfiguration configuration)
         {
             if (mainWindow == null) throw new ArgumentNullException("mainWindow");
             if (userInterface == null) throw new ArgumentNullException("userInterface");
+            if (configuration == null) throw new ArgumentNullException("configuration");
 
             this.mainWindow = mainWindow;
             this.userInterface = userInterface;
+            this.configuration = configuration;
 
             userInterface.MainWindowStateChanged += HandleUserInterfaceMainWindowStateChanged;
+            mainWindow.SizeChanged += HandleMainWindowSizeChanged;
+        }
+
+        private void HandleMainWindowSizeChanged(object sender, EventArgs eventArgs)
+        {
+            if (mainWindow.WindowState != FormWindowState.Minimized)
+                return;
+
+            if (configuration.MinimizeToTray)
+            {
+                mainWindow.Hide();
+                mainWindow.NotifyIconVisible = true;
+            }
         }
 
         private void HandleUserInterfaceMainWindowStateChanged(object sender, EventArgs e)

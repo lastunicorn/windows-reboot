@@ -84,7 +84,7 @@ namespace DustInTheWind.WindowsReboot
             applicationEnvironment.Initialize();
 
             mainWindowCloseBehaviour = new MainWindowCloseBehaviour(mainWindow, applicationEnvironment, windowsRebootConfiguration, timer, userInterface);
-            mainWindowStateBehaviour = new MainWindowStateBehaviour(mainWindow, userInterface);
+            mainWindowStateBehaviour = new MainWindowStateBehaviour(mainWindow, userInterface, windowsRebootConfiguration);
 
             return new WindowsRebootPresenter(mainWindow, userInterface, action, timer, rebootUtil, windowsRebootConfiguration, applicationEnvironment);
         }

@@ -105,11 +105,5 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         }
 
         #endregion
-
-        private void WindowsRebootForm_SizeChanged(object sender, EventArgs e)
-        {
-            if (WindowState == FormWindowState.Minimized)
-                Presenter.OnFormMinimized();
-        }
     }
 }

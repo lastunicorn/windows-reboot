@@ -526,7 +526,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Windows Reboot";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.SizeChanged += new System.EventHandler(this.WindowsRebootForm_SizeChanged);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.contextMenuStripTrayIcon.ResumeLayout(false);

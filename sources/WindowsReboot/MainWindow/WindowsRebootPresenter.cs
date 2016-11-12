@@ -136,25 +136,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         }
 
         /// <summary>
-        /// Method called when the form is minimized.
-        /// </summary>
-        internal void OnFormMinimized()
-        {
-            try
-            {
-                if (configuration.MinimizeToTray)
-                {
-                    view.Hide();
-                    view.NotifyIconVisible = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        /// <summary>
         /// Method called when the mouse is moved over the notify icon.
         /// </summary>
         internal void OnNotifyIconMouseMove()
