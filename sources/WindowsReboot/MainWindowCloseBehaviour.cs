@@ -50,19 +50,13 @@ namespace DustInTheWind.WindowsReboot
 
             mainWindow.Closing += HandleMainWindowClosing;
 
-            applicationEnvironment.PrepareToClose += HandleApplicationEnvironmentPrepareToClose;
             applicationEnvironment.Closing += HandleApplicationEnvironmentClosing;
             applicationEnvironment.CloseRevoked += HandleApplicationEnvironmentCloseRevoked;
         }
 
-        private void HandleApplicationEnvironmentPrepareToClose(object sender, EventArgs e)
-        {
-            closingFromBusiness = true;
-        }
-
         private void HandleApplicationEnvironmentClosing(object sender, EventArgs e)
         {
-            mainWindow.Close();
+            closingFromBusiness = true;
         }
 
         private void HandleApplicationEnvironmentCloseRevoked(object sender, EventArgs e)

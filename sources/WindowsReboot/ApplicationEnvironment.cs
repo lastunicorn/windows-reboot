@@ -16,9 +16,10 @@
 
 using System;
 using System.ComponentModel;
-using DustInTheWind.WindowsReboot.Core;
+using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core.Config;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
+using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 
 namespace DustInTheWind.WindowsReboot
 {
@@ -29,8 +30,7 @@ namespace DustInTheWind.WindowsReboot
         private readonly WorkerModel.Workers workers;
         private readonly WindowsRebootConfiguration configuration;
 
-        public event CancelEventHandler PrepareToClose;
-        public event EventHandler Closing;
+        public event CancelEventHandler Closing;
         public event EventHandler CloseRevoked;
 
         public ApplicationEnvironment(Action action, Timer timer, WorkerModel.Workers workers, WindowsRebootConfiguration configuration)
@@ -61,28 +61,20 @@ namespace DustInTheWind.WindowsReboot
         public void Close()
         {
             CancelEventArgs cancelEventArgs = new CancelEventArgs();
-            OnPrepareToClose(cancelEventArgs);
+            OnClosing(cancelEventArgs);
 
             if (cancelEventArgs.Cancel)
                 OnCloseRevoked();
             else
-                OnClosing();
+                Application.Exit();
         }
 
-        protected virtual void OnPrepareToClose(CancelEventArgs e)
+        protected virtual void OnClosing(CancelEventArgs e)
         {
-            CancelEventHandler handler = PrepareToClose;
+            CancelEventHandler handler = Closing;
 
             if (handler != null)
                 handler(this, e);
-        }
-
-        protected virtual void OnClosing()
-        {
-            EventHandler handler = Closing;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
         }
 
         protected virtual void OnCloseRevoked()

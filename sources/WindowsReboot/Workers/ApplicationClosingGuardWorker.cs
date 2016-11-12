@@ -41,15 +41,15 @@ namespace DustInTheWind.WindowsReboot.Workers
 
         public void Start()
         {
-            applicationEnvironment.PrepareToClose += HandleApplicationEnvironmentPrepareToClose;
+            applicationEnvironment.Closing += HandleApplicationEnvironmentClosing;
         }
 
         public void Stop()
         {
-            applicationEnvironment.PrepareToClose -= HandleApplicationEnvironmentPrepareToClose;
+            applicationEnvironment.Closing -= HandleApplicationEnvironmentClosing;
         }
 
-        private void HandleApplicationEnvironmentPrepareToClose(object sender, CancelEventArgs e)
+        private void HandleApplicationEnvironmentClosing(object sender, CancelEventArgs e)
         {
             if (!timer.IsRunning)
                 return;

@@ -30,12 +30,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// </summary>
         bool NotifyIconVisible { set; }
 
-
-        ///// <summary>
-        ///// Closes the form.
-        ///// </summary>
-        //void Close();
-
         /// <summary>
         /// Hides the form without closing it.
         /// </summary>
