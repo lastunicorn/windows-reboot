@@ -37,7 +37,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         private readonly Timer timer;
         private string title;
-        private readonly WindowsRebootConfiguration configuration;
 
         public GoToTrayCommand GoToTrayCommand { get; private set; }
         public LoadDefaultConfigurationCommand LoadDefaultConfigurationCommand { get; private set; }
@@ -48,6 +47,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         public AboutCommand AboutCommand { get; private set; }
         public ExitCommand ExitCommand { get; private set; }
 
+        public RestoreMainWindowCommand RestoreMainWindowCommand { get; private set; }
         public LockComputerCommand LockComputerCommand { get; private set; }
         public LogOffCommand LogOffCommand { get; private set; }
         public SleepCommand SleepCommand { get; private set; }
@@ -92,7 +92,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.view = view;
             this.userInterface = userInterface;
             this.timer = timer;
-            this.configuration = windowsRebootConfiguration;
 
             ActionTimeControlViewModel = new ActionTimeControlViewModel(timer, userInterface);
             ActionTypeControlViewModel = new ActionTypeControlViewModel(timer, action, userInterface);
@@ -101,13 +100,14 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
             GoToTrayCommand = new GoToTrayCommand(userInterface);
             LoadDefaultConfigurationCommand = new LoadDefaultConfigurationCommand(userInterface, timer, action);
-            LoadConfigurationCommand = new LoadConfigurationCommand(userInterface, timer, action, configuration);
-            SaveConfigurationCommand = new SaveConfigurationCommand(userInterface, timer, action, configuration);
-            OptionsCommand = new OptionsCommand(userInterface, configuration);
+            LoadConfigurationCommand = new LoadConfigurationCommand(userInterface, timer, action, windowsRebootConfiguration);
+            SaveConfigurationCommand = new SaveConfigurationCommand(userInterface, timer, action, windowsRebootConfiguration);
+            OptionsCommand = new OptionsCommand(userInterface, windowsRebootConfiguration);
             LicenseCommand = new LicenseCommand(userInterface);
             AboutCommand = new AboutCommand(userInterface);
             ExitCommand = new ExitCommand(userInterface, applicationEnvironment);
 
+            RestoreMainWindowCommand = new RestoreMainWindowCommand(userInterface);
             LockComputerCommand = new LockComputerCommand(userInterface, rebootUtil);
             LogOffCommand = new LogOffCommand(userInterface, rebootUtil);
             SleepCommand = new SleepCommand(userInterface, rebootUtil);
@@ -156,21 +156,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// Method called when the notify icon is clicked with the left mouse button.
         /// </summary>
         internal void OnNotifyIconMouseClicked()
-        {
-            try
-            {
-                userInterface.MainWindowState = MainWindowState.Normal;
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        /// <summary>
-        /// Method called when the "Show" item of the notify icon menu was clicked.
-        /// </summary>
-        internal void OnNotifyIconShowClicked()
         {
             try
             {

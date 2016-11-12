@@ -428,7 +428,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(137, 22);
             this.toolStripMenuItem1.Text = "Show";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
             // 
             // actionNowToolStripMenuItem
             // 

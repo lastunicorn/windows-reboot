@@ -83,6 +83,7 @@
     <Compile Include="Commands\OptionsCommand.cs" />
     <Compile Include="Commands\PowerOffCommand.cs" />
     <Compile Include="Commands\RebootCommand.cs" />
+    <Compile Include="Commands\RestoreMainWindowCommand.cs" />
     <Compile Include="Commands\SaveConfigurationCommand.cs" />
     <Compile Include="Commands\ShutDownCommand.cs" />
     <Compile Include="Commands\SleepCommand.cs" />

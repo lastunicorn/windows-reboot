@@ -20,14 +20,14 @@ using DustInTheWind.WindowsReboot.Services;
 
 namespace DustInTheWind.WindowsReboot.Commands
 {
-    internal class GoToTrayCommand : CommandBase
+    internal class RestoreMainWindowCommand : CommandBase
     {
         public override bool CanExecute
         {
-            get { return userInterface.MainWindowState != MainWindowState.Tray; }
+            get { return userInterface.MainWindowState == MainWindowState.Tray; }
         }
 
-        public GoToTrayCommand(IUserInterface userInterface)
+        public RestoreMainWindowCommand(IUserInterface userInterface)
             : base(userInterface)
         {
             userInterface.MainWindowStateChanged += HandleUserInterfaceMainWindowStateChanged;
@@ -40,7 +40,7 @@ namespace DustInTheWind.WindowsReboot.Commands
 
         protected override void DoExecute()
         {
-            userInterface.MainWindowState = MainWindowState.Tray;
+            userInterface.MainWindowState = MainWindowState.Normal;
         }
     }
 }

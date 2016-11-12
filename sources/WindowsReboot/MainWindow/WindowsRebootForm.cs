@@ -47,6 +47,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 aboutToolStripMenuItem.Command = presenter.AboutCommand;
                 exitToolStripMenuItem.Command = presenter.ExitCommand;
 
+                toolStripMenuItem1.Command = presenter.RestoreMainWindowCommand;
                 lockComputerToolStripMenuItem.Command = presenter.LockComputerCommand;
                 logOffToolStripMenuItem.Command = presenter.LogOffCommand;
                 sleepToolStripMenuItem.Command = presenter.SleepCommand;
@@ -68,15 +69,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             Presenter.OnFormLoad();
         }
         
-        #region Menu Items
-
-        private void showToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Presenter.OnNotifyIconShowClicked();
-        }
-
-        #endregion
-
         #region Notify Icon
 
         private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
