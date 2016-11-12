@@ -39,7 +39,7 @@ namespace DustInTheWind.WindowsReboot.OtherWindows
             labelVersion.Text = VersionUtil.GetVersion().ToString();
 
             labelAuthor.Text = Application.CompanyName;
-            labelDate.Text = new DateTime(2015, 08, 17).ToString("MMMM yyyy");
+            labelDate.Text = "2016";
             textBoxDescription.Text = AssemblyDescription;
         }
 
