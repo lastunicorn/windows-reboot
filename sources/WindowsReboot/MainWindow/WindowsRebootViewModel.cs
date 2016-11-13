@@ -26,7 +26,7 @@ using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
-    internal class WindowsRebootPresenter : ViewModelBase
+    internal class WindowsRebootViewModel : ViewModelBase
     {
         private string title;
 
@@ -58,10 +58,10 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WindowsRebootPresenter"/> class with
+        /// Initializes a new instance of the <see cref="WindowsRebootViewModel"/> class with
         /// the view used to interact with the user.
         /// </summary>
-        public WindowsRebootPresenter(IUserInterface userInterface, Action action, Timer timer,
+        public WindowsRebootViewModel(IUserInterface userInterface, Action action, Timer timer,
             WindowsRebootConfiguration windowsRebootConfiguration, ApplicationEnvironment applicationEnvironment)
         {
             if (userInterface == null) throw new ArgumentNullException("userInterface");

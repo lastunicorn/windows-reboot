@@ -51,8 +51,8 @@ namespace DustInTheWind.WindowsReboot
             Application.SetCompatibleTextRenderingDefault(false);
 
             WindowsRebootForm mainWindow = CreateMainWindow();
-            WindowsRebootPresenter presenter = CreatePresenter(mainWindow);
-            mainWindow.Presenter = presenter;
+            WindowsRebootViewModel viewModel = CreatePresenter(mainWindow);
+            mainWindow.ViewModel = viewModel;
 
             trayIcon = new TrayIcon
             {
@@ -67,7 +67,7 @@ namespace DustInTheWind.WindowsReboot
             return new WindowsRebootForm();
         }
 
-        private static WindowsRebootPresenter CreatePresenter(WindowsRebootForm mainWindow)
+        private static WindowsRebootViewModel CreatePresenter(WindowsRebootForm mainWindow)
         {
             uiDispatcher = new UiDispatcher();
 
@@ -91,7 +91,7 @@ namespace DustInTheWind.WindowsReboot
             mainWindowCloseBehaviour = new MainWindowCloseBehaviour(mainWindow, applicationEnvironment, windowsRebootConfiguration, timer, userInterface);
             mainWindowStateBehaviour = new MainWindowStateBehaviour(mainWindow, userInterface, windowsRebootConfiguration);
 
-            return new WindowsRebootPresenter(userInterface, action, timer, windowsRebootConfiguration, applicationEnvironment);
+            return new WindowsRebootViewModel(userInterface, action, timer, windowsRebootConfiguration, applicationEnvironment);
         }
     }
 }

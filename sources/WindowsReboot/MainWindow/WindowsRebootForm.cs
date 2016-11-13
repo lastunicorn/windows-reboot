@@ -21,30 +21,30 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 {
     internal partial class WindowsRebootForm : Form, IWindowsRebootView
     {
-        private WindowsRebootPresenter presenter;
+        private WindowsRebootViewModel viewModel;
 
-        public WindowsRebootPresenter Presenter
+        public WindowsRebootViewModel ViewModel
         {
-            get { return presenter; }
+            get { return viewModel; }
             set
             {
-                presenter = value;
+                viewModel = value;
 
-                this.Bind(x => x.Text, presenter, x => x.Title, false, DataSourceUpdateMode.Never);
+                this.Bind(x => x.Text, viewModel, x => x.Title, false, DataSourceUpdateMode.Never);
 
-                actionTimeControl1.ViewModel = presenter.ActionTimeControlViewModel;
-                actionTypeControl1.ViewModel = presenter.ActionTypeControlViewModel;
-                actionControl1.ViewModel = presenter.ActionControlViewModel;
-                statusControl1.ViewModel = presenter.StatusControlViewModel;
+                actionTimeControl1.ViewModel = viewModel.ActionTimeControlViewModel;
+                actionTypeControl1.ViewModel = viewModel.ActionTypeControlViewModel;
+                actionControl1.ViewModel = viewModel.ActionControlViewModel;
+                statusControl1.ViewModel = viewModel.StatusControlViewModel;
 
-                goToTrayToolStripMenuItem.Command = presenter.GoToTrayCommand;
-                loadDefaultSettingsToolStripMenuItem.Command = presenter.LoadDefaultConfigurationCommand;
-                loadInitialSettingsToolStripMenuItem.Command = presenter.LoadConfigurationCommand;
-                saveCurrentSettingsToolStripMenuItem.Command = presenter.SaveConfigurationCommand;
-                optionsToolStripMenuItem.Command = presenter.OptionsCommand;
-                licenseToolStripMenuItem.Command = presenter.LicenseCommand;
-                aboutToolStripMenuItem.Command = presenter.AboutCommand;
-                exitToolStripMenuItem.Command = presenter.ExitCommand;
+                goToTrayToolStripMenuItem.Command = viewModel.GoToTrayCommand;
+                loadDefaultSettingsToolStripMenuItem.Command = viewModel.LoadDefaultConfigurationCommand;
+                loadInitialSettingsToolStripMenuItem.Command = viewModel.LoadConfigurationCommand;
+                saveCurrentSettingsToolStripMenuItem.Command = viewModel.SaveConfigurationCommand;
+                optionsToolStripMenuItem.Command = viewModel.OptionsCommand;
+                licenseToolStripMenuItem.Command = viewModel.LicenseCommand;
+                aboutToolStripMenuItem.Command = viewModel.AboutCommand;
+                exitToolStripMenuItem.Command = viewModel.ExitCommand;
             }
         }
 
