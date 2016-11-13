@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.UiCommon;
 
@@ -46,16 +45,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 licenseToolStripMenuItem.Command = presenter.LicenseCommand;
                 aboutToolStripMenuItem.Command = presenter.AboutCommand;
                 exitToolStripMenuItem.Command = presenter.ExitCommand;
-
-                toolStripMenuItem1.Command = presenter.RestoreMainWindowCommand;
-                lockComputerToolStripMenuItem.Command = presenter.LockComputerCommand;
-                logOffToolStripMenuItem.Command = presenter.LogOffCommand;
-                sleepToolStripMenuItem.Command = presenter.SleepCommand;
-                hibernateToolStripMenuItem.Command = presenter.HibernateCommand;
-                rebootToolStripMenuItem.Command = presenter.RebootCommand;
-                shutDownToolStripMenuItem.Command = presenter.ShutDownCommand;
-                powerOffToolStripMenuItem.Command = presenter.PowerOffCommand;
-                toolStripMenuItem2.Command = presenter.ExitCommand;
             }
         }
 
@@ -63,39 +52,5 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             InitializeComponent();
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            Presenter.OnFormLoad();
-        }
-        
-        #region Notify Icon
-
-        private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-                Presenter.OnNotifyIconMouseClicked();
-        }
-
-        private void notifyIcon1_MouseMove(object sender, MouseEventArgs e)
-        {
-            Presenter.OnNotifyIconMouseMove();
-        }
-
-        #endregion
-
-        #region IWindowsRebootView Members
-
-        public string NotifyIconText
-        {
-            set { notifyIcon1.Text = value; }
-        }
-
-        public bool NotifyIconVisible
-        {
-            set { notifyIcon1.Visible = value; }
-        }
-
-        #endregion
     }
 }

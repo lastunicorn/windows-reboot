@@ -20,15 +20,15 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 {
     internal interface IWindowsRebootView
     {
-        /// <summary>
-        /// Sets the tool tip text displayed by the notify icon.
-        /// </summary>
-        string NotifyIconText { set; }
+        ///// <summary>
+        ///// Sets the tool tip text displayed by the notify icon.
+        ///// </summary>
+        //string NotifyIconText { set; }
 
-        /// <summary>
-        /// Sets the visibility of the notify icon.
-        /// </summary>
-        bool NotifyIconVisible { set; }
+        ///// <summary>
+        ///// Sets the visibility of the notify icon.
+        ///// </summary>
+        //bool NotifyIconVisible { set; }
 
         /// <summary>
         /// Hides the form without closing it.

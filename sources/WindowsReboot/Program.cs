@@ -39,6 +39,7 @@ namespace DustInTheWind.WindowsReboot
         private static ApplicationEnvironment applicationEnvironment;
         private static MainWindowCloseBehaviour mainWindowCloseBehaviour;
         private static MainWindowStateBehaviour mainWindowStateBehaviour;
+        private static TrayIcon trayIcon;
 
         /// <summary>
         /// The main entry point for the application.
@@ -51,8 +52,12 @@ namespace DustInTheWind.WindowsReboot
 
             WindowsRebootForm mainWindow = CreateMainWindow();
             WindowsRebootPresenter presenter = CreatePresenter(mainWindow);
-
             mainWindow.Presenter = presenter;
+
+            trayIcon = new TrayIcon
+            {
+                ViewModel = new TrayIconViewModel(userInterface, rebootUtil, timer, applicationEnvironment)
+            };
 
             Application.Run(mainWindow);
         }
@@ -86,7 +91,7 @@ namespace DustInTheWind.WindowsReboot
             mainWindowCloseBehaviour = new MainWindowCloseBehaviour(mainWindow, applicationEnvironment, windowsRebootConfiguration, timer, userInterface);
             mainWindowStateBehaviour = new MainWindowStateBehaviour(mainWindow, userInterface, windowsRebootConfiguration);
 
-            return new WindowsRebootPresenter(mainWindow, userInterface, action, timer, rebootUtil, windowsRebootConfiguration, applicationEnvironment);
+            return new WindowsRebootPresenter(userInterface, action, timer, windowsRebootConfiguration, applicationEnvironment);
         }
     }
 }

@@ -50,22 +50,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WindowsRebootForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.contextMenuStripTrayIcon = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.labelBlackLine1 = new System.Windows.Forms.Label();
-            this.labelBlackLine2 = new System.Windows.Forms.Label();
-            this.pictureBoxHeader = new System.Windows.Forms.PictureBox();
-            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.groupBoxActionTime = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
-            this.actionTimeControl1 = new DustInTheWind.WindowsReboot.MainWindow.ActionTimeControl();
-            this.customGroupBoxStatusInfo = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
-            this.statusControl1 = new DustInTheWind.WindowsReboot.MainWindow.StatusControl();
-            this.groupBoxActionType = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
-            this.actionTypeControl1 = new DustInTheWind.WindowsReboot.MainWindow.ActionTypeControl();
-            this.groupBoxActionStart = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
-            this.actionControl1 = new DustInTheWind.WindowsReboot.MainWindow.ActionControl();
             this.programToolStripMenuItem = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
             this.goToTrayToolStripMenuItem = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
             this.exitToolStripMenuItem = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
@@ -79,25 +63,27 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.helpToolStripMenuItem = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
             this.licenseToolStripMenuItem = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
             this.aboutToolStripMenuItem = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
-            this.toolStripMenuItem1 = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
-            this.actionNowToolStripMenuItem = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
-            this.lockComputerToolStripMenuItem = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
-            this.logOffToolStripMenuItem = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
-            this.sleepToolStripMenuItem = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
-            this.hibernateToolStripMenuItem = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
-            this.rebootToolStripMenuItem = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
-            this.shutDownToolStripMenuItem = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
-            this.powerOffToolStripMenuItem = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
-            this.toolStripMenuItem2 = new DustInTheWind.WindowsReboot.CustomControls.ToolStripMenuItemWithCommand();
+            this.labelBlackLine1 = new System.Windows.Forms.Label();
+            this.labelBlackLine2 = new System.Windows.Forms.Label();
+            this.pictureBoxHeader = new System.Windows.Forms.PictureBox();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBoxActionTime = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
+            this.actionTimeControl1 = new DustInTheWind.WindowsReboot.MainWindow.ActionTimeControl();
+            this.customGroupBoxStatusInfo = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
+            this.statusControl1 = new DustInTheWind.WindowsReboot.MainWindow.StatusControl();
+            this.groupBoxActionType = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
+            this.actionTypeControl1 = new DustInTheWind.WindowsReboot.MainWindow.ActionTypeControl();
+            this.groupBoxActionStart = new DustInTheWind.WindowsReboot.UiCommon.CustomGroupBox(this.components);
+            this.actionControl1 = new DustInTheWind.WindowsReboot.MainWindow.ActionControl();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
-            this.contextMenuStripTrayIcon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHeader)).BeginInit();
             this.tableLayoutPanel6.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.groupBoxActionTime.SuspendLayout();
             this.customGroupBoxStatusInfo.SuspendLayout();
             this.groupBoxActionType.SuspendLayout();
             this.groupBoxActionStart.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -112,28 +98,112 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // notifyIcon1
+            // programToolStripMenuItem
             // 
-            this.notifyIcon1.ContextMenuStrip = this.contextMenuStripTrayIcon;
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "notifyIcon1";
-            this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseClick);
-            this.notifyIcon1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseMove);
+            this.programToolStripMenuItem.Command = null;
+            this.programToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.goToTrayToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.programToolStripMenuItem.Name = "programToolStripMenuItem";
+            this.programToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.programToolStripMenuItem.Text = "&Program";
             // 
-            // contextMenuStripTrayIcon
+            // goToTrayToolStripMenuItem
             // 
-            this.contextMenuStripTrayIcon.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.actionNowToolStripMenuItem,
-            this.toolStripSeparator3,
-            this.toolStripMenuItem2});
-            this.contextMenuStripTrayIcon.Name = "contextMenuStrip1";
-            this.contextMenuStripTrayIcon.Size = new System.Drawing.Size(138, 76);
+            this.goToTrayToolStripMenuItem.Command = null;
+            this.goToTrayToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.tray;
+            this.goToTrayToolStripMenuItem.Name = "goToTrayToolStripMenuItem";
+            this.goToTrayToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.goToTrayToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.goToTrayToolStripMenuItem.Text = "Go To &Tray";
             // 
-            // toolStripSeparator3
+            // exitToolStripMenuItem
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(134, 6);
+            this.exitToolStripMenuItem.Command = null;
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            // 
+            // configurationToolStripMenuItem
+            // 
+            this.configurationToolStripMenuItem.Command = null;
+            this.configurationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadInitialSettingsToolStripMenuItem,
+            this.saveCurrentSettingsToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.loadDefaultSettingsToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.optionsToolStripMenuItem});
+            this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
+            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
+            this.configurationToolStripMenuItem.Text = "&Configuration";
+            // 
+            // loadInitialSettingsToolStripMenuItem
+            // 
+            this.loadInitialSettingsToolStripMenuItem.Command = null;
+            this.loadInitialSettingsToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.splat_blue;
+            this.loadInitialSettingsToolStripMenuItem.Name = "loadInitialSettingsToolStripMenuItem";
+            this.loadInitialSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.loadInitialSettingsToolStripMenuItem.Text = "&Load Settings";
+            // 
+            // saveCurrentSettingsToolStripMenuItem
+            // 
+            this.saveCurrentSettingsToolStripMenuItem.Command = null;
+            this.saveCurrentSettingsToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.splat_yellow;
+            this.saveCurrentSettingsToolStripMenuItem.Name = "saveCurrentSettingsToolStripMenuItem";
+            this.saveCurrentSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.saveCurrentSettingsToolStripMenuItem.Text = "&Save Settings";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
+            // 
+            // loadDefaultSettingsToolStripMenuItem
+            // 
+            this.loadDefaultSettingsToolStripMenuItem.Command = null;
+            this.loadDefaultSettingsToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.splat_black;
+            this.loadDefaultSettingsToolStripMenuItem.Name = "loadDefaultSettingsToolStripMenuItem";
+            this.loadDefaultSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.loadDefaultSettingsToolStripMenuItem.Text = "Load &Default Settings";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(183, 6);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Command = null;
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.optionsToolStripMenuItem.Text = "&Options...";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Command = null;
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.licenseToolStripMenuItem,
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "&Help";
+            // 
+            // licenseToolStripMenuItem
+            // 
+            this.licenseToolStripMenuItem.Command = null;
+            this.licenseToolStripMenuItem.Name = "licenseToolStripMenuItem";
+            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.licenseToolStripMenuItem.Text = "&License";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Command = null;
+            this.aboutToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.help_about16;
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.aboutToolStripMenuItem.Text = "&About";
             // 
             // labelBlackLine1
             // 
@@ -182,16 +252,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(389, 355);
             this.tableLayoutPanel6.TabIndex = 21;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.tableLayoutPanel6);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 87);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(10);
-            this.panel1.Size = new System.Drawing.Size(409, 375);
-            this.panel1.TabIndex = 22;
             // 
             // groupBoxActionTime
             // 
@@ -314,198 +374,15 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.actionControl1.TabIndex = 0;
             this.actionControl1.ViewModel = null;
             // 
-            // programToolStripMenuItem
+            // panel1
             // 
-            this.programToolStripMenuItem.Command = null;
-            this.programToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.goToTrayToolStripMenuItem,
-            this.exitToolStripMenuItem});
-            this.programToolStripMenuItem.Name = "programToolStripMenuItem";
-            this.programToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
-            this.programToolStripMenuItem.Text = "&Program";
-            // 
-            // goToTrayToolStripMenuItem
-            // 
-            this.goToTrayToolStripMenuItem.Command = null;
-            this.goToTrayToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.tray;
-            this.goToTrayToolStripMenuItem.Name = "goToTrayToolStripMenuItem";
-            this.goToTrayToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.goToTrayToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.goToTrayToolStripMenuItem.Text = "Go To &Tray";
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Command = null;
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.exitToolStripMenuItem.Text = "E&xit";
-            // 
-            // configurationToolStripMenuItem
-            // 
-            this.configurationToolStripMenuItem.Command = null;
-            this.configurationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadInitialSettingsToolStripMenuItem,
-            this.saveCurrentSettingsToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.loadDefaultSettingsToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.optionsToolStripMenuItem});
-            this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
-            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
-            this.configurationToolStripMenuItem.Text = "&Configuration";
-            // 
-            // loadInitialSettingsToolStripMenuItem
-            // 
-            this.loadInitialSettingsToolStripMenuItem.Command = null;
-            this.loadInitialSettingsToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.splat_blue;
-            this.loadInitialSettingsToolStripMenuItem.Name = "loadInitialSettingsToolStripMenuItem";
-            this.loadInitialSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.loadInitialSettingsToolStripMenuItem.Text = "&Load Settings";
-            // 
-            // saveCurrentSettingsToolStripMenuItem
-            // 
-            this.saveCurrentSettingsToolStripMenuItem.Command = null;
-            this.saveCurrentSettingsToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.splat_yellow;
-            this.saveCurrentSettingsToolStripMenuItem.Name = "saveCurrentSettingsToolStripMenuItem";
-            this.saveCurrentSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.saveCurrentSettingsToolStripMenuItem.Text = "&Save Settings";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
-            // 
-            // loadDefaultSettingsToolStripMenuItem
-            // 
-            this.loadDefaultSettingsToolStripMenuItem.Command = null;
-            this.loadDefaultSettingsToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.splat_black;
-            this.loadDefaultSettingsToolStripMenuItem.Name = "loadDefaultSettingsToolStripMenuItem";
-            this.loadDefaultSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.loadDefaultSettingsToolStripMenuItem.Text = "Load &Default Settings";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(183, 6);
-            // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.Command = null;
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.optionsToolStripMenuItem.Text = "&Options...";
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.Command = null;
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.licenseToolStripMenuItem,
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "&Help";
-            // 
-            // licenseToolStripMenuItem
-            // 
-            this.licenseToolStripMenuItem.Command = null;
-            this.licenseToolStripMenuItem.Name = "licenseToolStripMenuItem";
-            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
-            this.licenseToolStripMenuItem.Text = "&License";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Command = null;
-            this.aboutToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.help_about16;
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
-            this.aboutToolStripMenuItem.Text = "&About";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Command = null;
-            this.toolStripMenuItem1.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.win_reboot;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(137, 22);
-            this.toolStripMenuItem1.Text = "Show";
-            // 
-            // actionNowToolStripMenuItem
-            // 
-            this.actionNowToolStripMenuItem.Command = null;
-            this.actionNowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lockComputerToolStripMenuItem,
-            this.logOffToolStripMenuItem,
-            this.sleepToolStripMenuItem,
-            this.hibernateToolStripMenuItem,
-            this.rebootToolStripMenuItem,
-            this.shutDownToolStripMenuItem,
-            this.powerOffToolStripMenuItem});
-            this.actionNowToolStripMenuItem.Name = "actionNowToolStripMenuItem";
-            this.actionNowToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
-            this.actionNowToolStripMenuItem.Text = "Action Now";
-            // 
-            // lockComputerToolStripMenuItem
-            // 
-            this.lockComputerToolStripMenuItem.Command = null;
-            this.lockComputerToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.lock_16x16;
-            this.lockComputerToolStripMenuItem.Name = "lockComputerToolStripMenuItem";
-            this.lockComputerToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.lockComputerToolStripMenuItem.Text = "Lock Computer";
-            // 
-            // logOffToolStripMenuItem
-            // 
-            this.logOffToolStripMenuItem.Command = null;
-            this.logOffToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("logOffToolStripMenuItem.Image")));
-            this.logOffToolStripMenuItem.Name = "logOffToolStripMenuItem";
-            this.logOffToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.logOffToolStripMenuItem.Text = "Log Off";
-            // 
-            // sleepToolStripMenuItem
-            // 
-            this.sleepToolStripMenuItem.Command = null;
-            this.sleepToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("sleepToolStripMenuItem.Image")));
-            this.sleepToolStripMenuItem.Name = "sleepToolStripMenuItem";
-            this.sleepToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.sleepToolStripMenuItem.Text = "Sleep";
-            // 
-            // hibernateToolStripMenuItem
-            // 
-            this.hibernateToolStripMenuItem.Command = null;
-            this.hibernateToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.hibernate_16x16;
-            this.hibernateToolStripMenuItem.Name = "hibernateToolStripMenuItem";
-            this.hibernateToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.hibernateToolStripMenuItem.Text = "Hibernate";
-            // 
-            // rebootToolStripMenuItem
-            // 
-            this.rebootToolStripMenuItem.Command = null;
-            this.rebootToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.reboot_16x16;
-            this.rebootToolStripMenuItem.Name = "rebootToolStripMenuItem";
-            this.rebootToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.rebootToolStripMenuItem.Text = "Reboot";
-            // 
-            // shutDownToolStripMenuItem
-            // 
-            this.shutDownToolStripMenuItem.Command = null;
-            this.shutDownToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("shutDownToolStripMenuItem.Image")));
-            this.shutDownToolStripMenuItem.Name = "shutDownToolStripMenuItem";
-            this.shutDownToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.shutDownToolStripMenuItem.Text = "Shut Down";
-            // 
-            // powerOffToolStripMenuItem
-            // 
-            this.powerOffToolStripMenuItem.Command = null;
-            this.powerOffToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Properties.Resources.poweroff_16x16;
-            this.powerOffToolStripMenuItem.Name = "powerOffToolStripMenuItem";
-            this.powerOffToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.powerOffToolStripMenuItem.Text = "Power Off";
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Command = null;
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(137, 22);
-            this.toolStripMenuItem2.Text = "Exit";
+            this.panel1.Controls.Add(this.tableLayoutPanel6);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 87);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(10);
+            this.panel1.Size = new System.Drawing.Size(409, 375);
+            this.panel1.TabIndex = 22;
             // 
             // WindowsRebootForm
             // 
@@ -524,18 +401,16 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             this.Name = "WindowsRebootForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Windows Reboot";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.contextMenuStripTrayIcon.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHeader)).EndInit();
             this.tableLayoutPanel6.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
             this.groupBoxActionTime.ResumeLayout(false);
             this.customGroupBoxStatusInfo.ResumeLayout(false);
             this.groupBoxActionType.ResumeLayout(false);
             this.groupBoxActionType.PerformLayout();
             this.groupBoxActionStart.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -549,7 +424,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private ToolStripMenuItemWithCommand exitToolStripMenuItem;
         private ToolStripMenuItemWithCommand helpToolStripMenuItem;
         private ToolStripMenuItemWithCommand aboutToolStripMenuItem;
-        private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.PictureBox pictureBoxHeader;
         private System.Windows.Forms.Label labelBlackLine1;
         private System.Windows.Forms.Label labelBlackLine2;
@@ -561,18 +435,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItemWithCommand optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStripTrayIcon;
-        private ToolStripMenuItemWithCommand toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private ToolStripMenuItemWithCommand toolStripMenuItem2;
-        private ToolStripMenuItemWithCommand actionNowToolStripMenuItem;
-        private ToolStripMenuItemWithCommand lockComputerToolStripMenuItem;
-        private ToolStripMenuItemWithCommand logOffToolStripMenuItem;
-        private ToolStripMenuItemWithCommand rebootToolStripMenuItem;
-        private ToolStripMenuItemWithCommand shutDownToolStripMenuItem;
-        private ToolStripMenuItemWithCommand powerOffToolStripMenuItem;
-        private ToolStripMenuItemWithCommand sleepToolStripMenuItem;
-        private ToolStripMenuItemWithCommand hibernateToolStripMenuItem;
         private CustomGroupBox groupBoxActionTime;
         private CustomGroupBox groupBoxActionType;
         private CustomGroupBox groupBoxActionStart;

@@ -16,7 +16,6 @@
 
 using System.ComponentModel;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.UiCommon;
 
 namespace DustInTheWind.WindowsReboot.MainWindow
 {
@@ -29,10 +28,26 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             get { return viewModel; }
             set
             {
+                if (viewModel != null)
+                {
+                    toolStripMenuItem1.Command = null;
+                    lockComputerToolStripMenuItem.Command = null;
+                    logOffToolStripMenuItem.Command = null;
+                    sleepToolStripMenuItem.Command = null;
+                    hibernateToolStripMenuItem.Command = null;
+                    rebootToolStripMenuItem.Command = null;
+                    shutDownToolStripMenuItem.Command = null;
+                    powerOffToolStripMenuItem.Command = null;
+                    toolStripMenuItem2.Command = null;
+
+                    viewModel.PropertyChanged -= HandleViewModelPropertyChanged;
+                }
+
                 viewModel = value;
 
                 if (viewModel != null)
                 {
+                    toolStripMenuItem1.Command = viewModel.RestoreMainWindowCommand;
                     lockComputerToolStripMenuItem.Command = viewModel.LockComputerCommand;
                     logOffToolStripMenuItem.Command = viewModel.LogOffCommand;
                     sleepToolStripMenuItem.Command = viewModel.SleepCommand;
@@ -40,22 +55,25 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                     rebootToolStripMenuItem.Command = viewModel.RebootCommand;
                     shutDownToolStripMenuItem.Command = viewModel.ShutDownCommand;
                     powerOffToolStripMenuItem.Command = viewModel.PowerOffCommand;
+                    toolStripMenuItem2.Command = viewModel.ExitCommand;
 
-                    //notifyIcon1.Bind(x => x.Text, viewModel, x => x.Text, false, DataSourceUpdateMode.Never);
+                    viewModel.PropertyChanged += HandleViewModelPropertyChanged;
                 }
             }
         }
 
-        public bool Visible
+        private void HandleViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            get { return notifyIcon1.Visible; }
-            set { notifyIcon1.Visible = value; }
-        }
+            switch (e.PropertyName)
+            {
+                case "Text":
+                    notifyIcon1.Text = viewModel.Text;
+                    break;
 
-        public string Text
-        {
-            get { return notifyIcon1.Text; }
-            set { notifyIcon1.Text = value; }
+                case "IsVisible":
+                    notifyIcon1.Visible = viewModel.IsVisible;
+                    break;
+            }
         }
 
         public TrayIcon()
@@ -72,52 +90,13 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-                viewModel.OnNotifyIconMouseClicked();
+            if (e.Button == MouseButtons.Left && viewModel != null && viewModel.RestoreMainWindowCommand != null && viewModel.RestoreMainWindowCommand.CanExecute)
+                viewModel.RestoreMainWindowCommand.Execute();
         }
 
         private void notifyIcon1_MouseMove(object sender, MouseEventArgs e)
         {
             viewModel.OnNotifyIconMouseMove();
         }
-
-
-        //#region Menu Items
-
-        //private void goToTrayToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    viewModel.OnMenuItemGoToTrayClicked();
-        //}
-
-        //private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    viewModel.OnMenuItemExitClicked();
-        //}
-
-        //private void showToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    viewModel.OnNotifyIconShowClicked();
-        //}
-
-        //private void exitToolStripMenuItem1_Click(object sender, EventArgs e)
-        //{
-        //    viewModel.OnNotifyIconExitClicked();
-        //}
-
-        //#endregion
-
-        //#region Notify Icon
-
-        //private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
-        //{
-
-        //}
-
-        //private void notifyIcon1_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    viewModel.OnNotifyIconMouseMove();
-        //}
-
-        //#endregion
     }
 }

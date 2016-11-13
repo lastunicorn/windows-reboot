@@ -17,6 +17,7 @@
 using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core.Config;
+using DustInTheWind.WindowsReboot.MainWindow;
 using DustInTheWind.WindowsReboot.OtherWindows;
 
 namespace DustInTheWind.WindowsReboot.Services
@@ -25,7 +26,7 @@ namespace DustInTheWind.WindowsReboot.Services
     {
         private readonly IUiDispatcher uiDispatcher;
         private MainWindowState mainWindowState;
-        public Form MainForm { get; set; }
+        public WindowsRebootForm MainForm { get; set; }
 
         public MainWindowState MainWindowState
         {

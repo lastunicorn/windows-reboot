@@ -54,9 +54,14 @@ namespace DustInTheWind.WindowsReboot
             applicationEnvironment.CloseRevoked += HandleApplicationEnvironmentCloseRevoked;
         }
 
-        private void HandleApplicationEnvironmentClosing(object sender, EventArgs e)
+        private void HandleApplicationEnvironmentClosing(object sender, CancelEventArgs e)
         {
-            closingFromBusiness = true;
+            bool allowToClose = !timer.IsRunning || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
+
+            if (!allowToClose)
+                e.Cancel = true;
+            else
+                closingFromBusiness = true;
         }
 
         private void HandleApplicationEnvironmentCloseRevoked(object sender, EventArgs e)
@@ -72,19 +77,8 @@ namespace DustInTheWind.WindowsReboot
                 {
                     if (windowsRebootConfiguration.CloseToTray)
                     {
-                        // Minimize to tray
-                        mainWindow.Hide();
-                        mainWindow.NotifyIconVisible = true;
+                        userInterface.MainWindowState = MainWindowState.Tray;
                         e.Cancel = true;
-                    }
-                    else
-                    {
-                        bool allowToCLose = !timer.IsRunning || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
-
-                        if (!allowToCLose)
-                            e.Cancel = true;
-                        else
-                            mainWindow.NotifyIconVisible = false;
                     }
 
                     return;

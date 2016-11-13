@@ -28,14 +28,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 {
     internal class WindowsRebootPresenter : ViewModelBase
     {
-        /// <summary>
-        /// The view used to interact with the user.
-        /// </summary>
-        private readonly IWindowsRebootView view;
-
-        private readonly IUserInterface userInterface;
-
-        private readonly Timer timer;
         private string title;
 
         public GoToTrayCommand GoToTrayCommand { get; private set; }
@@ -46,15 +38,6 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         public LicenseCommand LicenseCommand { get; private set; }
         public AboutCommand AboutCommand { get; private set; }
         public ExitCommand ExitCommand { get; private set; }
-
-        public RestoreMainWindowCommand RestoreMainWindowCommand { get; private set; }
-        public LockComputerCommand LockComputerCommand { get; private set; }
-        public LogOffCommand LogOffCommand { get; private set; }
-        public SleepCommand SleepCommand { get; private set; }
-        public HibernateCommand HibernateCommand { get; private set; }
-        public RebootCommand RebootCommand { get; private set; }
-        public ShutDownCommand ShutDownCommand { get; private set; }
-        public PowerOffCommand PowerOffCommand { get; private set; }
 
         public ActionTimeControlViewModel ActionTimeControlViewModel { get; private set; }
         public ActionTypeControlViewModel ActionTypeControlViewModel { get; private set; }
@@ -78,20 +61,14 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// Initializes a new instance of the <see cref="WindowsRebootPresenter"/> class with
         /// the view used to interact with the user.
         /// </summary>
-        public WindowsRebootPresenter(IWindowsRebootView view, IUserInterface userInterface, Action action, Timer timer,
-            IRebootUtil rebootUtil, WindowsRebootConfiguration windowsRebootConfiguration, ApplicationEnvironment applicationEnvironment)
+        public WindowsRebootPresenter(IUserInterface userInterface, Action action, Timer timer,
+            WindowsRebootConfiguration windowsRebootConfiguration, ApplicationEnvironment applicationEnvironment)
         {
-            if (view == null) throw new ArgumentNullException("view");
             if (userInterface == null) throw new ArgumentNullException("userInterface");
             if (action == null) throw new ArgumentNullException("action");
             if (timer == null) throw new ArgumentNullException("timer");
-            if (rebootUtil == null) throw new ArgumentNullException("rebootUtil");
             if (windowsRebootConfiguration == null) throw new ArgumentNullException("windowsRebootConfiguration");
             if (applicationEnvironment == null) throw new ArgumentNullException("applicationEnvironment");
-
-            this.view = view;
-            this.userInterface = userInterface;
-            this.timer = timer;
 
             ActionTimeControlViewModel = new ActionTimeControlViewModel(timer, userInterface);
             ActionTypeControlViewModel = new ActionTypeControlViewModel(timer, action, userInterface);
@@ -107,64 +84,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             AboutCommand = new AboutCommand(userInterface);
             ExitCommand = new ExitCommand(userInterface, applicationEnvironment);
 
-            RestoreMainWindowCommand = new RestoreMainWindowCommand(userInterface);
-            LockComputerCommand = new LockComputerCommand(userInterface, rebootUtil);
-            LogOffCommand = new LogOffCommand(userInterface, rebootUtil);
-            SleepCommand = new SleepCommand(userInterface, rebootUtil);
-            HibernateCommand = new HibernateCommand(userInterface, rebootUtil);
-            RebootCommand = new RebootCommand(userInterface, rebootUtil);
-            ShutDownCommand = new ShutDownCommand(userInterface, rebootUtil);
-            PowerOffCommand = new PowerOffCommand(userInterface, rebootUtil);
-        }
-
-        /// <summary>
-        /// Method called when the form is loaded.
-        /// </summary>
-        internal void OnFormLoad()
-        {
-            try
-            {
-                string title = string.Format("{0} {1}", Application.ProductName, VersionUtil.GetVersionToString());
-
-                Title = title;
-                view.NotifyIconText = title;
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        /// <summary>
-        /// Method called when the mouse is moved over the notify icon.
-        /// </summary>
-        internal void OnNotifyIconMouseMove()
-        {
-            try
-            {
-                view.NotifyIconText = timer.IsRunning
-                    ? TimerFormatter.Format(timer.TimeUntilAction)
-                    : Title;
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
-        }
-
-        /// <summary>
-        /// Method called when the notify icon is clicked with the left mouse button.
-        /// </summary>
-        internal void OnNotifyIconMouseClicked()
-        {
-            try
-            {
-                userInterface.MainWindowState = MainWindowState.Normal;
-            }
-            catch (Exception ex)
-            {
-                userInterface.DisplayError(ex);
-            }
+            Title = string.Format("{0} {1}", Application.ProductName, VersionUtil.GetVersionToString());
         }
     }
 }

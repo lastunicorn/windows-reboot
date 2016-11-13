@@ -48,10 +48,7 @@ namespace DustInTheWind.WindowsReboot
                 return;
 
             if (configuration.MinimizeToTray)
-            {
-                mainWindow.Hide();
-                mainWindow.NotifyIconVisible = true;
-            }
+                userInterface.MainWindowState = MainWindowState.Tray;
         }
 
         private void HandleUserInterfaceMainWindowStateChanged(object sender, EventArgs e)
@@ -63,12 +60,10 @@ namespace DustInTheWind.WindowsReboot
                     case MainWindowState.Normal:
                         mainWindow.Show();
                         mainWindow.WindowState = FormWindowState.Normal;
-                        mainWindow.NotifyIconVisible = false;
                         break;
 
                     case MainWindowState.Tray:
                         mainWindow.Hide();
-                        mainWindow.NotifyIconVisible = true;
                         break;
 
                     default:
