@@ -33,7 +33,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             {
                 if (viewModel != null)
                 {
-                    this.DataBindings.Clear();
+                    DataBindings.Clear();
                     fixedDateControl1.DataBindings.Clear();
                     delayTimeControl1.DataBindings.Clear();
                     dailyControl1.DataBindings.Clear();

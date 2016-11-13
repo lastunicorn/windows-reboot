@@ -40,7 +40,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
                 OnMinutesChanged();
             }
         }
-        
+
         public int Seconds
         {
             get { return (int)numericUpDownSeconds.Value; }
@@ -59,7 +59,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         {
             InitializeComponent();
         }
-        
+
         protected virtual void OnHoursChanged()
         {
             EventHandler handler = HoursChanged;

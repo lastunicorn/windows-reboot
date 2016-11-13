@@ -50,7 +50,7 @@ namespace DustInTheWind.WindowsReboot.CustomControls
         {
             InitializeComponent();
         }
-        
+
         private void ToolStripMenuItemWithCommand_Click(object sender, EventArgs e)
         {
             if (command != null)

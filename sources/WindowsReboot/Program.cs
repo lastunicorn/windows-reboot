@@ -50,25 +50,7 @@ namespace DustInTheWind.WindowsReboot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            WindowsRebootForm mainWindow = CreateMainWindow();
-            WindowsRebootViewModel viewModel = CreatePresenter(mainWindow);
-            mainWindow.ViewModel = viewModel;
-
-            trayIcon = new TrayIcon
-            {
-                ViewModel = new TrayIconViewModel(userInterface, rebootUtil, timer, applicationEnvironment)
-            };
-
-            Application.Run(mainWindow);
-        }
-
-        private static WindowsRebootForm CreateMainWindow()
-        {
-            return new WindowsRebootForm();
-        }
-
-        private static WindowsRebootViewModel CreatePresenter(WindowsRebootForm mainWindow)
-        {
+            WindowsRebootForm mainWindow = new WindowsRebootForm();
             uiDispatcher = new UiDispatcher();
 
             userInterface = new UserInterface(uiDispatcher)
@@ -91,7 +73,14 @@ namespace DustInTheWind.WindowsReboot
             mainWindowCloseBehaviour = new MainWindowCloseBehaviour(mainWindow, applicationEnvironment, windowsRebootConfiguration, timer, userInterface);
             mainWindowStateBehaviour = new MainWindowStateBehaviour(mainWindow, userInterface, windowsRebootConfiguration);
 
-            return new WindowsRebootViewModel(userInterface, action, timer, windowsRebootConfiguration, applicationEnvironment);
+            mainWindow.ViewModel = new WindowsRebootViewModel(userInterface, action, timer, windowsRebootConfiguration, applicationEnvironment);
+
+            trayIcon = new TrayIcon
+            {
+                ViewModel = new TrayIconViewModel(userInterface, rebootUtil, timer, applicationEnvironment)
+            };
+
+            Application.Run(mainWindow);
         }
     }
 }

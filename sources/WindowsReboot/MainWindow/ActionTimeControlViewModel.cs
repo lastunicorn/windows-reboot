@@ -148,7 +148,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             Enabled = true;
 
             UpdateFromTimer();
-            
+
             timer.TimeChanged += HandleTimerTimeChanged;
             timer.Started += HandleTimerStarted;
             timer.Stoped += HandleTimerStoped;

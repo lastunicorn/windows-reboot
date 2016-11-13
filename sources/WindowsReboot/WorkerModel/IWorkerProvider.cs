@@ -15,11 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using DustInTheWind.WindowsReboot.Workers;
 
 namespace DustInTheWind.WindowsReboot.WorkerModel
 {
-    public interface IWorkerProvider
+    internal interface IWorkerProvider
     {
         IEnumerable<IWorker> GetNewWorkers();
     }

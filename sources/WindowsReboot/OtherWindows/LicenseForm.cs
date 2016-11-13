@@ -22,7 +22,7 @@ namespace DustInTheWind.WindowsReboot.OtherWindows
     /// <summary>
     /// This form displayes the license text.
     /// </summary>
-    public partial class LicenseForm : Form
+    internal partial class LicenseForm : Form
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LicenseForm"/> class.

@@ -133,7 +133,7 @@ namespace DustInTheWind.WindowsReboot.UiCommon
 
         private void AdditionalInitialization()
         {
-            titleFont = (Font) Font.Clone();
+            titleFont = (Font)Font.Clone();
             titleColor = ForeColor;
             titleAlignment = HorizontalAlignment.Left;
             borderColor = SystemColors.ActiveBorder;
@@ -225,7 +225,7 @@ namespace DustInTheWind.WindowsReboot.UiCommon
 
         private Size Ceiling(SizeF size)
         {
-            return new Size((int) Math.Ceiling(size.Width), (int) Math.Ceiling(size.Height));
+            return new Size((int)Math.Ceiling(size.Width), (int)Math.Ceiling(size.Height));
         }
 
         protected override void OnPaint(PaintEventArgs e)

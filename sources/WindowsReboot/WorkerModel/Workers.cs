@@ -19,7 +19,7 @@ using System.Collections.Generic;
 
 namespace DustInTheWind.WindowsReboot.WorkerModel
 {
-    public class Workers
+    internal class Workers
     {
         private readonly IWorkerProvider workerProvider;
         private List<IWorker> workers;

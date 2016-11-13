@@ -21,7 +21,7 @@ namespace DustInTheWind.WindowsReboot.WorkerModel
     /// It may be an observer that subscvribes itself to an event and does something when the event is triggered.
     /// It may also be a loop that processes some data from a queue.
     /// </summary>
-    public interface IWorker
+    internal interface IWorker
     {
         void Start();
         void Stop();

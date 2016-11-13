@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Services;
 using DustInTheWind.WindowsReboot.WorkerModel;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
@@ -48,10 +47,7 @@ namespace DustInTheWind.WindowsReboot.Workers
 
         private void HandleActionNotificationRaised(object sender, EventArgs e)
         {
-            userInterface.Dispatch(() =>
-            {
-                userInterface.DisplayMessage("Ring-ring!");
-            });
+            userInterface.Dispatch(() => { userInterface.DisplayMessage("Ring-ring!"); });
         }
     }
 }

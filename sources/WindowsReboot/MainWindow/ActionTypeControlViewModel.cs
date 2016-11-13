@@ -152,10 +152,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         private void HandleTimerStoped(object sender, EventArgs e)
         {
-            userInterface.Dispatch(() =>
-            {
-                Enabled = true;
-            });
+            userInterface.Dispatch(() => { Enabled = true; });
         }
 
         private void HandleActionTypeChanged(object sender, EventArgs eventArgs)

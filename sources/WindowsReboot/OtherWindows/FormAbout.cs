@@ -24,7 +24,7 @@ namespace DustInTheWind.WindowsReboot.OtherWindows
     /// <summary>
     /// Displayes information about the author, the version, etc.
     /// </summary>
-    public partial class AboutForm : Form
+    internal partial class AboutForm : Form
     {
         private readonly Assembly currentAssembly = Assembly.GetExecutingAssembly();
 

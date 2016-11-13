@@ -87,10 +87,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         private void HandleTimerStarted(object sender, EventArgs eventArgs)
         {
-            userInterface.Dispatch(() =>
-            {
-                ActionTime = timer.ActionTime;
-            });
+            userInterface.Dispatch(() => { ActionTime = timer.ActionTime; });
         }
 
         private void HandleTimerStoped(object sender, EventArgs eventArgs)
