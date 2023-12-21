@@ -17,11 +17,12 @@
 using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core.Config;
-using DustInTheWind.WindowsReboot.MainWindow;
 using DustInTheWind.WindowsReboot.Ports.SystemAccess;
+using DustInTheWind.WindowsReboot.Presentation;
+using DustInTheWind.WindowsReboot.Presentation.MainWindow;
+using DustInTheWind.WindowsReboot.Presentation.WorkerModel;
 using DustInTheWind.WindowsReboot.Setup;
 using DustInTheWind.WindowsReboot.UserAccess;
-using DustInTheWind.WindowsReboot.WorkerModel;
 using WindowsReboot.SystemAccess;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
 using Timer = DustInTheWind.WindowsReboot.Core.Timer;
@@ -36,7 +37,7 @@ namespace DustInTheWind.WindowsReboot
         private static IRebootUtil rebootUtil;
         private static Timer timer;
         private static Action action;
-        private static WorkerModel.Workers workers;
+        private static Workers workers;
         private static ApplicationEnvironment applicationEnvironment;
         private static MainWindowCloseBehaviour mainWindowCloseBehaviour;
         private static MainWindowStateBehaviour mainWindowStateBehaviour;
@@ -65,7 +66,7 @@ namespace DustInTheWind.WindowsReboot
             action = new Action(timer, rebootUtil);
 
             IWorkerProvider workerProvider = new WorkerProvider(userInterface, timer, action);
-            workers = new WorkerModel.Workers(workerProvider);
+            workers = new Workers(workerProvider);
 
             applicationEnvironment = new ApplicationEnvironment(action, timer, workers, windowsRebootConfiguration);
             applicationEnvironment.Initialize();

@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyName>DustInTheWind.WindowsReboot.Application</AssemblyName>
+        <RootNamespace>DustInTheWind.WindowsReboot.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Core.csproj" />
+    <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj" />
+    <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -17,9 +17,9 @@
 using System;
 using System.Collections.Generic;
 using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Presentation.WorkerModel;
+using DustInTheWind.WindowsReboot.Presentation.Workers;
 using DustInTheWind.WindowsReboot.Services;
-using DustInTheWind.WindowsReboot.WorkerModel;
-using DustInTheWind.WindowsReboot.Workers;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
 
 namespace DustInTheWind.WindowsReboot.Setup
@@ -32,13 +32,9 @@ namespace DustInTheWind.WindowsReboot.Setup
 
         public WorkerProvider(IUserInterface userInterface, Timer timer, Action action)
         {
-            if (userInterface == null) throw new ArgumentNullException("userInterface");
-            if (timer == null) throw new ArgumentNullException("timer");
-            if (action == null) throw new ArgumentNullException("action");
-
-            this.userInterface = userInterface;
-            this.timer = timer;
-            this.action = action;
+            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
+            this.timer = timer ?? throw new ArgumentNullException(nameof(timer));
+            this.action = action ?? throw new ArgumentNullException(nameof(action));
         }
 
         public IEnumerable<IWorker> GetNewWorkers()

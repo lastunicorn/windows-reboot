@@ -112,156 +112,11 @@
     <Compile Include="..\AssemblyInfo.shared.cs">
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
-    <Compile Include="ApplicationEnvironment.cs" />
-    <Compile Include="Commands\AboutCommand.cs" />
-    <Compile Include="CommandModel\CommandBase.cs" />
-    <Compile Include="Commands\ExitCommand.cs" />
-    <Compile Include="Commands\GoToTrayCommand.cs" />
-    <Compile Include="Commands\HibernateCommand.cs" />
-    <Compile Include="Commands\LicenseCommand.cs" />
-    <Compile Include="Commands\LoadConfigurationCommand.cs" />
-    <Compile Include="Commands\LoadDefaultConfigurationCommand.cs" />
-    <Compile Include="Commands\LockComputerCommand.cs" />
-    <Compile Include="Commands\LogOffCommand.cs" />
-    <Compile Include="Commands\OptionsCommand.cs" />
-    <Compile Include="Commands\PowerOffCommand.cs" />
-    <Compile Include="Commands\RebootCommand.cs" />
-    <Compile Include="Commands\RestoreMainWindowCommand.cs" />
-    <Compile Include="Commands\SaveConfigurationCommand.cs" />
-    <Compile Include="Commands\ShutDownCommand.cs" />
-    <Compile Include="Commands\SleepCommand.cs" />
-    <Compile Include="Commands\StopTimerCommand.cs" />
-    <Compile Include="Commands\StartTimerCommand.cs" />
-    <Compile Include="CustomControls\ButtonWithCommand.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="CustomControls\ButtonWithCommand.Designer.cs">
-      <DependentUpon>ButtonWithCommand.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CommandModel\ICommand.cs" />
-    <Compile Include="CustomControls\ToolStripMenuItemWithCommand.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="CustomControls\ToolStripMenuItemWithCommand.Designer.cs">
-      <DependentUpon>ToolStripMenuItemWithCommand.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindowCloseBehaviour.cs" />
-    <Compile Include="MainWindowStateBehaviour.cs" />
-    <Compile Include="MainWindow\ActionControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MainWindow\ActionControl.Designer.cs">
-      <DependentUpon>ActionControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\ActionControlViewModel.cs" />
-    <Compile Include="MainWindow\ActionTimeControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MainWindow\ActionTimeControl.Designer.cs">
-      <DependentUpon>ActionTimeControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\ActionTimeControlViewModel.cs" />
-    <Compile Include="MainWindow\DailyTabContent.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MainWindow\DailyTabContent.Designer.cs">
-      <DependentUpon>DailyTabContent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\TrayIcon.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="MainWindow\TrayIcon.Designer.cs">
-      <DependentUpon>TrayIcon.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\TrayIconViewModel.cs" />
-    <Compile Include="UiCommon\BindingExtensions.cs" />
-    <Compile Include="MainWindow\ActionTypeControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MainWindow\ActionTypeControl.Designer.cs">
-      <DependentUpon>ActionTypeControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\ActionTypeControlViewModel.cs" />
-    <Compile Include="MainWindow\ActionTypeItem.cs" />
-    <Compile Include="UiCommon\CustomGroupBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UiCommon\CustomGroupBox.Designer.cs">
-      <DependentUpon>CustomGroupBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\DelayTimeTabContent.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MainWindow\DelayTimeTabContent.Designer.cs">
-      <DependentUpon>DelayTimeTabContent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\FixedDateTabContent.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MainWindow\FixedDateTabContent.Designer.cs">
-      <DependentUpon>FixedDateTabContent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\StatusControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MainWindow\StatusControl.Designer.cs">
-      <DependentUpon>StatusControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\StatusControlViewModel.cs" />
-    <Compile Include="Services\TimerText.cs" />
-    <Compile Include="UiCommon\ViewModelBase.cs" />
-    <Compile Include="MainWindow\WindowsRebootForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainWindow\WindowsRebootForm.Designer.cs">
-      <DependentUpon>WindowsRebootForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\IWindowsRebootView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorkerModel\IWorker.cs" />
-    <Compile Include="WorkerModel\IWorkerProvider.cs" />
-    <Compile Include="Workers\ApplicationClosingGuardWorker.cs" />
-    <Compile Include="Workers\NotificationWorker.cs" />
-    <Compile Include="Workers\WarningWorker.cs" />
-    <Compile Include="WorkerModel\Workers.cs" />
     <Compile Include="Setup\WorkerProvider.cs" />
-    <EmbeddedResource Include="CustomControls\ButtonWithCommand.resx">
-      <DependentUpon>ButtonWithCommand.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CustomControls\ToolStripMenuItemWithCommand.resx">
-      <DependentUpon>ToolStripMenuItemWithCommand.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\ActionControl.resx">
-      <DependentUpon>ActionControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\ActionTimeControl.resx">
-      <DependentUpon>ActionTimeControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\ActionTypeControl.resx">
-      <DependentUpon>ActionTypeControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\DailyTabContent.resx">
-      <DependentUpon>DailyTabContent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\DelayTimeTabContent.resx">
-      <DependentUpon>DelayTimeTabContent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\FixedDateTabContent.resx">
-      <DependentUpon>FixedDateTabContent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\TrayIcon.resx">
-      <DependentUpon>TrayIcon.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Resources\License.txt" />
-    <EmbeddedResource Include="MainWindow\StatusControl.resx">
-      <DependentUpon>StatusControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\WindowsRebootForm.resx">
-      <DependentUpon>WindowsRebootForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -281,7 +136,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="MainWindow\WindowsRebootViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
@@ -340,6 +194,10 @@
     <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj">
       <Project>{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}</Project>
       <Name>WindowsReboot.Ports.UserAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsReboot.Presentation\WindowsReboot.Presentation.csproj">
+      <Project>{3A4BBBB2-47AC-4355-8EFA-E1A1CF65FBA0}</Project>
+      <Name>WindowsReboot.Presentation</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.SystemAccess\WindowsReboot.SystemAccess.csproj">
       <Project>{1D579956-B6C4-4FBF-BAC9-E749EA8C8662}</Project>
