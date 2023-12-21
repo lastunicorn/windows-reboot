@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyName>DustInTheWind.WindowsReboot.ConfigAccess</AssemblyName>
+        <RootNamespace>DustInTheWind.WindowsReboot.ConfigAccess</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\WindowsReboot.Ports.ConfigAccess\WindowsReboot.Ports.ConfigAccess.csproj" />
+    </ItemGroup>
+
+</Project>

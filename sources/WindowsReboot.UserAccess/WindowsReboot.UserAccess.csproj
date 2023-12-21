@@ -75,6 +75,10 @@
       <Project>{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}</Project>
       <Name>WindowsReboot.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WindowsReboot.Ports.ConfigAccess\WindowsReboot.Ports.ConfigAccess.csproj">
+      <Project>{52315771-8889-4DB8-BAE1-48A420728D49}</Project>
+      <Name>WindowsReboot.Ports.ConfigAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj">
       <Project>{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}</Project>
       <Name>WindowsReboot.Ports.UserAccess</Name>

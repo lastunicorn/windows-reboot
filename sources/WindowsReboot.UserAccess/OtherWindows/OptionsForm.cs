@@ -25,14 +25,14 @@ namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
     /// </summary>
     internal partial class OptionsForm : Form
     {
-        private readonly WindowsRebootConfiguration configSection;
+        private readonly IWindowsRebootConfiguration configSection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OptionsForm"/> class with
         /// the configuration object.
         /// </summary>
         /// <param name="configSection">An instance of <see cref="WindowsRebootConfigSection"/> class that contains the values that should be displayed.</param>
-        public OptionsForm(WindowsRebootConfiguration configSection)
+        public OptionsForm(IWindowsRebootConfiguration configSection)
         {
             if (configSection == null) throw new ArgumentNullException(nameof(configSection));
 

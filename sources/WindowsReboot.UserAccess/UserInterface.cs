@@ -25,7 +25,7 @@ namespace DustInTheWind.WindowsReboot.UserAccess
     public class UserInterface : IUserInterface
     {
         private readonly IUiDispatcher uiDispatcher;
-        private readonly WindowsRebootConfiguration configuration;
+        private readonly IWindowsRebootConfiguration configuration;
         private MainWindowState mainWindowState;
         public Form MainForm { get; set; }
 
@@ -41,7 +41,7 @@ namespace DustInTheWind.WindowsReboot.UserAccess
 
         public event EventHandler MainWindowStateChanged;
 
-        public UserInterface(IUiDispatcher uiDispatcher, WindowsRebootConfiguration configuration)
+        public UserInterface(IUiDispatcher uiDispatcher, IWindowsRebootConfiguration configuration)
         {
             this.uiDispatcher = uiDispatcher ?? throw new ArgumentNullException(nameof(uiDispatcher));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));

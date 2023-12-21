@@ -102,6 +102,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.ConfigurationManager, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Configuration.ConfigurationManager.8.0.0\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -183,9 +186,17 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WindowsReboot.ConfigAccess\WindowsReboot.ConfigAccess.csproj">
+      <Project>{E361EAE2-D408-4DDA-ABD3-81AF3CCBF612}</Project>
+      <Name>WindowsReboot.ConfigAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Core.csproj">
       <Project>{76665ccc-6451-4caf-893b-7da3d7f6ead0}</Project>
       <Name>WindowsReboot.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsReboot.Ports.ConfigAccess\WindowsReboot.Ports.ConfigAccess.csproj">
+      <Project>{52315771-8889-4DB8-BAE1-48A420728D49}</Project>
+      <Name>WindowsReboot.Ports.ConfigAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj">
       <Project>{CA55A116-6AA7-4222-9686-2D57B4CD5E58}</Project>

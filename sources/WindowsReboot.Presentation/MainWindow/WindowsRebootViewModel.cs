@@ -62,7 +62,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         /// the view used to interact with the user.
         /// </summary>
         public WindowsRebootViewModel(IUserInterface userInterface, Action action, Timer timer,
-            WindowsRebootConfiguration windowsRebootConfiguration, ApplicationEnvironment applicationEnvironment)
+            IWindowsRebootConfiguration windowsRebootConfiguration, ApplicationEnvironment applicationEnvironment)
         {
             if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
             if (action == null) throw new ArgumentNullException(nameof(action));

@@ -28,12 +28,12 @@ namespace DustInTheWind.WindowsReboot.Presentation
         private readonly Action action;
         private readonly Timer timer;
         private readonly WorkerModel.Workers workers;
-        private readonly WindowsRebootConfiguration configuration;
+        private readonly IWindowsRebootConfiguration configuration;
 
         public event CancelEventHandler Closing;
         public event EventHandler CloseRevoked;
 
-        public ApplicationEnvironment(Action action, Timer timer, WorkerModel.Workers workers, WindowsRebootConfiguration configuration)
+        public ApplicationEnvironment(Action action, Timer timer, WorkerModel.Workers workers, IWindowsRebootConfiguration configuration)
         {
             this.action = action ?? throw new ArgumentNullException(nameof(action));
             this.timer = timer ?? throw new ArgumentNullException(nameof(timer));

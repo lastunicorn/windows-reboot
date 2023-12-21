@@ -27,14 +27,14 @@ namespace DustInTheWind.WindowsReboot.Presentation
     {
         private readonly WindowsRebootForm mainWindow;
         private readonly ApplicationEnvironment applicationEnvironment;
-        private readonly WindowsRebootConfiguration windowsRebootConfiguration;
+        private readonly IWindowsRebootConfiguration windowsRebootConfiguration;
         private readonly Timer timer;
         private readonly IUserInterface userInterface;
 
         private volatile bool closingFromBusiness;
 
         public MainWindowCloseBehaviour(WindowsRebootForm mainWindow, ApplicationEnvironment applicationEnvironment,
-            WindowsRebootConfiguration windowsRebootConfiguration, Timer timer, IUserInterface userInterface)
+            IWindowsRebootConfiguration windowsRebootConfiguration, Timer timer, IUserInterface userInterface)
         {
             this.mainWindow = mainWindow ?? throw new ArgumentNullException(nameof(mainWindow));
             this.applicationEnvironment = applicationEnvironment ?? throw new ArgumentNullException(nameof(applicationEnvironment));

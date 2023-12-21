@@ -26,9 +26,9 @@ namespace DustInTheWind.WindowsReboot.Presentation
     {
         private readonly WindowsRebootForm mainWindow;
         private readonly IUserInterface userInterface;
-        private readonly WindowsRebootConfiguration configuration;
+        private readonly IWindowsRebootConfiguration configuration;
 
-        public MainWindowStateBehaviour(WindowsRebootForm mainWindow, IUserInterface userInterface, WindowsRebootConfiguration configuration)
+        public MainWindowStateBehaviour(WindowsRebootForm mainWindow, IUserInterface userInterface, IWindowsRebootConfiguration configuration)
         {
             this.mainWindow = mainWindow ?? throw new ArgumentNullException(nameof(mainWindow));
             this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));

@@ -27,9 +27,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
     {
         private readonly Timer timer;
         private readonly Action action;
-        private readonly WindowsRebootConfiguration configuration;
+        private readonly IWindowsRebootConfiguration configuration;
 
-        public SaveConfigurationCommand(IUserInterface userInterface, Timer timer, Action action, WindowsRebootConfiguration configuration)
+        public SaveConfigurationCommand(IUserInterface userInterface, Timer timer, Action action, IWindowsRebootConfiguration configuration)
             : base(userInterface)
         {
             this.timer = timer ?? throw new ArgumentNullException(nameof(timer));
