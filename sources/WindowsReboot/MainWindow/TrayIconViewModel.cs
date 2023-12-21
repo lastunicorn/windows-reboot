@@ -133,7 +133,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             try
             {
                 Text = timer.IsRunning
-                    ? TimerFormatter.Format(timer.TimeUntilAction)
+                    ? (TimerText)timer.TimeUntilAction
                     : defaultText;
             }
             catch (Exception ex)

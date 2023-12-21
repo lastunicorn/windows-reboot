@@ -27,7 +27,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
         public StatusControlViewModel ViewModel
         {
-            get { return viewModel; }
+            get => viewModel;
             set
             {
                 if (viewModel != null)
@@ -94,14 +94,13 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
             if (e.Value == null)
             {
-                e.Value = TimerFormatter.Format(null);
+                e.Value = TimerText.Empty.ToString();
             }
             else
             {
-                if (e.Value is TimeSpan)
+                if (e.Value is TimeSpan time)
                 {
-                    TimeSpan time = (TimeSpan)e.Value;
-                    e.Value = TimerFormatter.Format(time);
+                    e.Value = ((TimerText)time).ToString();
                 }
             }
         }

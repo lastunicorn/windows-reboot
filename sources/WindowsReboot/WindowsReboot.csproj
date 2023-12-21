@@ -61,6 +61,45 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DustInTheWind.WindowsApi.ConsoleApi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.ConsoleApi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.ConsoleApi.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Core, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Core.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Errhandlingapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Errhandlingapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Errhandlingapi.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Fileapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Fileapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Fileapi.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Handleapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Handleapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Handleapi.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.ProcessEnv, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.ProcessEnv.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.ProcessEnv.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Processthreadsapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Processthreadsapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Processthreadsapi.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Sysinfoapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Sysinfoapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Sysinfoapi.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Winbase, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Winbase.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Winbase.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Windef, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Windef.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Windef.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Wingdi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Wingdi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Wingdi.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Winnt, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Winnt.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Winnt.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Winuser, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Winuser.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Winuser.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -169,7 +208,7 @@
       <DependentUpon>StatusControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\StatusControlViewModel.cs" />
-    <Compile Include="Services\TimerFormatter.cs" />
+    <Compile Include="Services\TimerText.cs" />
     <Compile Include="UiCommon\ViewModelBase.cs" />
     <Compile Include="MainWindow\WindowsRebootForm.cs">
       <SubType>Form</SubType>
@@ -214,6 +253,7 @@
     <EmbeddedResource Include="MainWindow\TrayIcon.resx">
       <DependentUpon>TrayIcon.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Resources\License.txt" />
     <EmbeddedResource Include="MainWindow\StatusControl.resx">
       <DependentUpon>StatusControl.cs</DependentUpon>
