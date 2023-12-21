@@ -29,7 +29,7 @@ namespace DustInTheWind.WindowsReboot.SystemAccess
     /// Util class that calls the Windows API function to execute
     /// the lock, log off, sleep, hibernate, reboot, shut down and power off actions.
     /// </summary>
-    public class RebootUtil : IRebootUtil
+    public class OperatingSystem : IOperatingSystem
     {
         /// <summary>
         /// Checks if the system on which this application runs is an NT based system.

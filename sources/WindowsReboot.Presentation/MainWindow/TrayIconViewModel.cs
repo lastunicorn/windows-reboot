@@ -65,7 +65,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         public PowerOffCommand PowerOffCommand { get; private set; }
         public ExitCommand ExitCommand { get; private set; }
 
-        public TrayIconViewModel(IUserInterface userInterface, IRebootUtil rebootUtil, Timer timer, ApplicationEnvironment applicationEnvironment)
+        public TrayIconViewModel(IUserInterface userInterface, IOperatingSystem operatingSystem, Timer timer, ApplicationEnvironment applicationEnvironment)
         {
             if (userInterface == null) throw new ArgumentNullException("userInterface");
             if (timer == null) throw new ArgumentNullException("timer");
@@ -75,13 +75,13 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             this.timer = timer;
 
             RestoreMainWindowCommand = new RestoreMainWindowCommand(userInterface);
-            LockComputerCommand = new LockComputerCommand(userInterface, rebootUtil);
-            LogOffCommand = new LogOffCommand(userInterface, rebootUtil);
-            SleepCommand = new SleepCommand(userInterface, rebootUtil);
-            HibernateCommand = new HibernateCommand(userInterface, rebootUtil);
-            RebootCommand = new RebootCommand(userInterface, rebootUtil);
-            ShutDownCommand = new ShutDownCommand(userInterface, rebootUtil);
-            PowerOffCommand = new PowerOffCommand(userInterface, rebootUtil);
+            LockComputerCommand = new LockComputerCommand(userInterface, operatingSystem);
+            LogOffCommand = new LogOffCommand(userInterface, operatingSystem);
+            SleepCommand = new SleepCommand(userInterface, operatingSystem);
+            HibernateCommand = new HibernateCommand(userInterface, operatingSystem);
+            RebootCommand = new RebootCommand(userInterface, operatingSystem);
+            ShutDownCommand = new ShutDownCommand(userInterface, operatingSystem);
+            PowerOffCommand = new PowerOffCommand(userInterface, operatingSystem);
             ExitCommand = new ExitCommand(userInterface, applicationEnvironment);
 
             defaultText = string.Format("{0} {1}", Application.ProductName, VersionUtil.GetVersionToString());

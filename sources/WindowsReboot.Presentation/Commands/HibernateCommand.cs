@@ -23,12 +23,12 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class HibernateCommand : CommandBase
     {
-        private readonly IRebootUtil rebootUtil;
+        private readonly IOperatingSystem operatingSystem;
 
-        public HibernateCommand(IUserInterface userInterface, IRebootUtil rebootUtil)
+        public HibernateCommand(IUserInterface userInterface, IOperatingSystem operatingSystem)
             : base(userInterface)
         {
-            this.rebootUtil = rebootUtil ?? throw new ArgumentNullException(nameof(rebootUtil));
+            this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
         }
 
         protected override void DoExecute()
@@ -36,7 +36,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
             bool allowToContinue = userInterface.Confirm("Do you want to put the system in 'Hibernate' state?");
 
             if (allowToContinue)
-                rebootUtil.Hibernate(false);
+                operatingSystem.Hibernate(false);
         }
     }
 }

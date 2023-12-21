@@ -23,12 +23,12 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class ShutDownCommand : CommandBase
     {
-        private readonly IRebootUtil rebootUtil;
+        private readonly IOperatingSystem operatingSystem;
 
-        public ShutDownCommand(IUserInterface userInterface, IRebootUtil rebootUtil)
+        public ShutDownCommand(IUserInterface userInterface, IOperatingSystem operatingSystem)
             : base(userInterface)
         {
-            this.rebootUtil = rebootUtil ?? throw new ArgumentNullException(nameof(rebootUtil));
+            this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
         }
 
         protected override void DoExecute()
@@ -36,7 +36,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
             bool allowToContinue = userInterface.Confirm("Do you want to shut down the system?\n\nObs! From WinXP SP1 this command will also power off the system.");
 
             if (allowToContinue)
-                rebootUtil.ShutDown(false);
+                operatingSystem.ShutDown(false);
         }
     }
 }

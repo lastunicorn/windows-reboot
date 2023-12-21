@@ -21,7 +21,7 @@ namespace DustInTheWind.WindowsReboot.Core
 {
     public class Action
     {
-        private readonly IRebootUtil rebootUtil;
+        private readonly IOperatingSystem operatingSystem;
         private ActionType type;
         private bool force;
 
@@ -52,11 +52,11 @@ namespace DustInTheWind.WindowsReboot.Core
             }
         }
 
-        public Action(Timer timer, IRebootUtil rebootUtil)
+        public Action(Timer timer, IOperatingSystem operatingSystem)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            this.rebootUtil = rebootUtil ?? throw new ArgumentNullException(nameof(rebootUtil));
+            this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
 
             Type = ActionType.Ring;
             Force = true;
@@ -73,31 +73,31 @@ namespace DustInTheWind.WindowsReboot.Core
                     break;
 
                 case ActionType.LockWorkstation:
-                    rebootUtil.Lock();
+                    operatingSystem.Lock();
                     break;
 
                 case ActionType.LogOff:
-                    rebootUtil.LogOff(Force);
+                    operatingSystem.LogOff(Force);
                     break;
 
                 case ActionType.Sleep:
-                    rebootUtil.Sleep(Force);
+                    operatingSystem.Sleep(Force);
                     break;
 
                 case ActionType.Hibernate:
-                    rebootUtil.Hibernate(Force);
+                    operatingSystem.Hibernate(Force);
                     break;
 
                 case ActionType.Reboot:
-                    rebootUtil.Reboot(Force);
+                    operatingSystem.Reboot(Force);
                     break;
 
                 case ActionType.ShutDown:
-                    rebootUtil.ShutDown(Force);
+                    operatingSystem.ShutDown(Force);
                     break;
 
                 case ActionType.PowerOff:
-                    rebootUtil.PowerOff(Force);
+                    operatingSystem.PowerOff(Force);
                     break;
                 
                 default:

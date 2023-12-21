@@ -16,7 +16,7 @@
 
 namespace DustInTheWind.WindowsReboot.Ports.SystemAccess
 {
-    public interface IRebootUtil
+    public interface IOperatingSystem
     {
         /// <summary>
         /// Locks the workstation's display. To unlock the workstation, the user must log in.

@@ -23,12 +23,12 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class PowerOffCommand : CommandBase
     {
-        private readonly IRebootUtil rebootUtil;
+        private readonly IOperatingSystem operatingSystem;
 
-        public PowerOffCommand(IUserInterface userInterface, IRebootUtil rebootUtil)
+        public PowerOffCommand(IUserInterface userInterface, IOperatingSystem operatingSystem)
             : base(userInterface)
         {
-            this.rebootUtil = rebootUtil ?? throw new ArgumentNullException(nameof(rebootUtil));
+            this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
         }
 
         protected override void DoExecute()
@@ -36,7 +36,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
             bool allowToContinue = userInterface.Confirm("Do you want to power off the system?\n\nObs! Only if the hardware supports 'Power Off'. Otherwise just a 'Shut Down' will be performed.");
 
             if (allowToContinue)
-                rebootUtil.PowerOff(false);
+                operatingSystem.PowerOff(false);
         }
     }
 }

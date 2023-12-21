@@ -23,12 +23,12 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class RebootCommand : CommandBase
     {
-        private readonly IRebootUtil rebootUtil;
+        private readonly IOperatingSystem operatingSystem;
 
-        public RebootCommand(IUserInterface userInterface, IRebootUtil rebootUtil)
+        public RebootCommand(IUserInterface userInterface, IOperatingSystem operatingSystem)
             : base(userInterface)
         {
-            this.rebootUtil = rebootUtil ?? throw new ArgumentNullException(nameof(rebootUtil));
+            this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
         }
 
         protected override void DoExecute()
@@ -36,7 +36,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
             bool allowToContinue = userInterface.Confirm("Do you want to reboot the system?");
 
             if (allowToContinue)
-                rebootUtil.Reboot(false);
+                operatingSystem.Reboot(false);
         }
     }
 }

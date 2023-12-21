@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Core;
+using System.Threading;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.UiCommon;
 
@@ -23,8 +23,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
     public class StatusControlViewModel : ViewModelBase, IDisposable
     {
-        private readonly System.Threading.Timer ticker;
-        private readonly Timer timer;
+        private readonly Timer ticker;
+        private readonly Core.Timer timer;
         private readonly IUserInterface userInterface;
         private DateTime currentTime;
         private DateTime? actionTime;
@@ -32,7 +32,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public DateTime CurrentTime
         {
-            get { return currentTime; }
+            get => currentTime;
             set
             {
                 currentTime = value;
@@ -42,7 +42,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public DateTime? ActionTime
         {
-            get { return actionTime; }
+            get => actionTime;
             set
             {
                 actionTime = value;
@@ -52,7 +52,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public TimeSpan? TimerTime
         {
-            get { return timerTime; }
+            get => timerTime;
             set
             {
                 timerTime = value;
@@ -60,15 +60,12 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             }
         }
 
-        public StatusControlViewModel(Timer timer, IUserInterface userInterface)
+        public StatusControlViewModel(Core.Timer timer, IUserInterface userInterface)
         {
-            if (timer == null) throw new ArgumentNullException("timer");
-            if (userInterface == null) throw new ArgumentNullException("userInterface");
+            this.timer = timer ?? throw new ArgumentNullException(nameof(timer));
+            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
 
-            this.timer = timer;
-            this.userInterface = userInterface;
-
-            ticker = new System.Threading.Timer(HandleTickerTick, null, 0, 100);
+            ticker = new Timer(HandleTickerTick, null, 0, 100);
 
             timer.Started += HandleTimerStarted;
             timer.Stopped += HandleTimerStopped;

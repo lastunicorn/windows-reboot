@@ -23,12 +23,12 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class LogOffCommand : CommandBase
     {
-        private readonly IRebootUtil rebootUtil;
+        private readonly IOperatingSystem operatingSystem;
 
-        public LogOffCommand(IUserInterface userInterface, IRebootUtil rebootUtil)
+        public LogOffCommand(IUserInterface userInterface, IOperatingSystem operatingSystem)
             : base(userInterface)
         {
-            this.rebootUtil = rebootUtil ?? throw new ArgumentNullException(nameof(rebootUtil));
+            this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
         }
 
         protected override void DoExecute()
@@ -37,7 +37,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
             bool allowToContinue = userInterface.Confirm(question);
 
             if (allowToContinue)
-                rebootUtil.LogOff(false);
+                operatingSystem.LogOff(false);
         }
     }
 }
