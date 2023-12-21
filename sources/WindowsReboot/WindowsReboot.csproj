@@ -118,6 +118,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setup\WorkerProvider.cs" />
+    <Compile Include="WindowsRebootApplication.cs" />
     <None Include="packages.config" />
     <None Include="Resources\License.txt" />
     <EmbeddedResource Include="Properties\Resources.resx">
