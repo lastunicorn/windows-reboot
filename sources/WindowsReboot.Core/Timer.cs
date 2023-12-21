@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Threading;
 
 namespace DustInTheWind.WindowsReboot.Core
 {
@@ -31,7 +30,7 @@ namespace DustInTheWind.WindowsReboot.Core
         private DateTime startTime;
 
         public event EventHandler Started;
-        public event EventHandler Stoped;
+        public event EventHandler Stopped;
         public event EventHandler Warning;
         public event EventHandler Ring;
         public event EventHandler WarningTimeChanged;
@@ -40,14 +39,11 @@ namespace DustInTheWind.WindowsReboot.Core
         /// <summary>
         /// Indicates if the timer was started.
         /// </summary>
-        public bool IsRunning
-        {
-            get { return isRunning; }
-        }
+        public bool IsRunning => isRunning;
 
         public ScheduleTime Time
         {
-            get { return time; }
+            get => time;
             set
             {
                 time = value;
@@ -57,7 +53,7 @@ namespace DustInTheWind.WindowsReboot.Core
 
         public TimeSpan? WarningTime
         {
-            get { return warningTime; }
+            get => warningTime;
             set
             {
                 if (isRunning)
@@ -69,10 +65,7 @@ namespace DustInTheWind.WindowsReboot.Core
             }
         }
 
-        public TimeSpan TimeUntilAction
-        {
-            get { return ActionTime - DateTime.Now; }
-        }
+        public TimeSpan TimeUntilAction => ActionTime - DateTime.Now;
 
         public DateTime ActionTime { get; private set; }
 
@@ -192,55 +185,37 @@ namespace DustInTheWind.WindowsReboot.Core
             StopTimer();
             isRunning = false;
 
-            OnStoped();
+            OnStopped();
         }
 
         protected virtual void OnStarted()
         {
-            EventHandler handler = Started;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            Started?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnStoped()
+        protected virtual void OnStopped()
         {
-            EventHandler handler = Stoped;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            Stopped?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void OnWarning()
         {
-            EventHandler handler = Warning;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            Warning?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void OnRing()
         {
-            EventHandler handler = Ring;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            Ring?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void OnWarningTimeChanged()
         {
-            EventHandler handler = WarningTimeChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            WarningTimeChanged?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void OnTimeChanged()
         {
-            EventHandler handler = TimeChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            TimeChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void Dispose()

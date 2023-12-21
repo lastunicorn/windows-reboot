@@ -151,7 +151,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
 
             timer.TimeChanged += HandleTimerTimeChanged;
             timer.Started += HandleTimerStarted;
-            timer.Stoped += HandleTimerStoped;
+            timer.Stopped += HandleTimerStopped;
         }
 
         private void HandleTimerStarted(object sender, EventArgs eventArgs)
@@ -159,7 +159,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             Enabled = false;
         }
 
-        private void HandleTimerStoped(object sender, EventArgs eventArgs)
+        private void HandleTimerStopped(object sender, EventArgs eventArgs)
         {
             userInterface.Dispatch(() => Enabled = true);
         }

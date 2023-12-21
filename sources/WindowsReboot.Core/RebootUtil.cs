@@ -16,6 +16,9 @@
 
 using System;
 using System.Runtime.InteropServices;
+using DustInTheWind.WindowsApi.ProcessthreadsapiHeader;
+using DustInTheWind.WindowsApi.Winbase;
+using DustInTheWind.WindowsApi.Winuser;
 using DustInTheWind.WindowsReboot.Core.WinApi;
 
 namespace DustInTheWind.WindowsReboot.Core
@@ -37,7 +40,7 @@ namespace DustInTheWind.WindowsReboot.Core
         }
 
         /// <summary>
-        /// Sets the privilege needed to excute a ShutDown action.
+        /// Sets the privilege needed to execute a ShutDown action.
         /// </summary>
         private static void EnableShutDown()
         {
@@ -46,23 +49,24 @@ namespace DustInTheWind.WindowsReboot.Core
             const short SE_PRIVILEGE_ENABLED = 0x02;
             const string SE_SHUTDOWN_NAME = "SeShutdownPrivilege";
 
-            int hdlTokenHandle;
-            LUID tmpLuid;
+            DustInTheWind.WindowsApi.Winbase.LUID tmpLuid;
             TOKEN_PRIVILEGES tkp;
-            TOKEN_PRIVILEGES tkpNewButIgnored;
-            int lBufferNeeded;
 
-            var hdlProcessHandle = WinApiFunctions.GetCurrentProcess();
+            int processHandle = Processthreadsapi.GetCurrentProcess();
+            int desiredAccess = TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY;
 
-            if (WinApiFunctions.OpenProcessToken(hdlProcessHandle, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, out hdlTokenHandle) == WinApiConstants.FALSE)
+            if (Processthreadsapi.OpenProcessToken(processHandle, desiredAccess, out int tokenHandle) == WinApiConstants.FALSE)
                 throw new WindowsRebootException("Could not obtain the rights to execute the action.");
 
-            WinApiFunctions.LookupPrivilegeValueA(null, SE_SHUTDOWN_NAME, out tmpLuid);
+            Winbase.LookupPrivilegeValueA(null, SE_SHUTDOWN_NAME, out tmpLuid);
             tkp.PrivilegeCount = 1; // One privilege to set
-            tkp.TheLuid = tmpLuid;
+            tkp.TheLuid = new DustInTheWind.WindowsReboot.Core.WinApi.LUID();
+            tkp.TheLuid.UsedPart = tmpLuid.UsedPart;
+            tkp.TheLuid.IgnoredForNowHigh32BitPart = tmpLuid.IgnoredForNowHigh32BitPart;
+
             tkp.Attributes = SE_PRIVILEGE_ENABLED;
 
-            if (WinApiFunctions.AdjustTokenPrivileges(hdlTokenHandle, 0, ref tkp, Marshal.SizeOf(typeof(TOKEN_PRIVILEGES)), out tkpNewButIgnored, out lBufferNeeded) == WinApiConstants.FALSE)
+            if (WinApiFunctions.AdjustTokenPrivileges(tokenHandle, 0, ref tkp, Marshal.SizeOf(typeof(TOKEN_PRIVILEGES)), out _, out _) == WinApiConstants.FALSE)
                 throw new WindowsRebootException("Could not obtain the rights to execute the action.");
         }
 
@@ -71,7 +75,7 @@ namespace DustInTheWind.WindowsReboot.Core
         /// </summary>
         public void Lock()
         {
-            if (WinApiFunctions.LockWorkStation() == WinApiConstants.FALSE)
+            if (Winuser.LockWorkStation() == WinApiConstants.FALSE)
             {
                 throw new WindowsRebootException("The LockWorkstation action failed.");
             }
@@ -83,13 +87,13 @@ namespace DustInTheWind.WindowsReboot.Core
         /// <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
         public void LogOff(bool force)
         {
-            int flags = WinApiConstants.EWX_LOGOFF;
-            const uint reason = WinApiConstants.SHTDN_REASON_MAJOR_OTHER | WinApiConstants.SHTDN_REASON_MINOR_OTHER | WinApiConstants.SHTDN_REASON_FLAG_PLANNED;
+            ExitWindowsFlags flags = ExitWindowsFlags.LogOff;
+            SystemShutdownReason reason = SystemShutdownReason.SHTDN_REASON_MAJOR_OTHER | SystemShutdownReason.SHTDN_REASON_MINOR_OTHER | SystemShutdownReason.SHTDN_REASON_FLAG_PLANNED;
 
             if (force)
-                flags |= WinApiConstants.EWX_FORCE;
+                flags |= ExitWindowsFlags.Force;
 
-            if (WinApiFunctions.ExitWindowsEx(flags, reason) == WinApiConstants.FALSE)
+            if (Winuser.ExitWindowsEx(flags, reason) == WinApiConstants.FALSE)
                 throw new WindowsRebootException("The LogOff action failed.");
         }
 
@@ -137,16 +141,16 @@ namespace DustInTheWind.WindowsReboot.Core
         /// <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
         public void Reboot(bool force)
         {
-            int flags = WinApiConstants.EWX_REBOOT;
-            const uint reason = WinApiConstants.SHTDN_REASON_MAJOR_OTHER | WinApiConstants.SHTDN_REASON_MINOR_OTHER | WinApiConstants.SHTDN_REASON_FLAG_PLANNED;
+            ExitWindowsFlags flags = ExitWindowsFlags.Reboot;
+            SystemShutdownReason reason = SystemShutdownReason.SHTDN_REASON_MAJOR_OTHER | SystemShutdownReason.SHTDN_REASON_MINOR_OTHER | SystemShutdownReason.SHTDN_REASON_FLAG_PLANNED;
 
             if (force)
-                flags |= WinApiConstants.EWX_FORCE;
+                flags |= ExitWindowsFlags.Force;
 
             if (IsWinNT())
                 EnableShutDown();
 
-            if (WinApiFunctions.ExitWindowsEx(flags, reason) == WinApiConstants.FALSE)
+            if (Winuser.ExitWindowsEx(flags, reason) == WinApiConstants.FALSE)
                 throw new WindowsRebootException("The Reboot action failed.");
         }
 
@@ -155,22 +159,22 @@ namespace DustInTheWind.WindowsReboot.Core
         /// Shuts down the system without switching the power off.
         /// </para>
         /// <para>
-        /// Note: On Windows XP with SP1 and Vista swithes the power off if the system supports that.
+        /// Note: On Windows XP with SP1 and Vista switches the power off if the system supports that.
         /// </para>
         /// </summary>
         /// <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
         public void ShutDown(bool force)
         {
-            int flags = WinApiConstants.EWX_SHUTDOWN;
-            const uint reason = WinApiConstants.SHTDN_REASON_MAJOR_OTHER | WinApiConstants.SHTDN_REASON_MINOR_OTHER | WinApiConstants.SHTDN_REASON_FLAG_PLANNED;
+            ExitWindowsFlags flags = ExitWindowsFlags.Shutdown;
+            SystemShutdownReason reason = SystemShutdownReason.SHTDN_REASON_MAJOR_OTHER | SystemShutdownReason.SHTDN_REASON_MINOR_OTHER | SystemShutdownReason.SHTDN_REASON_FLAG_PLANNED;
 
             if (force)
-                flags |= WinApiConstants.EWX_FORCE;
+                flags |= ExitWindowsFlags.Force;
 
             if (IsWinNT())
                 EnableShutDown();
 
-            if (WinApiFunctions.ExitWindowsEx(flags, reason) == WinApiConstants.FALSE)
+            if (Winuser.ExitWindowsEx(flags, reason) == WinApiConstants.FALSE)
                 throw new WindowsRebootException("The ShutDown action failed.");
         }
 
@@ -180,16 +184,16 @@ namespace DustInTheWind.WindowsReboot.Core
         /// <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
         public void PowerOff(bool force)
         {
-            int flags = WinApiConstants.EWX_POWEROFF;
-            const uint reason = WinApiConstants.SHTDN_REASON_MAJOR_OTHER | WinApiConstants.SHTDN_REASON_MINOR_OTHER | WinApiConstants.SHTDN_REASON_FLAG_PLANNED;
+            ExitWindowsFlags flags = ExitWindowsFlags.PowerOff;
+            SystemShutdownReason reason = SystemShutdownReason.SHTDN_REASON_MAJOR_OTHER | SystemShutdownReason.SHTDN_REASON_MINOR_OTHER | SystemShutdownReason.SHTDN_REASON_FLAG_PLANNED;
 
             if (force)
-                flags |= WinApiConstants.EWX_FORCE;
+                flags |= ExitWindowsFlags.Force;
 
             if (IsWinNT())
                 EnableShutDown();
 
-            if (WinApiFunctions.ExitWindowsEx(flags, reason) == WinApiConstants.FALSE)
+            if (Winuser.ExitWindowsEx(flags, reason) == WinApiConstants.FALSE)
                 throw new WindowsRebootException("The PowerOff action failed.");
         }
     }

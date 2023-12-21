@@ -38,7 +38,7 @@ namespace DustInTheWind.WindowsReboot.Commands
             this.timer = timer;
 
             timer.Started += HandleTimerStarted;
-            timer.Stoped += HandleTimerStoped;
+            timer.Stopped += HandleTimerStopped;
         }
 
         private void HandleTimerStarted(object sender, EventArgs e)
@@ -46,7 +46,7 @@ namespace DustInTheWind.WindowsReboot.Commands
             OnCanExecuteChanged();
         }
 
-        private void HandleTimerStoped(object sender, EventArgs e)
+        private void HandleTimerStopped(object sender, EventArgs e)
         {
             userInterface.Dispatch(OnCanExecuteChanged);
         }

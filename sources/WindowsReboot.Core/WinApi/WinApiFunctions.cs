@@ -20,57 +20,8 @@ namespace DustInTheWind.WindowsReboot.Core.WinApi
 {
     internal static class WinApiFunctions
     {
-        [DllImport("kernel32.dll")]
-        public static extern int GetCurrentProcess();
-
-        [DllImport("advapi32.dll")]
-        public static extern int OpenProcessToken(int ProcessHandle, int DesiredAccess, out int TokenHandle);
-
-        [DllImport("advapi32.dll")]
-        public static extern int LookupPrivilegeValueA(string lpSystemName, string lpName, out LUID lpLuid);
-
         [DllImport("advapi32.dll")]
         public static extern int AdjustTokenPrivileges(int TokenHandle, int DisableAllPrivileges, ref TOKEN_PRIVILEGES NewState, int BufferLength, out TOKEN_PRIVILEGES PreviousState, out int ReturnLength);
-
-        /// <summary>
-        /// Locks the workstation's display.
-        /// </summary>
-        /// <returns>
-        /// <para>
-        /// If the function succeeds, the return value is nonzero. Because the function executes
-        /// asynchronously, a nonzero return value indicates that the operation has been initiated.
-        /// It does not indicate whether the workstation has been successfully locked.
-        /// </para>
-        /// <para>
-        /// If the function fails, the return value is zero.
-        /// To get extended error information, call GetLastError.
-        /// </para>
-        /// </returns>
-        [DllImport("user32.dll")]
-        public static extern int LockWorkStation();
-
-        /// <summary>
-        /// Logs off the interactive user, shuts down the system, or shuts down and restarts the system.
-        /// </summary>
-        /// <param name="uFlags">The shutdown type.</param>
-        /// <param name="dwReason">
-        /// The reason for initiating the shutdown.
-        /// On Windows 2000 this parameter is ignored.
-        /// </param>
-        /// <returns>
-        /// <para>
-        /// If the function succeeds, the return value is nonzero. Because the function executes
-        /// asynchronously, a nonzero return value indicates that the shutdown has been initiated.
-        /// It does not indicate whether the shutdown will succeed. It is possible that the system,
-        /// the user, or another application will abort the shutdown.
-        /// </para>
-        /// <para>
-        /// If the function fails, the return value is zero.
-        /// To get extended error information, call GetLastError.
-        /// </para>
-        /// </returns>
-        [DllImport("user32.dll")]
-        public static extern int ExitWindowsEx(int uFlags, uint dwReason);
 
         /// <summary>
         /// Suspends the system by shutting power down. Depending on the Hibernate parameter,

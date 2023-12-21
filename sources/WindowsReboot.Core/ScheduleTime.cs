@@ -47,7 +47,7 @@ namespace DustInTheWind.WindowsReboot.Core
                         DateTime potentialTime = now.Date + TimeOfDay;
 
                         while (potentialTime < now)
-                            potentialTime = potentialTime + TimeSpan.FromDays(1);
+                            potentialTime += TimeSpan.FromDays(1);
                         
                         // todo: check if reached DateTime.Max
 

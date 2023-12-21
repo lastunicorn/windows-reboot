@@ -64,7 +64,7 @@ namespace DustInTheWind.WindowsReboot.Core
         /// Shuts down the system without switching the power off.
         /// </para>
         /// <para>
-        /// Note: On Windows XP with SP1 and Vista swithes the power off if the system supports that.
+        /// Note: On Windows XP with SP1 and Vista switches the power off if the system supports that.
         /// </para>
         /// </summary>
         /// <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>

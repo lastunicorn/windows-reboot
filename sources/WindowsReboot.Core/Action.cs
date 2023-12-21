@@ -30,7 +30,7 @@ namespace DustInTheWind.WindowsReboot.Core
 
         public ActionType Type
         {
-            get { return type; }
+            get => type;
             set
             {
                 if (!Enum.IsDefined(typeof(ActionType), value))
@@ -43,7 +43,7 @@ namespace DustInTheWind.WindowsReboot.Core
 
         public bool Force
         {
-            get { return force; }
+            get => force;
             set
             {
                 force = value;
@@ -53,10 +53,9 @@ namespace DustInTheWind.WindowsReboot.Core
 
         public Action(Timer timer, IRebootUtil rebootUtil)
         {
-            if (timer == null) throw new ArgumentNullException("timer");
-            if (rebootUtil == null) throw new ArgumentNullException("rebootUtil");
+            if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            this.rebootUtil = rebootUtil;
+            this.rebootUtil = rebootUtil ?? throw new ArgumentNullException(nameof(rebootUtil));
 
             Type = ActionType.Ring;
             Force = true;
@@ -107,26 +106,17 @@ namespace DustInTheWind.WindowsReboot.Core
 
         protected virtual void OnForceChanged()
         {
-            EventHandler handler = ForceChanged;
-
-            if (handler != null) 
-                handler(this, EventArgs.Empty);
+            ForceChanged?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void OnTypeChanged()
         {
-            EventHandler handler = TypeChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            TypeChanged?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void OnNotificationRaised()
         {
-            EventHandler handler = NotificationRaised;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            NotificationRaised?.Invoke(this, EventArgs.Empty);
         }
     }
 }

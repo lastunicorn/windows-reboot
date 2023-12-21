@@ -22,7 +22,7 @@ namespace DustInTheWind.WindowsReboot.Core
     public enum ActionType
     {
         /// <summary>
-        /// Displays a message box to aunce the time has past.
+        /// Displays a message box to announce the time has past.
         /// </summary>
         Ring,
 

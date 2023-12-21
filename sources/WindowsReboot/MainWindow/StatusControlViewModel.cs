@@ -71,7 +71,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             ticker = new System.Threading.Timer(HandleTickerTick, null, 0, 100);
 
             timer.Started += HandleTimerStarted;
-            timer.Stoped += HandleTimerStoped;
+            timer.Stopped += HandleTimerStopped;
         }
 
         private void HandleTickerTick(object state)
@@ -90,7 +90,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             userInterface.Dispatch(() => { ActionTime = timer.ActionTime; });
         }
 
-        private void HandleTimerStoped(object sender, EventArgs eventArgs)
+        private void HandleTimerStopped(object sender, EventArgs eventArgs)
         {
             userInterface.Dispatch(() =>
             {
