@@ -17,7 +17,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace WindowsReboot.SystemAccess
+namespace DustInTheWind.WindowsReboot.SystemAccess
 {
     /// <summary>
     /// General exception for the WindowsReboot application. It's also used as base class for all the other exceptions.

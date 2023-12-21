@@ -16,7 +16,7 @@
 
 using System.Runtime.InteropServices;
 
-namespace WindowsReboot.SystemAccess.WinApi
+namespace DustInTheWind.WindowsReboot.SystemAccess.WinApi
 {
     internal static class WinApiFunctions
     {

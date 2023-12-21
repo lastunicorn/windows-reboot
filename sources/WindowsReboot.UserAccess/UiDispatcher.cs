@@ -16,7 +16,7 @@
 
 using System;
 using System.Threading;
-using DustInTheWind.WindowsReboot.Services;
+using DustInTheWind.WindowsReboot.Ports.UserAccess;
 
 namespace DustInTheWind.WindowsReboot.UserAccess
 {

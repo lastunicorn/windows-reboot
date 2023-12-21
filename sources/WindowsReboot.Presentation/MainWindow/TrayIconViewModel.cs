@@ -19,9 +19,9 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.SystemAccess;
+using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WindowsReboot.Presentation.UiCommon;
-using DustInTheWind.WindowsReboot.Services;
 using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow

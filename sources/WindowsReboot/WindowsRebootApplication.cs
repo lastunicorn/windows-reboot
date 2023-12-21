@@ -5,8 +5,8 @@ using DustInTheWind.WindowsReboot.Presentation;
 using DustInTheWind.WindowsReboot.Presentation.MainWindow;
 using DustInTheWind.WindowsReboot.Presentation.WorkerModel;
 using DustInTheWind.WindowsReboot.Setup;
+using DustInTheWind.WindowsReboot.SystemAccess;
 using DustInTheWind.WindowsReboot.UserAccess;
-using WindowsReboot.SystemAccess;
 using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 
 namespace DustInTheWind.WindowsReboot

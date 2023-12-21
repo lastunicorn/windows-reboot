@@ -1,4 +1,4 @@
-﻿namespace WindowsReboot.SystemAccess.WinApi
+﻿namespace DustInTheWind.WindowsReboot.SystemAccess.WinApi
 {
     internal struct LUID
     {

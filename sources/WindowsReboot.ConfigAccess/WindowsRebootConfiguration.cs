@@ -17,7 +17,7 @@
 using System;
 using System.Configuration;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Core.Config;
+using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 
 namespace DustInTheWind.WindowsReboot.ConfigAccess
 {

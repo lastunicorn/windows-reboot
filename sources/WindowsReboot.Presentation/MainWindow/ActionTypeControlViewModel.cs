@@ -17,8 +17,8 @@
 using System;
 using System.Linq;
 using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.UiCommon;
-using DustInTheWind.WindowsReboot.Services;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow

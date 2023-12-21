@@ -16,8 +16,8 @@
 
 using System;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.Core.Config;
-using DustInTheWind.WindowsReboot.Services;
+using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
+using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.UserAccess.OtherWindows;
 
 namespace DustInTheWind.WindowsReboot.UserAccess

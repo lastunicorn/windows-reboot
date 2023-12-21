@@ -17,9 +17,9 @@
 using System;
 using System.Collections.Generic;
 using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.WorkerModel;
 using DustInTheWind.WindowsReboot.Presentation.Workers;
-using DustInTheWind.WindowsReboot.Services;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
 
 namespace DustInTheWind.WindowsReboot.Setup

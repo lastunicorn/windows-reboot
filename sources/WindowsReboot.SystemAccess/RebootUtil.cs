@@ -20,10 +20,10 @@ using DustInTheWind.WindowsApi.ProcessthreadsapiHeader;
 using DustInTheWind.WindowsApi.Winbase;
 using DustInTheWind.WindowsApi.Winuser;
 using DustInTheWind.WindowsReboot.Ports.SystemAccess;
-using WindowsReboot.SystemAccess.WinApi;
-using LUID = WindowsReboot.SystemAccess.WinApi.LUID;
+using DustInTheWind.WindowsReboot.SystemAccess.WinApi;
+using LUID = DustInTheWind.WindowsReboot.SystemAccess.WinApi.LUID;
 
-namespace WindowsReboot.SystemAccess
+namespace DustInTheWind.WindowsReboot.SystemAccess
 {
     /// <summary>
     /// Util class that calls the Windows API function to execute

@@ -16,8 +16,8 @@
 
 using System;
 using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.CommandModel;
-using DustInTheWind.WindowsReboot.Services;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands

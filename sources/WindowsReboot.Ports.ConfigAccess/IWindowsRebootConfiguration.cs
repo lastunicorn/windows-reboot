@@ -1,4 +1,6 @@
-﻿namespace DustInTheWind.WindowsReboot.Core.Config
+﻿using DustInTheWind.WindowsReboot.Core;
+
+namespace DustInTheWind.WindowsReboot.Ports.ConfigAccess
 {
     public interface IWindowsRebootConfiguration
     {

@@ -15,9 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.CommandModel;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
-using DustInTheWind.WindowsReboot.Services;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {

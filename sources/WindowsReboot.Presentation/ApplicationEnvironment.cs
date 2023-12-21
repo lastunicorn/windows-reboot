@@ -17,7 +17,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.Core.Config;
+using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
 using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 

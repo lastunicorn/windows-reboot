@@ -16,7 +16,7 @@
 
 using System;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.Core.Config;
+using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 
 namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
 {

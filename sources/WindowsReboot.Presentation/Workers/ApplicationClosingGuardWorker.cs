@@ -17,8 +17,8 @@
 using System;
 using System.ComponentModel;
 using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.WorkerModel;
-using DustInTheWind.WindowsReboot.Services;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Workers
 {

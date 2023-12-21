@@ -17,10 +17,10 @@
 using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Core.Config;
+using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
+using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WindowsReboot.Presentation.UiCommon;
-using DustInTheWind.WindowsReboot.Services;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
 using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 

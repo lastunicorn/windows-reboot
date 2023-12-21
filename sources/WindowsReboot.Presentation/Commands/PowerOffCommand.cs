@@ -16,8 +16,8 @@
 
 using System;
 using DustInTheWind.WindowsReboot.Ports.SystemAccess;
+using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.CommandModel;
-using DustInTheWind.WindowsReboot.Services;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
