@@ -135,8 +135,6 @@
       <DependentUpon>TrayIcon.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\TrayIconViewModel.cs" />
-    <Compile Include="Services\IUserInterface.cs" />
-    <Compile Include="Services\MainWindowState.cs" />
     <Compile Include="UiCommon\BindingExtensions.cs" />
     <Compile Include="MainWindow\ActionTypeControl.cs">
       <SubType>UserControl</SubType>
@@ -145,7 +143,6 @@
       <DependentUpon>ActionTypeControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\ActionTypeControlViewModel.cs" />
-    <Compile Include="Services\IUiDispatcher.cs" />
     <Compile Include="MainWindow\ActionTypeItem.cs" />
     <Compile Include="UiCommon\CustomGroupBox.cs">
       <SubType>Component</SubType>
@@ -174,31 +171,11 @@
     <Compile Include="MainWindow\StatusControlViewModel.cs" />
     <Compile Include="Services\TimerFormatter.cs" />
     <Compile Include="UiCommon\ViewModelBase.cs" />
-    <Compile Include="Services\UiDispatcher.cs" />
-    <Compile Include="Services\UserInterface.cs" />
-    <Compile Include="OtherWindows\LicenseForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OtherWindows\LicenseForm.Designer.cs">
-      <DependentUpon>LicenseForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="OtherWindows\OptionsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OtherWindows\OptionsForm.Designer.cs">
-      <DependentUpon>OptionsForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainWindow\WindowsRebootForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow\WindowsRebootForm.Designer.cs">
       <DependentUpon>WindowsRebootForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="OtherWindows\FormAbout.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OtherWindows\FormAbout.Designer.cs">
-      <DependentUpon>FormAbout.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\IWindowsRebootView.cs" />
     <Compile Include="Program.cs" />
@@ -237,24 +214,12 @@
     <EmbeddedResource Include="MainWindow\TrayIcon.resx">
       <DependentUpon>TrayIcon.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OtherWindows\LicenseForm.resx">
-      <DependentUpon>LicenseForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <None Include="Resources\License.txt" />
-    <EmbeddedResource Include="OtherWindows\OptionsForm.resx">
-      <DependentUpon>OptionsForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\StatusControl.resx">
       <DependentUpon>StatusControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\WindowsRebootForm.resx">
       <DependentUpon>WindowsRebootForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OtherWindows\FormAbout.resx">
-      <DependentUpon>FormAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -327,6 +292,22 @@
     <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Core.csproj">
       <Project>{76665ccc-6451-4caf-893b-7da3d7f6ead0}</Project>
       <Name>WindowsReboot.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj">
+      <Project>{CA55A116-6AA7-4222-9686-2D57B4CD5E58}</Project>
+      <Name>WindowsReboot.Ports.SystemAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj">
+      <Project>{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}</Project>
+      <Name>WindowsReboot.Ports.UserAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsReboot.SystemAccess\WindowsReboot.SystemAccess.csproj">
+      <Project>{1D579956-B6C4-4FBF-BAC9-E749EA8C8662}</Project>
+      <Name>WindowsReboot.SystemAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsReboot.UserAccess\WindowsReboot.UserAccess.csproj">
+      <Project>{3D0B14FF-253A-435E-9031-673C7F672067}</Project>
+      <Name>WindowsReboot.UserAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

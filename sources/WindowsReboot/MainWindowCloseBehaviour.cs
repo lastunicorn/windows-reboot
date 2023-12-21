@@ -36,17 +36,11 @@ namespace DustInTheWind.WindowsReboot
         public MainWindowCloseBehaviour(WindowsRebootForm mainWindow, ApplicationEnvironment applicationEnvironment,
             WindowsRebootConfiguration windowsRebootConfiguration, Timer timer, IUserInterface userInterface)
         {
-            if (mainWindow == null) throw new ArgumentNullException("mainWindow");
-            if (applicationEnvironment == null) throw new ArgumentNullException("applicationEnvironment");
-            if (windowsRebootConfiguration == null) throw new ArgumentNullException("windowsRebootConfiguration");
-            if (timer == null) throw new ArgumentNullException("timer");
-            if (userInterface == null) throw new ArgumentNullException("userInterface");
-
-            this.mainWindow = mainWindow;
-            this.applicationEnvironment = applicationEnvironment;
-            this.windowsRebootConfiguration = windowsRebootConfiguration;
-            this.timer = timer;
-            this.userInterface = userInterface;
+            this.mainWindow = mainWindow ?? throw new ArgumentNullException(nameof(mainWindow));
+            this.applicationEnvironment = applicationEnvironment ?? throw new ArgumentNullException(nameof(applicationEnvironment));
+            this.windowsRebootConfiguration = windowsRebootConfiguration ?? throw new ArgumentNullException(nameof(windowsRebootConfiguration));
+            this.timer = timer ?? throw new ArgumentNullException(nameof(timer));
+            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
 
             mainWindow.Closing += HandleMainWindowClosing;
 

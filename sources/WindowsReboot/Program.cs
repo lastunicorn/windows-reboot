@@ -16,12 +16,13 @@
 
 using System;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Core.Config;
 using DustInTheWind.WindowsReboot.MainWindow;
-using DustInTheWind.WindowsReboot.Services;
+using DustInTheWind.WindowsReboot.Ports.SystemAccess;
 using DustInTheWind.WindowsReboot.Setup;
+using DustInTheWind.WindowsReboot.UserAccess;
 using DustInTheWind.WindowsReboot.WorkerModel;
+using WindowsReboot.SystemAccess;
 using Action = DustInTheWind.WindowsReboot.Core.Action;
 using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 
@@ -52,13 +53,12 @@ namespace DustInTheWind.WindowsReboot
 
             WindowsRebootForm mainWindow = new WindowsRebootForm();
             uiDispatcher = new UiDispatcher();
+            windowsRebootConfiguration = new WindowsRebootConfiguration();
 
-            userInterface = new UserInterface(uiDispatcher)
+            userInterface = new UserInterface(uiDispatcher, windowsRebootConfiguration)
             {
                 MainForm = mainWindow
             };
-
-            windowsRebootConfiguration = new WindowsRebootConfiguration();
 
             rebootUtil = new RebootUtil();
             timer = new Timer();

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AssemblyName>DustInTheWind.WindowsReboot.SystemAccess</AssemblyName>
+        <RootNamespace>DustInTheWind.WindowsReboot.SystemAccess</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="DustInTheWind.WindowsApi" Version="1.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj" PrivateAssets="All" />
+    </ItemGroup>
+
+</Project>

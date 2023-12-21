@@ -14,28 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
 using DustInTheWind.WindowsReboot.CommandModel;
-using DustInTheWind.WindowsReboot.Core.Config;
 using DustInTheWind.WindowsReboot.Services;
 
 namespace DustInTheWind.WindowsReboot.Commands
 {
     internal class OptionsCommand : CommandBase
     {
-        private readonly WindowsRebootConfiguration configuration;
-
-        public OptionsCommand(IUserInterface userInterface, WindowsRebootConfiguration configuration)
+        public OptionsCommand(IUserInterface userInterface)
             : base(userInterface)
         {
-            if (configuration == null) throw new ArgumentNullException("configuration");
-
-            this.configuration = configuration;
         }
 
         protected override void DoExecute()
         {
-            userInterface.DisplayOptions(configuration);
+            userInterface.DisplayOptions();
         }
     }
 }

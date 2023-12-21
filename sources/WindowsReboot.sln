@@ -1,13 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot", "WindowsReboot\WindowsReboot.csproj", "{C407B401-6749-4430-AC5C-8923572A0EA5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.Tests", "WindowsReboot.Tests\WindowsReboot.Tests.csproj", "{738C66BC-F74F-47E5-A526-0C565CD1911F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.Core", "WindowsReboot.Core\WindowsReboot.Core.csproj", "{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsReboot.Ports.SystemAccess", "WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj", "{CA55A116-6AA7-4222-9686-2D57B4CD5E58}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsReboot.SystemAccess", "WindowsReboot.SystemAccess\WindowsReboot.SystemAccess.csproj", "{1D579956-B6C4-4FBF-BAC9-E749EA8C8662}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsReboot.Ports.UserAccess", "WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj", "{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ports", "Ports", "{65ACE60B-F696-4842-B8B2-1B8E7AC91642}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{B1F5C43A-0715-410E-9469-E3DBE8D729D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.UserAccess", "WindowsReboot.UserAccess\WindowsReboot.UserAccess.csproj", "{3D0B14FF-253A-435E-9031-673C7F672067}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,8 +39,33 @@ Global
 		{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA55A116-6AA7-4222-9686-2D57B4CD5E58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA55A116-6AA7-4222-9686-2D57B4CD5E58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA55A116-6AA7-4222-9686-2D57B4CD5E58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA55A116-6AA7-4222-9686-2D57B4CD5E58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D579956-B6C4-4FBF-BAC9-E749EA8C8662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D579956-B6C4-4FBF-BAC9-E749EA8C8662}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D579956-B6C4-4FBF-BAC9-E749EA8C8662}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D579956-B6C4-4FBF-BAC9-E749EA8C8662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D0B14FF-253A-435E-9031-673C7F672067}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D0B14FF-253A-435E-9031-673C7F672067}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D0B14FF-253A-435E-9031-673C7F672067}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D0B14FF-253A-435E-9031-673C7F672067}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CA55A116-6AA7-4222-9686-2D57B4CD5E58} = {65ACE60B-F696-4842-B8B2-1B8E7AC91642}
+		{1D579956-B6C4-4FBF-BAC9-E749EA8C8662} = {B1F5C43A-0715-410E-9469-E3DBE8D729D4}
+		{1A1B92B9-47D6-4F20-9F29-9E009B817ADF} = {65ACE60B-F696-4842-B8B2-1B8E7AC91642}
+		{3D0B14FF-253A-435E-9031-673C7F672067} = {B1F5C43A-0715-410E-9469-E3DBE8D729D4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {461CA009-4250-461E-8FC0-7C026864E6F6}
 	EndGlobalSection
 EndGlobal

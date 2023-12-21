@@ -99,18 +99,18 @@
     <Compile Include="Config\MinimizeToTrayConfigElement.cs" />
     <Compile Include="Config\StartTimerAtApplicationStartConfigElement.cs" />
     <Compile Include="Config\WindowsRebootConfigSection.cs" />
-    <Compile Include="IRebootUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RebootUtil.cs" />
     <Compile Include="VersionUtil.cs" />
-    <Compile Include="WinApi\LUID.cs" />
-    <Compile Include="WinApi\TOKEN_PRIVILEGES.cs" />
-    <Compile Include="WinApi\WinApiConstants.cs" />
-    <Compile Include="WinApi\WinApiFunctions.cs" />
     <Compile Include="WindowsRebootException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj">
+      <Project>{CA55A116-6AA7-4222-9686-2D57B4CD5E58}</Project>
+      <Name>WindowsReboot.Ports.SystemAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

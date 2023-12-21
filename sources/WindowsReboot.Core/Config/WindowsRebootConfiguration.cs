@@ -26,9 +26,8 @@ namespace DustInTheWind.WindowsReboot.Core.Config
 
         public ScheduleTime ActionTime
         {
-            get
-            {
-                return new ScheduleTime
+            get =>
+                new ScheduleTime
                 {
                     Type = configSection.ActionTime.Type,
                     DateTime = configSection.ActionTime.DateTime,
@@ -37,11 +36,12 @@ namespace DustInTheWind.WindowsReboot.Core.Config
                     Minutes = configSection.ActionTime.Minutes,
                     Seconds = configSection.ActionTime.Seconds
                 };
-            }
             set
             {
                 configSection.ActionTime.Type = value.Type;
-                configSection.ActionTime.DateTime = value.Type == ScheduleTimeType.Daily ? DateTime.Today.Add(value.TimeOfDay) : value.DateTime;
+                configSection.ActionTime.DateTime = value.Type == ScheduleTimeType.Daily
+                    ? DateTime.Today.Add(value.TimeOfDay)
+                    : value.DateTime;
                 configSection.ActionTime.Hours = value.Hours;
                 configSection.ActionTime.Minutes = value.Minutes;
                 configSection.ActionTime.Seconds = value.Seconds;
@@ -50,32 +50,32 @@ namespace DustInTheWind.WindowsReboot.Core.Config
 
         public ActionType ActionType
         {
-            get { return configSection.ActionType.Value; }
-            set { configSection.ActionType.Value = value; }
+            get => configSection.ActionType.Value;
+            set => configSection.ActionType.Value = value;
         }
 
         public bool ForceClosingPrograms
         {
-            get { return configSection.ForceClosingPrograms.Value; }
-            set { configSection.ForceClosingPrograms.Value = value; }
+            get => configSection.ForceClosingPrograms.Value;
+            set => configSection.ForceClosingPrograms.Value = value;
         }
 
         public bool StartTimerAtApplicationStart
         {
-            get { return configSection.StartTimerAtApplicationStart.Value; }
-            set { configSection.StartTimerAtApplicationStart.Value = value; }
+            get => configSection.StartTimerAtApplicationStart.Value;
+            set => configSection.StartTimerAtApplicationStart.Value = value;
         }
 
         public bool CloseToTray
         {
-            get { return configSection.CloseToTray.Value; }
-            set { configSection.CloseToTray.Value = value; }
+            get => configSection.CloseToTray.Value;
+            set => configSection.CloseToTray.Value = value;
         }
 
         public bool MinimizeToTray
         {
-            get { return configSection.MinimizeToTray.Value; }
-            set { configSection.MinimizeToTray.Value = value; }
+            get => configSection.MinimizeToTray.Value;
+            set => configSection.MinimizeToTray.Value = value;
         }
 
         public WindowsRebootConfiguration()

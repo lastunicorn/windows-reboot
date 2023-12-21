@@ -16,7 +16,7 @@
 
 using System;
 using DustInTheWind.WindowsReboot.CommandModel;
-using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Ports.SystemAccess;
 using DustInTheWind.WindowsReboot.Services;
 
 namespace DustInTheWind.WindowsReboot.Commands
@@ -28,9 +28,7 @@ namespace DustInTheWind.WindowsReboot.Commands
         public HibernateCommand(IUserInterface userInterface, IRebootUtil rebootUtil)
             : base(userInterface)
         {
-            if (rebootUtil == null) throw new ArgumentNullException("rebootUtil");
-
-            this.rebootUtil = rebootUtil;
+            this.rebootUtil = rebootUtil ?? throw new ArgumentNullException(nameof(rebootUtil));
         }
 
         protected override void DoExecute()

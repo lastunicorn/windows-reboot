@@ -49,7 +49,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         /// </summary>
         public string Title
         {
-            get { return title; }
+            get => title;
             set
             {
                 title = value;
@@ -64,11 +64,11 @@ namespace DustInTheWind.WindowsReboot.MainWindow
         public WindowsRebootViewModel(IUserInterface userInterface, Action action, Timer timer,
             WindowsRebootConfiguration windowsRebootConfiguration, ApplicationEnvironment applicationEnvironment)
         {
-            if (userInterface == null) throw new ArgumentNullException("userInterface");
-            if (action == null) throw new ArgumentNullException("action");
-            if (timer == null) throw new ArgumentNullException("timer");
-            if (windowsRebootConfiguration == null) throw new ArgumentNullException("windowsRebootConfiguration");
-            if (applicationEnvironment == null) throw new ArgumentNullException("applicationEnvironment");
+            if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
+            if (action == null) throw new ArgumentNullException(nameof(action));
+            if (timer == null) throw new ArgumentNullException(nameof(timer));
+            if (windowsRebootConfiguration == null) throw new ArgumentNullException(nameof(windowsRebootConfiguration));
+            if (applicationEnvironment == null) throw new ArgumentNullException(nameof(applicationEnvironment));
 
             ActionTimeControlViewModel = new ActionTimeControlViewModel(timer, userInterface);
             ActionTypeControlViewModel = new ActionTypeControlViewModel(timer, action, userInterface);
@@ -79,7 +79,7 @@ namespace DustInTheWind.WindowsReboot.MainWindow
             LoadDefaultConfigurationCommand = new LoadDefaultConfigurationCommand(userInterface, timer, action);
             LoadConfigurationCommand = new LoadConfigurationCommand(userInterface, timer, action, windowsRebootConfiguration);
             SaveConfigurationCommand = new SaveConfigurationCommand(userInterface, timer, action, windowsRebootConfiguration);
-            OptionsCommand = new OptionsCommand(userInterface, windowsRebootConfiguration);
+            OptionsCommand = new OptionsCommand(userInterface);
             LicenseCommand = new LicenseCommand(userInterface);
             AboutCommand = new AboutCommand(userInterface);
             ExitCommand = new ExitCommand(userInterface, applicationEnvironment);
