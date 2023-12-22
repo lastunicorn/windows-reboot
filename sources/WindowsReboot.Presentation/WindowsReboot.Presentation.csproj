@@ -159,6 +159,7 @@
     <Compile Include="WorkerModel\Workers.cs" />
     <Compile Include="Workers\ApplicationClosingGuardWorker.cs" />
     <Compile Include="Workers\NotificationWorker.cs" />
+    <Compile Include="Workers\TimerWorker.cs" />
     <Compile Include="Workers\WarningWorker.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>

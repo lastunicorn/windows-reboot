@@ -24,7 +24,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
     public class StatusControlViewModel : ViewModelBase, IDisposable
     {
         private readonly Timer ticker;
-        private readonly Core.Timer timer;
+        private readonly Core.ExecutionTimer executionTimer;
         private readonly IUserInterface userInterface;
         private DateTime currentTime;
         private DateTime? actionTime;
@@ -60,15 +60,15 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             }
         }
 
-        public StatusControlViewModel(Core.Timer timer, IUserInterface userInterface)
+        public StatusControlViewModel(Core.ExecutionTimer executionTimer, IUserInterface userInterface)
         {
-            this.timer = timer ?? throw new ArgumentNullException(nameof(timer));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
 
             ticker = new Timer(HandleTickerTick, null, 0, 100);
 
-            timer.Started += HandleTimerStarted;
-            timer.Stopped += HandleTimerStopped;
+            executionTimer.Started += HandleTimerStarted;
+            executionTimer.Stopped += HandleTimerStopped;
         }
 
         private void HandleTickerTick(object state)
@@ -77,14 +77,14 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             {
                 CurrentTime = DateTime.Now;
 
-                if (timer.IsRunning)
-                    TimerTime = timer.TimeUntilAction;
+                if (executionTimer.IsRunning)
+                    TimerTime = executionTimer.TimeUntilAction;
             });
         }
 
         private void HandleTimerStarted(object sender, EventArgs eventArgs)
         {
-            userInterface.Dispatch(() => { ActionTime = timer.ActionTime; });
+            userInterface.Dispatch(() => { ActionTime = executionTimer.ActionTime; });
         }
 
         private void HandleTimerStopped(object sender, EventArgs eventArgs)

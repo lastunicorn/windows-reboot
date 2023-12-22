@@ -18,38 +18,37 @@ using System;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.WorkerModel;
-using Action = DustInTheWind.WindowsReboot.Core.Action;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Workers
 {
     public class WarningWorker : IWorker
     {
         private readonly IUserInterface userInterface;
-        private readonly Timer timer;
-        private readonly Action action;
+        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
 
-        public WarningWorker(IUserInterface userInterface, Timer timer, Action action)
+        public WarningWorker(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan)
         {
             this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
-            this.timer = timer ?? throw new ArgumentNullException(nameof(timer));
-            this.action = action ?? throw new ArgumentNullException(nameof(action));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public void Start()
         {
-            timer.Warning += HandleTimerWarning;
+            executionTimer.Warning += HandleExecutionTimerWarning;
         }
 
         public void Stop()
         {
-            timer.Warning -= HandleTimerWarning;
+            executionTimer.Warning -= HandleExecutionTimerWarning;
         }
 
-        private void HandleTimerWarning(object sender, EventArgs e)
+        private void HandleExecutionTimerWarning(object sender, EventArgs e)
         {
             userInterface.Dispatch(() =>
             {
-                string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.", action.Type);
+                string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.", executionPlan.ActionType);
                 userInterface.DisplayMessage(message);
             });
         }

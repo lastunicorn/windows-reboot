@@ -23,17 +23,17 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     internal class StopTimerCommand : CommandBase
     {
-        private readonly Timer timer;
+        private readonly ExecutionTimer executionTimer;
 
-        public override bool CanExecute => timer.IsRunning;
+        public override bool CanExecute => executionTimer.IsRunning;
 
-        public StopTimerCommand(Timer timer, IUserInterface userInterface)
+        public StopTimerCommand(ExecutionTimer executionTimer, IUserInterface userInterface)
             : base(userInterface)
         {
-            this.timer = timer ?? throw new ArgumentNullException(nameof(timer));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
 
-            timer.Started += HandleTimerStarted;
-            timer.Stopped += HandleTimerStopped;
+            executionTimer.Started += HandleTimerStarted;
+            executionTimer.Stopped += HandleTimerStopped;
         }
 
         private void HandleTimerStarted(object sender, EventArgs e)
@@ -48,7 +48,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         protected override void DoExecute()
         {
-            timer.Stop();
+            executionTimer.Stop();
         }
     }
 }

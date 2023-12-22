@@ -23,7 +23,6 @@ using DustInTheWind.WindowsReboot.Presentation.WorkerModel;
 using DustInTheWind.WindowsReboot.Setup;
 using DustInTheWind.WindowsReboot.SystemAccess;
 using DustInTheWind.WindowsReboot.UserAccess;
-using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 
 namespace DustInTheWind.WindowsReboot
 {
@@ -50,23 +49,23 @@ namespace DustInTheWind.WindowsReboot
             };
 
             OperatingSystem operatingSystem = new OperatingSystem();
-            Timer timer = new Timer();
-            Action action = new Action(timer, operatingSystem);
+            ExecutionTimer executionTimer = new ExecutionTimer();
+            ExecutionPlan executionPlan = new ExecutionPlan(operatingSystem);
 
-            WorkerProvider workerProvider = new WorkerProvider(userInterface, timer, action);
+            WorkerProvider workerProvider = new WorkerProvider(userInterface, executionTimer, executionPlan);
             Workers workers = new Workers(workerProvider);
 
-            ApplicationEnvironment applicationEnvironment = new ApplicationEnvironment(action, timer, workers, windowsRebootConfiguration);
+            ApplicationEnvironment applicationEnvironment = new ApplicationEnvironment(executionPlan, executionTimer, workers, windowsRebootConfiguration);
             applicationEnvironment.Initialize();
 
-            mainWindowCloseBehaviour = new MainWindowCloseBehaviour(mainWindow, applicationEnvironment, windowsRebootConfiguration, timer, userInterface);
+            mainWindowCloseBehaviour = new MainWindowCloseBehaviour(mainWindow, applicationEnvironment, windowsRebootConfiguration, executionTimer, userInterface);
             mainWindowStateBehaviour = new MainWindowStateBehaviour(mainWindow, userInterface, windowsRebootConfiguration);
 
-            mainWindow.ViewModel = new WindowsRebootViewModel(userInterface, action, timer, windowsRebootConfiguration, applicationEnvironment);
+            mainWindow.ViewModel = new WindowsRebootViewModel(userInterface, executionPlan, executionTimer, windowsRebootConfiguration, applicationEnvironment);
 
             trayIcon = new TrayIcon
             {
-                ViewModel = new TrayIconViewModel(userInterface, operatingSystem, timer, applicationEnvironment)
+                ViewModel = new TrayIconViewModel(userInterface, operatingSystem, executionTimer, applicationEnvironment)
             };
         }
 

@@ -24,7 +24,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public ActionControlViewModel ViewModel
         {
-            get { return viewModel; }
+            get => viewModel;
             set
             {
                 if (viewModel != null)

@@ -86,8 +86,9 @@
     <Compile Include="..\AssemblyInfo.shared.cs">
       <Link>Properties\AssemblyInfo.shared.cs</Link>
     </Compile>
-    <Compile Include="Action.cs" />
-    <Compile Include="Timer.cs" />
+    <Compile Include="ExecutionPlan.cs" />
+    <Compile Include="ActionTimeInThePastException.cs" />
+    <Compile Include="ExecutionTimer.cs" />
     <Compile Include="ScheduleTime.cs" />
     <Compile Include="ScheduleTimeType.cs" />
     <Compile Include="ActionType.cs" />

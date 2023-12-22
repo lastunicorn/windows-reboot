@@ -18,25 +18,24 @@ using System;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.CommandModel;
-using Action = DustInTheWind.WindowsReboot.Core.Action;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class LoadDefaultConfigurationCommand : CommandBase
     {
-        private readonly Timer timer;
-        private readonly Action action;
+        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
 
-        public override bool CanExecute => !timer.IsRunning;
+        public override bool CanExecute => !executionTimer.IsRunning;
 
-        public LoadDefaultConfigurationCommand(IUserInterface userInterface, Timer timer, Action action)
+        public LoadDefaultConfigurationCommand(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan)
             : base(userInterface)
         {
-            this.timer = timer ?? throw new ArgumentNullException(nameof(timer));
-            this.action = action ?? throw new ArgumentNullException(nameof(action));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
 
-            timer.Started += HandleTimerStarted;
-            timer.Stopped += HandleTimerStopped;
+            executionTimer.Started += HandleTimerStarted;
+            executionTimer.Stopped += HandleTimerStopped;
         }
 
         private void HandleTimerStarted(object sender, EventArgs e)
@@ -51,16 +50,16 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         protected override void DoExecute()
         {
-            if (timer.IsRunning)
+            if (executionTimer.IsRunning)
                 throw new WindowsRebootException("Cannot complete the task while the timer is started.");
 
-            timer.Time = new ScheduleTime
+            executionTimer.Time = new ScheduleTime
             {
                 Type = ScheduleTimeType.Delay
             };
 
-            action.Type = ActionType.PowerOff;
-            action.Force = true;
+            executionPlan.ActionType = ActionType.PowerOff;
+            executionPlan.ApplyForce = true;
         }
     }
 }

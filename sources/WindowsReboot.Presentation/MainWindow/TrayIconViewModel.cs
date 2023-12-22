@@ -22,14 +22,13 @@ using DustInTheWind.WindowsReboot.Ports.SystemAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WindowsReboot.Presentation.UiCommon;
-using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
     public class TrayIconViewModel : ViewModelBase
     {
         private readonly IUserInterface userInterface;
-        private readonly Timer timer;
+        private readonly ExecutionTimer executionTimer;
         private readonly string defaultText;
         private string text;
         private bool isVisible;
@@ -65,14 +64,14 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         public PowerOffCommand PowerOffCommand { get; private set; }
         public ExitCommand ExitCommand { get; private set; }
 
-        public TrayIconViewModel(IUserInterface userInterface, IOperatingSystem operatingSystem, Timer timer, ApplicationEnvironment applicationEnvironment)
+        public TrayIconViewModel(IUserInterface userInterface, IOperatingSystem operatingSystem, ExecutionTimer executionTimer, ApplicationEnvironment applicationEnvironment)
         {
             if (userInterface == null) throw new ArgumentNullException("userInterface");
-            if (timer == null) throw new ArgumentNullException("timer");
+            if (executionTimer == null) throw new ArgumentNullException("executionTimer");
             if (applicationEnvironment == null) throw new ArgumentNullException("applicationEnvironment");
 
             this.userInterface = userInterface;
-            this.timer = timer;
+            this.executionTimer = executionTimer;
 
             RestoreMainWindowCommand = new RestoreMainWindowCommand(userInterface);
             LockComputerCommand = new LockComputerCommand(userInterface, operatingSystem);
@@ -132,8 +131,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         {
             try
             {
-                Text = timer.IsRunning
-                    ? (TimerText)timer.TimeUntilAction
+                Text = executionTimer.IsRunning
+                    ? (TimerText)executionTimer.TimeUntilAction
                     : defaultText;
             }
             catch (Exception ex)

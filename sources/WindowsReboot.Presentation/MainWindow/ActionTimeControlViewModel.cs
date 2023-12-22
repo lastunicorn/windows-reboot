@@ -23,7 +23,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
     public class ActionTimeControlViewModel : ViewModelBase
     {
-        private readonly Timer timer;
+        private readonly ExecutionTimer executionTimer;
         private readonly IUserInterface userInterface;
         private bool updateFromBusiness;
 
@@ -45,7 +45,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged("ScheduleTimeType");
 
                 if (!updateFromBusiness)
-                    timer.Time = GetActionTime();
+                    executionTimer.Time = GetActionTime();
             }
         }
 
@@ -58,7 +58,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged("FixedDate");
 
                 if (!updateFromBusiness)
-                    timer.Time = GetActionTime();
+                    executionTimer.Time = GetActionTime();
             }
         }
 
@@ -71,7 +71,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged("FixedTime");
 
                 if (!updateFromBusiness)
-                    timer.Time = GetActionTime();
+                    executionTimer.Time = GetActionTime();
             }
         }
 
@@ -84,7 +84,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged("DelayHours");
 
                 if (!updateFromBusiness)
-                    timer.Time = GetActionTime();
+                    executionTimer.Time = GetActionTime();
             }
         }
 
@@ -97,7 +97,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged("DelayMinutes");
 
                 if (!updateFromBusiness)
-                    timer.Time = GetActionTime();
+                    executionTimer.Time = GetActionTime();
             }
         }
 
@@ -110,7 +110,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged("DelaySeconds");
 
                 if (!updateFromBusiness)
-                    timer.Time = GetActionTime();
+                    executionTimer.Time = GetActionTime();
             }
         }
 
@@ -123,7 +123,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged("DailyTime");
 
                 if (!updateFromBusiness)
-                    timer.Time = GetActionTime();
+                    executionTimer.Time = GetActionTime();
             }
         }
 
@@ -137,21 +137,21 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             }
         }
 
-        public ActionTimeControlViewModel(Timer timer, IUserInterface userInterface)
+        public ActionTimeControlViewModel(ExecutionTimer executionTimer, IUserInterface userInterface)
         {
-            if (timer == null) throw new ArgumentNullException("timer");
+            if (executionTimer == null) throw new ArgumentNullException("executionTimer");
             if (userInterface == null) throw new ArgumentNullException("userInterface");
 
-            this.timer = timer;
+            this.executionTimer = executionTimer;
             this.userInterface = userInterface;
 
             Enabled = true;
 
             UpdateFromTimer();
 
-            timer.TimeChanged += HandleTimerTimeChanged;
-            timer.Started += HandleTimerStarted;
-            timer.Stopped += HandleTimerStopped;
+            executionTimer.TimeChanged += HandleTimerTimeChanged;
+            executionTimer.Started += HandleTimerStarted;
+            executionTimer.Stopped += HandleTimerStopped;
         }
 
         private void HandleTimerStarted(object sender, EventArgs eventArgs)
@@ -175,18 +175,18 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
             try
             {
-                if (timer.Time == null)
+                if (executionTimer.Time == null)
                     Clear();
                 else
                 {
-                    FixedDate = timer.Time.DateTime.Date;
-                    FixedTime = timer.Time.DateTime.TimeOfDay;
-                    DelayHours = timer.Time.Hours;
-                    DelayMinutes = timer.Time.Minutes;
-                    DelaySeconds = timer.Time.Seconds;
-                    DailyTime = timer.Time.TimeOfDay;
+                    FixedDate = executionTimer.Time.DateTime.Date;
+                    FixedTime = executionTimer.Time.DateTime.TimeOfDay;
+                    DelayHours = executionTimer.Time.Hours;
+                    DelayMinutes = executionTimer.Time.Minutes;
+                    DelaySeconds = executionTimer.Time.Seconds;
+                    DailyTime = executionTimer.Time.TimeOfDay;
 
-                    ScheduleTimeType = timer.Time.Type;
+                    ScheduleTimeType = executionTimer.Time.Type;
                 }
             }
             finally

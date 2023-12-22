@@ -19,14 +19,13 @@ using System.Linq;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.UiCommon;
-using Action = DustInTheWind.WindowsReboot.Core.Action;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
     public class ActionTypeControlViewModel : ViewModelBase
     {
-        private readonly Timer timer;
-        private readonly Action action;
+        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
         private readonly IUserInterface userInterface;
         private ActionTypeItem[] actionTypes;
         private ActionTypeItem selectedActionType;
@@ -39,15 +38,15 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         private bool updateFromBusiness;
 
         /// <summary>
-        /// Sets the available values that can be chosed for the action type.
+        /// Sets the available values that can be chose for the action type.
         /// </summary>
         public ActionTypeItem[] ActionTypes
         {
-            get { return actionTypes; }
+            get => actionTypes;
             set
             {
                 actionTypes = value;
-                OnPropertyChanged("ActionTypes");
+                OnPropertyChanged(nameof(ActionTypes));
             }
         }
 
@@ -56,75 +55,71 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         /// </summary>
         public ActionTypeItem SelectedActionType
         {
-            get { return selectedActionType; }
+            get => selectedActionType;
             set
             {
                 if (selectedActionType == value)
                     return;
 
                 selectedActionType = value;
-                OnPropertyChanged("SelectedActionType");
+                OnPropertyChanged(nameof(SelectedActionType));
 
                 if (!updateFromBusiness)
-                    action.Type = value.Value;
+                    executionPlan.ActionType = value.Value;
             }
         }
 
         public bool ForceAction
         {
-            get { return forceAction; }
+            get => forceAction;
             set
             {
                 forceAction = value;
-                OnPropertyChanged("ForceAction");
+                OnPropertyChanged(nameof(ForceAction));
 
                 if (!updateFromBusiness)
-                    action.Force = value;
+                    executionPlan.ApplyForce = value;
             }
         }
 
         public bool ForceActionEnabled
         {
-            get { return forceActionEnabled; }
+            get => forceActionEnabled;
             set
             {
                 forceActionEnabled = value;
-                OnPropertyChanged("ForceActionEnabled");
+                OnPropertyChanged(nameof(ForceActionEnabled));
             }
         }
 
         public bool DisplayActionWarning
         {
-            get { return displayWarningMessage; }
+            get => displayWarningMessage;
             set
             {
                 displayWarningMessage = value;
-                OnPropertyChanged("DisplayActionWarning");
+                OnPropertyChanged(nameof(DisplayActionWarning));
 
                 if (!updateFromBusiness)
-                    timer.WarningTime = value ? timer.DefaultWarningTime : null;
+                    executionTimer.WarningTime = value ? executionTimer.DefaultWarningTime : null;
             }
         }
 
         public bool Enabled
         {
-            get { return enabled; }
+            get => enabled;
             set
             {
                 enabled = value;
-                OnPropertyChanged("Enabled");
+                OnPropertyChanged(nameof(Enabled));
             }
         }
 
-        public ActionTypeControlViewModel(Timer timer, Action action, IUserInterface userInterface)
+        public ActionTypeControlViewModel(ExecutionTimer executionTimer, ExecutionPlan executionPlan, IUserInterface userInterface)
         {
-            if (timer == null) throw new ArgumentNullException("timer");
-            if (action == null) throw new ArgumentNullException("action");
-            if (userInterface == null) throw new ArgumentNullException("userInterface");
-
-            this.timer = timer;
-            this.action = action;
-            this.userInterface = userInterface;
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
 
             ActionTypes = Enum.GetValues(typeof(ActionType))
                 .Cast<ActionType>()
@@ -132,17 +127,17 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 .ToArray();
 
             forceActionBackup = true;
-            forceAction = action.Force;
-            displayWarningMessage = timer.WarningTime != null;
+            forceAction = executionPlan.ApplyForce;
+            displayWarningMessage = executionTimer.WarningTime != null;
 
             UpdateFromBusiness();
 
-            timer.WarningTimeChanged += HandleTimerWarningTimeChanged;
-            timer.Started += HandleTimerStarted;
-            timer.Stopped += HandleTimerStopped;
+            executionTimer.WarningTimeChanged += HandleTimerWarningTimeChanged;
+            executionTimer.Started += HandleTimerStarted;
+            executionTimer.Stopped += HandleTimerStopped;
 
-            action.ForceChanged += HandleActionForceChanged;
-            action.TypeChanged += HandleActionTypeChanged;
+            executionPlan.ForceChanged += HandleActionForceChanged;
+            executionPlan.TypeChanged += HandleActionTypeChanged;
         }
 
         private void HandleTimerStarted(object sender, EventArgs e)
@@ -166,7 +161,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             try
             {
                 SelectedActionType = ActionTypes
-                    .First(x => x.Value == action.Type);
+                    .First(x => x.Value == executionPlan.ActionType);
 
                 UpdateForceAction();
             }
@@ -179,9 +174,10 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         private void HandleActionForceChanged(object sender, EventArgs eventArgs)
         {
             updateFromBusiness = true;
+
             try
             {
-                ForceAction = action.Force;
+                ForceAction = executionPlan.ApplyForce;
             }
             finally
             {
@@ -192,9 +188,10 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         private void HandleTimerWarningTimeChanged(object sender, EventArgs e)
         {
             updateFromBusiness = true;
+
             try
             {
-                DisplayActionWarning = timer.WarningTime != null;
+                DisplayActionWarning = executionTimer.WarningTime != null;
             }
             finally
             {

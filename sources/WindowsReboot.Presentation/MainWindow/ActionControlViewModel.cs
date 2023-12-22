@@ -26,10 +26,10 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         public ICommand StartTimerCommand { get; set; }
         public ICommand StopTimerCommand { get; set; }
 
-        public ActionControlViewModel(Timer timer, IUserInterface userInterface)
+        public ActionControlViewModel(ExecutionTimer executionTimer, IUserInterface userInterface)
         {
-            StartTimerCommand = new StartTimerCommand(timer, userInterface);
-            StopTimerCommand = new StopTimerCommand(timer, userInterface);
+            StartTimerCommand = new StartTimerCommand(executionTimer, userInterface);
+            StopTimerCommand = new StopTimerCommand(executionTimer, userInterface);
         }
     }
 }

@@ -19,30 +19,29 @@ using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.CommandModel;
-using Action = DustInTheWind.WindowsReboot.Core.Action;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class SaveConfigurationCommand : CommandBase
     {
-        private readonly Timer timer;
-        private readonly Action action;
+        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
         private readonly IWindowsRebootConfiguration configuration;
 
-        public SaveConfigurationCommand(IUserInterface userInterface, Timer timer, Action action, IWindowsRebootConfiguration configuration)
+        public SaveConfigurationCommand(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan, IWindowsRebootConfiguration configuration)
             : base(userInterface)
         {
-            this.timer = timer ?? throw new ArgumentNullException(nameof(timer));
-            this.action = action ?? throw new ArgumentNullException(nameof(action));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         protected override void DoExecute()
         {
-            configuration.ActionTime = timer.Time;
+            configuration.ActionTime = executionTimer.Time;
 
-            configuration.ActionType = action.Type;
-            configuration.ForceClosingPrograms = action.Force;
+            configuration.ActionType = executionPlan.ActionType;
+            configuration.ForceClosingPrograms = executionPlan.ApplyForce;
 
             configuration.Save();
 

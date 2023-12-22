@@ -21,8 +21,6 @@ using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WindowsReboot.Presentation.UiCommon;
-using Action = DustInTheWind.WindowsReboot.Core.Action;
-using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
@@ -61,24 +59,24 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         /// Initializes a new instance of the <see cref="WindowsRebootViewModel"/> class with
         /// the view used to interact with the user.
         /// </summary>
-        public WindowsRebootViewModel(IUserInterface userInterface, Action action, Timer timer,
+        public WindowsRebootViewModel(IUserInterface userInterface, ExecutionPlan executionPlan, ExecutionTimer executionTimer,
             IWindowsRebootConfiguration windowsRebootConfiguration, ApplicationEnvironment applicationEnvironment)
         {
             if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
-            if (action == null) throw new ArgumentNullException(nameof(action));
-            if (timer == null) throw new ArgumentNullException(nameof(timer));
+            if (executionPlan == null) throw new ArgumentNullException(nameof(executionPlan));
+            if (executionTimer == null) throw new ArgumentNullException(nameof(executionTimer));
             if (windowsRebootConfiguration == null) throw new ArgumentNullException(nameof(windowsRebootConfiguration));
             if (applicationEnvironment == null) throw new ArgumentNullException(nameof(applicationEnvironment));
 
-            ActionTimeControlViewModel = new ActionTimeControlViewModel(timer, userInterface);
-            ActionTypeControlViewModel = new ActionTypeControlViewModel(timer, action, userInterface);
-            ActionControlViewModel = new ActionControlViewModel(timer, userInterface);
-            StatusControlViewModel = new StatusControlViewModel(timer, userInterface);
+            ActionTimeControlViewModel = new ActionTimeControlViewModel(executionTimer, userInterface);
+            ActionTypeControlViewModel = new ActionTypeControlViewModel(executionTimer, executionPlan, userInterface);
+            ActionControlViewModel = new ActionControlViewModel(executionTimer, userInterface);
+            StatusControlViewModel = new StatusControlViewModel(executionTimer, userInterface);
 
             GoToTrayCommand = new GoToTrayCommand(userInterface);
-            LoadDefaultConfigurationCommand = new LoadDefaultConfigurationCommand(userInterface, timer, action);
-            LoadConfigurationCommand = new LoadConfigurationCommand(userInterface, timer, action, windowsRebootConfiguration);
-            SaveConfigurationCommand = new SaveConfigurationCommand(userInterface, timer, action, windowsRebootConfiguration);
+            LoadDefaultConfigurationCommand = new LoadDefaultConfigurationCommand(userInterface, executionTimer, executionPlan);
+            LoadConfigurationCommand = new LoadConfigurationCommand(userInterface, executionTimer, executionPlan, windowsRebootConfiguration);
+            SaveConfigurationCommand = new SaveConfigurationCommand(userInterface, executionTimer, executionPlan, windowsRebootConfiguration);
             OptionsCommand = new OptionsCommand(userInterface);
             LicenseCommand = new LicenseCommand(userInterface);
             AboutCommand = new AboutCommand(userInterface);

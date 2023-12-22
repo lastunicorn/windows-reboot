@@ -28,18 +28,18 @@ namespace DustInTheWind.WindowsReboot.Presentation
         private readonly WindowsRebootForm mainWindow;
         private readonly ApplicationEnvironment applicationEnvironment;
         private readonly IWindowsRebootConfiguration windowsRebootConfiguration;
-        private readonly Timer timer;
+        private readonly ExecutionTimer executionTimer;
         private readonly IUserInterface userInterface;
 
         private volatile bool closingFromBusiness;
 
         public MainWindowCloseBehaviour(WindowsRebootForm mainWindow, ApplicationEnvironment applicationEnvironment,
-            IWindowsRebootConfiguration windowsRebootConfiguration, Timer timer, IUserInterface userInterface)
+            IWindowsRebootConfiguration windowsRebootConfiguration, ExecutionTimer executionTimer, IUserInterface userInterface)
         {
             this.mainWindow = mainWindow ?? throw new ArgumentNullException(nameof(mainWindow));
             this.applicationEnvironment = applicationEnvironment ?? throw new ArgumentNullException(nameof(applicationEnvironment));
             this.windowsRebootConfiguration = windowsRebootConfiguration ?? throw new ArgumentNullException(nameof(windowsRebootConfiguration));
-            this.timer = timer ?? throw new ArgumentNullException(nameof(timer));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
 
             mainWindow.Closing += HandleMainWindowClosing;
@@ -50,7 +50,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
         private void HandleApplicationEnvironmentClosing(object sender, CancelEventArgs e)
         {
-            bool allowToClose = !timer.IsRunning || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
+            bool allowToClose = !executionTimer.IsRunning || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
 
             if (!allowToClose)
                 e.Cancel = true;

@@ -20,27 +20,26 @@ using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.WorkerModel;
 using DustInTheWind.WindowsReboot.Presentation.Workers;
-using Action = DustInTheWind.WindowsReboot.Core.Action;
 
 namespace DustInTheWind.WindowsReboot.Setup
 {
     internal class WorkerProvider : IWorkerProvider
     {
         private readonly IUserInterface userInterface;
-        private readonly Timer timer;
-        private readonly Action action;
+        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
 
-        public WorkerProvider(IUserInterface userInterface, Timer timer, Action action)
+        public WorkerProvider(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan)
         {
             this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
-            this.timer = timer ?? throw new ArgumentNullException(nameof(timer));
-            this.action = action ?? throw new ArgumentNullException(nameof(action));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public IEnumerable<IWorker> GetNewWorkers()
         {
-            yield return new WarningWorker(userInterface, timer, action);
-            yield return new NotificationWorker(userInterface, action);
+            yield return new TimerWorker(userInterface, executionTimer, executionPlan);
+            yield return new NotificationWorker(userInterface, executionPlan);
         }
     }
 }

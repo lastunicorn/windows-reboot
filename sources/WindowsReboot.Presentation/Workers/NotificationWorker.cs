@@ -15,34 +15,34 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.WorkerModel;
-using Action = DustInTheWind.WindowsReboot.Core.Action;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Workers
 {
     public class NotificationWorker : IWorker
     {
         private readonly IUserInterface userInterface;
-        private readonly Action action;
+        private readonly ExecutionPlan executionPlan;
 
-        public NotificationWorker(IUserInterface userInterface, Action action)
+        public NotificationWorker(IUserInterface userInterface, ExecutionPlan executionPlan)
         {
             this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
-            this.action = action ?? throw new ArgumentNullException(nameof(action));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public void Start()
         {
-            action.NotificationRaised += HandleActionNotificationRaised;
+            executionPlan.NotificationRaised += HandleExecutionPlanNotificationRaised;
         }
 
         public void Stop()
         {
-            action.NotificationRaised -= HandleActionNotificationRaised;
+            executionPlan.NotificationRaised -= HandleExecutionPlanNotificationRaised;
         }
 
-        private void HandleActionNotificationRaised(object sender, EventArgs e)
+        private void HandleExecutionPlanNotificationRaised(object sender, EventArgs e)
         {
             userInterface.Dispatch(() =>
             {

@@ -17,38 +17,37 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
-using Action = DustInTheWind.WindowsReboot.Core.Action;
-using Timer = DustInTheWind.WindowsReboot.Core.Timer;
 
 namespace DustInTheWind.WindowsReboot.Presentation
 {
     public class ApplicationEnvironment
     {
-        private readonly Action action;
-        private readonly Timer timer;
+        private readonly ExecutionPlan executionPlan;
+        private readonly ExecutionTimer executionTimer;
         private readonly WorkerModel.Workers workers;
         private readonly IWindowsRebootConfiguration configuration;
 
         public event CancelEventHandler Closing;
         public event EventHandler CloseRevoked;
 
-        public ApplicationEnvironment(Action action, Timer timer, WorkerModel.Workers workers, IWindowsRebootConfiguration configuration)
+        public ApplicationEnvironment(ExecutionPlan executionPlan, ExecutionTimer executionTimer, WorkerModel.Workers workers, IWindowsRebootConfiguration configuration)
         {
-            this.action = action ?? throw new ArgumentNullException(nameof(action));
-            this.timer = timer ?? throw new ArgumentNullException(nameof(timer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.workers = workers ?? throw new ArgumentNullException(nameof(workers));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         public void Initialize()
         {
-            timer.Time = configuration.ActionTime;
-            action.Type = configuration.ActionType;
-            action.Force = configuration.ForceClosingPrograms;
+            executionTimer.Time = configuration.ActionTime;
+            executionPlan.ActionType = configuration.ActionType;
+            executionPlan.ApplyForce = configuration.ForceClosingPrograms;
 
             if (configuration.StartTimerAtApplicationStart)
-                timer.Start();
+                executionTimer.Start();
 
             workers.Start();
         }
