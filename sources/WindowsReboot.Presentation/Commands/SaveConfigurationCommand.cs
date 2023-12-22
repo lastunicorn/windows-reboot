@@ -26,9 +26,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
     {
         private readonly ExecutionTimer executionTimer;
         private readonly ExecutionPlan executionPlan;
-        private readonly IWindowsRebootConfiguration configuration;
+        private readonly IConfigStorage configuration;
 
-        public SaveConfigurationCommand(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan, IWindowsRebootConfiguration configuration)
+        public SaveConfigurationCommand(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan, IConfigStorage configuration)
             : base(userInterface)
         {
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
@@ -45,7 +45,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
             configuration.Save();
 
-            userInterface.DisplayMessage("The configuration was saved.");
+            UserInterface.DisplayMessage("The configuration was saved.");
         }
     }
 }

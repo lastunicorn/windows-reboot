@@ -33,7 +33,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         protected override void DoExecute()
         {
-            bool allowToContinue = userInterface.Confirm("Do you want to shut down the system?\n\nObs! From WinXP SP1 this command will also power off the system.");
+            bool allowToContinue = UserInterface.Confirm("Do you want to shut down the system?\n\nObs! From WinXP SP1 this command will also power off the system.");
 
             if (allowToContinue)
                 operatingSystem.ShutDown(false);

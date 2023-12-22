@@ -21,13 +21,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{B1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.UserAccess", "WindowsReboot.UserAccess\WindowsReboot.UserAccess.csproj", "{3D0B14FF-253A-435E-9031-673C7F672067}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.Application", "WindowsReboot.Application\WindowsReboot.Application.csproj", "{95DFED73-834B-48B6-9956-AA891309C9C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsReboot.Application", "WindowsReboot.Application\WindowsReboot.Application.csproj", "{95DFED73-834B-48B6-9956-AA891309C9C6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.Presentation", "WindowsReboot.Presentation\WindowsReboot.Presentation.csproj", "{3A4BBBB2-47AC-4355-8EFA-E1A1CF65FBA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.Ports.ConfigAccess", "WindowsReboot.Ports.ConfigAccess\WindowsReboot.Ports.ConfigAccess.csproj", "{52315771-8889-4DB8-BAE1-48A420728D49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsReboot.Ports.ConfigAccess", "WindowsReboot.Ports.ConfigAccess\WindowsReboot.Ports.ConfigAccess.csproj", "{52315771-8889-4DB8-BAE1-48A420728D49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.ConfigAccess", "WindowsReboot.ConfigAccess\WindowsReboot.ConfigAccess.csproj", "{E361EAE2-D408-4DDA-ABD3-81AF3CCBF612}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsReboot.ConfigAccess", "WindowsReboot.ConfigAccess\WindowsReboot.ConfigAccess.csproj", "{E361EAE2-D408-4DDA-ABD3-81AF3CCBF612}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkersEngine", "WorkersEngine\WorkersEngine.csproj", "{4EF538E6-CE2C-4125-ACE8-83D4A9756491}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkersEngine.Setup.Autofac", "WorkersEngine.Setup.Autofac\WorkersEngine.Setup.Autofac.csproj", "{18C3ABB0-E98A-4F60-8A6D-68B811DDC8F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{C43E57B7-4545-4911-9885-BFD6D08211AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +85,14 @@ Global
 		{E361EAE2-D408-4DDA-ABD3-81AF3CCBF612}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E361EAE2-D408-4DDA-ABD3-81AF3CCBF612}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E361EAE2-D408-4DDA-ABD3-81AF3CCBF612}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EF538E6-CE2C-4125-ACE8-83D4A9756491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EF538E6-CE2C-4125-ACE8-83D4A9756491}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EF538E6-CE2C-4125-ACE8-83D4A9756491}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EF538E6-CE2C-4125-ACE8-83D4A9756491}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18C3ABB0-E98A-4F60-8A6D-68B811DDC8F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18C3ABB0-E98A-4F60-8A6D-68B811DDC8F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18C3ABB0-E98A-4F60-8A6D-68B811DDC8F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18C3ABB0-E98A-4F60-8A6D-68B811DDC8F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +104,8 @@ Global
 		{3D0B14FF-253A-435E-9031-673C7F672067} = {B1F5C43A-0715-410E-9469-E3DBE8D729D4}
 		{52315771-8889-4DB8-BAE1-48A420728D49} = {65ACE60B-F696-4842-B8B2-1B8E7AC91642}
 		{E361EAE2-D408-4DDA-ABD3-81AF3CCBF612} = {B1F5C43A-0715-410E-9469-E3DBE8D729D4}
+		{4EF538E6-CE2C-4125-ACE8-83D4A9756491} = {C43E57B7-4545-4911-9885-BFD6D08211AE}
+		{18C3ABB0-E98A-4F60-8A6D-68B811DDC8F8} = {C43E57B7-4545-4911-9885-BFD6D08211AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {461CA009-4250-461E-8FC0-7C026864E6F6}

@@ -18,43 +18,42 @@ using System;
 using System.ComponentModel;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
-using DustInTheWind.WindowsReboot.Presentation.WorkerModel;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Workers
 {
-    internal class ApplicationClosingGuardWorker : IWorker
-    {
-        private readonly IUserInterface userInterface;
-        private readonly ExecutionTimer executionTimer;
-        private readonly ApplicationEnvironment applicationEnvironment;
+    //internal class ApplicationClosingGuardWorker : IWorker
+    //{
+    //    private readonly IUserInterface userInterface;
+    //    private readonly ExecutionTimer executionTimer;
+    //    private readonly ApplicationEnvironment applicationEnvironment;
 
-        public ApplicationClosingGuardWorker(IUserInterface userInterface, ExecutionTimer executionTimer, ApplicationEnvironment applicationEnvironment)
-        {
-            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-            this.applicationEnvironment = applicationEnvironment ?? throw new ArgumentNullException(nameof(applicationEnvironment));
-        }
+    //    public ApplicationClosingGuardWorker(IUserInterface userInterface, ExecutionTimer executionTimer, ApplicationEnvironment applicationEnvironment)
+    //    {
+    //        this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
+    //        this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+    //        this.applicationEnvironment = applicationEnvironment ?? throw new ArgumentNullException(nameof(applicationEnvironment));
+    //    }
 
-        public void Start()
-        {
-            applicationEnvironment.Closing += HandleApplicationEnvironmentClosing;
-        }
+    //    public void Start()
+    //    {
+    //        applicationEnvironment.Closing += HandleApplicationEnvironmentClosing;
+    //    }
 
-        public void Stop()
-        {
-            applicationEnvironment.Closing -= HandleApplicationEnvironmentClosing;
-        }
+    //    public void Stop()
+    //    {
+    //        applicationEnvironment.Closing -= HandleApplicationEnvironmentClosing;
+    //    }
 
-        private void HandleApplicationEnvironmentClosing(object sender, CancelEventArgs e)
-        {
-            if (!executionTimer.IsRunning)
-                return;
+    //    private void HandleApplicationEnvironmentClosing(object sender, CancelEventArgs e)
+    //    {
+    //        if (!executionTimer.IsRunning)
+    //            return;
 
-            userInterface.Dispatch(() =>
-            {
-                bool allowToClose = userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
-                e.Cancel = !allowToClose;
-            });
-        }
-    }
+    //        userInterface.Dispatch(() =>
+    //        {
+    //            bool allowToClose = userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
+    //            e.Cancel = !allowToClose;
+    //        });
+    //    }
+    //}
 }

@@ -25,7 +25,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.UiCommon
         public static Binding Bind<TControl, TData, TProp1, TProp2>(this TControl control, Expression<Func<TControl, TProp1>> property, TData dataSource, Expression<Func<TData, TProp2>> dataSourceProperty, bool formattingEnabled, DataSourceUpdateMode updateMode)
             where TControl : IBindableComponent
         {
-            if (control == null) throw new ArgumentNullException("control");
+            if (control == null) throw new ArgumentNullException(nameof(control));
 
             string controlPropertyName = GetControlPropertyName(property);
             string dataSourcePropertyName = GetControlPropertyName(dataSourceProperty);

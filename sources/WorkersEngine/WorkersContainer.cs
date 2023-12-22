@@ -17,23 +17,16 @@
 using System;
 using System.Collections.Generic;
 
-namespace DustInTheWind.WindowsReboot.Presentation.WorkerModel
+namespace DustInTheWind.WorkersEngine
 {
-    public class Workers
+    public class WorkersContainer
     {
         private readonly IWorkerProvider workerProvider;
         private List<IWorker> workers;
 
-        public Workers(IWorkerProvider workerProvider)
+        public WorkersContainer(IWorkerProvider workerProvider)
         {
             this.workerProvider = workerProvider ?? throw new ArgumentNullException(nameof(workerProvider));
-        }
-
-        public Workers(IEnumerable<IWorker> workers)
-        {
-            if (workers == null) throw new ArgumentNullException(nameof(workers));
-
-            this.workers = new List<IWorker>(workers);
         }
 
         public void Start()

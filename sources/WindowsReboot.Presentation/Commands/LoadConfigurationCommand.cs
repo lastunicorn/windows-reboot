@@ -26,11 +26,11 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
     {
         private readonly ExecutionTimer executionTimer;
         private readonly ExecutionPlan executionPlan;
-        private readonly IWindowsRebootConfiguration configuration;
+        private readonly IConfigStorage configuration;
 
         public override bool CanExecute => !executionTimer.IsRunning;
 
-        public LoadConfigurationCommand(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan, IWindowsRebootConfiguration configuration)
+        public LoadConfigurationCommand(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan, IConfigStorage configuration)
             : base(userInterface)
         {
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
@@ -48,7 +48,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         private void HandleTimerStopped(object sender, EventArgs e)
         {
-            userInterface.Dispatch(OnCanExecuteChanged);
+            UserInterface.Dispatch(OnCanExecuteChanged);
         }
 
         protected override void DoExecute()

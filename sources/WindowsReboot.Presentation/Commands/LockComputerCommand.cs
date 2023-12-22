@@ -33,7 +33,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         protected override void DoExecute()
         {
-            bool allowToContinue = userInterface.Confirm("Do you want to lock the workstation?");
+            bool allowToContinue = UserInterface.Confirm("Do you want to lock the workstation?");
 
             if (allowToContinue)
                 operatingSystem.Lock();

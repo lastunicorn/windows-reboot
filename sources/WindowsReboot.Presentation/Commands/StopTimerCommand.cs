@@ -43,7 +43,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         private void HandleTimerStopped(object sender, EventArgs e)
         {
-            userInterface.Dispatch(OnCanExecuteChanged);
+            UserInterface.Dispatch(OnCanExecuteChanged);
         }
 
         protected override void DoExecute()

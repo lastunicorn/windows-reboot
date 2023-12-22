@@ -19,32 +19,33 @@ using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.MainWindow;
+using DustInTheWind.WorkersEngine;
 
-namespace DustInTheWind.WindowsReboot.Presentation
+namespace DustInTheWind.WindowsReboot.Presentation.Workers
 {
-    public class MainWindowStateBehaviour
+    public class MainWindowStateWorker : IWorker
     {
         private readonly WindowsRebootForm mainWindow;
         private readonly IUserInterface userInterface;
-        private readonly IWindowsRebootConfiguration configuration;
+        private readonly IConfigStorage configuration;
 
-        public MainWindowStateBehaviour(WindowsRebootForm mainWindow, IUserInterface userInterface, IWindowsRebootConfiguration configuration)
+        public MainWindowStateWorker(WindowsRebootForm mainWindow, IUserInterface userInterface, IConfigStorage configuration)
         {
             this.mainWindow = mainWindow ?? throw new ArgumentNullException(nameof(mainWindow));
             this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+        }
 
+        public void Start()
+        {
             userInterface.MainWindowStateChanged += HandleUserInterfaceMainWindowStateChanged;
             mainWindow.SizeChanged += HandleMainWindowSizeChanged;
         }
 
-        private void HandleMainWindowSizeChanged(object sender, EventArgs eventArgs)
+        public void Stop()
         {
-            if (mainWindow.WindowState != FormWindowState.Minimized)
-                return;
-
-            if (configuration.MinimizeToTray)
-                userInterface.MainWindowState = MainWindowState.Tray;
+            userInterface.MainWindowStateChanged -= HandleUserInterfaceMainWindowStateChanged;
+            mainWindow.SizeChanged -= HandleMainWindowSizeChanged;
         }
 
         private void HandleUserInterfaceMainWindowStateChanged(object sender, EventArgs e)
@@ -70,6 +71,15 @@ namespace DustInTheWind.WindowsReboot.Presentation
             {
                 userInterface.DisplayError(ex);
             }
+        }
+
+        private void HandleMainWindowSizeChanged(object sender, EventArgs eventArgs)
+        {
+            if (mainWindow.WindowState != FormWindowState.Minimized)
+                return;
+
+            if (configuration.MinimizeToTray)
+                userInterface.MainWindowState = MainWindowState.Tray;
         }
     }
 }

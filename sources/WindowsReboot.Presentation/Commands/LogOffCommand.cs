@@ -34,7 +34,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
         protected override void DoExecute()
         {
             string question = string.Format("Do you want to log off the current user?\nThe current logged in user is '{0}'", Environment.UserDomainName);
-            bool allowToContinue = userInterface.Confirm(question);
+            bool allowToContinue = UserInterface.Confirm(question);
 
             if (allowToContinue)
                 operatingSystem.LogOff(false);

@@ -20,47 +20,44 @@ using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.MainWindow;
+using DustInTheWind.WorkersEngine;
 
-namespace DustInTheWind.WindowsReboot.Presentation
+namespace DustInTheWind.WindowsReboot.Presentation.Workers
 {
-    public class MainWindowCloseBehaviour
+    public class MainWindowCloseWorker : IWorker
     {
         private readonly WindowsRebootForm mainWindow;
         private readonly ApplicationEnvironment applicationEnvironment;
-        private readonly IWindowsRebootConfiguration windowsRebootConfiguration;
+        private readonly IConfigStorage configStorage;
         private readonly ExecutionTimer executionTimer;
         private readonly IUserInterface userInterface;
 
         private volatile bool closingFromBusiness;
 
-        public MainWindowCloseBehaviour(WindowsRebootForm mainWindow, ApplicationEnvironment applicationEnvironment,
-            IWindowsRebootConfiguration windowsRebootConfiguration, ExecutionTimer executionTimer, IUserInterface userInterface)
+        public MainWindowCloseWorker(WindowsRebootForm mainWindow, ApplicationEnvironment applicationEnvironment,
+            IConfigStorage configStorage, ExecutionTimer executionTimer, IUserInterface userInterface)
         {
             this.mainWindow = mainWindow ?? throw new ArgumentNullException(nameof(mainWindow));
             this.applicationEnvironment = applicationEnvironment ?? throw new ArgumentNullException(nameof(applicationEnvironment));
-            this.windowsRebootConfiguration = windowsRebootConfiguration ?? throw new ArgumentNullException(nameof(windowsRebootConfiguration));
+            this.configStorage = configStorage ?? throw new ArgumentNullException(nameof(configStorage));
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
+        }
 
+        public void Start()
+        {
             mainWindow.Closing += HandleMainWindowClosing;
 
             applicationEnvironment.Closing += HandleApplicationEnvironmentClosing;
             applicationEnvironment.CloseRevoked += HandleApplicationEnvironmentCloseRevoked;
         }
 
-        private void HandleApplicationEnvironmentClosing(object sender, CancelEventArgs e)
+        public void Stop()
         {
-            bool allowToClose = !executionTimer.IsRunning || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
+            mainWindow.Closing -= HandleMainWindowClosing;
 
-            if (!allowToClose)
-                e.Cancel = true;
-            else
-                closingFromBusiness = true;
-        }
-
-        private void HandleApplicationEnvironmentCloseRevoked(object sender, EventArgs e)
-        {
-            closingFromBusiness = false;
+            applicationEnvironment.Closing -= HandleApplicationEnvironmentClosing;
+            applicationEnvironment.CloseRevoked -= HandleApplicationEnvironmentCloseRevoked;
         }
 
         private void HandleMainWindowClosing(object sender, CancelEventArgs e)
@@ -69,7 +66,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
             {
                 if (closingFromBusiness)
                 {
-                    if (windowsRebootConfiguration.CloseToTray)
+                    if (configStorage.CloseToTray)
                     {
                         userInterface.MainWindowState = MainWindowState.Tray;
                         e.Cancel = true;
@@ -85,6 +82,21 @@ namespace DustInTheWind.WindowsReboot.Presentation
             {
                 userInterface.DisplayError(ex);
             }
+        }
+
+        private void HandleApplicationEnvironmentClosing(object sender, CancelEventArgs e)
+        {
+            bool allowToClose = !executionTimer.IsRunning || userInterface.AskToClose("The timer is started. Are you sure you want to close the application?");
+
+            if (!allowToClose)
+                e.Cancel = true;
+            else
+                closingFromBusiness = true;
+        }
+
+        private void HandleApplicationEnvironmentCloseRevoked(object sender, EventArgs e)
+        {
+            closingFromBusiness = false;
         }
     }
 }

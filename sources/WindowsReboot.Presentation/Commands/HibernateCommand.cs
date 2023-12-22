@@ -33,7 +33,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         protected override void DoExecute()
         {
-            bool allowToContinue = userInterface.Confirm("Do you want to put the system in 'Hibernate' state?");
+            bool allowToContinue = UserInterface.Confirm("Do you want to put the system in 'Hibernate' state?");
 
             if (allowToContinue)
                 operatingSystem.Hibernate(false);

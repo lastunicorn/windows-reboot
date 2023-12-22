@@ -14,21 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
-using DustInTheWind.WindowsReboot.Presentation.CommandModel;
+using DustInTheWind.WindowsReboot.Core;
 
-namespace DustInTheWind.WindowsReboot.Presentation.Commands
+namespace DustInTheWind.WindowsReboot.Ports.ConfigAccess
 {
-    public class AboutCommand : CommandBase
+    public interface IConfigStorage
     {
-        public AboutCommand(IUserInterface userInterface)
-            : base(userInterface)
-        {
-        }
-
-        protected override void DoExecute()
-        {
-            UserInterface.DisplayAbout();
-        }
+        ScheduleTime ActionTime { get; set; }
+        
+        ActionType ActionType { get; set; }
+        
+        bool ForceClosingPrograms { get; set; }
+        
+        bool StartTimerAtApplicationStart { get; set; }
+        
+        bool CloseToTray { get; set; }
+        
+        bool MinimizeToTray { get; set; }
+        
+        void Save();
     }
 }

@@ -21,7 +21,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.CommandModel
 {
     public abstract class CommandBase : ICommand
     {
-        protected readonly IUserInterface userInterface;
+        protected readonly IUserInterface UserInterface;
 
         public virtual bool CanExecute => true;
 
@@ -29,7 +29,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.CommandModel
 
         protected CommandBase(IUserInterface userInterface)
         {
-            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
+            this.UserInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
         }
 
         public void Execute()
@@ -40,7 +40,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.CommandModel
             }
             catch (Exception ex)
             {
-                userInterface.DisplayError(ex);
+                UserInterface.DisplayError(ex);
             }
         }
 

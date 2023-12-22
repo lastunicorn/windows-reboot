@@ -75,8 +75,8 @@
     <Compile Include="CustomControls\ToolStripMenuItemWithCommand.Designer.cs">
       <DependentUpon>ToolStripMenuItemWithCommand.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainWindowCloseBehaviour.cs" />
-    <Compile Include="MainWindowStateBehaviour.cs" />
+    <Compile Include="Workers\MainWindowCloseWorker.cs" />
+    <Compile Include="Workers\MainWindowStateWorker.cs" />
     <Compile Include="MainWindow\ActionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -154,9 +154,6 @@
       <DependentUpon>CustomGroupBox.cs</DependentUpon>
     </Compile>
     <Compile Include="UiCommon\ViewModelBase.cs" />
-    <Compile Include="WorkerModel\IWorker.cs" />
-    <Compile Include="WorkerModel\IWorkerProvider.cs" />
-    <Compile Include="WorkerModel\Workers.cs" />
     <Compile Include="Workers\ApplicationClosingGuardWorker.cs" />
     <Compile Include="Workers\NotificationWorker.cs" />
     <Compile Include="Workers\TimerWorker.cs" />
@@ -179,6 +176,10 @@
     <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj">
       <Project>{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}</Project>
       <Name>WindowsReboot.Ports.UserAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WorkersEngine\WorkersEngine.csproj">
+      <Project>{4EF538E6-CE2C-4125-ACE8-83D4A9756491}</Project>
+      <Name>WorkersEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -254,5 +255,6 @@
   <ItemGroup>
     <None Include="Resources\header.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

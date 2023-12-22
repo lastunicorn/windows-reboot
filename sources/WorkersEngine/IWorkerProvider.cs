@@ -1,5 +1,5 @@
-﻿// Windows Reboot
-// Copyright (C) 2009-2015 Dust in the Wind
+﻿// Lisimba
+// Copyright (C) 2007-2016 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,16 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot.Presentation.WorkerModel
+using System.Collections.Generic;
+
+namespace DustInTheWind.WorkersEngine
 {
-    /// <summary>
-    /// A worker is a peace of code that runs continously until is stopped.
-    /// It may be an observer that subscvribes itself to an event and does something when the event is triggered.
-    /// It may also be a loop that processes some data from a queue.
-    /// </summary>
-    public interface IWorker
+    public interface IWorkerProvider
     {
-        void Start();
-        void Stop();
+        IEnumerable<IWorker> GetNewWorkers();
     }
 }

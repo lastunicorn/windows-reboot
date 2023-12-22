@@ -33,7 +33,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         protected override void DoExecute()
         {
-            bool allowToContinue = userInterface.Confirm("Do you want to reboot the system?");
+            bool allowToContinue = UserInterface.Confirm("Do you want to reboot the system?");
 
             if (allowToContinue)
                 operatingSystem.Reboot(false);

@@ -22,7 +22,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class GoToTrayCommand : CommandBase
     {
-        public override bool CanExecute => userInterface.MainWindowState != MainWindowState.Tray;
+        public override bool CanExecute => UserInterface.MainWindowState != MainWindowState.Tray;
 
         public GoToTrayCommand(IUserInterface userInterface)
             : base(userInterface)
@@ -37,7 +37,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         protected override void DoExecute()
         {
-            userInterface.MainWindowState = MainWindowState.Tray;
+            UserInterface.MainWindowState = MainWindowState.Tray;
         }
     }
 }

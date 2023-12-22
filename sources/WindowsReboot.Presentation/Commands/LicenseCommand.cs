@@ -28,7 +28,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         protected override void DoExecute()
         {
-            userInterface.DisplayLicense();
+            UserInterface.DisplayLicense();
         }
     }
 }

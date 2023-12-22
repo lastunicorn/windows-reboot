@@ -21,7 +21,7 @@ using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 
 namespace DustInTheWind.WindowsReboot.ConfigAccess
 {
-    public class WindowsRebootConfiguration : IWindowsRebootConfiguration
+    public class ConfigStorage : IConfigStorage
     {
         private readonly Configuration config;
         private readonly WindowsRebootConfigSection configSection;
@@ -80,7 +80,7 @@ namespace DustInTheWind.WindowsReboot.ConfigAccess
             set => configSection.MinimizeToTray.Value = value;
         }
 
-        public WindowsRebootConfiguration()
+        public ConfigStorage()
         {
             config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             configSection = WindowsRebootConfigSection.GetOrCreateSection(config);

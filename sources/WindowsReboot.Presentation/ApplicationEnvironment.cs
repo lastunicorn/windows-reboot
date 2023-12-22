@@ -19,6 +19,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
+using DustInTheWind.WorkersEngine;
 
 namespace DustInTheWind.WindowsReboot.Presentation
 {
@@ -26,17 +27,17 @@ namespace DustInTheWind.WindowsReboot.Presentation
     {
         private readonly ExecutionPlan executionPlan;
         private readonly ExecutionTimer executionTimer;
-        private readonly WorkerModel.Workers workers;
-        private readonly IWindowsRebootConfiguration configuration;
+        private readonly WorkersContainer workersContainer;
+        private readonly IConfigStorage configuration;
 
         public event CancelEventHandler Closing;
         public event EventHandler CloseRevoked;
 
-        public ApplicationEnvironment(ExecutionPlan executionPlan, ExecutionTimer executionTimer, WorkerModel.Workers workers, IWindowsRebootConfiguration configuration)
+        public ApplicationEnvironment(ExecutionPlan executionPlan, ExecutionTimer executionTimer, WorkersContainer workersContainer, IConfigStorage configuration)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-            this.workers = workers ?? throw new ArgumentNullException(nameof(workers));
+            this.workersContainer = workersContainer ?? throw new ArgumentNullException(nameof(workersContainer));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
@@ -49,7 +50,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
             if (configuration.StartTimerAtApplicationStart)
                 executionTimer.Start();
 
-            workers.Start();
+            workersContainer.Start();
         }
 
         public void Close()

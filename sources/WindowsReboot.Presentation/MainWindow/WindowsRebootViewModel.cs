@@ -60,12 +60,12 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         /// the view used to interact with the user.
         /// </summary>
         public WindowsRebootViewModel(IUserInterface userInterface, ExecutionPlan executionPlan, ExecutionTimer executionTimer,
-            IWindowsRebootConfiguration windowsRebootConfiguration, ApplicationEnvironment applicationEnvironment)
+            IConfigStorage configStorage, ApplicationEnvironment applicationEnvironment)
         {
             if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
             if (executionPlan == null) throw new ArgumentNullException(nameof(executionPlan));
             if (executionTimer == null) throw new ArgumentNullException(nameof(executionTimer));
-            if (windowsRebootConfiguration == null) throw new ArgumentNullException(nameof(windowsRebootConfiguration));
+            if (configStorage == null) throw new ArgumentNullException(nameof(configStorage));
             if (applicationEnvironment == null) throw new ArgumentNullException(nameof(applicationEnvironment));
 
             ActionTimeControlViewModel = new ActionTimeControlViewModel(executionTimer, userInterface);
@@ -75,8 +75,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
             GoToTrayCommand = new GoToTrayCommand(userInterface);
             LoadDefaultConfigurationCommand = new LoadDefaultConfigurationCommand(userInterface, executionTimer, executionPlan);
-            LoadConfigurationCommand = new LoadConfigurationCommand(userInterface, executionTimer, executionPlan, windowsRebootConfiguration);
-            SaveConfigurationCommand = new SaveConfigurationCommand(userInterface, executionTimer, executionPlan, windowsRebootConfiguration);
+            LoadConfigurationCommand = new LoadConfigurationCommand(userInterface, executionTimer, executionPlan, configStorage);
+            SaveConfigurationCommand = new SaveConfigurationCommand(userInterface, executionTimer, executionPlan, configStorage);
             OptionsCommand = new OptionsCommand(userInterface);
             LicenseCommand = new LicenseCommand(userInterface);
             AboutCommand = new AboutCommand(userInterface);

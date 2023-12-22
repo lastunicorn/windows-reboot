@@ -14,24 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.WindowsReboot.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Autofac;
 
-namespace DustInTheWind.WindowsReboot.Ports.ConfigAccess
+namespace DustInTheWind.WorkersEngine.Setup.Autofac
 {
-    public interface IWindowsRebootConfiguration
+    internal class WorkerProvider : IWorkerProvider
     {
-        ScheduleTime ActionTime { get; set; }
-        
-        ActionType ActionType { get; set; }
-        
-        bool ForceClosingPrograms { get; set; }
-        
-        bool StartTimerAtApplicationStart { get; set; }
-        
-        bool CloseToTray { get; set; }
-        
-        bool MinimizeToTray { get; set; }
-        
-        void Save();
+        private readonly IComponentContext context;
+
+        public WorkerProvider(IComponentContext context)
+        {
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+        }
+
+        public IEnumerable<IWorker> GetNewWorkers()
+        {
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(x => x.GetTypes())
+                .Where(x => x.IsAssignableTo<IWorker>())
+                .Select(x => (IWorker)context.Resolve(x));
+        }
     }
 }
