@@ -16,6 +16,7 @@
 
 using System;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using DustInTheWind.WinFormsAdditions;
 
 namespace DustInTheWind.WindowsReboot.Presentation.CommandModel
 {
@@ -29,7 +30,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.CommandModel
 
         protected CommandBase(IUserInterface userInterface)
         {
-            this.UserInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
+            UserInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
         }
 
         public void Execute()

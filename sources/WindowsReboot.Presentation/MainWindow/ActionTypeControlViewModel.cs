@@ -18,7 +18,7 @@ using System;
 using System.Linq;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
-using DustInTheWind.WindowsReboot.Presentation.UiCommon;
+using DustInTheWind.WinFormsAdditions;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
@@ -26,7 +26,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
     {
         private readonly ExecutionTimer executionTimer;
         private readonly ExecutionPlan executionPlan;
-        private readonly IUserInterface userInterface;
+        private readonly IUiDispatcher uiDispatcher;
         private ActionTypeItem[] actionTypes;
         private ActionTypeItem selectedActionType;
         private bool forceActionEnabled;
@@ -115,11 +115,11 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             }
         }
 
-        public ActionTypeControlViewModel(ExecutionTimer executionTimer, ExecutionPlan executionPlan, IUserInterface userInterface)
+        public ActionTypeControlViewModel(ExecutionTimer executionTimer, ExecutionPlan executionPlan, IUiDispatcher uiDispatcher)
         {
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
-            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
+            this.uiDispatcher = uiDispatcher ?? throw new ArgumentNullException(nameof(uiDispatcher));
 
             ActionTypes = Enum.GetValues(typeof(ActionType))
                 .Cast<ActionType>()
@@ -147,7 +147,10 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         private void HandleTimerStopped(object sender, EventArgs e)
         {
-            userInterface.Dispatch(() => { Enabled = true; });
+            uiDispatcher.Dispatch(() =>
+            {
+                Enabled = true;
+            });
         }
 
         private void HandleActionTypeChanged(object sender, EventArgs eventArgs)

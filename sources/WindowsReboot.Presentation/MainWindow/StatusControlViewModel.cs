@@ -17,7 +17,7 @@
 using System;
 using System.Threading;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
-using DustInTheWind.WindowsReboot.Presentation.UiCommon;
+using DustInTheWind.WinFormsAdditions;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
@@ -25,7 +25,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
     {
         private readonly Timer ticker;
         private readonly Core.ExecutionTimer executionTimer;
-        private readonly IUserInterface userInterface;
+        private readonly IUiDispatcher uiDispatcher;
         private DateTime currentTime;
         private DateTime? actionTime;
         private TimeSpan? timerTime;
@@ -60,10 +60,10 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             }
         }
 
-        public StatusControlViewModel(Core.ExecutionTimer executionTimer, IUserInterface userInterface)
+        public StatusControlViewModel(Core.ExecutionTimer executionTimer, IUiDispatcher uiDispatcher)
         {
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
+            this.uiDispatcher = uiDispatcher ?? throw new ArgumentNullException(nameof(uiDispatcher));
 
             ticker = new Timer(HandleTickerTick, null, 0, 100);
 
@@ -73,7 +73,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         private void HandleTickerTick(object state)
         {
-            userInterface.Dispatch(() =>
+            uiDispatcher.Dispatch(() =>
             {
                 CurrentTime = DateTime.Now;
 
@@ -84,12 +84,12 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         private void HandleTimerStarted(object sender, EventArgs eventArgs)
         {
-            userInterface.Dispatch(() => { ActionTime = executionTimer.ActionTime; });
+            uiDispatcher.Dispatch(() => { ActionTime = executionTimer.ActionTime; });
         }
 
         private void HandleTimerStopped(object sender, EventArgs eventArgs)
         {
-            userInterface.Dispatch(() =>
+            uiDispatcher.Dispatch(() =>
             {
                 ActionTime = null;
                 TimerTime = null;

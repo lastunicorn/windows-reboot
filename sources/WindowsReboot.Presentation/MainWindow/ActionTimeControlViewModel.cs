@@ -17,14 +17,14 @@
 using System;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
-using DustInTheWind.WindowsReboot.Presentation.UiCommon;
+using DustInTheWind.WinFormsAdditions;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
     public class ActionTimeControlViewModel : ViewModelBase
     {
         private readonly ExecutionTimer executionTimer;
-        private readonly IUserInterface userInterface;
+        private readonly IUiDispatcher uiDispatcher;
         private bool updateFromBusiness;
 
         private ScheduleTimeType scheduleTimeType;
@@ -38,11 +38,11 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public ScheduleTimeType ScheduleTimeType
         {
-            get { return scheduleTimeType; }
+            get => scheduleTimeType;
             set
             {
                 scheduleTimeType = value;
-                OnPropertyChanged("ScheduleTimeType");
+                OnPropertyChanged(nameof(ScheduleTimeType));
 
                 if (!updateFromBusiness)
                     executionTimer.Time = GetActionTime();
@@ -51,11 +51,11 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public DateTime FixedDate
         {
-            get { return fixedDate; }
+            get => fixedDate;
             set
             {
                 fixedDate = value;
-                OnPropertyChanged("FixedDate");
+                OnPropertyChanged(nameof(FixedDate));
 
                 if (!updateFromBusiness)
                     executionTimer.Time = GetActionTime();
@@ -64,11 +64,11 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public TimeSpan FixedTime
         {
-            get { return fixedTime; }
+            get => fixedTime;
             set
             {
                 fixedTime = value;
-                OnPropertyChanged("FixedTime");
+                OnPropertyChanged(nameof(FixedTime));
 
                 if (!updateFromBusiness)
                     executionTimer.Time = GetActionTime();
@@ -77,11 +77,11 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public int DelayHours
         {
-            get { return delayHours; }
+            get => delayHours;
             set
             {
                 delayHours = value;
-                OnPropertyChanged("DelayHours");
+                OnPropertyChanged(nameof(DelayHours));
 
                 if (!updateFromBusiness)
                     executionTimer.Time = GetActionTime();
@@ -90,11 +90,11 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public int DelayMinutes
         {
-            get { return delayMinutes; }
+            get => delayMinutes;
             set
             {
                 delayMinutes = value;
-                OnPropertyChanged("DelayMinutes");
+                OnPropertyChanged(nameof(DelayMinutes));
 
                 if (!updateFromBusiness)
                     executionTimer.Time = GetActionTime();
@@ -103,11 +103,11 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public int DelaySeconds
         {
-            get { return delaySeconds; }
+            get => delaySeconds;
             set
             {
                 delaySeconds = value;
-                OnPropertyChanged("DelaySeconds");
+                OnPropertyChanged(nameof(DelaySeconds));
 
                 if (!updateFromBusiness)
                     executionTimer.Time = GetActionTime();
@@ -116,11 +116,11 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public TimeSpan DailyTime
         {
-            get { return dailyTime; }
+            get => dailyTime;
             set
             {
                 dailyTime = value;
-                OnPropertyChanged("DailyTime");
+                OnPropertyChanged(nameof(DailyTime));
 
                 if (!updateFromBusiness)
                     executionTimer.Time = GetActionTime();
@@ -129,21 +129,18 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public bool Enabled
         {
-            get { return enabled; }
+            get => enabled;
             set
             {
                 enabled = value;
-                OnPropertyChanged("Enabled");
+                OnPropertyChanged(nameof(Enabled));
             }
         }
 
-        public ActionTimeControlViewModel(ExecutionTimer executionTimer, IUserInterface userInterface)
+        public ActionTimeControlViewModel(ExecutionTimer executionTimer, IUiDispatcher uiDispatcher)
         {
-            if (executionTimer == null) throw new ArgumentNullException("executionTimer");
-            if (userInterface == null) throw new ArgumentNullException("userInterface");
-
-            this.executionTimer = executionTimer;
-            this.userInterface = userInterface;
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.uiDispatcher = uiDispatcher ?? throw new ArgumentNullException(nameof(uiDispatcher));
 
             Enabled = true;
 
@@ -161,7 +158,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         private void HandleTimerStopped(object sender, EventArgs eventArgs)
         {
-            userInterface.Dispatch(() => Enabled = true);
+            uiDispatcher.Dispatch(() => Enabled = true);
         }
 
         private void HandleTimerTimeChanged(object sender, EventArgs e)

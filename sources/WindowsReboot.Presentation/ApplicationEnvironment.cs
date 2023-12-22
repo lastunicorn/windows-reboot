@@ -28,26 +28,26 @@ namespace DustInTheWind.WindowsReboot.Presentation
         private readonly ExecutionPlan executionPlan;
         private readonly ExecutionTimer executionTimer;
         private readonly WorkersContainer workersContainer;
-        private readonly IConfigStorage configuration;
+        private readonly IConfigStorage configStorage;
 
         public event CancelEventHandler Closing;
         public event EventHandler CloseRevoked;
 
-        public ApplicationEnvironment(ExecutionPlan executionPlan, ExecutionTimer executionTimer, WorkersContainer workersContainer, IConfigStorage configuration)
+        public ApplicationEnvironment(ExecutionPlan executionPlan, ExecutionTimer executionTimer, WorkersContainer workersContainer, IConfigStorage configStorage)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.workersContainer = workersContainer ?? throw new ArgumentNullException(nameof(workersContainer));
-            this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            this.configStorage = configStorage ?? throw new ArgumentNullException(nameof(configStorage));
         }
 
         public void Initialize()
         {
-            executionTimer.Time = configuration.ActionTime;
-            executionPlan.ActionType = configuration.ActionType;
-            executionPlan.ApplyForce = configuration.ForceClosingPrograms;
+            executionTimer.Time = configStorage.ActionTime;
+            executionPlan.ActionType = configStorage.ActionType;
+            executionPlan.ApplyForce = configStorage.ForceClosingPrograms;
 
-            if (configuration.StartTimerAtApplicationStart)
+            if (configStorage.StartTimerAtApplicationStart)
                 executionTimer.Start();
 
             workersContainer.Start();

@@ -16,7 +16,7 @@
 
 using System.ComponentModel;
 
-namespace DustInTheWind.WindowsReboot.Presentation.UiCommon
+namespace DustInTheWind.WinFormsAdditions
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
@@ -24,10 +24,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.UiCommon
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChangedEventArgs eventArgs = new PropertyChangedEventArgs(propertyName);
+            PropertyChanged?.Invoke(this, eventArgs);
         }
     }
 }

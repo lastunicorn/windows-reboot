@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Ports.SystemAccess;
 
 namespace DustInTheWind.WindowsReboot
 {
@@ -24,7 +23,7 @@ namespace DustInTheWind.WindowsReboot
         [STAThread]
         private static void Main()
         {
-            WindowsRebootApplication application = new WindowsRebootApplication();
+            var application = new WindowsRebootApplication();
             application.Run();
         }
     }

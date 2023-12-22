@@ -19,7 +19,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace DustInTheWind.WindowsReboot.Presentation.UiCommon
+namespace DustInTheWind.WinFormsAdditions.CustomControls
 {
     [ToolboxItem(true)]
     public partial class CustomGroupBox : GroupBox
@@ -29,7 +29,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.UiCommon
         [Category("Appearance")]
         public Font TitleFont
         {
-            get { return titleFont; }
+            get => titleFont;
             set
             {
                 titleFont = value;
@@ -42,7 +42,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.UiCommon
         [Category("Appearance"), DefaultValue(typeof(Color), "Black")]
         public Color TitleColor
         {
-            get { return titleColor; }
+            get => titleColor;
             set
             {
                 titleColor = value;
@@ -56,7 +56,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.UiCommon
         [Category("Appearance"), DefaultValue(typeof(HorizontalAlignment), "Left")]
         public HorizontalAlignment TitleAlignment
         {
-            get { return titleAlignment; }
+            get => titleAlignment;
             set
             {
                 titleAlignment = value;
@@ -69,7 +69,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.UiCommon
         [Category("Appearance"), DefaultValue(typeof(SystemColors), "ActiveBorder")]
         public Color BorderColor
         {
-            get { return borderColor; }
+            get => borderColor;
             set
             {
                 borderColor = value;
@@ -83,7 +83,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.UiCommon
         [Category("Appearance"), DefaultValue(5)]
         public int CornerRadius
         {
-            get { return cornerRadius; }
+            get => cornerRadius;
             set
             {
                 cornerRadius = value;
@@ -96,7 +96,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.UiCommon
         [Category("Layout"), DefaultValue(typeof(Padding), "3, 0, 3, 0")]
         public Padding TitlePadding
         {
-            get { return titlePadding; }
+            get => titlePadding;
             set
             {
                 titlePadding = value;
@@ -109,7 +109,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.UiCommon
         [Category("Layout"), DefaultValue(typeof(Padding), "2, 0, 2, 0")]
         public Padding TitleMargin
         {
-            get { return titleMargin; }
+            get => titleMargin;
             set
             {
                 titleMargin = value;

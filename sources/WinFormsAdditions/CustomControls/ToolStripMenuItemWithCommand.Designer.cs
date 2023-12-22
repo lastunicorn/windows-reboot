@@ -1,4 +1,4 @@
-﻿namespace DustInTheWind.WindowsReboot.Presentation.CustomControls
+﻿namespace DustInTheWind.WinFormsAdditions.CustomControls
 {
     partial class ToolStripMenuItemWithCommand
     {

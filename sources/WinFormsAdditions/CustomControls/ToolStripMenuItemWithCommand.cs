@@ -16,17 +16,16 @@
 
 using System;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.Presentation.CommandModel;
 
-namespace DustInTheWind.WindowsReboot.Presentation.CustomControls
+namespace DustInTheWind.WinFormsAdditions.CustomControls
 {
-    public partial class ButtonWithCommand : Button
+    public partial class ToolStripMenuItemWithCommand : ToolStripMenuItem
     {
         private ICommand command;
 
         public ICommand Command
         {
-            get { return command; }
+            get => command;
             set
             {
                 if (command != null)
@@ -41,20 +40,19 @@ namespace DustInTheWind.WindowsReboot.Presentation.CustomControls
             }
         }
 
-        private void HandleCommandCanExecuteChanged(object sender, EventArgs eventArgs)
+        private void HandleCommandCanExecuteChanged(object sender, EventArgs e)
         {
             Enabled = command == null || command.CanExecute;
         }
 
-        public ButtonWithCommand()
+        public ToolStripMenuItemWithCommand()
         {
             InitializeComponent();
         }
 
-        private void ButtonWithCommand_Click(object sender, EventArgs e)
+        private void ToolStripMenuItemWithCommand_Click(object sender, EventArgs e)
         {
-            if (command != null)
-                command.Execute();
+            command?.Execute();
         }
     }
 }

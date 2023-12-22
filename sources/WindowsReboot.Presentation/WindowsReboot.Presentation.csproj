@@ -43,8 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEnvironment.cs" />
-    <Compile Include="CommandModel\CommandBase.cs" />
-    <Compile Include="CommandModel\ICommand.cs" />
+    <Compile Include="CommandBase.cs" />
     <Compile Include="Commands\AboutCommand.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\GoToTrayCommand.cs" />
@@ -63,18 +62,6 @@
     <Compile Include="Commands\SleepCommand.cs" />
     <Compile Include="Commands\StartTimerCommand.cs" />
     <Compile Include="Commands\StopTimerCommand.cs" />
-    <Compile Include="CustomControls\ButtonWithCommand.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="CustomControls\ButtonWithCommand.Designer.cs">
-      <DependentUpon>ButtonWithCommand.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CustomControls\ToolStripMenuItemWithCommand.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="CustomControls\ToolStripMenuItemWithCommand.Designer.cs">
-      <DependentUpon>ToolStripMenuItemWithCommand.cs</DependentUpon>
-    </Compile>
     <Compile Include="Workers\MainWindowCloseWorker.cs" />
     <Compile Include="Workers\MainWindowStateWorker.cs" />
     <Compile Include="MainWindow\ActionControl.cs">
@@ -146,14 +133,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TimerText.cs" />
-    <Compile Include="UiCommon\BindingExtensions.cs" />
-    <Compile Include="UiCommon\CustomGroupBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UiCommon\CustomGroupBox.Designer.cs">
-      <DependentUpon>CustomGroupBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UiCommon\ViewModelBase.cs" />
     <Compile Include="Workers\ApplicationClosingGuardWorker.cs" />
     <Compile Include="Workers\NotificationWorker.cs" />
     <Compile Include="Workers\TimerWorker.cs" />
@@ -177,18 +156,16 @@
       <Project>{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}</Project>
       <Name>WindowsReboot.Ports.UserAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WinFormsAdditions\WinFormsAdditions.csproj">
+      <Project>{a47c0d20-17d8-4b63-be9a-f1f14ca4a64d}</Project>
+      <Name>WinFormsAdditions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WorkersEngine\WorkersEngine.csproj">
       <Project>{4EF538E6-CE2C-4125-ACE8-83D4A9756491}</Project>
       <Name>WorkersEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CustomControls\ButtonWithCommand.resx">
-      <DependentUpon>ButtonWithCommand.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CustomControls\ToolStripMenuItemWithCommand.resx">
-      <DependentUpon>ToolStripMenuItemWithCommand.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\ActionControl.resx">
       <DependentUpon>ActionControl.cs</DependentUpon>
     </EmbeddedResource>

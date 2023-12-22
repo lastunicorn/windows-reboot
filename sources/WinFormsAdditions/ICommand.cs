@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.WindowsReboot.Presentation.CommandModel
+namespace DustInTheWind.WinFormsAdditions
 {
     public interface ICommand
     {

@@ -1,4 +1,4 @@
-﻿using DustInTheWind.WindowsReboot.Presentation.CustomControls;
+﻿using DustInTheWind.WinFormsAdditions.CustomControls;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {

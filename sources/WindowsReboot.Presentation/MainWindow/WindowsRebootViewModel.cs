@@ -20,7 +20,7 @@ using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
-using DustInTheWind.WindowsReboot.Presentation.UiCommon;
+using DustInTheWind.WinFormsAdditions;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
@@ -60,18 +60,19 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         /// the view used to interact with the user.
         /// </summary>
         public WindowsRebootViewModel(IUserInterface userInterface, ExecutionPlan executionPlan, ExecutionTimer executionTimer,
-            IConfigStorage configStorage, ApplicationEnvironment applicationEnvironment)
+            IConfigStorage configStorage, ApplicationEnvironment applicationEnvironment, IUiDispatcher uiDispatcher)
         {
             if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
             if (executionPlan == null) throw new ArgumentNullException(nameof(executionPlan));
             if (executionTimer == null) throw new ArgumentNullException(nameof(executionTimer));
             if (configStorage == null) throw new ArgumentNullException(nameof(configStorage));
             if (applicationEnvironment == null) throw new ArgumentNullException(nameof(applicationEnvironment));
+            if (uiDispatcher == null) throw new ArgumentNullException(nameof(uiDispatcher));
 
-            ActionTimeControlViewModel = new ActionTimeControlViewModel(executionTimer, userInterface);
-            ActionTypeControlViewModel = new ActionTypeControlViewModel(executionTimer, executionPlan, userInterface);
+            ActionTimeControlViewModel = new ActionTimeControlViewModel(executionTimer, uiDispatcher);
+            ActionTypeControlViewModel = new ActionTypeControlViewModel(executionTimer, executionPlan, uiDispatcher);
             ActionControlViewModel = new ActionControlViewModel(executionTimer, userInterface);
-            StatusControlViewModel = new StatusControlViewModel(executionTimer, userInterface);
+            StatusControlViewModel = new StatusControlViewModel(executionTimer, uiDispatcher);
 
             GoToTrayCommand = new GoToTrayCommand(userInterface);
             LoadDefaultConfigurationCommand = new LoadDefaultConfigurationCommand(userInterface, executionTimer, executionPlan);

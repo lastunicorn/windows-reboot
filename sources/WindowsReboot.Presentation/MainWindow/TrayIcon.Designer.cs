@@ -1,4 +1,4 @@
-﻿using DustInTheWind.WindowsReboot.Presentation.CustomControls;
+﻿using DustInTheWind.WinFormsAdditions.CustomControls;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
@@ -162,17 +162,17 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         #endregion
 
         private System.Windows.Forms.ContextMenuStrip contextMenuStripTrayIcon;
-        private CustomControls.ToolStripMenuItemWithCommand toolStripMenuItem1;
-        private CustomControls.ToolStripMenuItemWithCommand actionNowToolStripMenuItem;
-        private CustomControls.ToolStripMenuItemWithCommand lockComputerToolStripMenuItem;
-        private CustomControls.ToolStripMenuItemWithCommand logOffToolStripMenuItem;
-        private CustomControls.ToolStripMenuItemWithCommand sleepToolStripMenuItem;
-        private CustomControls.ToolStripMenuItemWithCommand hibernateToolStripMenuItem;
-        private CustomControls.ToolStripMenuItemWithCommand rebootToolStripMenuItem;
-        private CustomControls.ToolStripMenuItemWithCommand shutDownToolStripMenuItem;
-        private CustomControls.ToolStripMenuItemWithCommand powerOffToolStripMenuItem;
+        private ToolStripMenuItemWithCommand toolStripMenuItem1;
+        private ToolStripMenuItemWithCommand actionNowToolStripMenuItem;
+        private ToolStripMenuItemWithCommand lockComputerToolStripMenuItem;
+        private ToolStripMenuItemWithCommand logOffToolStripMenuItem;
+        private ToolStripMenuItemWithCommand sleepToolStripMenuItem;
+        private ToolStripMenuItemWithCommand hibernateToolStripMenuItem;
+        private ToolStripMenuItemWithCommand rebootToolStripMenuItem;
+        private ToolStripMenuItemWithCommand shutDownToolStripMenuItem;
+        private ToolStripMenuItemWithCommand powerOffToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private CustomControls.ToolStripMenuItemWithCommand toolStripMenuItem2;
+        private ToolStripMenuItemWithCommand toolStripMenuItem2;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
