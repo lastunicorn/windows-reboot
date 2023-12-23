@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActivateWarning
+namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.ConfigureWarningOption
 {
     public class ConfigureWarningRequest : IRequest
     {

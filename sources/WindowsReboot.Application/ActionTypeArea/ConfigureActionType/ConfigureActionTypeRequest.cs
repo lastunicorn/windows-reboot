@@ -1,7 +1,7 @@
 ﻿using DustInTheWind.WindowsReboot.Core;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ConfigureActionType
+namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.ConfigureActionType
 {
     public class ConfigureActionTypeRequest : IRequest
     {

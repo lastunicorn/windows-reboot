@@ -25,8 +25,20 @@ namespace DustInTheWind.WindowsReboot.Presentation
     {
         private readonly SynchronizationContext synchronizationContext;
         protected readonly IUserInterface UserInterface;
+        private bool canExecute = true;
 
-        public virtual bool CanExecute => true;
+        public virtual bool CanExecute
+        {
+            get => canExecute;
+            protected set
+            {
+                if (canExecute == value)
+                    return;
+
+                canExecute = value;
+                OnCanExecuteChanged();
+            }
+        }
 
         public event EventHandler CanExecuteChanged;
 

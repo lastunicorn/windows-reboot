@@ -18,13 +18,14 @@ using System.Reflection;
 using System.Windows.Forms;
 using Autofac;
 using DustInTheWind.EventBusEngine;
-using DustInTheWind.WindowsReboot.Application.PresentActionTypeConfiguration;
+using DustInTheWind.WindowsReboot.Application.ActionTypeArea.PresentActionTypeConfiguration;
 using DustInTheWind.WindowsReboot.ConfigAccess;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.SystemAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation;
+using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WindowsReboot.Presentation.MainWindow;
 using DustInTheWind.WindowsReboot.Presentation.Workers;
 using DustInTheWind.WindowsReboot.SystemAccess;
@@ -89,6 +90,14 @@ namespace DustInTheWind.WindowsReboot
 
             containerBuilder.RegisterType<WindowsRebootForm>().AsSelf();
             containerBuilder.RegisterType<WindowsRebootViewModel>().AsSelf();
+            
+            containerBuilder.RegisterType<ActionTimeControlViewModel>().AsSelf();
+            containerBuilder.RegisterType<ActionTypeControlViewModel>().AsSelf();
+            containerBuilder.RegisterType<ActionControlViewModel>().AsSelf();
+            containerBuilder.RegisterType<StatusControlViewModel>().AsSelf();
+            
+            containerBuilder.RegisterType<StartTimerCommand>().AsSelf();
+            containerBuilder.RegisterType<StopTimerCommand>().AsSelf();
 
             containerBuilder.RegisterType<TrayIcon>().AsSelf();
             containerBuilder.RegisterType<TrayIconViewModel>().AsSelf();

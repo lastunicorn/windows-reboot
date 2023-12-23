@@ -14,28 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Core;
-using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ConfigureForceOption
+namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.PresentActionTypeConfiguration
 {
-    internal class ConfigureForceOptionUseCase : IRequestHandler<ConfigureForceOptionRequest>
+    public class PresentActionTypeConfigurationResponse
     {
-        private readonly ExecutionPlan executionPlan;
+        public ActionType ActionType { get; set; }
 
-        public ConfigureForceOptionUseCase(ExecutionPlan executionPlan)
-        {
-            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
-        }
+        public bool IsWarningEnabled { get; set; }
 
-        public Task Handle(ConfigureForceOptionRequest request, CancellationToken cancellationToken)
-        {
-            executionPlan.ForceOption = request.ForceOption;
-
-            return Task.CompletedTask;
-        }
+        public ForceOption ForceOption { get; set; }
     }
 }

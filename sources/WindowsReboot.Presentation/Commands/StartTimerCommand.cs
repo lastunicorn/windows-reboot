@@ -15,46 +15,60 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Threading.Tasks;
-using System.Threading;
 using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Application.ActionArea.PresentStartAbility;
+using DustInTheWind.WindowsReboot.Application.ActionArea.StartExecution;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
-    internal class StartTimerCommand : CommandBase
+    public class StartTimerCommand : CommandBase
     {
-        private readonly ExecutionTimer executionTimer;
+        private readonly IMediator mediator;
 
-        public override bool CanExecute => !executionTimer.IsRunning;
-
-        public StartTimerCommand(ExecutionTimer executionTimer, IUserInterface userInterface, EventBus eventBus)
+        public StartTimerCommand(IMediator mediator, IUserInterface userInterface, EventBus eventBus)
             : base(userInterface)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
             eventBus.Subscribe<TimerStartedEvent>(HandleTimerStartedEvent);
             eventBus.Subscribe<TimerStoppedEvent>(HandleTimerStoppedEvent);
+
+            Initialize();
         }
 
-        private Task HandleTimerStartedEvent(TimerStartedEvent ev, CancellationToken cancellationToken)
+        private async void Initialize()
         {
-            OnCanExecuteChanged();
-            return Task.CompletedTask;
+            PresentStartAbilityRequest request = new PresentStartAbilityRequest();
+            PresentStartAbilityResponse response = await mediator.Send(request);
+
+            Dispatch(() =>
+            {
+                CanExecute = response.CanStart;
+            });
         }
 
-        private Task HandleTimerStoppedEvent(TimerStoppedEvent ev, CancellationToken cancellationToken)
+        private void HandleTimerStartedEvent(TimerStartedEvent ev)
         {
-            Dispatch(OnCanExecuteChanged);
-            return Task.CompletedTask;
+            CanExecute = false;
+        }
+
+        private void HandleTimerStoppedEvent(TimerStoppedEvent ev)
+        {
+            Dispatch(() =>
+            {
+                CanExecute = true;
+            });
         }
 
         protected override void DoExecute()
         {
-            executionTimer.Start();
+            StartExecutionRequest request = new StartExecutionRequest();
+            _ = mediator.Send(request);
         }
     }
 }

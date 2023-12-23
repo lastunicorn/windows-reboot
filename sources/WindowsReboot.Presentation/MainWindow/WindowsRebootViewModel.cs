@@ -62,19 +62,20 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         /// the view used to interact with the user.
         /// </summary>
         public WindowsRebootViewModel(IMediator mediator, IUserInterface userInterface, ExecutionPlan executionPlan, ExecutionTimer executionTimer,
-            IConfigStorage configStorage, ApplicationEnvironment applicationEnvironment, IUiDispatcher uiDispatcher, EventBus eventBus)
+            IConfigStorage configStorage, ApplicationEnvironment applicationEnvironment, EventBus eventBus,
+            ActionTimeControlViewModel actionTimeControlViewModel, ActionTypeControlViewModel actionTypeControlViewModel,
+            ActionControlViewModel actionControlViewModel, StatusControlViewModel statusControlViewModel)
         {
             if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
             if (executionPlan == null) throw new ArgumentNullException(nameof(executionPlan));
             if (executionTimer == null) throw new ArgumentNullException(nameof(executionTimer));
             if (configStorage == null) throw new ArgumentNullException(nameof(configStorage));
             if (applicationEnvironment == null) throw new ArgumentNullException(nameof(applicationEnvironment));
-            if (uiDispatcher == null) throw new ArgumentNullException(nameof(uiDispatcher));
 
-            ActionTimeControlViewModel = new ActionTimeControlViewModel(executionTimer, eventBus);
-            ActionTypeControlViewModel = new ActionTypeControlViewModel(mediator, eventBus);
-            ActionControlViewModel = new ActionControlViewModel(executionTimer, userInterface, eventBus);
-            StatusControlViewModel = new StatusControlViewModel(executionTimer, uiDispatcher, eventBus);
+            ActionTimeControlViewModel = actionTimeControlViewModel ?? throw new ArgumentNullException(nameof(actionTimeControlViewModel));
+            ActionTypeControlViewModel = actionTypeControlViewModel ?? throw new ArgumentNullException(nameof(actionTypeControlViewModel));
+            ActionControlViewModel = actionControlViewModel ?? throw new ArgumentNullException(nameof(actionControlViewModel));
+            StatusControlViewModel = statusControlViewModel ?? throw new ArgumentNullException(nameof(statusControlViewModel));
 
             GoToTrayCommand = new GoToTrayCommand(userInterface);
             LoadDefaultConfigurationCommand = new LoadDefaultConfigurationCommand(userInterface, executionTimer, executionPlan, eventBus);

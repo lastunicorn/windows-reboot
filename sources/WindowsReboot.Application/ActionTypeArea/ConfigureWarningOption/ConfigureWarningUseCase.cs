@@ -20,29 +20,25 @@ using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Core;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.PresentActionTypeConfiguration
+namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.ConfigureWarningOption
 {
-    public class PresentActionTypeConfigurationUseCase : IRequestHandler<PresentActionTypeConfigurationRequest, PresentActionTypeConfigurationResponse>
+    internal class ConfigureWarningUseCase : IRequestHandler<ConfigureWarningRequest>
     {
         private readonly ExecutionTimer executionTimer;
-        private readonly ExecutionPlan executionPlan;
 
-        public PresentActionTypeConfigurationUseCase(ExecutionTimer executionTimer, ExecutionPlan executionPlan)
+        public ConfigureWarningUseCase(ExecutionTimer executionTimer)
         {
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
-        public Task<PresentActionTypeConfigurationResponse> Handle(PresentActionTypeConfigurationRequest request, CancellationToken cancellationToken)
+        public Task Handle(ConfigureWarningRequest request, CancellationToken cancellationToken)
         {
-            PresentActionTypeConfigurationResponse response = new PresentActionTypeConfigurationResponse
-            {
-                ActionType = executionPlan.ActionType,
-                IsWarningEnabled = executionTimer.WarningTime != null,
-                ForceOption = executionPlan.ForceOption
-            };
+            if (request.ActivateWarning)
+                executionTimer.ActivateWarning();
+            else
+                executionTimer.DeactivateWarning();
 
-            return Task.FromResult(response);
+            return Task.CompletedTask;
         }
     }
 }
