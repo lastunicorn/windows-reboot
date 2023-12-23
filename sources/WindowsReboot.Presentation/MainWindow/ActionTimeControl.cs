@@ -28,7 +28,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public ActionTimeControlViewModel ViewModel
         {
-            get { return viewModel; }
+            get => viewModel;
             set
             {
                 if (viewModel != null)
@@ -62,10 +62,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         private void HandleViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ScheduleTimeType")
-            {
+            if (e.PropertyName == "ScheduleTimeType") 
                 tabControlActionTime.SelectedIndex = ToTabIndex(viewModel.ScheduleTimeType);
-            }
         }
 
         public ActionTimeControl()

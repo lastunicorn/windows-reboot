@@ -26,7 +26,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public ActionTypeControlViewModel ViewModel
         {
-            get { return viewModel; }
+            get => viewModel;
             set
             {
                 comboBoxAction.DataSource = null;
@@ -44,6 +44,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                     checkBoxForceAction.Bind(x => x.Checked, viewModel, x => x.ForceAction, false, DataSourceUpdateMode.OnPropertyChanged);
                     checkBoxForceAction.Bind(x => x.Enabled, viewModel, x => x.ForceActionEnabled, false, DataSourceUpdateMode.OnPropertyChanged);
                     checkBoxDisplayActionWarning.Bind(x => x.Checked, viewModel, x => x.DisplayActionWarning, false, DataSourceUpdateMode.OnPropertyChanged);
+
+                    this.Bind(x => x.Enabled, viewModel, x => x.Enabled, false, DataSourceUpdateMode.Never);
                 }
             }
         }

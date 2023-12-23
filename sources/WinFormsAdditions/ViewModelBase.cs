@@ -14,18 +14,73 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DustInTheWind.WinFormsAdditions
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
+        private volatile bool isInitializeMode;
+        private readonly SynchronizationContext synchronizationContext;
+
+        protected bool IsInitializeMode => isInitializeMode;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected ViewModelBase()
         {
-            PropertyChangedEventArgs eventArgs = new PropertyChangedEventArgs(propertyName);
-            PropertyChanged?.Invoke(this, eventArgs);
+            synchronizationContext = SynchronizationContext.Current;
+        }
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+
+        protected void RunInInitializeMode(Action action)
+        {
+            isInitializeMode = true;
+
+            try
+            {
+                action();
+            }
+            finally
+            {
+                isInitializeMode = false;
+            }
+        }
+
+        protected async Task RunInInitializeMode(Func<Task> action)
+        {
+            isInitializeMode = true;
+
+            try
+            {
+                await action();
+            }
+            finally
+            {
+                isInitializeMode = false;
+            }
+        }
+
+        protected void Dispatch(Action action)
+        {
+            synchronizationContext.Post(o => action(), null);
         }
     }
 }

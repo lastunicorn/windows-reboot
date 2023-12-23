@@ -15,11 +15,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.EventBusEngine;
 
 namespace DustInTheWind.WindowsReboot.Core
 {
     public class ExecutionTimer : IDisposable
     {
+        private readonly EventBus eventBus;
         private readonly System.Threading.Timer timer;
 
         public readonly TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
@@ -29,12 +31,8 @@ namespace DustInTheWind.WindowsReboot.Core
         private bool shouldRaiseWarning;
         private DateTime startTime;
 
-        public event EventHandler Started;
-        public event EventHandler Stopped;
         public event EventHandler Warning;
         public event EventHandler Ring;
-        public event EventHandler WarningTimeChanged;
-        public event EventHandler TimeChanged;
 
         /// <summary>
         /// Indicates if the timer was started.
@@ -47,7 +45,8 @@ namespace DustInTheWind.WindowsReboot.Core
             set
             {
                 time = value;
-                OnTimeChanged();
+
+                OnTimeChanges();
             }
         }
 
@@ -69,8 +68,10 @@ namespace DustInTheWind.WindowsReboot.Core
 
         public DateTime ActionTime { get; private set; }
 
-        public ExecutionTimer()
+        public ExecutionTimer(EventBus eventBus)
         {
+            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+
             timer = new System.Threading.Timer(TimerElapsed);
 
             WarningTime = TimeSpan.FromSeconds(30);
@@ -184,12 +185,14 @@ namespace DustInTheWind.WindowsReboot.Core
 
         protected virtual void OnStarted()
         {
-            Started?.Invoke(this, EventArgs.Empty);
+            TimerStartedEvent ev = new TimerStartedEvent();
+            eventBus.PublishAsync(ev).Wait();
         }
 
         protected virtual void OnStopped()
         {
-            Stopped?.Invoke(this, EventArgs.Empty);
+            TimerStoppedEvent ev = new TimerStoppedEvent();
+            eventBus.PublishAsync(ev).Wait();
         }
 
         protected virtual void OnWarning()
@@ -204,12 +207,22 @@ namespace DustInTheWind.WindowsReboot.Core
 
         protected virtual void OnWarningTimeChanged()
         {
-            WarningTimeChanged?.Invoke(this, EventArgs.Empty);
+            WarningTimeChangedEvent ev = new WarningTimeChangedEvent
+            {
+                Time = WarningTime
+            };
+
+            eventBus.PublishAsync(ev).Wait();
         }
 
-        protected virtual void OnTimeChanged()
+        protected virtual void OnTimeChanges()
         {
-            TimeChanged?.Invoke(this, EventArgs.Empty);
+            TimerTimeChangedEvent ev = new TimerTimeChangedEvent
+            {
+                Time = time
+            };
+
+            eventBus.PublishAsync(ev).Wait();
         }
 
         public void Dispose()

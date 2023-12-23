@@ -16,6 +16,9 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
+using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WinFormsAdditions;
 
@@ -60,15 +63,16 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             }
         }
 
-        public StatusControlViewModel(Core.ExecutionTimer executionTimer, IUiDispatcher uiDispatcher)
+        public StatusControlViewModel(Core.ExecutionTimer executionTimer, IUiDispatcher uiDispatcher, EventBus eventBus)
         {
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.uiDispatcher = uiDispatcher ?? throw new ArgumentNullException(nameof(uiDispatcher));
-
             ticker = new Timer(HandleTickerTick, null, 0, 100);
 
-            executionTimer.Started += HandleTimerStarted;
-            executionTimer.Stopped += HandleTimerStopped;
+            eventBus.Subscribe<TimerStartedEvent>(HandleTimerStartedEvent);
+            eventBus.Subscribe<TimerStoppedEvent>(HandleTimerStoppedEvent);
         }
 
         private void HandleTickerTick(object state)
@@ -82,18 +86,23 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             });
         }
 
-        private void HandleTimerStarted(object sender, EventArgs eventArgs)
+        private Task HandleTimerStartedEvent(TimerStartedEvent ev, CancellationToken cancellationToken)
         {
-            uiDispatcher.Dispatch(() => { ActionTime = executionTimer.ActionTime; });
+            Dispatch(() =>
+            {
+                ActionTime = executionTimer.ActionTime;
+            });
+            return Task.CompletedTask;
         }
 
-        private void HandleTimerStopped(object sender, EventArgs eventArgs)
+        private Task HandleTimerStoppedEvent(TimerStoppedEvent ev, CancellationToken cancellationToken)
         {
-            uiDispatcher.Dispatch(() =>
+            Dispatch(() =>
             {
                 ActionTime = null;
                 TimerTime = null;
             });
+            return Task.CompletedTask;
         }
 
         public void Dispose()

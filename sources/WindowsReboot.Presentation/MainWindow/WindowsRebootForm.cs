@@ -25,7 +25,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public WindowsRebootViewModel ViewModel
         {
-            get { return viewModel; }
+            get => viewModel;
             set
             {
                 viewModel = value;

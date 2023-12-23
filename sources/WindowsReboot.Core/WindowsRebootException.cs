@@ -25,13 +25,13 @@ namespace DustInTheWind.WindowsReboot.Core
     [Serializable]
     public class WindowsRebootException : ApplicationException
     {
-        private const string MESSAGE = "Internal error in WindowsReboot.";
+        private const string DefaultMessage = "Internal error in WindowsReboot.";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowsRebootException"/> class.
         /// </summary>
         public WindowsRebootException()
-            : base(MESSAGE)
+            : base(DefaultMessage)
         {
         }
 
@@ -49,7 +49,7 @@ namespace DustInTheWind.WindowsReboot.Core
         /// </summary>
         /// <param name="innerException">The exception that is the cause of the current exception.</param>
         public WindowsRebootException(Exception innerException)
-            : base(MESSAGE, innerException)
+            : base(DefaultMessage, innerException)
         {
         }
 

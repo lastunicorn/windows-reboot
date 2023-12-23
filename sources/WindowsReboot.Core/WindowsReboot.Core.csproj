@@ -93,6 +93,10 @@
     <Compile Include="ScheduleTimeType.cs" />
     <Compile Include="ActionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimerStartedEvent.cs" />
+    <Compile Include="TimerStoppedEvent.cs" />
+    <Compile Include="TimerTimeChangedEvent.cs" />
+    <Compile Include="WarningTimeChangedEvent.cs" />
     <Compile Include="VersionUtil.cs" />
     <Compile Include="WindowsRebootException.cs" />
   </ItemGroup>
@@ -100,6 +104,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventBusEngine\EventBusEngine.csproj">
+      <Project>{B7AC38A9-718C-4102-8862-D50FDD897B31}</Project>
+      <Name>EventBusEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj">
       <Project>{CA55A116-6AA7-4222-9686-2D57B4CD5E58}</Project>
       <Name>WindowsReboot.Ports.SystemAccess</Name>

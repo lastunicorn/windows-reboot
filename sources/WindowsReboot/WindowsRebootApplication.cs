@@ -16,6 +16,7 @@
 
 using System.Windows.Forms;
 using Autofac;
+using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.ConfigAccess;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
@@ -60,6 +61,10 @@ namespace DustInTheWind.WindowsReboot
             // Workers
 
             containerBuilder.RegisterWorkers();
+
+            // Event Bus
+
+            containerBuilder.RegisterType<EventBus>().AsSelf().SingleInstance();
 
             // Presentation
 

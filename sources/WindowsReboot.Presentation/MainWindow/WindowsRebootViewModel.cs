@@ -16,6 +16,7 @@
 
 using System;
 using System.Windows.Forms;
+using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
@@ -51,7 +52,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             set
             {
                 title = value;
-                OnPropertyChanged("Title");
+                OnPropertyChanged();
             }
         }
 
@@ -60,7 +61,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         /// the view used to interact with the user.
         /// </summary>
         public WindowsRebootViewModel(IUserInterface userInterface, ExecutionPlan executionPlan, ExecutionTimer executionTimer,
-            IConfigStorage configStorage, ApplicationEnvironment applicationEnvironment, IUiDispatcher uiDispatcher)
+            IConfigStorage configStorage, ApplicationEnvironment applicationEnvironment, IUiDispatcher uiDispatcher, EventBus eventBus)
         {
             if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
             if (executionPlan == null) throw new ArgumentNullException(nameof(executionPlan));
@@ -69,21 +70,24 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             if (applicationEnvironment == null) throw new ArgumentNullException(nameof(applicationEnvironment));
             if (uiDispatcher == null) throw new ArgumentNullException(nameof(uiDispatcher));
 
-            ActionTimeControlViewModel = new ActionTimeControlViewModel(executionTimer, uiDispatcher);
-            ActionTypeControlViewModel = new ActionTypeControlViewModel(executionTimer, executionPlan, uiDispatcher);
-            ActionControlViewModel = new ActionControlViewModel(executionTimer, userInterface);
-            StatusControlViewModel = new StatusControlViewModel(executionTimer, uiDispatcher);
+            ActionTimeControlViewModel = new ActionTimeControlViewModel(executionTimer, eventBus);
+            ActionTypeControlViewModel = new ActionTypeControlViewModel(executionTimer, executionPlan, eventBus);
+            ActionControlViewModel = new ActionControlViewModel(executionTimer, userInterface, eventBus);
+            StatusControlViewModel = new StatusControlViewModel(executionTimer, uiDispatcher, eventBus);
 
             GoToTrayCommand = new GoToTrayCommand(userInterface);
-            LoadDefaultConfigurationCommand = new LoadDefaultConfigurationCommand(userInterface, executionTimer, executionPlan);
-            LoadConfigurationCommand = new LoadConfigurationCommand(userInterface, executionTimer, executionPlan, configStorage);
+            LoadDefaultConfigurationCommand = new LoadDefaultConfigurationCommand(userInterface, executionTimer, executionPlan, eventBus);
+            LoadConfigurationCommand = new LoadConfigurationCommand(userInterface, executionTimer, executionPlan, configStorage, eventBus);
             SaveConfigurationCommand = new SaveConfigurationCommand(userInterface, executionTimer, executionPlan, configStorage);
             OptionsCommand = new OptionsCommand(userInterface);
             LicenseCommand = new LicenseCommand(userInterface);
             AboutCommand = new AboutCommand(userInterface);
             ExitCommand = new ExitCommand(userInterface, applicationEnvironment);
 
-            Title = string.Format("{0} {1}", Application.ProductName, VersionUtil.GetVersionToString());
+            string productName = Application.ProductName;
+            string versionToString = VersionUtil.GetVersionToString();
+            
+            Title = $"{productName} {versionToString}";
         }
     }
 }

@@ -15,8 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
+using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WinFormsAdditions;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
@@ -24,8 +26,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
     public class ActionTimeControlViewModel : ViewModelBase
     {
         private readonly ExecutionTimer executionTimer;
-        private readonly IUiDispatcher uiDispatcher;
-        private bool updateFromBusiness;
 
         private ScheduleTimeType scheduleTimeType;
         private DateTime fixedDate;
@@ -42,9 +42,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             set
             {
                 scheduleTimeType = value;
-                OnPropertyChanged(nameof(ScheduleTimeType));
+                OnPropertyChanged();
 
-                if (!updateFromBusiness)
+                if (!IsInitializeMode)
                     executionTimer.Time = GetActionTime();
             }
         }
@@ -55,9 +55,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             set
             {
                 fixedDate = value;
-                OnPropertyChanged(nameof(FixedDate));
+                OnPropertyChanged();
 
-                if (!updateFromBusiness)
+                if (!IsInitializeMode)
                     executionTimer.Time = GetActionTime();
             }
         }
@@ -68,9 +68,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             set
             {
                 fixedTime = value;
-                OnPropertyChanged(nameof(FixedTime));
+                OnPropertyChanged();
 
-                if (!updateFromBusiness)
+                if (!IsInitializeMode)
                     executionTimer.Time = GetActionTime();
             }
         }
@@ -81,9 +81,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             set
             {
                 delayHours = value;
-                OnPropertyChanged(nameof(DelayHours));
+                OnPropertyChanged();
 
-                if (!updateFromBusiness)
+                if (!IsInitializeMode)
                     executionTimer.Time = GetActionTime();
             }
         }
@@ -94,9 +94,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             set
             {
                 delayMinutes = value;
-                OnPropertyChanged(nameof(DelayMinutes));
+                OnPropertyChanged();
 
-                if (!updateFromBusiness)
+                if (!IsInitializeMode)
                     executionTimer.Time = GetActionTime();
             }
         }
@@ -107,9 +107,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             set
             {
                 delaySeconds = value;
-                OnPropertyChanged(nameof(DelaySeconds));
+                OnPropertyChanged();
 
-                if (!updateFromBusiness)
+                if (!IsInitializeMode)
                     executionTimer.Time = GetActionTime();
             }
         }
@@ -120,9 +120,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             set
             {
                 dailyTime = value;
-                OnPropertyChanged(nameof(DailyTime));
+                OnPropertyChanged();
 
-                if (!updateFromBusiness)
+                if (!IsInitializeMode)
                     executionTimer.Time = GetActionTime();
             }
         }
@@ -133,63 +133,62 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             set
             {
                 enabled = value;
-                OnPropertyChanged(nameof(Enabled));
+                OnPropertyChanged();
             }
         }
 
-        public ActionTimeControlViewModel(ExecutionTimer executionTimer, IUiDispatcher uiDispatcher)
+        public ActionTimeControlViewModel(ExecutionTimer executionTimer, EventBus eventBus)
         {
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-            this.uiDispatcher = uiDispatcher ?? throw new ArgumentNullException(nameof(uiDispatcher));
 
             Enabled = true;
 
-            UpdateFromTimer();
+            UpdateGui(executionTimer.Time);
 
-            executionTimer.TimeChanged += HandleTimerTimeChanged;
-            executionTimer.Started += HandleTimerStarted;
-            executionTimer.Stopped += HandleTimerStopped;
+            eventBus.Subscribe<TimerTimeChangedEvent>(HandleTimerTimeChangedEvent);
+            eventBus.Subscribe<TimerStartedEvent>(HandleTimerStartedEvent);
+            eventBus.Subscribe<TimerStoppedEvent>(HandleTimerStoppedEvent);
         }
 
-        private void HandleTimerStarted(object sender, EventArgs eventArgs)
+        private Task HandleTimerTimeChangedEvent(TimerTimeChangedEvent ev, CancellationToken cancellationToken)
         {
-            Enabled = false;
+            UpdateGui(ev.Time);
+            return Task.CompletedTask;
         }
 
-        private void HandleTimerStopped(object sender, EventArgs eventArgs)
+        private Task HandleTimerStartedEvent(TimerStartedEvent ev, CancellationToken cancellationToken)
         {
-            uiDispatcher.Dispatch(() => Enabled = true);
+            Dispatch(() => Enabled = false);
+            return Task.CompletedTask;
         }
 
-        private void HandleTimerTimeChanged(object sender, EventArgs e)
+        private Task HandleTimerStoppedEvent(TimerStoppedEvent ev, CancellationToken cancellationToken)
         {
-            UpdateFromTimer();
+            Dispatch(() => Enabled = true);
+            return Task.CompletedTask;
         }
 
-        private void UpdateFromTimer()
+        private void UpdateGui(ScheduleTime scheduleTime)
         {
-            updateFromBusiness = true;
-
-            try
+            RunInInitializeMode(() =>
             {
-                if (executionTimer.Time == null)
-                    Clear();
-                else
+                if (scheduleTime == null)
                 {
-                    FixedDate = executionTimer.Time.DateTime.Date;
-                    FixedTime = executionTimer.Time.DateTime.TimeOfDay;
-                    DelayHours = executionTimer.Time.Hours;
-                    DelayMinutes = executionTimer.Time.Minutes;
-                    DelaySeconds = executionTimer.Time.Seconds;
-                    DailyTime = executionTimer.Time.TimeOfDay;
-
-                    ScheduleTimeType = executionTimer.Time.Type;
+                    Clear();
+                    return;
                 }
-            }
-            finally
-            {
-                updateFromBusiness = false;
-            }
+                
+                FixedDate = scheduleTime.DateTime.Date;
+                FixedTime = scheduleTime.DateTime.TimeOfDay;
+                DelayHours = scheduleTime.Hours;
+                DelayMinutes = scheduleTime.Minutes;
+                DelaySeconds = scheduleTime.Seconds;
+                DailyTime = scheduleTime.TimeOfDay;
+
+                ScheduleTimeType = scheduleTime.Type;
+
+            });
         }
 
         private void Clear()

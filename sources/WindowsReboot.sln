@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsAdditions", "WinFormsAdditions\WinFormsAdditions.csproj", "{A47C0D20-17D8-4B63-BE9A-F1F14CA4A64D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBusEngine", "EventBusEngine\EventBusEngine.csproj", "{B7AC38A9-718C-4102-8862-D50FDD897B31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{A47C0D20-17D8-4B63-BE9A-F1F14CA4A64D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A47C0D20-17D8-4B63-BE9A-F1F14CA4A64D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A47C0D20-17D8-4B63-BE9A-F1F14CA4A64D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7AC38A9-718C-4102-8862-D50FDD897B31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7AC38A9-718C-4102-8862-D50FDD897B31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7AC38A9-718C-4102-8862-D50FDD897B31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7AC38A9-718C-4102-8862-D50FDD897B31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +119,7 @@ Global
 		{4EF538E6-CE2C-4125-ACE8-83D4A9756491} = {C43E57B7-4545-4911-9885-BFD6D08211AE}
 		{18C3ABB0-E98A-4F60-8A6D-68B811DDC8F8} = {C43E57B7-4545-4911-9885-BFD6D08211AE}
 		{A47C0D20-17D8-4B63-BE9A-F1F14CA4A64D} = {C43E57B7-4545-4911-9885-BFD6D08211AE}
+		{B7AC38A9-718C-4102-8862-D50FDD897B31} = {C43E57B7-4545-4911-9885-BFD6D08211AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {461CA009-4250-461E-8FC0-7C026864E6F6}

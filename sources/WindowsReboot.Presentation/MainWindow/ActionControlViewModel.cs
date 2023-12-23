@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
-using DustInTheWind.WindowsReboot.Presentation.CommandModel;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WinFormsAdditions;
 
@@ -27,10 +27,10 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         public ICommand StartTimerCommand { get; set; }
         public ICommand StopTimerCommand { get; set; }
 
-        public ActionControlViewModel(ExecutionTimer executionTimer, IUserInterface userInterface)
+        public ActionControlViewModel(ExecutionTimer executionTimer, IUserInterface userInterface, EventBus eventBus)
         {
-            StartTimerCommand = new StartTimerCommand(executionTimer, userInterface);
-            StopTimerCommand = new StopTimerCommand(executionTimer, userInterface);
+            StartTimerCommand = new StartTimerCommand(executionTimer, userInterface, eventBus);
+            StopTimerCommand = new StopTimerCommand(executionTimer, userInterface, eventBus);
         }
     }
 }

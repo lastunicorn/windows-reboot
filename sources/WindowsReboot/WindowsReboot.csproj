@@ -211,6 +211,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventBusEngine\EventBusEngine.csproj">
+      <Project>{B7AC38A9-718C-4102-8862-D50FDD897B31}</Project>
+      <Name>EventBusEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.ConfigAccess\WindowsReboot.ConfigAccess.csproj">
       <Project>{E361EAE2-D408-4DDA-ABD3-81AF3CCBF612}</Project>
       <Name>WindowsReboot.ConfigAccess</Name>

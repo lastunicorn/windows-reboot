@@ -140,6 +140,10 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventBusEngine\EventBusEngine.csproj">
+      <Project>{B7AC38A9-718C-4102-8862-D50FDD897B31}</Project>
+      <Name>EventBusEngine</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Core.csproj">
       <Project>{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}</Project>
       <Name>WindowsReboot.Core</Name>

@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WinFormsAdditions;
 
@@ -22,6 +23,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.CommandModel
 {
     public abstract class CommandBase : ICommand
     {
+        private readonly SynchronizationContext synchronizationContext;
         protected readonly IUserInterface UserInterface;
 
         public virtual bool CanExecute => true;
@@ -31,6 +33,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.CommandModel
         protected CommandBase(IUserInterface userInterface)
         {
             UserInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
+
+            synchronizationContext = SynchronizationContext.Current;
         }
 
         public void Execute()
@@ -50,6 +54,11 @@ namespace DustInTheWind.WindowsReboot.Presentation.CommandModel
         protected virtual void OnCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected void Dispatch(Action action)
+        {
+            synchronizationContext.Post(o => action(), null);
         }
     }
 }

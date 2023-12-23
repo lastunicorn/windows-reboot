@@ -15,6 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading.Tasks;
+using System.Threading;
+using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
@@ -30,25 +33,29 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         public override bool CanExecute => !executionTimer.IsRunning;
 
-        public LoadConfigurationCommand(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan, IConfigStorage configuration)
+        public LoadConfigurationCommand(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan, IConfigStorage configuration, EventBus eventBus)
             : base(userInterface)
         {
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-
-            executionTimer.Started += HandleTimerStarted;
-            executionTimer.Stopped += HandleTimerStopped;
+            
+            eventBus.Subscribe<TimerStartedEvent>(HandleTimerStartedEvent);
+            eventBus.Subscribe<TimerStoppedEvent>(HandleTimerStoppedEvent);
         }
 
-        private void HandleTimerStarted(object sender, EventArgs e)
+        private Task HandleTimerStartedEvent(TimerStartedEvent ev, CancellationToken cancellationToken)
         {
             OnCanExecuteChanged();
+            return Task.CompletedTask;
         }
 
-        private void HandleTimerStopped(object sender, EventArgs e)
+        private Task HandleTimerStoppedEvent(TimerStoppedEvent ev, CancellationToken cancellationToken)
         {
-            UserInterface.Dispatch(OnCanExecuteChanged);
+            Dispatch(OnCanExecuteChanged);
+            return Task.CompletedTask;
         }
 
         protected override void DoExecute()
