@@ -21,7 +21,6 @@ using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
-using DustInTheWind.WindowsReboot.Presentation.CommandModel;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
@@ -65,7 +64,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
             executionTimer.Time = configuration.ActionTime;
             executionPlan.ActionType = configuration.ActionType;
-            executionPlan.ApplyForce = configuration.ForceClosingPrograms;
+            executionPlan.ForceOption = configuration.ForceClosingPrograms
+                ? ForceOption.Yes
+                : ForceOption.No;
         }
     }
 }

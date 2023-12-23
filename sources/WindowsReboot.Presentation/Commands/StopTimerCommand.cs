@@ -20,7 +20,6 @@ using System.Threading;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
-using DustInTheWind.WindowsReboot.Presentation.CommandModel;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {

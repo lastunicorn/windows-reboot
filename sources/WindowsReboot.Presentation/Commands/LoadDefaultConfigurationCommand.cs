@@ -15,12 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Threading.Tasks;
-using System.Threading;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
-using DustInTheWind.WindowsReboot.Presentation.CommandModel;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
@@ -43,16 +40,14 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
             eventBus.Subscribe<TimerStoppedEvent>(HandleTimerStoppedEvent);
         }
 
-        private Task HandleTimerStartedEvent(TimerStartedEvent ev, CancellationToken cancellationToken)
+        private void HandleTimerStartedEvent(TimerStartedEvent ev)
         {
             OnCanExecuteChanged();
-            return Task.CompletedTask;
         }
 
-        private Task HandleTimerStoppedEvent(TimerStoppedEvent ev, CancellationToken cancellationToken)
+        private void HandleTimerStoppedEvent(TimerStoppedEvent ev)
         {
             Dispatch(OnCanExecuteChanged);
-            return Task.CompletedTask;
         }
 
         protected override void DoExecute()
@@ -66,7 +61,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
             };
 
             executionPlan.ActionType = ActionType.PowerOff;
-            executionPlan.ApplyForce = true;
+            executionPlan.ForceOption = ForceOption.Yes;
+            executionTimer.WarningTime = null;
         }
     }
 }

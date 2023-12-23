@@ -83,7 +83,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             PowerOffCommand = new PowerOffCommand(userInterface, operatingSystem);
             ExitCommand = new ExitCommand(userInterface, applicationEnvironment);
 
-            defaultText = string.Format("{0} {1}", Application.ProductName, VersionUtil.GetVersionToString());
+            defaultText = string.Format("{0} {1}", System.Windows.Forms.Application.ProductName, VersionUtil.GetVersionToString());
 
             Text = defaultText;
 

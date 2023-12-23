@@ -183,16 +183,26 @@ namespace DustInTheWind.WindowsReboot.Core
             timer.Change(-1, -1);
         }
 
+        public void ActivateWarning()
+        {
+            WarningTime = DefaultWarningTime;
+        }
+
+        public void DeactivateWarning()
+        {
+            WarningTime = null;
+        }
+
         protected virtual void OnStarted()
         {
             TimerStartedEvent ev = new TimerStartedEvent();
-            eventBus.PublishAsync(ev).Wait();
+            eventBus.Publish(ev);
         }
 
         protected virtual void OnStopped()
         {
             TimerStoppedEvent ev = new TimerStoppedEvent();
-            eventBus.PublishAsync(ev).Wait();
+            eventBus.Publish(ev);
         }
 
         protected virtual void OnWarning()
@@ -212,7 +222,7 @@ namespace DustInTheWind.WindowsReboot.Core
                 Time = WarningTime
             };
 
-            eventBus.PublishAsync(ev).Wait();
+            eventBus.Publish(ev);
         }
 
         protected virtual void OnTimeChanges()
@@ -222,7 +232,7 @@ namespace DustInTheWind.WindowsReboot.Core
                 Time = time
             };
 
-            eventBus.PublishAsync(ev).Wait();
+            eventBus.Publish(ev);
         }
 
         public void Dispose()

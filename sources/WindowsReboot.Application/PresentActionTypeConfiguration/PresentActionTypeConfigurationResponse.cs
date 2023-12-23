@@ -1,5 +1,5 @@
 ﻿// Windows Reboot
-// Copyright (C) 2009-2015 Dust in the Wind
+// Copyright (C) 2009-2023 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,20 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using DustInTheWind.WindowsReboot.Core;
 
-namespace DustInTheWind.WindowsReboot.Presentation.Commands
+namespace DustInTheWind.WindowsReboot.Application.PresentActionTypeConfiguration
 {
-    public class OptionsCommand : CommandBase
+    public class PresentActionTypeConfigurationResponse
     {
-        public OptionsCommand(IUserInterface userInterface)
-            : base(userInterface)
-        {
-        }
+        public ActionType ActionType { get; set; }
 
-        protected override void DoExecute()
-        {
-            UserInterface.DisplayOptions();
-        }
+        public bool IsWarningEnabled { get; set; }
+        
+        public ForceOption ForceOption { get; set; }
     }
 }

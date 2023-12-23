@@ -14,9 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Reflection;
 using System.Windows.Forms;
 using Autofac;
 using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Application.PresentActionTypeConfiguration;
 using DustInTheWind.WindowsReboot.ConfigAccess;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
@@ -24,9 +26,13 @@ using DustInTheWind.WindowsReboot.Ports.SystemAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation;
 using DustInTheWind.WindowsReboot.Presentation.MainWindow;
+using DustInTheWind.WindowsReboot.Presentation.Workers;
 using DustInTheWind.WindowsReboot.SystemAccess;
 using DustInTheWind.WindowsReboot.UserAccess;
 using DustInTheWind.WorkersEngine.Setup.Autofac;
+using MediatR.Extensions.Autofac.DependencyInjection;
+using MediatR.Extensions.Autofac.DependencyInjection.Builder;
+using WindowsReboot.BackgroundWorkers;
 
 namespace DustInTheWind.WindowsReboot
 {
@@ -60,11 +66,22 @@ namespace DustInTheWind.WindowsReboot
 
             // Workers
 
-            containerBuilder.RegisterWorkers();
+            Assembly[] workerAssemblies = new[]
+            {
+                typeof(ExecutionWorker).Assembly,
+                typeof(MainWindowCloseWorker).Assembly
+            };
+            containerBuilder.RegisterWorkers(workerAssemblies);
 
-            // Event Bus
+            // Infrastructure
 
             containerBuilder.RegisterType<EventBus>().AsSelf().SingleInstance();
+
+            Assembly useCaseAssembly = typeof(PresentActionTypeConfigurationRequest).Assembly;
+            MediatRConfiguration mediatRConfiguration = MediatRConfigurationBuilder.Create(useCaseAssembly)
+                .WithAllOpenGenericHandlerTypesRegistered()
+                .Build();
+            containerBuilder.RegisterMediatR(mediatRConfiguration);
 
             // Presentation
 
@@ -81,8 +98,8 @@ namespace DustInTheWind.WindowsReboot
 
         private void InitializeApplication(IComponentContext context)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
 
             mainWindow = context.Resolve<WindowsRebootForm>();
 
@@ -100,7 +117,7 @@ namespace DustInTheWind.WindowsReboot
 
         public void Run()
         {
-            Application.Run(mainWindow);
+            System.Windows.Forms.Application.Run(mainWindow);
         }
     }
 }

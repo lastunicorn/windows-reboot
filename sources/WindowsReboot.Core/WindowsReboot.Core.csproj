@@ -89,6 +89,9 @@
     <Compile Include="ExecutionPlan.cs" />
     <Compile Include="ActionTimeInThePastException.cs" />
     <Compile Include="ExecutionTimer.cs" />
+    <Compile Include="ActionTypeChangedEvent.cs" />
+    <Compile Include="ForceOption.cs" />
+    <Compile Include="ForceOptionChangedEvent.cs" />
     <Compile Include="ScheduleTime.cs" />
     <Compile Include="ScheduleTimeType.cs" />
     <Compile Include="ActionType.cs" />

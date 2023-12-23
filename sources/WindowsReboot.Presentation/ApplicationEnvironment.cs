@@ -45,7 +45,9 @@ namespace DustInTheWind.WindowsReboot.Presentation
         {
             executionTimer.Time = configStorage.ActionTime;
             executionPlan.ActionType = configStorage.ActionType;
-            executionPlan.ApplyForce = configStorage.ForceClosingPrograms;
+            executionPlan.ForceOption = configStorage.ForceClosingPrograms
+                ? ForceOption.Yes
+                : ForceOption.No;
 
             if (configStorage.StartTimerAtApplicationStart)
                 executionTimer.Start();
@@ -61,7 +63,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
             if (cancelEventArgs.Cancel)
                 OnCloseRevoked();
             else
-                Application.Exit();
+                System.Windows.Forms.Application.Exit();
         }
 
         protected virtual void OnClosing(CancelEventArgs e)

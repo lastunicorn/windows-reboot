@@ -28,25 +28,17 @@ namespace DustInTheWind.WindowsReboot.Ports.UserAccess
         MainWindowState MainWindowState { get; set; }
         event EventHandler MainWindowStateChanged;
 
-        /// <summary>
-        /// Displays a message to the user.
-        /// </summary>
-        /// <param name="message">The message text to be displayed.</param>
         void DisplayMessage(string message);
 
-        /// <summary>
-        /// Displays an error message to the user.
-        /// </summary>
-        /// <param name="message">The message text to be displayed.</param>
         void DisplayError(string message);
 
-        /// <summary>
-        /// Displays the exception in a friendly way for the user.
-        /// </summary>
-        /// <param name="ex">The <see cref="Exception"/> instance containing data about the error.</param>
         void DisplayError(Exception ex);
 
         bool AskToClose(string message);
         bool Confirm(string message);
+
+        void DisplayExecutionWarning(string actionName);
+
+        void DisplayNotification();
     }
 }

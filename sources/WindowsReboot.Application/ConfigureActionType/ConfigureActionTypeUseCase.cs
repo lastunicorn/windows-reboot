@@ -1,5 +1,5 @@
 ﻿// Windows Reboot
-// Copyright (C) 2009-2015 Dust in the Wind
+// Copyright (C) 2009-2023 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,23 +15,26 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using System.Threading;
+using System.Threading.Tasks;
+using DustInTheWind.WindowsReboot.Core;
+using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Presentation.Commands
+namespace DustInTheWind.WindowsReboot.Application.ConfigureActionType
 {
-    public class ExitCommand : CommandBase
+    internal class ConfigureActionTypeUseCase : IRequestHandler<ConfigureActionTypeRequest>
     {
-        private readonly ApplicationEnvironment applicationEnvironment;
+        private readonly ExecutionPlan executionPlan;
 
-        public ExitCommand(IUserInterface userInterface, ApplicationEnvironment applicationEnvironment)
-            : base(userInterface)
+        public ConfigureActionTypeUseCase(ExecutionPlan executionPlan)
         {
-            this.applicationEnvironment = applicationEnvironment ?? throw new ArgumentNullException(nameof(applicationEnvironment));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
-        protected override void DoExecute()
+        public Task Handle(ConfigureActionTypeRequest request, CancellationToken cancellationToken)
         {
-            applicationEnvironment.Close();
+            executionPlan.ActionType = request.ActionType;
+            return Task.CompletedTask;
         }
     }
 }

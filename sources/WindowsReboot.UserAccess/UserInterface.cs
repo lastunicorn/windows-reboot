@@ -16,6 +16,7 @@
 
 using System;
 using System.Windows.Forms;
+using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.UserAccess.OtherWindows;
@@ -79,7 +80,10 @@ namespace DustInTheWind.WindowsReboot.UserAccess
         /// <param name="message">The message text to be displayed.</param>
         public void DisplayMessage(string message)
         {
-            MessageBox.Show(MainForm, message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Dispatch(() =>
+            {
+                MessageBox.Show(MainForm, message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            });
         }
 
         /// <summary>
@@ -108,6 +112,24 @@ namespace DustInTheWind.WindowsReboot.UserAccess
         public bool Confirm(string message)
         {
             return MessageBox.Show(MainForm, message, string.Empty, MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK;
+        }
+
+        public void DisplayExecutionWarning(string actionName)
+        {
+            Dispatch(() =>
+            {
+                string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.", actionName);
+                MessageBox.Show(MainForm, message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            });
+        }
+
+        public void DisplayNotification()
+        {
+            Dispatch(() =>
+            {
+                string message = "Ring-ring!";
+                MessageBox.Show(MainForm, message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            });
         }
 
         protected virtual void OnMainWindowStateChanged()

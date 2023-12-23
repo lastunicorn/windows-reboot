@@ -16,29 +16,27 @@
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Threading;
 using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Application.ActivateWarning;
+using DustInTheWind.WindowsReboot.Application.ConfigureActionType;
+using DustInTheWind.WindowsReboot.Application.ConfigureForceOption;
+using DustInTheWind.WindowsReboot.Application.PresentActionTypeConfiguration;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WinFormsAdditions;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
     public class ActionTypeControlViewModel : ViewModelBase
     {
-        private readonly ExecutionTimer executionTimer;
-        private readonly ExecutionPlan executionPlan;
+        private readonly IMediator mediator;
         private ActionTypeItem[] actionTypes;
         private ActionTypeItem selectedActionType;
-        private bool forceActionEnabled;
-        private bool forceActionBackup;
-        private bool forceAction;
-        private bool displayWarningMessage;
+        private bool isForceEnabled;
+        private bool force;
+        private bool isWarningEnabled;
         private bool enabled;
 
-        /// <summary>
-        /// Sets the available values that can be chose for the action type.
-        /// </summary>
         public ActionTypeItem[] ActionTypes
         {
             get => actionTypes;
@@ -49,9 +47,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             }
         }
 
-        /// <summary>
-        /// Gets or sets the action type.
-        /// </summary>
         public ActionTypeItem SelectedActionType
         {
             get => selectedActionType;
@@ -64,43 +59,63 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged();
 
                 if (!IsInitializeMode)
-                    executionPlan.ActionType = value.Value;
+                {
+                    ConfigureActionTypeRequest request = new ConfigureActionTypeRequest
+                    {
+                        ActionType = value.Value
+                    };
+
+                    _ = mediator.Send(request);
+                }
             }
         }
 
-        public bool ForceAction
+        public bool Force
         {
-            get => forceAction;
+            get => force;
             set
             {
-                forceAction = value;
+                force = value;
                 OnPropertyChanged();
 
                 if (!IsInitializeMode)
-                    executionPlan.ApplyForce = value;
+                {
+                    ConfigureForceOptionRequest request = new ConfigureForceOptionRequest
+                    {
+                        ForceOption = value ? ForceOption.Yes : ForceOption.No
+                    };
+
+                    _ = mediator.Send(request);
+                }
             }
         }
 
-        public bool ForceActionEnabled
+        public bool IsForceEnabled
         {
-            get => forceActionEnabled;
+            get => isForceEnabled;
             set
             {
-                forceActionEnabled = value;
+                isForceEnabled = value;
                 OnPropertyChanged();
             }
         }
 
-        public bool DisplayActionWarning
+        public bool IsWarningEnable
         {
-            get => displayWarningMessage;
+            get => isWarningEnabled;
             set
             {
-                displayWarningMessage = value;
+                isWarningEnabled = value;
                 OnPropertyChanged();
 
                 if (!IsInitializeMode)
-                    executionTimer.WarningTime = value ? executionTimer.DefaultWarningTime : null;
+                {
+                    ConfigureWarningRequest request = new ConfigureWarningRequest
+                    {
+                        ActivateWarning = value
+                    };
+                    _ = mediator.Send(request);
+                }
             }
         }
 
@@ -114,125 +129,87 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             }
         }
 
-        public ActionTypeControlViewModel(ExecutionTimer executionTimer, ExecutionPlan executionPlan, EventBus eventBus)
+        public ActionTypeControlViewModel(IMediator mediator, EventBus eventBus)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
             ActionTypes = Enum.GetValues(typeof(ActionType))
                 .Cast<ActionType>()
                 .Select(x => new ActionTypeItem(x))
                 .ToArray();
 
-            forceActionBackup = true;
-            forceAction = executionPlan.ApplyForce;
-            displayWarningMessage = executionTimer.WarningTime != null;
-            enabled = true;
-
-            UpdateFromBusiness();
-
             eventBus.Subscribe<WarningTimeChangedEvent>(HandleTimerWarningTimeChangedEvent);
             eventBus.Subscribe<TimerStartedEvent>(HandleTimerStartedEvent);
             eventBus.Subscribe<TimerStoppedEvent>(HandleTimerStoppedEvent);
 
-            executionPlan.ForceChanged += HandleActionForceChanged;
-            executionPlan.TypeChanged += HandleActionTypeChanged;
+            eventBus.Subscribe<ForceOptionChangedEvent>(HandleForceOptionChangedEvent);
+            eventBus.Subscribe<ActionTypeChangedEvent>(HandleActionTypeChangedEvent);
+
+            Initialize();
         }
 
-        private Task HandleTimerWarningTimeChangedEvent(WarningTimeChangedEvent ev, CancellationToken cancellationToken)
+        private async void Initialize()
         {
+            PresentActionTypeConfigurationRequest request = new PresentActionTypeConfigurationRequest();
+            PresentActionTypeConfigurationResponse response = await mediator.Send(request);
+
             RunInInitializeMode(() =>
             {
-                DisplayActionWarning = ev.Time != null;
+                SelectedActionType = ActionTypes
+                    .First(x => x.Value == response.ActionType);
+
+                IsWarningEnable = response.IsWarningEnabled;
+                Force = response.ForceOption == ForceOption.Yes;
+                IsForceEnabled = response.ForceOption != ForceOption.NotApplicable && Enum.IsDefined(typeof(ForceOption), response.ForceOption);
+                Enabled = true;
             });
-            return Task.CompletedTask;
         }
 
-        private Task HandleTimerStartedEvent(TimerStartedEvent ev, CancellationToken cancellationToken)
+        private void HandleTimerWarningTimeChangedEvent(WarningTimeChangedEvent ev)
+        {
+            Dispatch(() =>
+            {
+                RunInInitializeMode(() =>
+                {
+                    IsWarningEnable = ev.Time != null;
+                });
+            });
+        }
+
+        private void HandleTimerStartedEvent(TimerStartedEvent ev)
         {
             Dispatch(() =>
             {
                 Enabled = false;
             });
-            return Task.CompletedTask;
         }
 
-        private Task HandleTimerStoppedEvent(TimerStoppedEvent ev, CancellationToken cancellationToken)
+        private void HandleTimerStoppedEvent(TimerStoppedEvent ev)
         {
             Dispatch(() =>
             {
                 Enabled = true;
             });
-            return Task.CompletedTask;
         }
 
-        private void HandleActionTypeChanged(object sender, EventArgs eventArgs)
+        private void HandleForceOptionChangedEvent(ForceOptionChangedEvent ev)
         {
-            UpdateFromBusiness();
+            RunInInitializeMode(() =>
+            {
+                Force = ev.ForceOption == ForceOption.Yes;
+                IsForceEnabled = ev.ForceOption != ForceOption.NotApplicable && Enum.IsDefined(typeof(ForceOption), ev.ForceOption);
+            });
         }
 
-        private void UpdateFromBusiness()
+        private void HandleActionTypeChangedEvent(ActionTypeChangedEvent ev)
         {
             RunInInitializeMode(() =>
             {
                 SelectedActionType = ActionTypes
-                    .First(x => x.Value == executionPlan.ActionType);
-
-                UpdateForceAction();
+                    .First(x => x.Value == ev.ActionType);
             });
-        }
-
-        private void HandleActionForceChanged(object sender, EventArgs eventArgs)
-        {
-            RunInInitializeMode(() =>
-            {
-                ForceAction = executionPlan.ApplyForce;
-            });
-        }
-
-        private void UpdateForceAction()
-        {
-            if (SelectedActionType == null)
-            {
-                ForceActionEnabled = false;
-                ForceAction = false;
-                return;
-            }
-
-            switch (SelectedActionType.Value)
-            {
-                case ActionType.LogOff:
-                case ActionType.Sleep:
-                case ActionType.Hibernate:
-                case ActionType.Reboot:
-                case ActionType.ShutDown:
-                case ActionType.PowerOff:
-                    EnableForceAction();
-                    break;
-
-                default:
-                    DisableForceAction();
-                    break;
-            }
-        }
-
-        private void DisableForceAction()
-        {
-            if (ForceActionEnabled)
-                forceActionBackup = ForceAction;
-
-            ForceActionEnabled = false;
-            ForceAction = false;
-        }
-
-        private void EnableForceAction()
-        {
-            if (!ForceActionEnabled)
-                ForceAction = forceActionBackup;
-
-            ForceActionEnabled = true;
         }
     }
 }

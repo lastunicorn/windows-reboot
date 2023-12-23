@@ -1,5 +1,5 @@
 ﻿// Windows Reboot
-// Copyright (C) 2009-2015 Dust in the Wind
+// Copyright (C) 2009-2023 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,42 +15,34 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
-using DustInTheWind.WorkersEngine;
+using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Presentation.Workers
+namespace DustInTheWind.WindowsReboot.Application.PresentActionTypeConfiguration
 {
-    public class WarningWorker : IWorker
+    public class PresentActionTypeConfigurationUseCase : IRequestHandler<PresentActionTypeConfigurationRequest, PresentActionTypeConfigurationResponse>
     {
-        private readonly IUserInterface userInterface;
         private readonly ExecutionTimer executionTimer;
         private readonly ExecutionPlan executionPlan;
 
-        public WarningWorker(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan)
+        public PresentActionTypeConfigurationUseCase(ExecutionTimer executionTimer, ExecutionPlan executionPlan)
         {
-            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
-        public void Start()
+        public Task<PresentActionTypeConfigurationResponse> Handle(PresentActionTypeConfigurationRequest request, CancellationToken cancellationToken)
         {
-            executionTimer.Warning += HandleExecutionTimerWarning;
-        }
-
-        public void Stop()
-        {
-            executionTimer.Warning -= HandleExecutionTimerWarning;
-        }
-
-        private void HandleExecutionTimerWarning(object sender, EventArgs e)
-        {
-            userInterface.Dispatch(() =>
+            PresentActionTypeConfigurationResponse response = new PresentActionTypeConfigurationResponse
             {
-                string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.", executionPlan.ActionType);
-                userInterface.DisplayMessage(message);
-            });
+                ActionType = executionPlan.ActionType,
+                IsWarningEnabled = executionTimer.WarningTime != null,
+                ForceOption = executionPlan.ForceOption
+            };
+
+            return Task.FromResult(response);
         }
     }
 }

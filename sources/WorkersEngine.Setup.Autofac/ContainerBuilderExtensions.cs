@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Autofac;
 
 namespace DustInTheWind.WorkersEngine.Setup.Autofac
@@ -28,8 +29,22 @@ namespace DustInTheWind.WorkersEngine.Setup.Autofac
             containerBuilder.RegisterType<WorkersContainer>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<WorkerProvider>().As<IWorkerProvider>().SingleInstance();
 
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            RegisterWorkersInternal(containerBuilder, assemblies);
+        }
 
-            IEnumerable<Type> workerTypes = AppDomain.CurrentDomain.GetAssemblies()
+        public static void RegisterWorkers(this ContainerBuilder containerBuilder, params Assembly[] assemblies)
+        {
+            containerBuilder.RegisterType<WorkersContainer>().AsSelf().SingleInstance();
+            containerBuilder.RegisterType<WorkerProvider>().As<IWorkerProvider>().SingleInstance();
+
+            if (assemblies?.Length > 0)
+                RegisterWorkersInternal(containerBuilder, assemblies);
+        }
+
+        private static void RegisterWorkersInternal(ContainerBuilder containerBuilder, Assembly[] assemblies)
+        {
+            IEnumerable<Type> workerTypes = assemblies
                 .SelectMany(x => x.GetTypes())
                 .Where(x => x.IsClass && x.IsAssignableTo<IWorker>());
 

@@ -22,6 +22,7 @@ using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WinFormsAdditions;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
@@ -60,7 +61,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         /// Initializes a new instance of the <see cref="WindowsRebootViewModel"/> class with
         /// the view used to interact with the user.
         /// </summary>
-        public WindowsRebootViewModel(IUserInterface userInterface, ExecutionPlan executionPlan, ExecutionTimer executionTimer,
+        public WindowsRebootViewModel(IMediator mediator, IUserInterface userInterface, ExecutionPlan executionPlan, ExecutionTimer executionTimer,
             IConfigStorage configStorage, ApplicationEnvironment applicationEnvironment, IUiDispatcher uiDispatcher, EventBus eventBus)
         {
             if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
@@ -71,7 +72,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             if (uiDispatcher == null) throw new ArgumentNullException(nameof(uiDispatcher));
 
             ActionTimeControlViewModel = new ActionTimeControlViewModel(executionTimer, eventBus);
-            ActionTypeControlViewModel = new ActionTypeControlViewModel(executionTimer, executionPlan, eventBus);
+            ActionTypeControlViewModel = new ActionTypeControlViewModel(mediator, eventBus);
             ActionControlViewModel = new ActionControlViewModel(executionTimer, userInterface, eventBus);
             StatusControlViewModel = new StatusControlViewModel(executionTimer, uiDispatcher, eventBus);
 
@@ -84,7 +85,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             AboutCommand = new AboutCommand(userInterface);
             ExitCommand = new ExitCommand(userInterface, applicationEnvironment);
 
-            string productName = Application.ProductName;
+            string productName = System.Windows.Forms.Application.ProductName;
             string versionToString = VersionUtil.GetVersionToString();
             
             Title = $"{productName} {versionToString}";

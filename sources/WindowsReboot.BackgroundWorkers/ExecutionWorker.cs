@@ -16,43 +16,29 @@
 
 using System;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WorkersEngine;
 
-namespace DustInTheWind.WindowsReboot.Presentation.Workers
+namespace WindowsReboot.BackgroundWorkers
 {
-    public class TimerWorker : IWorker
+    public class ExecutionWorker : IWorker
     {
-        private readonly IUserInterface userInterface;
         private readonly ExecutionTimer executionTimer;
         private readonly ExecutionPlan executionPlan;
 
-        public TimerWorker(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan)
+        public ExecutionWorker(ExecutionTimer executionTimer, ExecutionPlan executionPlan)
         {
-            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public void Start()
         {
-            executionTimer.Warning += HandleExecutionTimerWarning;
             executionTimer.Ring += HandleExecutionTimerRing;
         }
 
         public void Stop()
         {
-            executionTimer.Warning -= HandleExecutionTimerWarning;
             executionTimer.Ring -= HandleExecutionTimerRing;
-        }
-
-        private void HandleExecutionTimerWarning(object sender, EventArgs e)
-        {
-            userInterface.Dispatch(() =>
-            {
-                string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.", executionPlan.ActionType);
-                userInterface.DisplayMessage(message);
-            });
         }
 
         private void HandleExecutionTimerRing(object sender, EventArgs eventArgs)

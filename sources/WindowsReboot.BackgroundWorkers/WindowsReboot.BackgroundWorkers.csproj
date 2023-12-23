@@ -2,18 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>DustInTheWind.WindowsReboot.Application</AssemblyName>
-        <RootNamespace>DustInTheWind.WindowsReboot.Application</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Core.csproj" />
-    <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj" />
     <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj" />
+    <ProjectReference Include="..\WorkersEngine\WorkersEngine.csproj" />
   </ItemGroup>
 
 </Project>

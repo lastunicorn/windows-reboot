@@ -29,30 +29,41 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             get => viewModel;
             set
             {
-                comboBoxAction.DataSource = null;
-                comboBoxAction.DataBindings.Clear();
-                checkBoxForceAction.DataBindings.Clear();
-                checkBoxDisplayActionWarning.DataBindings.Clear();
-
                 viewModel = value;
+                
+                ClearBindings();
 
-                if (viewModel != null)
-                {
-                    comboBoxAction.DataSource = viewModel.ActionTypes;
-                    comboBoxAction.Bind(x => x.SelectedItem, viewModel, x => x.SelectedActionType, false, DataSourceUpdateMode.OnPropertyChanged);
-
-                    checkBoxForceAction.Bind(x => x.Checked, viewModel, x => x.ForceAction, false, DataSourceUpdateMode.OnPropertyChanged);
-                    checkBoxForceAction.Bind(x => x.Enabled, viewModel, x => x.ForceActionEnabled, false, DataSourceUpdateMode.OnPropertyChanged);
-                    checkBoxDisplayActionWarning.Bind(x => x.Checked, viewModel, x => x.DisplayActionWarning, false, DataSourceUpdateMode.OnPropertyChanged);
-
-                    this.Bind(x => x.Enabled, viewModel, x => x.Enabled, false, DataSourceUpdateMode.Never);
-                }
+                if (viewModel != null) 
+                    CreateBindings();
             }
         }
 
         public ActionTypeControl()
         {
             InitializeComponent();
+        }
+
+        private void ClearBindings()
+        {
+            DataBindings.Clear();
+
+            comboBoxAction.DataSource = null;
+            comboBoxAction.DataBindings.Clear();
+
+            checkBoxForceAction.DataBindings.Clear();
+            checkBoxDisplayActionWarning.DataBindings.Clear();
+        }
+
+        private void CreateBindings()
+        {
+            this.Bind(x => x.Enabled, viewModel, x => x.Enabled, false, DataSourceUpdateMode.Never);
+
+            comboBoxAction.DataSource = viewModel.ActionTypes;
+            comboBoxAction.Bind(x => x.SelectedItem, viewModel, x => x.SelectedActionType, false, DataSourceUpdateMode.OnPropertyChanged);
+
+            checkBoxForceAction.Bind(x => x.Checked, viewModel, x => x.Force, false, DataSourceUpdateMode.OnPropertyChanged);
+            checkBoxForceAction.Bind(x => x.Enabled, viewModel, x => x.IsForceEnabled, false, DataSourceUpdateMode.Never);
+            checkBoxDisplayActionWarning.Bind(x => x.Checked, viewModel, x => x.IsWarningEnable, false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         private void comboBoxAction_SelectionChangeCommitted(object sender, EventArgs e)

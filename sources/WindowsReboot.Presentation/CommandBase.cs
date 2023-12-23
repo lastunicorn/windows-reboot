@@ -19,7 +19,7 @@ using System.Threading;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WinFormsAdditions;
 
-namespace DustInTheWind.WindowsReboot.Presentation.CommandModel
+namespace DustInTheWind.WindowsReboot.Presentation
 {
     public abstract class CommandBase : ICommand
     {

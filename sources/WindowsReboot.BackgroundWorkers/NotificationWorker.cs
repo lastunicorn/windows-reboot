@@ -19,7 +19,7 @@ using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WorkersEngine;
 
-namespace DustInTheWind.WindowsReboot.Presentation.Workers
+namespace WindowsReboot.BackgroundWorkers
 {
     public class NotificationWorker : IWorker
     {
@@ -44,10 +44,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Workers
 
         private void HandleExecutionPlanNotificationRaised(object sender, EventArgs e)
         {
-            userInterface.Dispatch(() =>
-            {
-                userInterface.DisplayMessage("Ring-ring!");
-            });
+            userInterface.DisplayNotification();
         }
     }
 }

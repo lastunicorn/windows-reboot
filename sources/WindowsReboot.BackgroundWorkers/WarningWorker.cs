@@ -1,5 +1,5 @@
 ﻿// Windows Reboot
-// Copyright (C) 2009-2015 Dust in the Wind
+// Copyright (C) 2009-2023 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,35 +16,37 @@
 
 using System;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using DustInTheWind.WorkersEngine;
 
-namespace DustInTheWind.WindowsReboot.Presentation.Commands
+namespace WindowsReboot.BackgroundWorkers
 {
-    public class SaveConfigurationCommand : CommandBase
+    public class WarningWorker : IWorker
     {
+        private readonly IUserInterface userInterface;
         private readonly ExecutionTimer executionTimer;
         private readonly ExecutionPlan executionPlan;
-        private readonly IConfigStorage configuration;
 
-        public SaveConfigurationCommand(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan, IConfigStorage configuration)
-            : base(userInterface)
+        public WarningWorker(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan)
         {
+            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
-            this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
-        protected override void DoExecute()
+        public void Start()
         {
-            configuration.ActionTime = executionTimer.Time;
+            executionTimer.Warning += HandleExecutionTimerWarning;
+        }
 
-            configuration.ActionType = executionPlan.ActionType;
-            configuration.ForceClosingPrograms = executionPlan.ForceOption == ForceOption.Yes;
+        public void Stop()
+        {
+            executionTimer.Warning -= HandleExecutionTimerWarning;
+        }
 
-            configuration.Save();
-
-            UserInterface.DisplayMessage("The configuration was saved.");
+        private void HandleExecutionTimerWarning(object sender, EventArgs e)
+        {
+            userInterface.DisplayExecutionWarning(executionPlan.ActionType.ToString());
         }
     }
 }
