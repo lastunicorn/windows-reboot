@@ -15,26 +15,23 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using DustInTheWind.WindowsReboot.Core;
-using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionArea.StopExecution
+namespace DustInTheWind.WindowsReboot.Core
 {
-    internal class StopExecutionUseCase : IRequestHandler<StopExecutionRequest>
+    public class ScheduleChangedEvent
     {
-        private readonly ExecutionTimer executionTimer;
+        public ScheduleTimeType Type { get; set; }
 
-        public StopExecutionUseCase(ExecutionTimer executionTimer)
-        {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-        }
+        public DateTime DateTime { get; set; }
 
-        public Task Handle(StopExecutionRequest request, CancellationToken cancellationToken)
-        {
-            executionTimer.Stop();
-            return Task.CompletedTask;
-        }
+        public TimeSpan TimeOfDay { get; set; }
+
+        public int Hours { get; set; }
+
+        public int Minutes { get; set; }
+
+        public int Seconds { get; set; }
+
+        public bool IsAllowedToChange { get; set; }
     }
 }

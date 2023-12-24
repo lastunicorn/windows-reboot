@@ -20,18 +20,18 @@ using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Core;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.ConfigureWarningOption
+namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.SetWarningOption
 {
-    internal class ConfigureWarningUseCase : IRequestHandler<ConfigureWarningRequest>
+    internal class SetWarningOptionUseCase : IRequestHandler<SetWarningOptionRequest>
     {
         private readonly ExecutionTimer executionTimer;
 
-        public ConfigureWarningUseCase(ExecutionTimer executionTimer)
+        public SetWarningOptionUseCase(ExecutionTimer executionTimer)
         {
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
         }
 
-        public Task Handle(ConfigureWarningRequest request, CancellationToken cancellationToken)
+        public Task Handle(SetWarningOptionRequest request, CancellationToken cancellationToken)
         {
             if (request.ActivateWarning)
                 executionTimer.ActivateWarning();

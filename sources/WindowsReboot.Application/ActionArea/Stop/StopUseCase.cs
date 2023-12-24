@@ -14,10 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot.Core
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using DustInTheWind.WindowsReboot.Core;
+using MediatR;
+
+namespace DustInTheWind.WindowsReboot.Application.ActionArea.Stop
 {
-    public class TimerTimeChangedEvent
+    internal class StopUseCase : IRequestHandler<StopRequest>
     {
-        public ScheduleTime Time { get; set; }
+        private readonly ExecutionTimer executionTimer;
+
+        public StopUseCase(ExecutionTimer executionTimer)
+        {
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+        }
+
+        public Task Handle(StopRequest request, CancellationToken cancellationToken)
+        {
+            executionTimer.Stop();
+            return Task.CompletedTask;
+        }
     }
 }

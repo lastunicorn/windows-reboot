@@ -62,7 +62,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
             if (executionTimer.IsRunning)
                 throw new WindowsRebootException("Cannot complete the task while the timer is started.");
 
-            executionTimer.Time = configuration.ActionTime;
+            executionTimer.ScheduleTime = configuration.ActionTime;
             executionPlan.ActionType = configuration.ActionType;
             executionPlan.ForceOption = configuration.ForceClosingPrograms
                 ? ForceOption.Yes

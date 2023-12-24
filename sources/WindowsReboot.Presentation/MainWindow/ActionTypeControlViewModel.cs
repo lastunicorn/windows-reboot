@@ -17,10 +17,10 @@
 using System;
 using System.Linq;
 using DustInTheWind.EventBusEngine;
-using DustInTheWind.WindowsReboot.Application.ActionTypeArea.ConfigureActionType;
-using DustInTheWind.WindowsReboot.Application.ActionTypeArea.ConfigureForceOption;
-using DustInTheWind.WindowsReboot.Application.ActionTypeArea.ConfigureWarningOption;
 using DustInTheWind.WindowsReboot.Application.ActionTypeArea.PresentActionTypeConfiguration;
+using DustInTheWind.WindowsReboot.Application.ActionTypeArea.SetActionType;
+using DustInTheWind.WindowsReboot.Application.ActionTypeArea.SetForceOption;
+using DustInTheWind.WindowsReboot.Application.ActionTypeArea.SetWarningOption;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WinFormsAdditions;
 using MediatR;
@@ -60,7 +60,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
                 if (!IsInitializeMode)
                 {
-                    ConfigureActionTypeRequest request = new ConfigureActionTypeRequest
+                    SetActionTypeRequest request = new SetActionTypeRequest
                     {
                         ActionType = value.Value
                     };
@@ -80,7 +80,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
                 if (!IsInitializeMode)
                 {
-                    ConfigureForceOptionRequest request = new ConfigureForceOptionRequest
+                    SetForceOptionRequest request = new SetForceOptionRequest
                     {
                         ForceOption = value ? ForceOption.Yes : ForceOption.No
                     };
@@ -110,7 +110,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
                 if (!IsInitializeMode)
                 {
-                    ConfigureWarningRequest request = new ConfigureWarningRequest
+                    SetWarningOptionRequest request = new SetWarningOptionRequest
                     {
                         ActivateWarning = value
                     };

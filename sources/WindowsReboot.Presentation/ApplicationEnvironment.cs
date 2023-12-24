@@ -43,7 +43,7 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
         public void Initialize()
         {
-            executionTimer.Time = configStorage.ActionTime;
+            executionTimer.ScheduleTime = configStorage.ActionTime;
             executionPlan.ActionType = configStorage.ActionType;
             executionPlan.ForceOption = configStorage.ForceClosingPrograms
                 ? ForceOption.Yes

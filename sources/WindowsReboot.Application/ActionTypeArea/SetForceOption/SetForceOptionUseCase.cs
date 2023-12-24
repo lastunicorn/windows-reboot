@@ -20,20 +20,21 @@ using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Core;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.ConfigureActionType
+namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.SetForceOption
 {
-    internal class ConfigureActionTypeUseCase : IRequestHandler<ConfigureActionTypeRequest>
+    internal class SetForceOptionUseCase : IRequestHandler<SetForceOptionRequest>
     {
         private readonly ExecutionPlan executionPlan;
 
-        public ConfigureActionTypeUseCase(ExecutionPlan executionPlan)
+        public SetForceOptionUseCase(ExecutionPlan executionPlan)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
-        public Task Handle(ConfigureActionTypeRequest request, CancellationToken cancellationToken)
+        public Task Handle(SetForceOptionRequest request, CancellationToken cancellationToken)
         {
-            executionPlan.ActionType = request.ActionType;
+            executionPlan.ForceOption = request.ForceOption;
+
             return Task.CompletedTask;
         }
     }

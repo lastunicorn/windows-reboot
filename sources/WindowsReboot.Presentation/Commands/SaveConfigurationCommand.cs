@@ -37,7 +37,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         protected override void DoExecute()
         {
-            configuration.ActionTime = executionTimer.Time;
+            configuration.ActionTime = executionTimer.ScheduleTime;
 
             configuration.ActionType = executionPlan.ActionType;
             configuration.ForceClosingPrograms = executionPlan.ForceOption == ForceOption.Yes;

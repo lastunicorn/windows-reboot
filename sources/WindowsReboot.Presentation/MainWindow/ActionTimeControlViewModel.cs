@@ -18,14 +18,23 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Application.ActionTimeArea.PresentActionTimeSettings;
+using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDailyTime;
+using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetFixedDate;
+using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetFixedTime;
+using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetHours;
+using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetMinutes;
+using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetScheduleType;
+using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetSeconds;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WinFormsAdditions;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
     public class ActionTimeControlViewModel : ViewModelBase
     {
-        private readonly ExecutionTimer executionTimer;
+        private readonly IMediator mediator;
 
         private ScheduleTimeType scheduleTimeType;
         private DateTime fixedDate;
@@ -45,7 +54,13 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged();
 
                 if (!IsInitializeMode)
-                    executionTimer.Time = GetActionTime();
+                {
+                    SetScheduleTypeRequest request = new SetScheduleTypeRequest
+                    {
+                        ScheduleType = value
+                    };
+                    _ = mediator.Send(request);
+                }
             }
         }
 
@@ -58,7 +73,13 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged();
 
                 if (!IsInitializeMode)
-                    executionTimer.Time = GetActionTime();
+                {
+                    SetFixedDateRequest request = new SetFixedDateRequest
+                    {
+                        Date = value
+                    };
+                    _ = mediator.Send(request);
+                }
             }
         }
 
@@ -71,7 +92,13 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged();
 
                 if (!IsInitializeMode)
-                    executionTimer.Time = GetActionTime();
+                {
+                    SetFixedTimeRequest request = new SetFixedTimeRequest
+                    {
+                        Time = value
+                    };
+                    _ = mediator.Send(request);
+                }
             }
         }
 
@@ -84,7 +111,13 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged();
 
                 if (!IsInitializeMode)
-                    executionTimer.Time = GetActionTime();
+                {
+                    SetHoursRequest request = new SetHoursRequest
+                    {
+                        Hours = value
+                    };
+                    _ = mediator.Send(request);
+                }
             }
         }
 
@@ -97,7 +130,13 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged();
 
                 if (!IsInitializeMode)
-                    executionTimer.Time = GetActionTime();
+                {
+                    SetMinutesRequest request = new SetMinutesRequest
+                    {
+                        Minutes = value
+                    };
+                    _ = mediator.Send(request);
+                }
             }
         }
 
@@ -110,7 +149,13 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged();
 
                 if (!IsInitializeMode)
-                    executionTimer.Time = GetActionTime();
+                {
+                    SetSecondsRequest request = new SetSecondsRequest
+                    {
+                        Seconds = value
+                    };
+                    _ = mediator.Send(request);
+                }
             }
         }
 
@@ -123,7 +168,13 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 OnPropertyChanged();
 
                 if (!IsInitializeMode)
-                    executionTimer.Time = GetActionTime();
+                {
+                    SetDailyTimeRequest request = new SetDailyTimeRequest
+                    {
+                        Time = value
+                    };
+                    _ = mediator.Send(request);
+                }
             }
         }
 
@@ -137,83 +188,76 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             }
         }
 
-        public ActionTimeControlViewModel(ExecutionTimer executionTimer, EventBus eventBus)
+        public ActionTimeControlViewModel(IMediator mediator, EventBus eventBus)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-            Enabled = true;
-
-            UpdateGui(executionTimer.Time);
-
-            eventBus.Subscribe<TimerTimeChangedEvent>(HandleTimerTimeChangedEvent);
+            eventBus.Subscribe<ScheduleChangedEvent>(HandleTimerTimeChangedEvent);
             eventBus.Subscribe<TimerStartedEvent>(HandleTimerStartedEvent);
             eventBus.Subscribe<TimerStoppedEvent>(HandleTimerStoppedEvent);
+
+            Initialize();
         }
 
-        private Task HandleTimerTimeChangedEvent(TimerTimeChangedEvent ev, CancellationToken cancellationToken)
+        private async void Initialize()
         {
-            UpdateGui(ev.Time);
-            return Task.CompletedTask;
-        }
+            PresentActionTimeSettingsRequest request = new PresentActionTimeSettingsRequest();
+            PresentActionTimeSettingsResponse response = await mediator.Send(request);
 
-        private Task HandleTimerStartedEvent(TimerStartedEvent ev, CancellationToken cancellationToken)
-        {
-            Dispatch(() => Enabled = false);
-            return Task.CompletedTask;
-        }
-
-        private Task HandleTimerStoppedEvent(TimerStoppedEvent ev, CancellationToken cancellationToken)
-        {
-            Dispatch(() => Enabled = true);
-            return Task.CompletedTask;
-        }
-
-        private void UpdateGui(ScheduleTime scheduleTime)
-        {
             RunInInitializeMode(() =>
             {
-                if (scheduleTime == null)
-                {
-                    Clear();
-                    return;
-                }
-                
-                FixedDate = scheduleTime.DateTime.Date;
-                FixedTime = scheduleTime.DateTime.TimeOfDay;
-                DelayHours = scheduleTime.Hours;
-                DelayMinutes = scheduleTime.Minutes;
-                DelaySeconds = scheduleTime.Seconds;
-                DailyTime = scheduleTime.TimeOfDay;
+                FixedDate = response.DateTime.Date;
+                FixedTime = response.DateTime.TimeOfDay;
 
-                ScheduleTimeType = scheduleTime.Type;
+                DailyTime = response.TimeOfDay;
+
+                DelayHours = response.Hours;
+                DelayMinutes = response.Minutes;
+                DelaySeconds = response.Seconds;
+
+                ScheduleTimeType = response.Type;
+
+                Enabled = response.IsAllowedToChange;
 
             });
         }
 
-        private void Clear()
+        private Task HandleTimerTimeChangedEvent(ScheduleChangedEvent ev, CancellationToken cancellationToken)
         {
-            FixedDate = DateTime.Today;
-            FixedTime = DateTime.Now.TimeOfDay;
-            DelayHours = 0;
-            DelayMinutes = 0;
-            DelaySeconds = 0;
-            DailyTime = TimeSpan.Zero;
+            RunInInitializeMode(() =>
+            {
+                FixedDate = ev.DateTime.Date;
+                FixedTime = ev.DateTime.TimeOfDay;
 
-            ScheduleTimeType = ScheduleTimeType.Immediate;
+                DailyTime = ev.TimeOfDay;
+
+                DelayHours = ev.Hours;
+                DelayMinutes = ev.Minutes;
+                DelaySeconds = ev.Seconds;
+
+                ScheduleTimeType = ev.Type;
+
+                Enabled = ev.IsAllowedToChange;
+            });
+
+            return Task.CompletedTask;
         }
 
-        private ScheduleTime GetActionTime()
+        private void HandleTimerStartedEvent(TimerStartedEvent ev)
         {
-            return new ScheduleTime
+            Dispatch(() =>
             {
-                Type = scheduleTimeType,
-                DateTime = fixedDate.Date + fixedTime,
-                TimeOfDay = dailyTime,
-                Hours = delayHours,
-                Minutes = delayMinutes,
-                Seconds = delaySeconds
-            };
+                RunInInitializeMode(() => Enabled = false);
+            });
+        }
+
+        private void HandleTimerStoppedEvent(TimerStoppedEvent ev)
+        {
+            Dispatch(() =>
+            {
+                RunInInitializeMode(() => Enabled = true);
+            });
         }
     }
 }

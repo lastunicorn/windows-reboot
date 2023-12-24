@@ -20,20 +20,20 @@ using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Core;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionArea.StartExecution
+namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.SetActionType
 {
-    internal class StartExecutionUseCase : IRequestHandler<StartExecutionRequest>
+    internal class SetActionTypeUseCase : IRequestHandler<SetActionTypeRequest>
     {
-        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
 
-        public StartExecutionUseCase(ExecutionTimer executionTimer)
+        public SetActionTypeUseCase(ExecutionPlan executionPlan)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
-        public Task Handle(StartExecutionRequest request, CancellationToken cancellationToken)
+        public Task Handle(SetActionTypeRequest request, CancellationToken cancellationToken)
         {
-            executionTimer.Start();
+            executionPlan.ActionType = request.ActionType;
             return Task.CompletedTask;
         }
     }
