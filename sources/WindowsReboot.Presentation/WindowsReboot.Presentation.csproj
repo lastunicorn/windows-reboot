@@ -128,6 +128,12 @@
       <DependentUpon>StatusControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\StatusControlViewModel.cs" />
+    <Compile Include="MainWindow\CountDownControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainWindow\CountDownControl.Designer.cs">
+      <DependentUpon>CountDownControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow\TrayIcon.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -209,6 +215,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\StatusControl.resx">
       <DependentUpon>StatusControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow\CountDownControl.resx">
+      <DependentUpon>CountDownControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\TrayIcon.resx">
       <DependentUpon>TrayIcon.cs</DependentUpon>

@@ -18,17 +18,17 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Application.StatusArea.PresentTimerStatus;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WinFormsAdditions;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
     public class StatusControlViewModel : ViewModelBase, IDisposable
     {
-        private readonly Timer ticker;
-        private readonly Core.ExecutionTimer executionTimer;
-        private readonly IUiDispatcher uiDispatcher;
+        private Timer ticker;
+        private readonly IMediator mediator;
         private DateTime currentTime;
         private DateTime? actionTime;
         private TimeSpan? timerTime;
@@ -36,53 +36,64 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         public DateTime CurrentTime
         {
             get => currentTime;
-            set
+            private set
             {
                 currentTime = value;
-                OnPropertyChanged("CurrentTime");
+                OnPropertyChanged();
             }
         }
 
         public DateTime? ActionTime
         {
             get => actionTime;
-            set
+            private set
             {
                 actionTime = value;
-                OnPropertyChanged("ActionTime");
+                OnPropertyChanged();
             }
         }
 
         public TimeSpan? TimerTime
         {
             get => timerTime;
-            set
+            private set
             {
                 timerTime = value;
-                OnPropertyChanged("TimerTime");
+                OnPropertyChanged();
             }
         }
 
-        public StatusControlViewModel(Core.ExecutionTimer executionTimer, IUiDispatcher uiDispatcher, EventBus eventBus)
+        public StatusControlViewModel(IMediator mediator, EventBus eventBus)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-            this.uiDispatcher = uiDispatcher ?? throw new ArgumentNullException(nameof(uiDispatcher));
-            ticker = new Timer(HandleTickerTick, null, 0, 100);
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
             eventBus.Subscribe<TimerStartedEvent>(HandleTimerStartedEvent);
             eventBus.Subscribe<TimerStoppedEvent>(HandleTimerStoppedEvent);
+
+            Initialize();
+        }
+
+        private async void Initialize()
+        {
+            PresentTimerStatusRequest request = new PresentTimerStatusRequest();
+            PresentTimerStatusResponse response = await mediator.Send(request);
+
+            CurrentTime = response.CurrentTime;
+            ActionTime = response.ActionTime;
+
+            ticker = new Timer(HandleTickerTick, null, 0, 100);
         }
 
         private void HandleTickerTick(object state)
         {
-            uiDispatcher.Dispatch(() =>
+            Dispatch(() =>
             {
                 CurrentTime = DateTime.Now;
 
-                if (executionTimer.IsRunning)
-                    TimerTime = executionTimer.TimeUntilAction;
+                if (ActionTime != null)
+                    TimerTime = ActionTime - DateTime.Now;
             });
         }
 
@@ -90,7 +101,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         {
             Dispatch(() =>
             {
-                ActionTime = executionTimer.ActionTime;
+                ActionTime = ev.ActionTime;
             });
             return Task.CompletedTask;
         }

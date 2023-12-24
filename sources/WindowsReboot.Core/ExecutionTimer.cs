@@ -195,7 +195,10 @@ namespace DustInTheWind.WindowsReboot.Core
 
         protected virtual void OnStarted()
         {
-            TimerStartedEvent ev = new TimerStartedEvent();
+            TimerStartedEvent ev = new TimerStartedEvent
+            {
+                ActionTime = ActionTime
+            };
             eventBus.Publish(ev);
         }
 
