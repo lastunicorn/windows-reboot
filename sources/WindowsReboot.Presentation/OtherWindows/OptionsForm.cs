@@ -16,7 +16,6 @@
 
 using System;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 
 namespace DustInTheWind.WindowsReboot.Presentation.OtherWindows
 {
@@ -25,34 +24,27 @@ namespace DustInTheWind.WindowsReboot.Presentation.OtherWindows
     /// </summary>
     public partial class OptionsForm : Form
     {
-        private readonly IConfigStorage configSection;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OptionsForm"/> class with
-        /// the configuration object.
-        /// </summary>
-        /// <param name="configSection">An instance of <see cref="WindowsRebootConfigSection"/> class that contains the values that should be displayed.</param>
-        public OptionsForm(IConfigStorage configSection)
+        public bool CloseToTray
         {
-            if (configSection == null) throw new ArgumentNullException(nameof(configSection));
+            get => checkBoxCloseToTray.Checked;
+            set => checkBoxCloseToTray.Checked = value;
+        }
 
+        public bool MinimizeToTray
+        {
+            get => checkBoxMinimizeToTray.Checked;
+            set => checkBoxMinimizeToTray.Checked = value;
+        }
+
+        public bool AutoStart
+        {
+            get => checkBoxStartTimerAtApplicationStart.Checked;
+            set => checkBoxStartTimerAtApplicationStart.Checked = value;
+        }
+
+        public OptionsForm()
+        {
             InitializeComponent();
-
-            this.configSection = configSection;
-        }
-
-        private void OptionsForm_Shown(object sender, EventArgs e)
-        {
-            checkBoxCloseToTray.Checked = configSection.CloseToTray;
-            checkBoxMinimizeToTray.Checked = configSection.MinimizeToTray;
-            checkBoxStartTimerAtApplicationStart.Checked = configSection.StartTimerAtApplicationStart;
-        }
-
-        private void HandleButtonOkayClick(object sender, EventArgs e)
-        {
-            configSection.CloseToTray = checkBoxCloseToTray.Checked;
-            configSection.MinimizeToTray = checkBoxMinimizeToTray.Checked;
-            configSection.StartTimerAtApplicationStart = checkBoxStartTimerAtApplicationStart.Checked;
         }
     }
 }

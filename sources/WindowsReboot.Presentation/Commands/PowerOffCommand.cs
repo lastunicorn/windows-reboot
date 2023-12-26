@@ -16,7 +16,6 @@
 
 using System;
 using DustInTheWind.WindowsReboot.Application.DirectActionsArea.ExecutePowerOff;
-using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
@@ -25,8 +24,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
     {
         private readonly IMediator mediator;
 
-        public PowerOffCommand(IUserInterface userInterface, IMediator mediator)
-            : base(userInterface)
+        public PowerOffCommand(IMediator mediator)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }

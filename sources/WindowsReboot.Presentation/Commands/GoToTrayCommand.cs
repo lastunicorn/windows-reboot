@@ -29,8 +29,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         public override bool CanExecute => applicationState != ApplicationState.Tray;
 
-        public GoToTrayCommand(IUserInterface userInterface, IMediator mediator, EventBus eventBus)
-            : base(userInterface)
+        public GoToTrayCommand(IMediator mediator, EventBus eventBus)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));

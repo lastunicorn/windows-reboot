@@ -18,7 +18,6 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using DustInTheWind.WinFormsAdditions;
 
 namespace DustInTheWind.WindowsReboot.Presentation
@@ -26,7 +25,6 @@ namespace DustInTheWind.WindowsReboot.Presentation
     public abstract class CommandBase : ICommand
     {
         private readonly SynchronizationContext synchronizationContext;
-        protected readonly IUserInterface UserInterface;
         private bool canExecute = true;
 
         public virtual bool CanExecute
@@ -44,10 +42,8 @@ namespace DustInTheWind.WindowsReboot.Presentation
 
         public event EventHandler CanExecuteChanged;
 
-        protected CommandBase(IUserInterface userInterface)
+        protected CommandBase()
         {
-            UserInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
-
             synchronizationContext = SynchronizationContext.Current;
         }
 

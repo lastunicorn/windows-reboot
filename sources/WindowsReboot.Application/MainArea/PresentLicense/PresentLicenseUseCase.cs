@@ -15,25 +15,27 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Application.DirectActionsArea.ExecuteLock;
+using System.Threading;
+using System.Threading.Tasks;
+using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Presentation.Commands
+namespace DustInTheWind.WindowsReboot.Application.MainArea.PresentLicense
 {
-    public class LockComputerCommand : CommandBase
+    internal class PresentLicenseUseCase : IRequestHandler<PresentLicenseRequest>
     {
-        private readonly IMediator mediator;
+        private readonly IUserInterface userInterface;
 
-        public LockComputerCommand(IMediator mediator)
+        public PresentLicenseUseCase(IUserInterface userInterface)
         {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
         }
 
-        protected override void DoExecute()
+        public Task Handle(PresentLicenseRequest request, CancellationToken cancellationToken)
         {
-            ExecuteLockRequest request = new ExecuteLockRequest();
+            userInterface.DisplayLicense();
 
-            _ = mediator.Send(request);
+            return Task.CompletedTask;
         }
     }
 }

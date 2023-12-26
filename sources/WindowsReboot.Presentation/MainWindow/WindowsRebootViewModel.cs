@@ -15,6 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics;
+using System.Windows.Forms;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
 using DustInTheWind.WindowsReboot.Domain;
@@ -26,22 +28,31 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
     public class WindowsRebootViewModel : ViewModelBase
     {
-        private readonly IUserInterface userInterface;
         private string title;
         private bool isVisible;
 
         public GoToTrayCommand GoToTrayCommand { get; private set; }
+
         public LoadDefaultConfigurationCommand LoadDefaultConfigurationCommand { get; private set; }
+
         public LoadConfigurationCommand LoadConfigurationCommand { get; private set; }
+
         public SaveConfigurationCommand SaveConfigurationCommand { get; private set; }
+
         public OptionsCommand OptionsCommand { get; private set; }
+
         public LicenseCommand LicenseCommand { get; private set; }
+
         public AboutCommand AboutCommand { get; private set; }
+
         public ExitCommand ExitCommand { get; private set; }
 
         public ActionTimeControlViewModel ActionTimeControlViewModel { get; private set; }
+
         public ActionTypeControlViewModel ActionTypeControlViewModel { get; private set; }
+
         public ActionControlViewModel ActionControlViewModel { get; private set; }
+
         public StatusControlViewModel StatusControlViewModel { get; private set; }
 
         public string Title
@@ -64,15 +75,13 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             }
         }
 
-        public WindowsRebootViewModel(IUserInterface userInterface, EventBus eventBus,
+        public WindowsRebootViewModel(EventBus eventBus,
             ActionTimeControlViewModel actionTimeControlViewModel, ActionTypeControlViewModel actionTypeControlViewModel,
             ActionControlViewModel actionControlViewModel, StatusControlViewModel statusControlViewModel,
             GoToTrayCommand goToTrayCommand, LoadDefaultConfigurationCommand loadDefaultConfigurationCommand,
             LoadConfigurationCommand loadConfigurationCommand, SaveConfigurationCommand saveConfigurationCommand,
             OptionsCommand optionsCommand, LicenseCommand licenseCommand, AboutCommand aboutCommand, ExitCommand exitCommand)
         {
-            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
-
             ActionTimeControlViewModel = actionTimeControlViewModel ?? throw new ArgumentNullException(nameof(actionTimeControlViewModel));
             ActionTypeControlViewModel = actionTypeControlViewModel ?? throw new ArgumentNullException(nameof(actionTypeControlViewModel));
             ActionControlViewModel = actionControlViewModel ?? throw new ArgumentNullException(nameof(actionControlViewModel));
@@ -89,7 +98,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
             string productName = System.Windows.Forms.Application.ProductName;
             string versionToString = VersionUtil.GetVersionToString();
-            
+
             Title = $"{productName} {versionToString}";
 
             eventBus.Subscribe<ApplicationStateChangedEvent>(HandleApplicationStateChangedEvent);
@@ -115,7 +124,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             }
             catch (Exception ex)
             {
-                userInterface.DisplayError(ex);
+                Form mainForm = (Form)Control.FromHandle(Process.GetCurrentProcess().MainWindowHandle);
+                MessageBox.Show(mainForm, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

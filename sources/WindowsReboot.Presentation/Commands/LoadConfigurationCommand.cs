@@ -18,7 +18,6 @@ using System;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.ConfigurationArea.LoadConfiguration;
 using DustInTheWind.WindowsReboot.Domain;
-using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
@@ -27,8 +26,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
     {
         private readonly IMediator mediator;
 
-        public LoadConfigurationCommand(IUserInterface userInterface, EventBus eventBus, IMediator mediator)
-            : base(userInterface)
+        public LoadConfigurationCommand(EventBus eventBus, IMediator mediator)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 

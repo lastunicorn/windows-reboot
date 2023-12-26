@@ -30,8 +30,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         public override bool CanExecute => applicationState != ApplicationState.Normal;
 
-        public RestoreMainWindowCommand(IUserInterface userInterface, IMediator mediator, EventBus eventBus)
-            : base(userInterface)
+        public RestoreMainWindowCommand(IMediator mediator, EventBus eventBus)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));

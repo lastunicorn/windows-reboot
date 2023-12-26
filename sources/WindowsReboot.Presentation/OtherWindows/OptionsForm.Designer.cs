@@ -77,7 +77,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.OtherWindows
             this.buttonOkay.TabIndex = 0;
             this.buttonOkay.Text = "Okay";
             this.buttonOkay.UseVisualStyleBackColor = true;
-            this.buttonOkay.Click += new System.EventHandler(this.HandleButtonOkayClick);
             // 
             // checkBoxMinimizeToTray
             // 
@@ -141,7 +140,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.OtherWindows
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Options";
-            this.Shown += new System.EventHandler(this.OptionsForm_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

@@ -17,7 +17,6 @@
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using DustInTheWind.WindowsReboot.Presentation.OtherWindows;
 
@@ -26,22 +25,18 @@ namespace DustInTheWind.WindowsReboot.PresentationAccess
     public class UserInterface : IUserInterface
     {
         private readonly IUiDispatcher uiDispatcher;
-        private readonly IConfigStorage configuration;
 
-        public UserInterface(IUiDispatcher uiDispatcher, IConfigStorage configuration)
+        public UserInterface(IUiDispatcher uiDispatcher)
         {
             this.uiDispatcher = uiDispatcher ?? throw new ArgumentNullException(nameof(uiDispatcher));
-            this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         public void DisplayAbout()
         {
             Form mainForm = GetMainForm();
 
-            using (AboutForm form = new AboutForm())
-            {
+            using (AboutForm form = new AboutForm()) 
                 form.ShowDialog(mainForm);
-            }
         }
 
         public void DisplayLicense()
@@ -54,14 +49,29 @@ namespace DustInTheWind.WindowsReboot.PresentationAccess
             }
         }
 
-        public void DisplayOptions()
+        public ApplicationOptions DisplayOptions(ApplicationOptions options)
         {
             Form mainForm = GetMainForm();
 
-            using (OptionsForm form = new OptionsForm(configuration))
+            using (OptionsForm form = new OptionsForm())
             {
-                if (form.ShowDialog(mainForm) == DialogResult.OK)
-                    configuration.Save();
+                form.CloseToTray = options.CloseToTray;
+                form.MinimizeToTray = options.MinimizeToTray;
+                form.AutoStart = options.AutoStart;
+
+                DialogResult dialogResult = form.ShowDialog(mainForm);
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    return new ApplicationOptions
+                    {
+                        CloseToTray = form.CloseToTray,
+                        MinimizeToTray = form.MinimizeToTray,
+                        AutoStart = form.AutoStart
+                    };
+                }
+
+                return null;
             }
         }
 
@@ -177,7 +187,8 @@ namespace DustInTheWind.WindowsReboot.PresentationAccess
 
         private Form GetMainForm()
         {
-            return (Form)Control.FromHandle(Process.GetCurrentProcess().MainWindowHandle);
+            IntPtr mainWindowHandle = Process.GetCurrentProcess().MainWindowHandle;
+            return (Form)Control.FromHandle(mainWindowHandle);
         }
     }
 }

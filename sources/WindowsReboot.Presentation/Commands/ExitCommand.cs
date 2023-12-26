@@ -16,7 +16,6 @@
 
 using System;
 using DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication;
-using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
@@ -25,8 +24,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
     {
         private readonly IMediator mediator;
 
-        public ExitCommand(IUserInterface userInterface, IMediator mediator)
-            : base(userInterface)
+        public ExitCommand(IMediator mediator)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }

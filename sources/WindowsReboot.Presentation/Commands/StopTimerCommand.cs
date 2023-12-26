@@ -19,7 +19,6 @@ using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.ActionArea.PresentStopAbility;
 using DustInTheWind.WindowsReboot.Application.ActionArea.Stop;
 using DustInTheWind.WindowsReboot.Domain;
-using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
@@ -28,8 +27,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
     {
         private readonly IMediator mediator;
 
-        public StopTimerCommand(IMediator mediator, IUserInterface userInterface, EventBus eventBus)
-            : base(userInterface)
+        public StopTimerCommand(IMediator mediator, EventBus eventBus)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 

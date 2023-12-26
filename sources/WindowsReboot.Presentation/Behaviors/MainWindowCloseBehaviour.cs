@@ -15,10 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication;
-using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using DustInTheWind.WinFormsAdditions;
 using MediatR;
 
@@ -26,7 +26,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.Behaviors
 {
     public class MainWindowCloseBehaviour : IFormBehaviour
     {
-        private readonly IUserInterface userInterface;
         private readonly IMediator mediator;
         private readonly EventBus eventBus;
 
@@ -48,9 +47,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.Behaviors
             }
         }
 
-        public MainWindowCloseBehaviour(IUserInterface userInterface, IMediator mediator, EventBus eventBus)
+        public MainWindowCloseBehaviour(IMediator mediator, EventBus eventBus)
         {
-            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
@@ -85,7 +83,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.Behaviors
             }
             catch (Exception ex)
             {
-                userInterface.DisplayError(ex);
+                Form mainForm = (Form)Control.FromHandle(Process.GetCurrentProcess().MainWindowHandle);
+                MessageBox.Show(mainForm, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

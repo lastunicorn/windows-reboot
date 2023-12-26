@@ -15,6 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics;
+using System.Windows.Forms;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication;
 using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
@@ -28,7 +30,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
 {
     public class TrayIconViewModel : ViewModelBase
     {
-        private readonly IUserInterface userInterface;
         private readonly ExecutionTimer executionTimer;
         private readonly string defaultText;
         private string text;
@@ -56,16 +57,24 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
         }
 
         public RestoreMainWindowCommand RestoreMainWindowCommand { get; private set; }
+
         public LockComputerCommand LockComputerCommand { get; private set; }
+
         public LogOffCommand LogOffCommand { get; private set; }
+
         public SleepCommand SleepCommand { get; private set; }
+
         public HibernateCommand HibernateCommand { get; private set; }
+
         public RebootCommand RebootCommand { get; private set; }
+
         public ShutDownCommand ShutDownCommand { get; private set; }
+
         public PowerOffCommand PowerOffCommand { get; private set; }
+
         public ExitCommand ExitCommand { get; private set; }
 
-        public TrayIconViewModel(IUserInterface userInterface, ExecutionTimer executionTimer,
+        public TrayIconViewModel(ExecutionTimer executionTimer,
             EventBus eventBus, IMediator mediator,
             RestoreMainWindowCommand restoreMainWindowCommand,
             LockComputerCommand lockComputerCommand,
@@ -80,7 +89,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
             if (mediator == null) throw new ArgumentNullException(nameof(mediator));
 
-            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
 
             RestoreMainWindowCommand = restoreMainWindowCommand ?? throw new ArgumentNullException(nameof(restoreMainWindowCommand));
@@ -122,7 +130,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
             }
             catch (Exception ex)
             {
-                userInterface.DisplayError(ex);
+                Form mainForm = (Form)Control.FromHandle(Process.GetCurrentProcess().MainWindowHandle);
+                MessageBox.Show(mainForm, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -147,7 +156,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
             }
             catch (Exception ex)
             {
-                userInterface.DisplayError(ex);
+                Form mainForm = (Form)Control.FromHandle(Process.GetCurrentProcess().MainWindowHandle);
+                MessageBox.Show(mainForm, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -24,7 +24,7 @@ namespace DustInTheWind.WindowsReboot.Ports.PresentationAccess
 
         void DisplayLicense();
 
-        void DisplayOptions();
+        ApplicationOptions DisplayOptions(ApplicationOptions options);
 
         void DisplayMessage(string message);
 
@@ -51,5 +51,14 @@ namespace DustInTheWind.WindowsReboot.Ports.PresentationAccess
         bool ConfirmDirectShutDown();
 
         bool ConfirmDirectPowerOff();
+    }
+
+    public class ApplicationOptions
+    {
+        public bool CloseToTray { get; set; }
+
+        public bool MinimizeToTray { get; set; }
+
+        public bool AutoStart { get; set; }
     }
 }

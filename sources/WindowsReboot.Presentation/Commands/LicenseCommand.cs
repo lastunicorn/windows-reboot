@@ -14,20 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
+using System;
+using DustInTheWind.WindowsReboot.Application.MainArea.PresentLicense;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class LicenseCommand : CommandBase
     {
-        public LicenseCommand(IUserInterface userInterface)
-            : base(userInterface)
+        private readonly IMediator mediator;
+
+        public LicenseCommand(IMediator mediator)
         {
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         protected override void DoExecute()
         {
-            UserInterface.DisplayLicense();
+            PresentLicenseRequest request = new PresentLicenseRequest();
+            _ = mediator.Send(request);
         }
     }
 }

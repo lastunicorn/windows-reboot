@@ -14,26 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using DustInTheWind.WindowsReboot.Application.DirectActionsArea.ExecuteLock;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Presentation.Commands
+namespace DustInTheWind.WindowsReboot.Application.MainArea.PresentAbout
 {
-    public class LockComputerCommand : CommandBase
+    public class PresentAboutRequest : IRequest
     {
-        private readonly IMediator mediator;
-
-        public LockComputerCommand(IMediator mediator)
-        {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
-
-        protected override void DoExecute()
-        {
-            ExecuteLockRequest request = new ExecuteLockRequest();
-
-            _ = mediator.Send(request);
-        }
     }
 }
