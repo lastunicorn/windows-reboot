@@ -40,7 +40,7 @@ namespace DustInTheWind.WindowsReboot.Application.DirectActionsArea.ExecuteLogOf
 
             if (allowToContinue)
                 operatingSystem.LogOff(false);
-         
+
             return Task.CompletedTask;
         }
     }

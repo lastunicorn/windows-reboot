@@ -63,10 +63,12 @@ namespace DustInTheWind.EventBusEngine
                         return asyncAction(@event, cancellationToken);
 
                     if (x is Action<TEvent> syncAction)
+                    {
                         return Task.Run(() =>
                         {
                             syncAction(@event);
                         }, cancellationToken);
+                    }
 
                     return Task.CompletedTask;
                 });

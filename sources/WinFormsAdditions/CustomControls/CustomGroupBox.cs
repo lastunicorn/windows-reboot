@@ -39,7 +39,8 @@ namespace DustInTheWind.WinFormsAdditions.CustomControls
 
         private Color titleColor;
 
-        [Category("Appearance"), DefaultValue(typeof(Color), "Black")]
+        [Category("Appearance")]
+        [DefaultValue(typeof(Color), "Black")]
         public Color TitleColor
         {
             get => titleColor;
@@ -53,7 +54,8 @@ namespace DustInTheWind.WinFormsAdditions.CustomControls
 
         private HorizontalAlignment titleAlignment;
 
-        [Category("Appearance"), DefaultValue(typeof(HorizontalAlignment), "Left")]
+        [Category("Appearance")]
+        [DefaultValue(typeof(HorizontalAlignment), "Left")]
         public HorizontalAlignment TitleAlignment
         {
             get => titleAlignment;
@@ -66,7 +68,8 @@ namespace DustInTheWind.WinFormsAdditions.CustomControls
 
         private Color borderColor;
 
-        [Category("Appearance"), DefaultValue(typeof(SystemColors), "ActiveBorder")]
+        [Category("Appearance")]
+        [DefaultValue(typeof(SystemColors), "ActiveBorder")]
         public Color BorderColor
         {
             get => borderColor;
@@ -80,7 +83,8 @@ namespace DustInTheWind.WinFormsAdditions.CustomControls
 
         private int cornerRadius;
 
-        [Category("Appearance"), DefaultValue(5)]
+        [Category("Appearance")]
+        [DefaultValue(5)]
         public int CornerRadius
         {
             get => cornerRadius;
@@ -93,7 +97,8 @@ namespace DustInTheWind.WinFormsAdditions.CustomControls
 
         private Padding titlePadding;
 
-        [Category("Layout"), DefaultValue(typeof(Padding), "3, 0, 3, 0")]
+        [Category("Layout")]
+        [DefaultValue(typeof(Padding), "3, 0, 3, 0")]
         public Padding TitlePadding
         {
             get => titlePadding;
@@ -106,7 +111,8 @@ namespace DustInTheWind.WinFormsAdditions.CustomControls
 
         private Padding titleMargin;
 
-        [Category("Layout"), DefaultValue(typeof(Padding), "2, 0, 2, 0")]
+        [Category("Layout")]
+        [DefaultValue(typeof(Padding), "2, 0, 2, 0")]
         public Padding TitleMargin
         {
             get => titleMargin;
@@ -149,7 +155,9 @@ namespace DustInTheWind.WinFormsAdditions.CustomControls
         protected override void OnTextChanged(EventArgs e)
         {
             using (Graphics g = CreateGraphics())
+            {
                 titleSize = g.MeasureString(Text, titleFont);
+            }
 
             base.OnTextChanged(e);
         }
@@ -337,7 +345,6 @@ namespace DustInTheWind.WinFormsAdditions.CustomControls
 
             // Left line
             g.DrawLine(borderPen, cornerBottomLeftRectangle.Left, cornerBottomLeftRectangle.Top - 1, cornerTopLeftRectangle.Left, cornerTopLeftRectangle.Bottom + 1);
-
 
             // Create the title text rectangle.
             RectangleF titleTextRectangle = new RectangleF(

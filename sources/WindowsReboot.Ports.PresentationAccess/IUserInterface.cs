@@ -21,7 +21,9 @@ namespace DustInTheWind.WindowsReboot.Ports.PresentationAccess
     public interface IUserInterface
     {
         void DisplayAbout();
+
         void DisplayLicense();
+
         void DisplayOptions();
 
         void DisplayMessage(string message);

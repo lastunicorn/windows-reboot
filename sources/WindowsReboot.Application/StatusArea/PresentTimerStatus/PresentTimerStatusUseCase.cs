@@ -24,9 +24,7 @@ namespace DustInTheWind.WindowsReboot.Application.StatusArea.PresentTimerStatus
     {
         public Task<PresentTimerStatusResponse> Handle(PresentTimerStatusRequest request, CancellationToken cancellationToken)
         {
-            PresentTimerStatusResponse response = new PresentTimerStatusResponse
-            {
-            };
+            PresentTimerStatusResponse response = new PresentTimerStatusResponse();
 
             return Task.FromResult(response);
         }

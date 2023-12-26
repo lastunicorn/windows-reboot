@@ -37,11 +37,11 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.PresentActionTi
             {
                 DateTime = executionTimer.ScheduleTime.DateTime,
                 TimeOfDay = executionTimer.ScheduleTime.TimeOfDay,
-                
+
                 Hours = executionTimer.ScheduleTime.Hours,
                 Minutes = executionTimer.ScheduleTime.Minutes,
                 Seconds = executionTimer.ScheduleTime.Seconds,
-                
+
                 Type = executionTimer.ScheduleTime.Type,
                 IsAllowedToChange = !executionTimer.IsRunning
             };

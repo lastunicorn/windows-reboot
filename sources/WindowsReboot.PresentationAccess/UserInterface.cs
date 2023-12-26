@@ -23,7 +23,6 @@ using DustInTheWind.WindowsReboot.Presentation.OtherWindows;
 
 namespace DustInTheWind.WindowsReboot.PresentationAccess
 {
-
     public class UserInterface : IUserInterface
     {
         private readonly IUiDispatcher uiDispatcher;
@@ -40,7 +39,9 @@ namespace DustInTheWind.WindowsReboot.PresentationAccess
             Form mainForm = GetMainForm();
 
             using (AboutForm form = new AboutForm())
+            {
                 form.ShowDialog(mainForm);
+            }
         }
 
         public void DisplayLicense()
@@ -48,7 +49,9 @@ namespace DustInTheWind.WindowsReboot.PresentationAccess
             Form mainForm = GetMainForm();
 
             using (LicenseForm form = new LicenseForm())
+            {
                 form.ShowDialog(mainForm);
+            }
         }
 
         public void DisplayOptions()

@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
 using DustInTheWind.EventBusEngine;
 
 namespace DustInTheWind.WindowsReboot.Domain
@@ -22,7 +23,7 @@ namespace DustInTheWind.WindowsReboot.Domain
     public class ExecutionTimer : IDisposable
     {
         private readonly EventBus eventBus;
-        private readonly System.Threading.Timer timer;
+        private readonly Timer timer;
 
         public readonly TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
         private volatile bool isRunning;
@@ -32,6 +33,7 @@ namespace DustInTheWind.WindowsReboot.Domain
         private DateTime startTime;
 
         public event EventHandler Warning;
+
         public event EventHandler Ring;
 
         public bool IsRunning => isRunning;
@@ -72,7 +74,7 @@ namespace DustInTheWind.WindowsReboot.Domain
         {
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
 
-            timer = new System.Threading.Timer(TimerElapsed);
+            timer = new Timer(TimerElapsed);
 
             WarningTime = TimeSpan.FromSeconds(30);
         }

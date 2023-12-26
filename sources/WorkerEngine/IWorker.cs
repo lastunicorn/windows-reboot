@@ -24,6 +24,7 @@ namespace DustInTheWind.WorkerEngine
     public interface IWorker
     {
         void Start();
+
         void Stop();
     }
 }

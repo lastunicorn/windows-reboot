@@ -23,10 +23,13 @@ namespace DustInTheWind.WindowsReboot.Domain
         public ScheduleTimeType Type { get; set; }
 
         public DateTime DateTime { get; set; }
+
         public TimeSpan TimeOfDay { get; set; }
 
         public int Hours { get; set; }
+
         public int Minutes { get; set; }
+
         public int Seconds { get; set; }
 
         public static ScheduleTime Immediate { get; } = new ScheduleTime
@@ -48,16 +51,16 @@ namespace DustInTheWind.WindowsReboot.Domain
                     return DateTime;
 
                 case ScheduleTimeType.Daily:
-                    {
-                        DateTime potentialTime = now.Date + TimeOfDay;
+                {
+                    DateTime potentialTime = now.Date + TimeOfDay;
 
-                        while (potentialTime < now)
-                            potentialTime += TimeSpan.FromDays(1);
+                    while (potentialTime < now)
+                        potentialTime += TimeSpan.FromDays(1);
 
-                        // todo: check if reached DateTime.Max
+                    // todo: check if reached DateTime.Max
 
-                        return potentialTime;
-                    }
+                    return potentialTime;
+                }
 
                 case ScheduleTimeType.Delay:
                     return now + new TimeSpan(Hours, Minutes, Seconds);

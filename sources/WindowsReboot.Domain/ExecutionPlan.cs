@@ -166,8 +166,6 @@ namespace DustInTheWind.WindowsReboot.Domain
             return false;
         }
 
-
-
         private bool IsAllowedToSet(ForceOption value)
         {
             switch (ActionType)

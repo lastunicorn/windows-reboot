@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfo.shared.cs">
+      <Link>Properties\AssemblyInfo.shared.cs</Link>
+    </Compile>
     <Compile Include="BindingExtensions.cs" />
     <Compile Include="CustomControls\ButtonWithCommand.cs">
       <SubType>Component</SubType>
