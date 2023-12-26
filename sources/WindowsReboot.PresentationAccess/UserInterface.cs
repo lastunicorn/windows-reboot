@@ -1,5 +1,5 @@
 ﻿// Windows Reboot
-// Copyright (C) 2009-2015 Dust in the Wind
+// Copyright (C) 2009-2023 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -77,13 +77,6 @@ namespace DustInTheWind.WindowsReboot.PresentationAccess
             Form mainForm = GetMainForm();
 
             MessageBox.Show(mainForm, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        public bool Confirm(string message)
-        {
-            Form mainForm = GetMainForm();
-
-            return MessageBox.Show(mainForm, message, string.Empty, MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK;
         }
 
         public void DisplayExecutionWarning(string actionName)

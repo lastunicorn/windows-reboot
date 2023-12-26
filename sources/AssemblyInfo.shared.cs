@@ -1,5 +1,5 @@
 // Windows Reboot
-// Copyright (C) 2009-2015 Dust in the Wind
+// Copyright (C) 2009-2023 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,6 +16,10 @@
 
 using System.Reflection;
 
+[assembly: AssemblyCompany("Dust in the Wind")]
+[assembly: AssemblyProduct("Windows Reboot")]
+[assembly: AssemblyCopyright("Copyright © Dust in the Wind 2009-2023")]
+
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version
@@ -27,6 +31,6 @@ using System.Reflection;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.5.1.*")]
+[assembly: AssemblyVersion("1.5.1")]
 //[assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: AssemblyInformationalVersion("1.5")]

@@ -44,6 +44,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{883DE610-61C3-463D-B025-070D0F73E9D6}"
 	ProjectSection(SolutionItems) = preProject
 		AssemblyInfo.shared.cs = AssemblyInfo.shared.cs
+		Directory.build.props = Directory.build.props
 	EndProjectSection
 EndProject
 Global

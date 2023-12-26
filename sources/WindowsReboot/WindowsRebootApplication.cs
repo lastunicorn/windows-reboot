@@ -1,5 +1,5 @@
 ﻿// Windows Reboot
-// Copyright (C) 2009-2015 Dust in the Wind
+// Copyright (C) 2009-2023 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,8 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Reflection;
-using System.Threading;
-using System.Windows.Forms;
 using Autofac;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.ActionTypeArea.PresentActionTypeConfiguration;
@@ -26,7 +24,6 @@ using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using DustInTheWind.WindowsReboot.Ports.SystemAccess;
-using DustInTheWind.WindowsReboot.Presentation;
 using DustInTheWind.WindowsReboot.Presentation.Behaviors;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WindowsReboot.Presentation.MainWindow;
@@ -71,7 +68,7 @@ namespace DustInTheWind.WindowsReboot
 
             // Workers
 
-            Assembly[] workerAssemblies = new[]
+            Assembly[] workerAssemblies =
             {
                 typeof(ExecutionWorker).Assembly
             };
@@ -133,13 +130,6 @@ namespace DustInTheWind.WindowsReboot
 
             mainWindow = context.Resolve<WindowsRebootForm>();
             mainWindow.ViewModel = context.Resolve<WindowsRebootViewModel>();
-
-            //SynchronizationContext sync = SynchronizationContext.Current;
-            //IUiDispatcher uiDispatcher = context.Resolve<IUiDispatcher>();
-            //uiDispatcher.Dispatch(() =>
-            //{
-            //    MessageBox.Show("asd");
-            //});
 
             MainWindowCloseBehaviour mainWindowCloseBehaviour = context.Resolve<MainWindowCloseBehaviour>();
             mainWindow.AddBehavior(mainWindowCloseBehaviour);

@@ -1,5 +1,5 @@
 ﻿// Windows Reboot
-// Copyright (C) 2009-2015 Dust in the Wind
+// Copyright (C) 2009-2023 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,9 +23,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("WindowsReboot")]
 [assembly: AssemblyDescription("This application can log off the current user, reboot the system or shut down it. And all this can be scheduled to be done on a specific time.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Dust in the Wind")]
-[assembly: AssemblyProduct("Windows Reboot")]
-[assembly: AssemblyCopyright("Copyright © Dust in the Wind 2009-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

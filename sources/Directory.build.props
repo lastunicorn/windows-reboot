@@ -1,4 +1,4 @@
-﻿<!--
+<!--
 Windows Reboot
 Copyright (C) 2009-2023 Dust in the Wind
 
@@ -16,21 +16,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<Project Sdk="Microsoft.NET.Sdk">
+<Project>
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>DustInTheWind.WorkerEngine.Setup.Autofac</AssemblyName>
-        <RootNamespace>DustInTheWind.WorkerEngine.Setup.Autofac</RootNamespace>
+        <Version>1.5.1.0</Version>
+        <Product>Windows Reboot</Product>
+        <Company>Dust in the Wind</Company>
+        <Copyright>Copyright © Dust in the Wind 2009-2023</Copyright>
+        <Authors />
     </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Autofac" Version="7.1.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\WorkerEngine\WorkerEngine.csproj" />
-      <ProjectReference Include="..\WorkerEngine\WorkerEngine.csproj" PrivateAssets="All" />
-    </ItemGroup>
 
 </Project>
