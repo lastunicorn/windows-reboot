@@ -16,9 +16,12 @@
 
 namespace DustInTheWind.WindowsReboot.Ports.PresentationAccess
 {
-    public enum ApplicationState
+    public class ApplicationOptions
     {
-        Normal,
-        Tray
+        public bool CloseToTray { get; set; }
+
+        public bool MinimizeToTray { get; set; }
+
+        public bool AutoStart { get; set; }
     }
 }

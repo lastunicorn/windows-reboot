@@ -14,8 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-
 namespace DustInTheWind.WindowsReboot.Ports.PresentationAccess
 {
     public interface IUserInterface
@@ -27,8 +25,6 @@ namespace DustInTheWind.WindowsReboot.Ports.PresentationAccess
         ApplicationOptions DisplayOptions(ApplicationOptions options);
 
         void DisplayMessage(string message);
-
-        void DisplayError(Exception ex);
 
         void DisplayExecutionWarning(string actionName);
 
@@ -51,14 +47,5 @@ namespace DustInTheWind.WindowsReboot.Ports.PresentationAccess
         bool ConfirmDirectShutDown();
 
         bool ConfirmDirectPowerOff();
-    }
-
-    public class ApplicationOptions
-    {
-        public bool CloseToTray { get; set; }
-
-        public bool MinimizeToTray { get; set; }
-
-        public bool AutoStart { get; set; }
     }
 }

@@ -85,13 +85,6 @@ namespace DustInTheWind.WindowsReboot.PresentationAccess
             });
         }
 
-        public void DisplayError(Exception ex)
-        {
-            Form mainForm = GetMainForm();
-
-            MessageBox.Show(mainForm, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
         public void DisplayExecutionWarning(string actionName)
         {
             Form mainForm = GetMainForm();
