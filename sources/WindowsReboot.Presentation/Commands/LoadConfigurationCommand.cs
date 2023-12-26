@@ -15,58 +15,43 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Threading.Tasks;
-using System.Threading;
 using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Application.ConfigurationArea.LoadConfiguration;
 using DustInTheWind.WindowsReboot.Domain;
-using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class LoadConfigurationCommand : CommandBase
     {
-        private readonly ExecutionTimer executionTimer;
-        private readonly ExecutionPlan executionPlan;
-        private readonly IConfigStorage configuration;
+        private readonly IMediator mediator;
 
-        public override bool CanExecute => !executionTimer.IsRunning;
-
-        public LoadConfigurationCommand(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan, IConfigStorage configuration, EventBus eventBus)
+        public LoadConfigurationCommand(IUserInterface userInterface, EventBus eventBus, IMediator mediator)
             : base(userInterface)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
-            this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-            
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+
             eventBus.Subscribe<TimerStartedEvent>(HandleTimerStartedEvent);
             eventBus.Subscribe<TimerStoppedEvent>(HandleTimerStoppedEvent);
         }
 
-        private Task HandleTimerStartedEvent(TimerStartedEvent ev, CancellationToken cancellationToken)
+        private void HandleTimerStartedEvent(TimerStartedEvent ev)
         {
-            OnCanExecuteChanged();
-            return Task.CompletedTask;
+            CanExecute = false;
         }
 
-        private Task HandleTimerStoppedEvent(TimerStoppedEvent ev, CancellationToken cancellationToken)
+        private void HandleTimerStoppedEvent(TimerStoppedEvent ev)
         {
-            Dispatch(OnCanExecuteChanged);
-            return Task.CompletedTask;
+            CanExecute = true;
         }
 
         protected override void DoExecute()
         {
-            if (executionTimer.IsRunning)
-                throw new WindowsRebootException("Cannot complete the task while the timer is started.");
-
-            executionTimer.ScheduleTime = configuration.ActionTime;
-            executionPlan.ActionType = configuration.ActionType;
-            executionPlan.ForceOption = configuration.ForceClosingPrograms
-                ? ForceOption.Yes
-                : ForceOption.No;
+            LoadConfigurationRequest request = new LoadConfigurationRequest();
+            _ = mediator.Send(request);
         }
     }
 }

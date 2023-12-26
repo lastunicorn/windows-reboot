@@ -16,25 +16,23 @@
 
 using System;
 using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Application.ConfigurationArea.LoadDefaultConfiguration;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class LoadDefaultConfigurationCommand : CommandBase
     {
-        private readonly ExecutionTimer executionTimer;
-        private readonly ExecutionPlan executionPlan;
+        private readonly IMediator mediator;
 
-        public override bool CanExecute => !executionTimer.IsRunning;
-
-        public LoadDefaultConfigurationCommand(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan, EventBus eventBus)
+        public LoadDefaultConfigurationCommand(IUserInterface userInterface, EventBus eventBus, IMediator mediator)
             : base(userInterface)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
             eventBus.Subscribe<TimerStartedEvent>(HandleTimerStartedEvent);
             eventBus.Subscribe<TimerStoppedEvent>(HandleTimerStoppedEvent);
@@ -42,27 +40,18 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         private void HandleTimerStartedEvent(TimerStartedEvent ev)
         {
-            OnCanExecuteChanged();
+            CanExecute = false;
         }
 
         private void HandleTimerStoppedEvent(TimerStoppedEvent ev)
         {
-            Dispatch(OnCanExecuteChanged);
+            CanExecute = true;
         }
 
         protected override void DoExecute()
         {
-            if (executionTimer.IsRunning)
-                throw new WindowsRebootException("Cannot complete the task while the timer is started.");
-
-            executionTimer.ScheduleTime = new ScheduleTime
-            {
-                Type = ScheduleTimeType.Delay
-            };
-
-            executionPlan.ActionType = ActionType.PowerOff;
-            executionPlan.ForceOption = ForceOption.Yes;
-            executionTimer.WarningTime = null;
+            LoadDefaultConfigurationRequest request = new LoadDefaultConfigurationRequest();
+            _ = mediator.Send(request);
         }
     }
 }

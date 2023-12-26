@@ -15,36 +15,26 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Domain;
-using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
+using DustInTheWind.WindowsReboot.Application.ConfigurationArea.SaveConfiguration;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class SaveConfigurationCommand : CommandBase
     {
-        private readonly ExecutionTimer executionTimer;
-        private readonly ExecutionPlan executionPlan;
-        private readonly IConfigStorage configuration;
+        private readonly IMediator mediator;
 
-        public SaveConfigurationCommand(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan, IConfigStorage configuration)
+        public SaveConfigurationCommand(IUserInterface userInterface, IMediator mediator)
             : base(userInterface)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
-            this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         protected override void DoExecute()
         {
-            configuration.ActionTime = executionTimer.ScheduleTime;
-
-            configuration.ActionType = executionPlan.ActionType;
-            configuration.ForceClosingPrograms = executionPlan.ForceOption == ForceOption.Yes;
-
-            configuration.Save();
-
-            UserInterface.DisplayMessage("The configuration was saved.");
+            SaveConfigurationRequest request = new SaveConfigurationRequest();
+            _ = mediator.Send(request);
         }
     }
 }

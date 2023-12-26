@@ -29,6 +29,11 @@ namespace DustInTheWind.WindowsReboot.Domain
         public int Minutes { get; set; }
         public int Seconds { get; set; }
 
+        public static ScheduleTime Immediate { get; } = new ScheduleTime
+        {
+            Type = ScheduleTimeType.Immediate
+        };
+
         public ScheduleTime()
         {
             Type = ScheduleTimeType.Immediate;
@@ -48,7 +53,7 @@ namespace DustInTheWind.WindowsReboot.Domain
 
                         while (potentialTime < now)
                             potentialTime += TimeSpan.FromDays(1);
-                        
+
                         // todo: check if reached DateTime.Max
 
                         return potentialTime;

@@ -26,7 +26,7 @@ namespace DustInTheWind.WindowsReboot.Domain
 
         public readonly TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
         private volatile bool isRunning;
-        private ScheduleTime scheduleTime;
+        private ScheduleTime scheduleTime = ScheduleTime.Immediate;
         private TimeSpan? warningTime;
         private bool shouldRaiseWarning;
         private DateTime startTime;
@@ -41,6 +41,9 @@ namespace DustInTheWind.WindowsReboot.Domain
             get => scheduleTime;
             set
             {
+                if (value == null)
+                    scheduleTime = ScheduleTime.Immediate;
+
                 scheduleTime = value;
 
                 OnTimeChanges();

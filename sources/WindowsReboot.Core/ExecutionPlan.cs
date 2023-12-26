@@ -52,7 +52,7 @@ namespace DustInTheWind.WindowsReboot.Domain
             {
                 bool isAllowedToSet = IsAllowedToSet(value);
                 if (!isAllowedToSet)
-                    throw new ArgumentException($"ForceOption value '{value}' is not allowed for action type '{actionType}'.");
+                    return;
 
                 if (value != ForceOption.NotApplicable)
                     lastApplicableForceOption = value;

@@ -31,7 +31,7 @@ namespace DustInTheWind.WindowsReboot.UserAccess
 
         public void Dispatch(Action action)
         {
-            synchronizationContext.Post(o => action(), null);
+            synchronizationContext?.Post(o => action(), null);
         }
     }
 }

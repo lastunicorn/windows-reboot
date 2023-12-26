@@ -15,6 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Reflection;
+using System.Threading;
+using System.Windows.Forms;
 using Autofac;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.ActionTypeArea.PresentActionTypeConfiguration;
@@ -93,15 +95,15 @@ namespace DustInTheWind.WindowsReboot
             containerBuilder.RegisterType<WindowsRebootViewModel>().AsSelf();
             containerBuilder.RegisterType<MainWindowCloseBehaviour>().AsSelf();
             containerBuilder.RegisterType<MainWindowMinimizeBehavior>().AsSelf();
-            
+
             containerBuilder.RegisterType<ActionTimeControlViewModel>().AsSelf();
             containerBuilder.RegisterType<ActionTypeControlViewModel>().AsSelf();
             containerBuilder.RegisterType<ActionControlViewModel>().AsSelf();
             containerBuilder.RegisterType<StatusControlViewModel>().AsSelf();
-            
+
             containerBuilder.RegisterType<StartTimerCommand>().AsSelf();
             containerBuilder.RegisterType<StopTimerCommand>().AsSelf();
-            
+
             containerBuilder.RegisterType<GoToTrayCommand>().AsSelf();
             containerBuilder.RegisterType<ExitCommand>().AsSelf();
             containerBuilder.RegisterType<LoadConfigurationCommand>().AsSelf();
@@ -113,7 +115,7 @@ namespace DustInTheWind.WindowsReboot
 
             containerBuilder.RegisterType<TrayIcon>().AsSelf();
             containerBuilder.RegisterType<TrayIconViewModel>().AsSelf();
-            
+
             containerBuilder.RegisterType<RestoreMainWindowCommand>().AsSelf();
             containerBuilder.RegisterType<LockComputerCommand>().AsSelf();
             containerBuilder.RegisterType<LogOffCommand>().AsSelf();
@@ -129,12 +131,15 @@ namespace DustInTheWind.WindowsReboot
             System.Windows.Forms.Application.EnableVisualStyles();
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
 
-            IMediator mediator = context.Resolve<IMediator>();
-            InitializeApplicationRequest request = new InitializeApplicationRequest();
-            mediator.Send(request).Wait();
-
             mainWindow = context.Resolve<WindowsRebootForm>();
             mainWindow.ViewModel = context.Resolve<WindowsRebootViewModel>();
+
+            //SynchronizationContext sync = SynchronizationContext.Current;
+            //IUiDispatcher uiDispatcher = context.Resolve<IUiDispatcher>();
+            //uiDispatcher.Dispatch(() =>
+            //{
+            //    MessageBox.Show("asd");
+            //});
 
             MainWindowCloseBehaviour mainWindowCloseBehaviour = context.Resolve<MainWindowCloseBehaviour>();
             mainWindow.AddBehavior(mainWindowCloseBehaviour);
@@ -147,6 +152,10 @@ namespace DustInTheWind.WindowsReboot
 
             trayIcon = context.Resolve<TrayIcon>();
             trayIcon.ViewModel = context.Resolve<TrayIconViewModel>();
+
+            IMediator mediator = context.Resolve<IMediator>();
+            InitializeApplicationRequest request = new InitializeApplicationRequest();
+            mediator.Send(request).Wait();
         }
 
         public void Run()
