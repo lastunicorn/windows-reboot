@@ -5,7 +5,7 @@ using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication

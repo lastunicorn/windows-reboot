@@ -11,7 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WorkersEngine\WorkerEngine.csproj" PrivateAssets="All" />
+      <ProjectReference Include="..\WorkerEngine\WorkerEngine.csproj" />
+      <ProjectReference Include="..\WorkerEngine\WorkerEngine.csproj" PrivateAssets="All" />
     </ItemGroup>
 
 </Project>

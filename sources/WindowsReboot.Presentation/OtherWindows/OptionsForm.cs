@@ -18,7 +18,7 @@ using System;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 
-namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
+namespace DustInTheWind.WindowsReboot.Presentation.OtherWindows
 {
     /// <summary>
     /// Displays some options that the user can set.

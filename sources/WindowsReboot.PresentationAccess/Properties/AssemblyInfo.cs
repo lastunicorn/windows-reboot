@@ -20,12 +20,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WindowsReboot.Presentation")]
+[assembly: AssemblyTitle("WindowsReboot.PresentationAccess")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Dust in the Wind")]
 [assembly: AssemblyProduct("Windows Reboot")]
-[assembly: AssemblyCopyright("Copyright © Dust in the Wind 2009-2023")]
+[assembly: AssemblyCopyright("Copyright © Dust in the Wind 2009-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -35,4 +35,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3a4bbbb2-47ac-4355-8efa-e1a1cf65fba0")]
+[assembly: Guid("3d0b14ff-253a-435e-9031-673c7f672067")]

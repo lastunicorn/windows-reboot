@@ -18,7 +18,7 @@ using System;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.ConfigurationArea.LoadDefaultConfiguration;
 using DustInTheWind.WindowsReboot.Domain;
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands

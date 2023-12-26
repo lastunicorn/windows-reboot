@@ -20,7 +20,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Domain;
 
-namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
+namespace DustInTheWind.WindowsReboot.Presentation.OtherWindows
 {
     /// <summary>
     /// Displays information about the author, the version, etc.

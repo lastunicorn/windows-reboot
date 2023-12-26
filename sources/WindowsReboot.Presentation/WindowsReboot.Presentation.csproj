@@ -60,6 +60,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfo.shared.cs">
+      <Link>Properties\AssemblyInfo.shared.cs</Link>
+    </Compile>
     <Compile Include="CommandBase.cs" />
     <Compile Include="Commands\AboutCommand.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
@@ -185,15 +188,15 @@
       <Project>{52315771-8889-4DB8-BAE1-48A420728D49}</Project>
       <Name>WindowsReboot.Ports.ConfigAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj">
+    <ProjectReference Include="..\WindowsReboot.Ports.PresentationAccess\WindowsReboot.Ports.PresentationAccess.csproj">
       <Project>{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}</Project>
-      <Name>WindowsReboot.Ports.UserAccess</Name>
+      <Name>WindowsReboot.Ports.PresentationAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\WinFormsAdditions\WinFormsAdditions.csproj">
       <Project>{a47c0d20-17d8-4b63-be9a-f1f14ca4a64d}</Project>
       <Name>WinFormsAdditions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WorkersEngine\WorkerEngine.csproj">
+    <ProjectReference Include="..\WorkerEngine\WorkerEngine.csproj">
       <Project>{4EF538E6-CE2C-4125-ACE8-83D4A9756491}</Project>
       <Name>WorkerEngine</Name>
     </ProjectReference>

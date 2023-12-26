@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.ConfigurationArea.SaveConfiguration

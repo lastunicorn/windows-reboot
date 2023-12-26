@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.WindowsReboot.Ports.UserAccess
+namespace DustInTheWind.WindowsReboot.Ports.PresentationAccess
 {
     public interface IUserInterface
     {

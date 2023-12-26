@@ -231,7 +231,7 @@
       <Project>{95DFED73-834B-48B6-9956-AA891309C9C6}</Project>
       <Name>WindowsReboot.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsReboot.BackgroundWorkers\WindowsReboot.Workers.csproj">
+    <ProjectReference Include="..\WindowsReboot.Workers\WindowsReboot.Workers.csproj">
       <Project>{51F474F7-2443-496B-AFC5-ABA7BCBA5FA1}</Project>
       <Name>WindowsReboot.Workers</Name>
     </ProjectReference>
@@ -251,9 +251,9 @@
       <Project>{CA55A116-6AA7-4222-9686-2D57B4CD5E58}</Project>
       <Name>WindowsReboot.Ports.SystemAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj">
+    <ProjectReference Include="..\WindowsReboot.Ports.PresentationAccess\WindowsReboot.Ports.PresentationAccess.csproj">
       <Project>{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}</Project>
-      <Name>WindowsReboot.Ports.UserAccess</Name>
+      <Name>WindowsReboot.Ports.PresentationAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.Presentation\WindowsReboot.Presentation.csproj">
       <Project>{3A4BBBB2-47AC-4355-8EFA-E1A1CF65FBA0}</Project>
@@ -263,7 +263,7 @@
       <Project>{1D579956-B6C4-4FBF-BAC9-E749EA8C8662}</Project>
       <Name>WindowsReboot.SystemAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsReboot.UserAccess\WindowsReboot.PresentationAccess.csproj">
+    <ProjectReference Include="..\WindowsReboot.PresentationAccess\WindowsReboot.PresentationAccess.csproj">
       <Project>{3D0B14FF-253A-435E-9031-673C7F672067}</Project>
       <Name>WindowsReboot.PresentationAccess</Name>
     </ProjectReference>
@@ -271,7 +271,7 @@
       <Project>{A47C0D20-17D8-4B63-BE9A-F1F14CA4A64D}</Project>
       <Name>WinFormsAdditions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WorkersEngine.Setup.Autofac\WorkerEngine.Setup.Autofac.csproj">
+    <ProjectReference Include="..\WorkerEngine.Setup.Autofac\WorkerEngine.Setup.Autofac.csproj">
       <Project>{18C3ABB0-E98A-4F60-8A6D-68B811DDC8F8}</Project>
       <Name>WorkerEngine.Setup.Autofac</Name>
     </ProjectReference>

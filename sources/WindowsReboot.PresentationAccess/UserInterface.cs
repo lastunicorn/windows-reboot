@@ -18,10 +18,10 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
-using DustInTheWind.WindowsReboot.UserAccess.OtherWindows;
+using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
+using DustInTheWind.WindowsReboot.Presentation.OtherWindows;
 
-namespace DustInTheWind.WindowsReboot.UserAccess
+namespace DustInTheWind.WindowsReboot.PresentationAccess
 {
 
     public class UserInterface : IUserInterface

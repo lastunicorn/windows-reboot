@@ -1,4 +1,4 @@
-﻿// Windows Reboot
+// Windows Reboot
 // Copyright (C) 2009-2015 Dust in the Wind
 // 
 // This program is free software: you can redistribute it and/or modify
@@ -15,23 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Threading;
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
 
-namespace DustInTheWind.WindowsReboot.UserAccess
+namespace DustInTheWind.WindowsReboot.Ports.PresentationAccess
 {
-    public class UiDispatcher : IUiDispatcher
+    public interface IUiDispatcher
     {
-        private readonly SynchronizationContext synchronizationContext;
-
-        public UiDispatcher()
-        {
-            synchronizationContext = SynchronizationContext.Current;
-        }
-
-        public void Dispatch(Action action)
-        {
-            synchronizationContext?.Post(o => action(), null);
-        }
+        void Dispatch(Action action);
     }
 }

@@ -16,7 +16,7 @@
 
 using System;
 using DustInTheWind.WindowsReboot.Application.DirectActionsArea.ExecuteHibernate;
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands

@@ -9,7 +9,7 @@
     <ItemGroup>
         <ProjectReference Include="..\EventBusEngine\EventBusEngine.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\WindowsReboot.Ports.PresentationAccess\WindowsReboot.Ports.PresentationAccess.csproj" PrivateAssets="All" />
     </ItemGroup>
 
 </Project>
