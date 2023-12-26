@@ -17,7 +17,7 @@
 using System;
 using DustInTheWind.EventBusEngine;
 
-namespace DustInTheWind.WindowsReboot.Core
+namespace DustInTheWind.WindowsReboot.Domain
 {
     public class ExecutionTimer : IDisposable
     {
@@ -34,9 +34,6 @@ namespace DustInTheWind.WindowsReboot.Core
         public event EventHandler Warning;
         public event EventHandler Ring;
 
-        /// <summary>
-        /// Indicates if the timer was started.
-        /// </summary>
         public bool IsRunning => isRunning;
 
         public ScheduleTime ScheduleTime

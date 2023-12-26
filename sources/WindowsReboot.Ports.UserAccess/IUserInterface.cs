@@ -20,29 +20,22 @@ namespace DustInTheWind.WindowsReboot.Ports.UserAccess
 {
     public interface IUserInterface
     {
-        void Dispatch(Action action);
         void DisplayAbout();
         void DisplayLicense();
         void DisplayOptions();
 
-        MainWindowState MainWindowState { get; set; }
-        event EventHandler MainWindowStateChanged;
-
         void DisplayMessage(string message);
-
-        void DisplayError(string message);
 
         void DisplayError(Exception ex);
 
-        bool AskToClose(string message);
         bool Confirm(string message);
 
         void DisplayExecutionWarning(string actionName);
 
         void DisplayNotification();
 
-        void HideMainWindow();
+        void CloseUserInterface();
 
-        void ShowTray();
+        bool ConfirmClosingWhileTimerIsRunning();
     }
 }

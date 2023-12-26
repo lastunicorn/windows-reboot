@@ -38,6 +38,17 @@ namespace DustInTheWind.EventBusEngine
             actions.Add(action);
         }
 
+        public void Unsubscribe<TEvent>(Action<TEvent> action)
+        {
+            List<object> actions = GetBucket<TEvent>();
+
+            if (actions == null)
+                return;
+
+            if (actions.Contains(actions))
+                actions.Remove(action);
+        }
+
         public async Task PublishAsync<TEvent>(TEvent @event, CancellationToken cancellationToken = default)
         {
             List<object> bucket = GetBucket<TEvent>();

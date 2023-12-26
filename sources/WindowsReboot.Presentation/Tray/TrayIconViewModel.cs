@@ -15,11 +15,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.ComponentModel;
 using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication;
 using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
-using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Ports.SystemAccess;
+using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WinFormsAdditions;
@@ -66,47 +65,54 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
         public PowerOffCommand PowerOffCommand { get; private set; }
         public ExitCommand ExitCommand { get; private set; }
 
-        public TrayIconViewModel(IUserInterface userInterface, IOperatingSystem operatingSystem, ExecutionTimer executionTimer,
-            ApplicationEnvironment applicationEnvironment, EventBus eventBus, IMediator mediator)
+        public TrayIconViewModel(IUserInterface userInterface, ExecutionTimer executionTimer,
+            EventBus eventBus, IMediator mediator,
+            RestoreMainWindowCommand restoreMainWindowCommand,
+            LockComputerCommand lockComputerCommand,
+            LogOffCommand logOffCommand,
+            SleepCommand sleepCommand,
+            HibernateCommand hibernateCommand,
+            RebootCommand rebootCommand,
+            ShutDownCommand shutDownCommand,
+            PowerOffCommand powerOffCommand,
+            ExitCommand exitCommand)
         {
-            if (applicationEnvironment == null) throw new ArgumentNullException(nameof(applicationEnvironment));
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
             if (mediator == null) throw new ArgumentNullException(nameof(mediator));
 
             this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
 
-            RestoreMainWindowCommand = new RestoreMainWindowCommand(userInterface, mediator, eventBus);
-            LockComputerCommand = new LockComputerCommand(userInterface, operatingSystem);
-            LogOffCommand = new LogOffCommand(userInterface, operatingSystem);
-            SleepCommand = new SleepCommand(userInterface, operatingSystem);
-            HibernateCommand = new HibernateCommand(userInterface, operatingSystem);
-            RebootCommand = new RebootCommand(userInterface, operatingSystem);
-            ShutDownCommand = new ShutDownCommand(userInterface, operatingSystem);
-            PowerOffCommand = new PowerOffCommand(userInterface, operatingSystem);
-            ExitCommand = new ExitCommand(userInterface, applicationEnvironment);
+            RestoreMainWindowCommand = restoreMainWindowCommand ?? throw new ArgumentNullException(nameof(restoreMainWindowCommand));
+            LockComputerCommand = lockComputerCommand ?? throw new ArgumentNullException(nameof(lockComputerCommand));
+            LogOffCommand = logOffCommand ?? throw new ArgumentNullException(nameof(logOffCommand));
+            SleepCommand = sleepCommand ?? throw new ArgumentNullException(nameof(sleepCommand));
+            HibernateCommand = hibernateCommand ?? throw new ArgumentNullException(nameof(hibernateCommand));
+            RebootCommand = rebootCommand ?? throw new ArgumentNullException(nameof(rebootCommand));
+            ShutDownCommand = shutDownCommand ?? throw new ArgumentNullException(nameof(shutDownCommand));
+            PowerOffCommand = powerOffCommand ?? throw new ArgumentNullException(nameof(powerOffCommand));
+            ExitCommand = exitCommand ?? throw new ArgumentNullException(nameof(exitCommand));
 
             defaultText = string.Format("{0} {1}", System.Windows.Forms.Application.ProductName, VersionUtil.GetVersionToString());
 
             Text = defaultText;
 
-            eventBus.Subscribe<GuiStateChangedEvent>(HandleGuiStateChangedEvent);
-
-            applicationEnvironment.Closing += HandleApplicationEnvironmentClosing;
-            applicationEnvironment.CloseRevoked += HandleApplicationEnvironmentCloseRevoked;
+            eventBus.Subscribe<ApplicationStateChangedEvent>(HandleApplicationStateChangedEvent);
+            eventBus.Subscribe<ApplicationClosingEvent>(HandleApplicationClosingEvent);
+            eventBus.Subscribe<ApplicationCloseRevokedEvent>(HandleApplicationCloseRevokedEvent);
         }
 
-        private void HandleGuiStateChangedEvent(GuiStateChangedEvent ev)
+        private void HandleApplicationStateChangedEvent(ApplicationStateChangedEvent ev)
         {
             try
             {
-                switch (ev.MainWindowState)
+                switch (ev.ApplicationState)
                 {
-                    case MainWindowState.Normal:
+                    case ApplicationState.Normal:
                         IsVisible = false;
                         break;
 
-                    case MainWindowState.Tray:
+                    case ApplicationState.Tray:
                         IsVisible = true;
                         break;
 
@@ -120,13 +126,13 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
             }
         }
 
-        private void HandleApplicationEnvironmentClosing(object sender, CancelEventArgs e)
+        private void HandleApplicationClosingEvent(ApplicationClosingEvent ev)
         {
             wasVisibleBeforeClosing = isVisible;
             IsVisible = false;
         }
 
-        private void HandleApplicationEnvironmentCloseRevoked(object sender, EventArgs e)
+        private void HandleApplicationCloseRevokedEvent(ApplicationCloseRevokedEvent ev)
         {
             IsVisible = wasVisibleBeforeClosing;
         }

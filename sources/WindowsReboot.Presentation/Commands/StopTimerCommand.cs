@@ -18,7 +18,7 @@ using System;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.ActionArea.PresentStopAbility;
 using DustInTheWind.WindowsReboot.Application.ActionArea.Stop;
-using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using MediatR;
 

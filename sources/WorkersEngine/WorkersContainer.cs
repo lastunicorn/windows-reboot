@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DustInTheWind.WorkersEngine
+namespace DustInTheWind.WorkerEngine
 {
     public class WorkersContainer
     {

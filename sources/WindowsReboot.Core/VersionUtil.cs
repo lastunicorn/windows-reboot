@@ -17,7 +17,7 @@
 using System;
 using System.Reflection;
 
-namespace DustInTheWind.WindowsReboot.Core
+namespace DustInTheWind.WindowsReboot.Domain
 {
     public static class VersionUtil
     {

@@ -73,9 +73,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Core.csproj">
+    <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Domain.csproj">
       <Project>{76665ccc-6451-4caf-893b-7da3d7f6ead0}</Project>
-      <Name>WindowsReboot.Core</Name>
+      <Name>WindowsReboot.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsReboot\WindowsReboot.csproj">
       <Project>{C407B401-6749-4430-AC5C-8923572A0EA5}</Project>

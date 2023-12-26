@@ -11,9 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Core.csproj" />
-    <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj" />
-    <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj" />
+    <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Domain.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\WindowsReboot.Ports.ConfigAccess\WindowsReboot.Ports.ConfigAccess.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\WorkersEngine\WorkerEngine.csproj" />
   </ItemGroup>
 
 </Project>

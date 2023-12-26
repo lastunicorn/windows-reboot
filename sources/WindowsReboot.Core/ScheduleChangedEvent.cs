@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.WindowsReboot.Core
+namespace DustInTheWind.WindowsReboot.Domain
 {
     public class ScheduleChangedEvent
     {

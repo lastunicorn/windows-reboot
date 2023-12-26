@@ -18,7 +18,7 @@ using System;
 using System.Threading.Tasks;
 using System.Threading;
 using DustInTheWind.EventBusEngine;
-using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 

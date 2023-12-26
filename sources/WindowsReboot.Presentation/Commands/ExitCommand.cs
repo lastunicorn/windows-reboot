@@ -15,23 +15,29 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class ExitCommand : CommandBase
     {
-        private readonly ApplicationEnvironment applicationEnvironment;
+        private readonly IMediator mediator;
 
-        public ExitCommand(IUserInterface userInterface, ApplicationEnvironment applicationEnvironment)
+        public ExitCommand(IUserInterface userInterface, IMediator mediator)
             : base(userInterface)
         {
-            this.applicationEnvironment = applicationEnvironment ?? throw new ArgumentNullException(nameof(applicationEnvironment));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         protected override void DoExecute()
         {
-            applicationEnvironment.Close();
+            CloseApplicationRequest request = new CloseApplicationRequest
+            {
+                Force = true
+            };
+            _ = mediator.Send(request);
         }
     }
 }

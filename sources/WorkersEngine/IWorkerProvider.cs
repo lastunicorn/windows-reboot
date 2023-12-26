@@ -16,7 +16,7 @@
 
 using System.Collections.Generic;
 
-namespace DustInTheWind.WorkersEngine
+namespace DustInTheWind.WorkerEngine
 {
     public interface IWorkerProvider
     {

@@ -17,7 +17,7 @@
 using System;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
-using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WinFormsAdditions;
@@ -92,20 +92,20 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             
             Title = $"{productName} {versionToString}";
 
-            eventBus.Subscribe<GuiStateChangedEvent>(HandleGuiStateChangedEvent);
+            eventBus.Subscribe<ApplicationStateChangedEvent>(HandleApplicationStateChangedEvent);
         }
 
-        private void HandleGuiStateChangedEvent(GuiStateChangedEvent ev)
+        private void HandleApplicationStateChangedEvent(ApplicationStateChangedEvent ev)
         {
             try
             {
-                switch (ev.MainWindowState)
+                switch (ev.ApplicationState)
                 {
-                    case MainWindowState.Normal:
+                    case ApplicationState.Normal:
                         IsVisible = true;
                         break;
 
-                    case MainWindowState.Tray:
+                    case ApplicationState.Tray:
                         IsVisible = false;
                         break;
 

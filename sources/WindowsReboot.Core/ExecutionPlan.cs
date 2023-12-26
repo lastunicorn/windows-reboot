@@ -17,18 +17,18 @@
 using System;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Ports.SystemAccess;
+using DustInTheWind.WindowsReboot.Ports.UserAccess;
 
-namespace DustInTheWind.WindowsReboot.Core
+namespace DustInTheWind.WindowsReboot.Domain
 {
     public class ExecutionPlan
     {
         private readonly IOperatingSystem operatingSystem;
         private readonly EventBus eventBus;
+        private readonly IUserInterface userInterface;
         private ActionType actionType;
         private ForceOption forceOption;
         private ForceOption lastApplicableForceOption;
-
-        public event EventHandler NotificationRaised;
 
         public ActionType ActionType
         {
@@ -62,10 +62,11 @@ namespace DustInTheWind.WindowsReboot.Core
             }
         }
 
-        public ExecutionPlan(IOperatingSystem operatingSystem, EventBus eventBus)
+        public ExecutionPlan(IOperatingSystem operatingSystem, EventBus eventBus, IUserInterface userInterface)
         {
             this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
 
             ActionType = ActionType.Ring;
             ForceOption = ForceOption.NotApplicable;
@@ -77,7 +78,7 @@ namespace DustInTheWind.WindowsReboot.Core
             switch (ActionType)
             {
                 case ActionType.Ring:
-                    OnNotificationRaised();
+                    userInterface.DisplayNotification();
                     break;
 
                 case ActionType.LockWorkstation:
@@ -202,11 +203,6 @@ namespace DustInTheWind.WindowsReboot.Core
                 ActionType = ActionType
             };
             eventBus.Publish(ev);
-        }
-
-        protected virtual void OnNotificationRaised()
-        {
-            NotificationRaised?.Invoke(this, EventArgs.Empty);
         }
     }
 }

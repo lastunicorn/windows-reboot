@@ -17,7 +17,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WinFormsAdditions;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow

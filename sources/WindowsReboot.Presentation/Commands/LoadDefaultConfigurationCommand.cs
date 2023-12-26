@@ -16,7 +16,7 @@
 
 using System;
 using DustInTheWind.EventBusEngine;
-using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands

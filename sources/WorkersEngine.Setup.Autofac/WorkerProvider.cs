@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 
-namespace DustInTheWind.WorkersEngine.Setup.Autofac
+namespace DustInTheWind.WorkerEngine.Setup.Autofac
 {
     internal class WorkerProvider : IWorkerProvider
     {
@@ -35,7 +35,10 @@ namespace DustInTheWind.WorkersEngine.Setup.Autofac
             return AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.GetTypes())
                 .Where(x => x.IsAssignableTo<IWorker>())
-                .Select(x => (IWorker)context.Resolve(x));
+                .Select(x => context.IsRegistered(x)
+                    ? (IWorker)context.Resolve(x)
+                    : null)
+                .Where(x => x != null);
         }
     }
 }

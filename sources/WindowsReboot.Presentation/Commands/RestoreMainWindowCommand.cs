@@ -26,9 +26,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
     public class RestoreMainWindowCommand : CommandBase
     {
         private readonly IMediator mediator;
-        private MainWindowState mainWindowState;
+        private ApplicationState applicationState;
 
-        public override bool CanExecute => mainWindowState != MainWindowState.Normal;
+        public override bool CanExecute => applicationState != ApplicationState.Normal;
 
         public RestoreMainWindowCommand(IUserInterface userInterface, IMediator mediator, EventBus eventBus)
             : base(userInterface)
@@ -36,12 +36,12 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-            eventBus.Subscribe<GuiStateChangedEvent>(HandleGuiStateChangedEvent);
+            eventBus.Subscribe<ApplicationStateChangedEvent>(HandleApplicationStateChangedEvent);
         }
 
-        private void HandleGuiStateChangedEvent(GuiStateChangedEvent ev)
+        private void HandleApplicationStateChangedEvent(ApplicationStateChangedEvent ev)
         {
-            mainWindowState = ev.MainWindowState;
+            applicationState = ev.ApplicationState;
             OnCanExecuteChanged();
         }
 

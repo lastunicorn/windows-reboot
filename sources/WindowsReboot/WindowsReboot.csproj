@@ -231,17 +231,17 @@
       <Project>{95DFED73-834B-48B6-9956-AA891309C9C6}</Project>
       <Name>WindowsReboot.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsReboot.BackgroundWorkers\WindowsReboot.BackgroundWorkers.csproj">
+    <ProjectReference Include="..\WindowsReboot.BackgroundWorkers\WindowsReboot.Workers.csproj">
       <Project>{51F474F7-2443-496B-AFC5-ABA7BCBA5FA1}</Project>
-      <Name>WindowsReboot.BackgroundWorkers</Name>
+      <Name>WindowsReboot.Workers</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.ConfigAccess\WindowsReboot.ConfigAccess.csproj">
       <Project>{E361EAE2-D408-4DDA-ABD3-81AF3CCBF612}</Project>
       <Name>WindowsReboot.ConfigAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Core.csproj">
+    <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Domain.csproj">
       <Project>{76665ccc-6451-4caf-893b-7da3d7f6ead0}</Project>
-      <Name>WindowsReboot.Core</Name>
+      <Name>WindowsReboot.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.Ports.ConfigAccess\WindowsReboot.Ports.ConfigAccess.csproj">
       <Project>{52315771-8889-4DB8-BAE1-48A420728D49}</Project>
@@ -267,9 +267,13 @@
       <Project>{3D0B14FF-253A-435E-9031-673C7F672067}</Project>
       <Name>WindowsReboot.UserAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WorkersEngine.Setup.Autofac\WorkersEngine.Setup.Autofac.csproj">
+    <ProjectReference Include="..\WinFormsAdditions\WinFormsAdditions.csproj">
+      <Project>{A47C0D20-17D8-4B63-BE9A-F1F14CA4A64D}</Project>
+      <Name>WinFormsAdditions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WorkersEngine.Setup.Autofac\WorkerEngine.Setup.Autofac.csproj">
       <Project>{18C3ABB0-E98A-4F60-8A6D-68B811DDC8F8}</Project>
-      <Name>WorkersEngine.Setup.Autofac</Name>
+      <Name>WorkerEngine.Setup.Autofac</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

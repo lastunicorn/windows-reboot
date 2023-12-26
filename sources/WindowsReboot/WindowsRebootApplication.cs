@@ -15,26 +15,27 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Reflection;
-using System.Windows.Forms;
 using Autofac;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.ActionTypeArea.PresentActionTypeConfiguration;
+using DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication;
 using DustInTheWind.WindowsReboot.ConfigAccess;
-using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.SystemAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation;
+using DustInTheWind.WindowsReboot.Presentation.Behaviors;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WindowsReboot.Presentation.MainWindow;
 using DustInTheWind.WindowsReboot.Presentation.Tray;
-using DustInTheWind.WindowsReboot.Presentation.Workers;
 using DustInTheWind.WindowsReboot.SystemAccess;
 using DustInTheWind.WindowsReboot.UserAccess;
-using DustInTheWind.WorkersEngine.Setup.Autofac;
+using DustInTheWind.WindowsReboot.Workers;
+using DustInTheWind.WorkerEngine.Setup.Autofac;
+using MediatR;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using MediatR.Extensions.Autofac.DependencyInjection.Builder;
-using WindowsReboot.BackgroundWorkers;
 
 namespace DustInTheWind.WindowsReboot
 {
@@ -70,8 +71,7 @@ namespace DustInTheWind.WindowsReboot
 
             Assembly[] workerAssemblies = new[]
             {
-                typeof(ExecutionWorker).Assembly,
-                typeof(MainWindowCloseWorker).Assembly
+                typeof(ExecutionWorker).Assembly
             };
             containerBuilder.RegisterWorkers(workerAssemblies);
 
@@ -91,6 +91,8 @@ namespace DustInTheWind.WindowsReboot
 
             containerBuilder.RegisterType<WindowsRebootForm>().AsSelf();
             containerBuilder.RegisterType<WindowsRebootViewModel>().AsSelf();
+            containerBuilder.RegisterType<MainWindowCloseBehaviour>().AsSelf();
+            containerBuilder.RegisterType<MainWindowMinimizeBehavior>().AsSelf();
             
             containerBuilder.RegisterType<ActionTimeControlViewModel>().AsSelf();
             containerBuilder.RegisterType<ActionTypeControlViewModel>().AsSelf();
@@ -99,11 +101,27 @@ namespace DustInTheWind.WindowsReboot
             
             containerBuilder.RegisterType<StartTimerCommand>().AsSelf();
             containerBuilder.RegisterType<StopTimerCommand>().AsSelf();
+            
+            containerBuilder.RegisterType<GoToTrayCommand>().AsSelf();
+            containerBuilder.RegisterType<ExitCommand>().AsSelf();
+            containerBuilder.RegisterType<LoadConfigurationCommand>().AsSelf();
+            containerBuilder.RegisterType<SaveConfigurationCommand>().AsSelf();
+            containerBuilder.RegisterType<LoadDefaultConfigurationCommand>().AsSelf();
+            containerBuilder.RegisterType<OptionsCommand>().AsSelf();
+            containerBuilder.RegisterType<LicenseCommand>().AsSelf();
+            containerBuilder.RegisterType<AboutCommand>().AsSelf();
 
             containerBuilder.RegisterType<TrayIcon>().AsSelf();
             containerBuilder.RegisterType<TrayIconViewModel>().AsSelf();
-
-            containerBuilder.RegisterType<ApplicationEnvironment>().AsSelf().SingleInstance();
+            
+            containerBuilder.RegisterType<RestoreMainWindowCommand>().AsSelf();
+            containerBuilder.RegisterType<LockComputerCommand>().AsSelf();
+            containerBuilder.RegisterType<LogOffCommand>().AsSelf();
+            containerBuilder.RegisterType<SleepCommand>().AsSelf();
+            containerBuilder.RegisterType<HibernateCommand>().AsSelf();
+            containerBuilder.RegisterType<RebootCommand>().AsSelf();
+            containerBuilder.RegisterType<ShutDownCommand>().AsSelf();
+            containerBuilder.RegisterType<PowerOffCommand>().AsSelf();
         }
 
         private void InitializeApplication(IComponentContext context)
@@ -111,15 +129,21 @@ namespace DustInTheWind.WindowsReboot
             System.Windows.Forms.Application.EnableVisualStyles();
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
 
+            IMediator mediator = context.Resolve<IMediator>();
+            InitializeApplicationRequest request = new InitializeApplicationRequest();
+            mediator.Send(request).Wait();
+
             mainWindow = context.Resolve<WindowsRebootForm>();
+            mainWindow.ViewModel = context.Resolve<WindowsRebootViewModel>();
+
+            MainWindowCloseBehaviour mainWindowCloseBehaviour = context.Resolve<MainWindowCloseBehaviour>();
+            mainWindow.AddBehavior(mainWindowCloseBehaviour);
+
+            MainWindowMinimizeBehavior mainWindowMinimizeBehavior = context.Resolve<MainWindowMinimizeBehavior>();
+            mainWindow.AddBehavior(mainWindowMinimizeBehavior);
 
             UserInterface userInterface = context.Resolve<UserInterface>();
             userInterface.MainForm = mainWindow;
-
-            ApplicationEnvironment applicationEnvironment = context.Resolve<ApplicationEnvironment>();
-            applicationEnvironment.Initialize();
-
-            mainWindow.ViewModel = context.Resolve<WindowsRebootViewModel>();
 
             trayIcon = context.Resolve<TrayIcon>();
             trayIcon.ViewModel = context.Resolve<TrayIconViewModel>();

@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>DustInTheWind.WorkersEngine.Setup.Autofac</AssemblyName>
-        <RootNamespace>DustInTheWind.WorkersEngine.Setup.Autofac</RootNamespace>
+        <AssemblyName>DustInTheWind.WorkerEngine.Setup.Autofac</AssemblyName>
+        <RootNamespace>DustInTheWind.WorkerEngine.Setup.Autofac</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WorkersEngine\WorkersEngine.csproj" />
+      <ProjectReference Include="..\WorkersEngine\WorkerEngine.csproj" PrivateAssets="All" />
     </ItemGroup>
 
 </Project>

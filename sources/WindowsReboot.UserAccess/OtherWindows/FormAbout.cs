@@ -17,7 +17,7 @@
 using System;
 using System.Reflection;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Domain;
 
 namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
 {

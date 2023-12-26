@@ -2,5 +2,6 @@
 {
     public class CloseApplicationResponse
     {
+        public bool CloseSuccessfullyCompleted { get; set; }
     }
 }

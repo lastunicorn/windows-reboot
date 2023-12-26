@@ -18,9 +18,9 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.GoToTray
 
         public Task Handle(GoToTrayRequest request, CancellationToken cancellationToken)
         {
-            GuiStateChangedEvent ev = new GuiStateChangedEvent
+            ApplicationStateChangedEvent ev = new ApplicationStateChangedEvent
             {
-                MainWindowState = MainWindowState.Tray
+                ApplicationState = ApplicationState.Tray
             };
             eventBus.Publish(ev);
 

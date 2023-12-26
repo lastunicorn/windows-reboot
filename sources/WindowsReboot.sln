@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot", "WindowsReb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.Tests", "WindowsReboot.Tests\WindowsReboot.Tests.csproj", "{738C66BC-F74F-47E5-A526-0C565CD1911F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.Core", "WindowsReboot.Core\WindowsReboot.Core.csproj", "{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.Domain", "WindowsReboot.Core\WindowsReboot.Domain.csproj", "{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsReboot.Ports.SystemAccess", "WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj", "{CA55A116-6AA7-4222-9686-2D57B4CD5E58}"
 EndProject
@@ -29,9 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsReboot.Ports.ConfigA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsReboot.ConfigAccess", "WindowsReboot.ConfigAccess\WindowsReboot.ConfigAccess.csproj", "{E361EAE2-D408-4DDA-ABD3-81AF3CCBF612}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkersEngine", "WorkersEngine\WorkersEngine.csproj", "{4EF538E6-CE2C-4125-ACE8-83D4A9756491}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkerEngine", "WorkersEngine\WorkerEngine.csproj", "{4EF538E6-CE2C-4125-ACE8-83D4A9756491}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkersEngine.Setup.Autofac", "WorkersEngine.Setup.Autofac\WorkersEngine.Setup.Autofac.csproj", "{18C3ABB0-E98A-4F60-8A6D-68B811DDC8F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkerEngine.Setup.Autofac", "WorkersEngine.Setup.Autofac\WorkerEngine.Setup.Autofac.csproj", "{18C3ABB0-E98A-4F60-8A6D-68B811DDC8F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{C43E57B7-4545-4911-9885-BFD6D08211AE}"
 EndProject
@@ -39,7 +39,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsAdditions", "WinFor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBusEngine", "EventBusEngine\EventBusEngine.csproj", "{B7AC38A9-718C-4102-8862-D50FDD897B31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.BackgroundWorkers", "WindowsReboot.BackgroundWorkers\WindowsReboot.BackgroundWorkers.csproj", "{51F474F7-2443-496B-AFC5-ABA7BCBA5FA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsReboot.Workers", "WindowsReboot.BackgroundWorkers\WindowsReboot.Workers.csproj", "{51F474F7-2443-496B-AFC5-ABA7BCBA5FA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

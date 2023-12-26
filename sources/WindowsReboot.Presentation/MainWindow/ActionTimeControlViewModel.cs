@@ -26,7 +26,7 @@ using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetHours;
 using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetMinutes;
 using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetScheduleType;
 using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetSeconds;
-using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WinFormsAdditions;
 using MediatR;
 

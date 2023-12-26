@@ -20,7 +20,7 @@ using DustInTheWind.WinFormsAdditions;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
-    public partial class WindowsRebootForm : Form
+    public partial class WindowsRebootForm : FormWithBehaviors
     {
         private WindowsRebootViewModel viewModel;
 

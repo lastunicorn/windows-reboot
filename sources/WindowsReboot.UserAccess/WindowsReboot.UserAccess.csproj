@@ -71,9 +71,9 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Core.csproj">
+    <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Domain.csproj">
       <Project>{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}</Project>
-      <Name>WindowsReboot.Core</Name>
+      <Name>WindowsReboot.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.Ports.ConfigAccess\WindowsReboot.Ports.ConfigAccess.csproj">
       <Project>{52315771-8889-4DB8-BAE1-48A420728D49}</Project>

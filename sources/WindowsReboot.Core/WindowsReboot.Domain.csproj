@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DustInTheWind.WindowsReboot.Domain</RootNamespace>
+    <AssemblyName>WindowsReboot.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DustInTheWind.WindowsApi.ConsoleApi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.ConsoleApi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.ConsoleApi.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Core, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Core.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Errhandlingapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Errhandlingapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Errhandlingapi.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Fileapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Fileapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Fileapi.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Handleapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Handleapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Handleapi.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.ProcessEnv, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.ProcessEnv.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.ProcessEnv.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Processthreadsapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Processthreadsapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Processthreadsapi.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Sysinfoapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Sysinfoapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Sysinfoapi.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Winbase, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Winbase.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Winbase.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Windef, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Windef.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Windef.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Wingdi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Wingdi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Wingdi.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Winnt, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Winnt.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Winnt.dll</HintPath>
+    </Reference>
+    <Reference Include="DustInTheWind.WindowsApi.Winuser, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Winuser.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Winuser.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\AssemblyInfo.shared.cs">
+      <Link>Properties\AssemblyInfo.shared.cs</Link>
+    </Compile>
+    <Compile Include="ExecutionPlan.cs" />
+    <Compile Include="ActionTimeInThePastException.cs" />
+    <Compile Include="ExecutionTimer.cs" />
+    <Compile Include="ActionTypeChangedEvent.cs" />
+    <Compile Include="ForceOption.cs" />
+    <Compile Include="ForceOptionChangedEvent.cs" />
+    <Compile Include="ScheduleTime.cs" />
+    <Compile Include="ScheduleTimeType.cs" />
+    <Compile Include="ActionType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimerStartedEvent.cs" />
+    <Compile Include="TimerStoppedEvent.cs" />
+    <Compile Include="ScheduleChangedEvent.cs" />
+    <Compile Include="WarningTimeChangedEvent.cs" />
+    <Compile Include="VersionUtil.cs" />
+    <Compile Include="WindowsRebootException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EventBusEngine\EventBusEngine.csproj">
+      <Project>{B7AC38A9-718C-4102-8862-D50FDD897B31}</Project>
+      <Name>EventBusEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj">
+      <Project>{CA55A116-6AA7-4222-9686-2D57B4CD5E58}</Project>
+      <Name>WindowsReboot.Ports.SystemAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj">
+      <Project>{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}</Project>
+      <Name>WindowsReboot.Ports.UserAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -20,7 +20,7 @@ using System.Linq;
 using System.Reflection;
 using Autofac;
 
-namespace DustInTheWind.WorkersEngine.Setup.Autofac
+namespace DustInTheWind.WorkerEngine.Setup.Autofac
 {
     public static class ContainerBuilderExtensions
     {

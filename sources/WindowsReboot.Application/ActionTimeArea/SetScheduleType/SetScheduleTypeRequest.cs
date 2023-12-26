@@ -1,4 +1,4 @@
-﻿using DustInTheWind.WindowsReboot.Core;
+﻿using DustInTheWind.WindowsReboot.Domain;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetScheduleType

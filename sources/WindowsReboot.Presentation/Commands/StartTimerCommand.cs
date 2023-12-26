@@ -18,7 +18,7 @@ using System;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.ActionArea.PresentStartAbility;
 using DustInTheWind.WindowsReboot.Application.ActionArea.Start;
-using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using MediatR;
 

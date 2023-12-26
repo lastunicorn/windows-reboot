@@ -27,30 +27,13 @@ namespace DustInTheWind.WindowsReboot.UserAccess
     {
         private readonly IUiDispatcher uiDispatcher;
         private readonly IConfigStorage configuration;
-        private MainWindowState mainWindowState;
+
         public Form MainForm { get; set; }
-
-        public MainWindowState MainWindowState
-        {
-            get => mainWindowState;
-            set
-            {
-                mainWindowState = value;
-                //OnMainWindowStateChanged();
-            }
-        }
-
-        public event EventHandler MainWindowStateChanged;
 
         public UserInterface(IUiDispatcher uiDispatcher, IConfigStorage configuration)
         {
             this.uiDispatcher = uiDispatcher ?? throw new ArgumentNullException(nameof(uiDispatcher));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        }
-
-        public void Dispatch(Action action)
-        {
-            uiDispatcher.Dispatch(action);
         }
 
         public void DisplayAbout()
@@ -74,39 +57,17 @@ namespace DustInTheWind.WindowsReboot.UserAccess
             }
         }
 
-        /// <summary>
-        /// Displays a message to the user.
-        /// </summary>
-        /// <param name="message">The message text to be displayed.</param>
         public void DisplayMessage(string message)
         {
-            Dispatch(() =>
+            uiDispatcher.Dispatch(() =>
             {
                 MessageBox.Show(MainForm, message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             });
         }
 
-        /// <summary>
-        /// Displays an error message to the user.
-        /// </summary>
-        /// <param name="message">The message text to be displayed.</param>
-        public void DisplayError(string message)
-        {
-            MessageBox.Show(MainForm, message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        /// <summary>
-        /// Displays the exception in a friendly way for the user.
-        /// </summary>
-        /// <param name="ex">The <see cref="Exception"/> instance containing data about the error.</param>
         public void DisplayError(Exception ex)
         {
             MessageBox.Show(MainForm, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        public bool AskToClose(string message)
-        {
-            return MessageBox.Show(MainForm, message, "Close Windwos Reboot", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes;
         }
 
         public bool Confirm(string message)
@@ -116,30 +77,33 @@ namespace DustInTheWind.WindowsReboot.UserAccess
 
         public void DisplayExecutionWarning(string actionName)
         {
-            Dispatch(() =>
+            uiDispatcher.Dispatch(() =>
             {
-                string message = string.Format("In 30 seconds WindowsReboot will perform the action:\n\n{0}.", actionName);
+                string message = string.Format("In 30 seconds Windows Reboot will perform:\n\n{0}.", actionName);
                 MessageBox.Show(MainForm, message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             });
         }
 
         public void DisplayNotification()
         {
-            Dispatch(() =>
+            uiDispatcher.Dispatch(() =>
             {
-                string message = "Ring-ring!";
+                const string message = "Ring-ring!";
                 MessageBox.Show(MainForm, message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             });
         }
 
-        protected virtual void OnMainWindowStateChanged()
+        public void CloseUserInterface()
         {
-            MainWindowStateChanged?.Invoke(this, EventArgs.Empty);
+            Application.Exit();
         }
 
-        public void HideMainWindow()
+        public bool ConfirmClosingWhileTimerIsRunning()
         {
-            MainForm.Hide();
+            const string message = "The timer is started. Are you sure you want to close the application?";
+
+            DialogResult dialogResult = MessageBox.Show(MainForm, message, "Close Windows Reboot", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+            return dialogResult == DialogResult.Yes;
         }
     }
 }

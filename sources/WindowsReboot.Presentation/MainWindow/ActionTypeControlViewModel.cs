@@ -21,7 +21,7 @@ using DustInTheWind.WindowsReboot.Application.ActionTypeArea.PresentActionTypeCo
 using DustInTheWind.WindowsReboot.Application.ActionTypeArea.SetActionType;
 using DustInTheWind.WindowsReboot.Application.ActionTypeArea.SetForceOption;
 using DustInTheWind.WindowsReboot.Application.ActionTypeArea.SetWarningOption;
-using DustInTheWind.WindowsReboot.Core;
+using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WinFormsAdditions;
 using MediatR;
 

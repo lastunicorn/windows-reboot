@@ -1,5 +1,5 @@
-﻿using DustInTheWind.WindowsReboot.Core;
-using System;
+﻿using System;
+using DustInTheWind.WindowsReboot.Domain;
 
 namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.PresentActionTimeSettings
 {
