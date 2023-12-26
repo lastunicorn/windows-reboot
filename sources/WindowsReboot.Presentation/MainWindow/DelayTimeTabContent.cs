@@ -23,7 +23,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
     {
         public int Hours
         {
-            get { return (int)numericUpDownHours.Value; }
+            get => (int)numericUpDownHours.Value;
             set
             {
                 numericUpDownHours.Value = value;
@@ -33,7 +33,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public int Minutes
         {
-            get { return (int)numericUpDownMinutes.Value; }
+            get => (int)numericUpDownMinutes.Value;
             set
             {
                 numericUpDownMinutes.Value = value;
@@ -43,7 +43,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public int Seconds
         {
-            get { return (int)numericUpDownSeconds.Value; }
+            get => (int)numericUpDownSeconds.Value;
             set
             {
                 numericUpDownSeconds.Value = value;
@@ -62,26 +62,17 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         protected virtual void OnHoursChanged()
         {
-            EventHandler handler = HoursChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            HoursChanged?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void OnMinutesChanged()
         {
-            EventHandler handler = MinutesChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            MinutesChanged?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void OnSecondsChanged()
         {
-            EventHandler handler = SecondsChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            SecondsChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void numericUpDownHours_ValueChanged(object sender, EventArgs e)

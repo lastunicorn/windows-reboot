@@ -1,4 +1,4 @@
-﻿namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
+﻿namespace DustInTheWind.WinFormsAdditions.CustomControls
 {
     partial class CountDownControl
     {
@@ -35,17 +35,16 @@
             // 
             // labelTimer
             // 
-            this.labelTimer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.labelTimer.BackColor = System.Drawing.Color.Transparent;
             this.labelTimer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelTimer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelTimer.Font = new System.Drawing.Font("Trebuchet MS", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTimer.ForeColor = System.Drawing.Color.RoyalBlue;
             this.labelTimer.Location = new System.Drawing.Point(0, 0);
             this.labelTimer.Margin = new System.Windows.Forms.Padding(0, 4, 0, 0);
             this.labelTimer.Name = "labelTimer";
             this.labelTimer.Size = new System.Drawing.Size(454, 132);
             this.labelTimer.TabIndex = 8;
-            this.labelTimer.Text = "--  :  --  :  --  .  -";
+            this.labelTimer.Text = TimerText.Empty;
             this.labelTimer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // timer1

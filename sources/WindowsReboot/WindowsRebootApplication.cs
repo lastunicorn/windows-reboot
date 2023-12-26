@@ -27,6 +27,7 @@ using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WindowsReboot.Presentation.MainWindow;
+using DustInTheWind.WindowsReboot.Presentation.Tray;
 using DustInTheWind.WindowsReboot.Presentation.Workers;
 using DustInTheWind.WindowsReboot.SystemAccess;
 using DustInTheWind.WindowsReboot.UserAccess;

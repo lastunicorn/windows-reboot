@@ -23,7 +23,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
     {
         public DateTime Date
         {
-            get { return dateTimePickerFixedDate.Value; }
+            get => dateTimePickerFixedDate.Value;
             set
             {
                 dateTimePickerFixedDate.Value = value;
@@ -33,7 +33,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public TimeSpan Time
         {
-            get { return dateTimePickerFixedTime.Value.TimeOfDay; }
+            get => dateTimePickerFixedTime.Value.TimeOfDay;
             set
             {
                 dateTimePickerFixedTime.Value = DateTime.Today.Add(value);
@@ -59,18 +59,12 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         protected virtual void OnDateChanged()
         {
-            EventHandler handler = DateChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            DateChanged?.Invoke(this, EventArgs.Empty);
         }
 
         protected virtual void OnTimeChanged()
         {
-            EventHandler handler = TimeChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            TimeChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void dateTimePickerFixedDate_ValueChanged(object sender, EventArgs e)

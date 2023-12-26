@@ -27,7 +27,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         /// <summary>
         /// Gets the type of the action to be executed.
         /// </summary>
-        public ActionType Value { get; private set; }
+        public ActionType Value { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ActionTypeItem"/> class with

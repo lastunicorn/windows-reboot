@@ -23,7 +23,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
     {
         public TimeSpan Time
         {
-            get { return dateTimePickerDailyTime.Value.TimeOfDay; }
+            get => dateTimePickerDailyTime.Value.TimeOfDay;
             set
             {
                 dateTimePickerDailyTime.Value = DateTime.Today.Add(value);
@@ -40,10 +40,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         protected virtual void OnTimeChanged()
         {
-            EventHandler handler = TimeChanged;
-
-            if (handler != null)
-                handler(this, EventArgs.Empty);
+            TimeChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void dateTimePickerDailyTime_ValueChanged(object sender, EventArgs e)

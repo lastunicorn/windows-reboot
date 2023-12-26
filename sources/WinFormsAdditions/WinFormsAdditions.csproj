@@ -49,6 +49,12 @@
     <Compile Include="CustomControls\ButtonWithCommand.Designer.cs">
       <DependentUpon>ButtonWithCommand.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\CountDownControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\CountDownControl.Designer.cs">
+      <DependentUpon>CountDownControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\CustomGroupBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -63,12 +69,16 @@
     </Compile>
     <Compile Include="ICommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimerText.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CustomControls\ButtonWithCommand.resx">
       <DependentUpon>ButtonWithCommand.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\CountDownControl.resx">
+      <DependentUpon>CountDownControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomControls\ToolStripMenuItemWithCommand.resx">
       <DependentUpon>ToolStripMenuItemWithCommand.cs</DependentUpon>

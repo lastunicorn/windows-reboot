@@ -16,13 +16,13 @@
 
 using System;
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.UserAccess.OtherWindows;
 
 namespace DustInTheWind.WindowsReboot.UserAccess
 {
+
     public class UserInterface : IUserInterface
     {
         private readonly IUiDispatcher uiDispatcher;
@@ -36,7 +36,7 @@ namespace DustInTheWind.WindowsReboot.UserAccess
             set
             {
                 mainWindowState = value;
-                OnMainWindowStateChanged();
+                //OnMainWindowStateChanged();
             }
         }
 
@@ -135,6 +135,11 @@ namespace DustInTheWind.WindowsReboot.UserAccess
         protected virtual void OnMainWindowStateChanged()
         {
             MainWindowStateChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void HideMainWindow()
+        {
+            MainForm.Hide();
         }
     }
 }

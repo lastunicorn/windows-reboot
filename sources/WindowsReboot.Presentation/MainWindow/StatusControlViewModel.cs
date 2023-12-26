@@ -16,7 +16,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.StatusArea.PresentTimerStatus;
 using DustInTheWind.WindowsReboot.Core;
@@ -27,8 +26,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
     public class StatusControlViewModel : ViewModelBase, IDisposable
     {
-        private Timer ticker;
         private readonly IMediator mediator;
+        private Timer ticker;
         private DateTime currentTime;
         private DateTime? actionTime;
         private TimeSpan? timerTime;
@@ -82,6 +81,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
             CurrentTime = response.CurrentTime;
             ActionTime = response.ActionTime;
+            TimerTime = null;
 
             ticker = new Timer(HandleTickerTick, null, 0, 100);
         }
@@ -97,23 +97,21 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             });
         }
 
-        private Task HandleTimerStartedEvent(TimerStartedEvent ev, CancellationToken cancellationToken)
+        private void HandleTimerStartedEvent(TimerStartedEvent ev)
         {
             Dispatch(() =>
             {
                 ActionTime = ev.ActionTime;
             });
-            return Task.CompletedTask;
         }
 
-        private Task HandleTimerStoppedEvent(TimerStoppedEvent ev, CancellationToken cancellationToken)
+        private void HandleTimerStoppedEvent(TimerStoppedEvent ev)
         {
             Dispatch(() =>
             {
                 ActionTime = null;
                 TimerTime = null;
             });
-            return Task.CompletedTask;
         }
 
         public void Dispose()

@@ -40,5 +40,9 @@ namespace DustInTheWind.WindowsReboot.Ports.UserAccess
         void DisplayExecutionWarning(string actionName);
 
         void DisplayNotification();
+
+        void HideMainWindow();
+
+        void ShowTray();
     }
 }

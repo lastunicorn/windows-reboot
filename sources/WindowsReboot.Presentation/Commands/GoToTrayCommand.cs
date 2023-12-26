@@ -15,28 +15,39 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class GoToTrayCommand : CommandBase
     {
-        public override bool CanExecute => UserInterface.MainWindowState != MainWindowState.Tray;
+        private readonly IMediator mediator;
+        private MainWindowState mainWindowState;
 
-        public GoToTrayCommand(IUserInterface userInterface)
+        public override bool CanExecute => mainWindowState != MainWindowState.Tray;
+
+        public GoToTrayCommand(IUserInterface userInterface, IMediator mediator, EventBus eventBus)
             : base(userInterface)
         {
-            userInterface.MainWindowStateChanged += HandleUserInterfaceMainWindowStateChanged;
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+
+            eventBus.Subscribe<GuiStateChangedEvent>(HandleGuiStateChangedEvent);
         }
 
-        private void HandleUserInterfaceMainWindowStateChanged(object sender, EventArgs e)
+        private void HandleGuiStateChangedEvent(GuiStateChangedEvent ev)
         {
+            mainWindowState = ev.MainWindowState;
             OnCanExecuteChanged();
         }
 
         protected override void DoExecute()
         {
-            UserInterface.MainWindowState = MainWindowState.Tray;
+            GoToTrayRequest goToTrayRequest = new GoToTrayRequest();
+            _ = mediator.Send(goToTrayRequest);
         }
     }
 }

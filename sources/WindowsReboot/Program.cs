@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.WindowsReboot.Presentation;
 
 namespace DustInTheWind.WindowsReboot
 {
@@ -23,7 +24,7 @@ namespace DustInTheWind.WindowsReboot
         [STAThread]
         private static void Main()
         {
-            var application = new WindowsRebootApplication();
+            WindowsRebootApplication application = new WindowsRebootApplication();
             application.Run();
         }
     }

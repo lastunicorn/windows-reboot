@@ -120,7 +120,6 @@
     <Compile Include="MainWindow\FixedDateTabContent.Designer.cs">
       <DependentUpon>FixedDateTabContent.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\IWindowsRebootView.cs" />
     <Compile Include="MainWindow\StatusControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -128,19 +127,13 @@
       <DependentUpon>StatusControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\StatusControlViewModel.cs" />
-    <Compile Include="MainWindow\CountDownControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MainWindow\CountDownControl.Designer.cs">
-      <DependentUpon>CountDownControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow\TrayIcon.cs">
+    <Compile Include="Tray\TrayIcon.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MainWindow\TrayIcon.Designer.cs">
+    <Compile Include="Tray\TrayIcon.Designer.cs">
       <DependentUpon>TrayIcon.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\TrayIconViewModel.cs" />
+    <Compile Include="Tray\TrayIconViewModel.cs" />
     <Compile Include="MainWindow\WindowsRebootForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,7 +147,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="TimerText.cs" />
     <Compile Include="Workers\ApplicationClosingGuardWorker.cs" />
     <Compile Include="Workers\MainWindowCloseWorker.cs" />
     <Compile Include="Workers\MainWindowStateWorker.cs" />
@@ -216,10 +208,7 @@
     <EmbeddedResource Include="MainWindow\StatusControl.resx">
       <DependentUpon>StatusControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\CountDownControl.resx">
-      <DependentUpon>CountDownControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow\TrayIcon.resx">
+    <EmbeddedResource Include="Tray\TrayIcon.resx">
       <DependentUpon>TrayIcon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\WindowsRebootForm.resx">

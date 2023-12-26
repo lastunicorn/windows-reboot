@@ -1,6 +1,6 @@
 ﻿using DustInTheWind.WinFormsAdditions.CustomControls;
 
-namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
+namespace DustInTheWind.WindowsReboot.Presentation.Tray
 {
     public partial class TrayIcon
     {

@@ -69,6 +69,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Workers
                     if (configStorage.CloseToTray)
                     {
                         userInterface.MainWindowState = MainWindowState.Tray;
+                        userInterface.HideMainWindow();
                         e.Cancel = true;
                     }
 

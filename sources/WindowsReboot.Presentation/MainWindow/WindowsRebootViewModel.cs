@@ -15,20 +15,20 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Windows.Forms;
 using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
 using DustInTheWind.WindowsReboot.Core;
-using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WinFormsAdditions;
-using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
     public class WindowsRebootViewModel : ViewModelBase
     {
+        private readonly IUserInterface userInterface;
         private string title;
+        private bool isVisible;
 
         public GoToTrayCommand GoToTrayCommand { get; private set; }
         public LoadDefaultConfigurationCommand LoadDefaultConfigurationCommand { get; private set; }
@@ -44,9 +44,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         public ActionControlViewModel ActionControlViewModel { get; private set; }
         public StatusControlViewModel StatusControlViewModel { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the title of the window.
-        /// </summary>
         public string Title
         {
             get => title;
@@ -57,39 +54,69 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WindowsRebootViewModel"/> class with
-        /// the view used to interact with the user.
-        /// </summary>
-        public WindowsRebootViewModel(IMediator mediator, IUserInterface userInterface, ExecutionPlan executionPlan, ExecutionTimer executionTimer,
-            IConfigStorage configStorage, ApplicationEnvironment applicationEnvironment, EventBus eventBus,
-            ActionTimeControlViewModel actionTimeControlViewModel, ActionTypeControlViewModel actionTypeControlViewModel,
-            ActionControlViewModel actionControlViewModel, StatusControlViewModel statusControlViewModel)
+        public bool IsVisible
         {
-            if (userInterface == null) throw new ArgumentNullException(nameof(userInterface));
-            if (executionPlan == null) throw new ArgumentNullException(nameof(executionPlan));
-            if (executionTimer == null) throw new ArgumentNullException(nameof(executionTimer));
-            if (configStorage == null) throw new ArgumentNullException(nameof(configStorage));
-            if (applicationEnvironment == null) throw new ArgumentNullException(nameof(applicationEnvironment));
+            get => isVisible;
+            set
+            {
+                isVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public WindowsRebootViewModel(IUserInterface userInterface, EventBus eventBus,
+            ActionTimeControlViewModel actionTimeControlViewModel, ActionTypeControlViewModel actionTypeControlViewModel,
+            ActionControlViewModel actionControlViewModel, StatusControlViewModel statusControlViewModel,
+            GoToTrayCommand goToTrayCommand, LoadDefaultConfigurationCommand loadDefaultConfigurationCommand,
+            LoadConfigurationCommand loadConfigurationCommand, SaveConfigurationCommand saveConfigurationCommand,
+            OptionsCommand optionsCommand, LicenseCommand licenseCommand, AboutCommand aboutCommand, ExitCommand exitCommand)
+        {
+            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
 
             ActionTimeControlViewModel = actionTimeControlViewModel ?? throw new ArgumentNullException(nameof(actionTimeControlViewModel));
             ActionTypeControlViewModel = actionTypeControlViewModel ?? throw new ArgumentNullException(nameof(actionTypeControlViewModel));
             ActionControlViewModel = actionControlViewModel ?? throw new ArgumentNullException(nameof(actionControlViewModel));
             StatusControlViewModel = statusControlViewModel ?? throw new ArgumentNullException(nameof(statusControlViewModel));
 
-            GoToTrayCommand = new GoToTrayCommand(userInterface);
-            LoadDefaultConfigurationCommand = new LoadDefaultConfigurationCommand(userInterface, executionTimer, executionPlan, eventBus);
-            LoadConfigurationCommand = new LoadConfigurationCommand(userInterface, executionTimer, executionPlan, configStorage, eventBus);
-            SaveConfigurationCommand = new SaveConfigurationCommand(userInterface, executionTimer, executionPlan, configStorage);
-            OptionsCommand = new OptionsCommand(userInterface);
-            LicenseCommand = new LicenseCommand(userInterface);
-            AboutCommand = new AboutCommand(userInterface);
-            ExitCommand = new ExitCommand(userInterface, applicationEnvironment);
+            GoToTrayCommand = goToTrayCommand ?? throw new ArgumentNullException(nameof(goToTrayCommand));
+            LoadDefaultConfigurationCommand = loadDefaultConfigurationCommand ?? throw new ArgumentNullException(nameof(loadDefaultConfigurationCommand));
+            LoadConfigurationCommand = loadConfigurationCommand ?? throw new ArgumentNullException(nameof(loadConfigurationCommand));
+            SaveConfigurationCommand = saveConfigurationCommand ?? throw new ArgumentNullException(nameof(saveConfigurationCommand));
+            OptionsCommand = optionsCommand ?? throw new ArgumentNullException(nameof(optionsCommand));
+            LicenseCommand = licenseCommand ?? throw new ArgumentNullException(nameof(licenseCommand));
+            AboutCommand = aboutCommand ?? throw new ArgumentNullException(nameof(aboutCommand));
+            ExitCommand = exitCommand ?? throw new ArgumentNullException(nameof(exitCommand));
 
             string productName = System.Windows.Forms.Application.ProductName;
             string versionToString = VersionUtil.GetVersionToString();
             
             Title = $"{productName} {versionToString}";
+
+            eventBus.Subscribe<GuiStateChangedEvent>(HandleGuiStateChangedEvent);
+        }
+
+        private void HandleGuiStateChangedEvent(GuiStateChangedEvent ev)
+        {
+            try
+            {
+                switch (ev.MainWindowState)
+                {
+                    case MainWindowState.Normal:
+                        IsVisible = true;
+                        break;
+
+                    case MainWindowState.Tray:
+                        IsVisible = false;
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            catch (Exception ex)
+            {
+                userInterface.DisplayError(ex);
+            }
         }
     }
 }

@@ -17,7 +17,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
+namespace DustInTheWind.WindowsReboot.Presentation.Tray
 {
     public partial class TrayIcon : Component
     {
@@ -25,7 +25,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public TrayIconViewModel ViewModel
         {
-            get { return viewModel; }
+            get => viewModel;
             set
             {
                 if (viewModel != null)

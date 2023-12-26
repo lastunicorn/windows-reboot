@@ -16,7 +16,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WorkersEngine;

@@ -16,14 +16,16 @@
 
 using System;
 using System.ComponentModel;
-using System.Windows.Forms;
+using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
 using DustInTheWind.WindowsReboot.Core;
 using DustInTheWind.WindowsReboot.Ports.SystemAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WinFormsAdditions;
+using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
+namespace DustInTheWind.WindowsReboot.Presentation.Tray
 {
     public class TrayIconViewModel : ViewModelBase
     {
@@ -32,25 +34,25 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         private readonly string defaultText;
         private string text;
         private bool isVisible;
-        private bool isVisibleBeforeClosing;
+        private bool wasVisibleBeforeClosing;
 
         public string Text
         {
-            get { return text; }
+            get => text;
             set
             {
                 text = value;
-                OnPropertyChanged("Text");
+                OnPropertyChanged();
             }
         }
 
         public bool IsVisible
         {
-            get { return isVisible; }
+            get => isVisible;
             set
             {
                 isVisible = value;
-                OnPropertyChanged("IsVisible");
+                OnPropertyChanged();
             }
         }
 
@@ -64,16 +66,17 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         public PowerOffCommand PowerOffCommand { get; private set; }
         public ExitCommand ExitCommand { get; private set; }
 
-        public TrayIconViewModel(IUserInterface userInterface, IOperatingSystem operatingSystem, ExecutionTimer executionTimer, ApplicationEnvironment applicationEnvironment)
+        public TrayIconViewModel(IUserInterface userInterface, IOperatingSystem operatingSystem, ExecutionTimer executionTimer,
+            ApplicationEnvironment applicationEnvironment, EventBus eventBus, IMediator mediator)
         {
-            if (userInterface == null) throw new ArgumentNullException("userInterface");
-            if (executionTimer == null) throw new ArgumentNullException("executionTimer");
-            if (applicationEnvironment == null) throw new ArgumentNullException("applicationEnvironment");
+            if (applicationEnvironment == null) throw new ArgumentNullException(nameof(applicationEnvironment));
+            if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
+            if (mediator == null) throw new ArgumentNullException(nameof(mediator));
 
-            this.userInterface = userInterface;
-            this.executionTimer = executionTimer;
+            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
 
-            RestoreMainWindowCommand = new RestoreMainWindowCommand(userInterface);
+            RestoreMainWindowCommand = new RestoreMainWindowCommand(userInterface, mediator, eventBus);
             LockComputerCommand = new LockComputerCommand(userInterface, operatingSystem);
             LogOffCommand = new LogOffCommand(userInterface, operatingSystem);
             SleepCommand = new SleepCommand(userInterface, operatingSystem);
@@ -87,27 +90,17 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
             Text = defaultText;
 
-            userInterface.MainWindowStateChanged += HandleUserInterfaceMainWindowStateChanged;
+            eventBus.Subscribe<GuiStateChangedEvent>(HandleGuiStateChangedEvent);
+
             applicationEnvironment.Closing += HandleApplicationEnvironmentClosing;
             applicationEnvironment.CloseRevoked += HandleApplicationEnvironmentCloseRevoked;
         }
 
-        private void HandleApplicationEnvironmentClosing(object sender, CancelEventArgs e)
-        {
-            isVisibleBeforeClosing = isVisible;
-            IsVisible = false;
-        }
-
-        private void HandleApplicationEnvironmentCloseRevoked(object sender, EventArgs e)
-        {
-            IsVisible = isVisibleBeforeClosing;
-        }
-
-        private void HandleUserInterfaceMainWindowStateChanged(object sender, EventArgs eventArgs)
+        private void HandleGuiStateChangedEvent(GuiStateChangedEvent ev)
         {
             try
             {
-                switch (userInterface.MainWindowState)
+                switch (ev.MainWindowState)
                 {
                     case MainWindowState.Normal:
                         IsVisible = false;
@@ -125,6 +118,17 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             {
                 userInterface.DisplayError(ex);
             }
+        }
+
+        private void HandleApplicationEnvironmentClosing(object sender, CancelEventArgs e)
+        {
+            wasVisibleBeforeClosing = isVisible;
+            IsVisible = false;
+        }
+
+        private void HandleApplicationEnvironmentCloseRevoked(object sender, EventArgs e)
+        {
+            IsVisible = wasVisibleBeforeClosing;
         }
 
         public void OnNotifyIconMouseMove()

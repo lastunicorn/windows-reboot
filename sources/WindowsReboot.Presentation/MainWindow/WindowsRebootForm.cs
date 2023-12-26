@@ -14,12 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.ComponentModel;
 using System.Windows.Forms;
 using DustInTheWind.WinFormsAdditions;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
-    public partial class WindowsRebootForm : Form, IWindowsRebootView
+    public partial class WindowsRebootForm : Form
     {
         private WindowsRebootViewModel viewModel;
 
@@ -45,6 +46,25 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 licenseToolStripMenuItem.Command = viewModel.LicenseCommand;
                 aboutToolStripMenuItem.Command = viewModel.AboutCommand;
                 exitToolStripMenuItem.Command = viewModel.ExitCommand;
+
+                viewModel.PropertyChanged += HandleViewModelPropertyChanged;
+            }
+        }
+
+        private void HandleViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(WindowsRebootViewModel.IsVisible))
+                return;
+
+            switch (viewModel.IsVisible)
+            {
+                case true when !Visible:
+                    Show();
+                    break;
+
+                case false when Visible:
+                    Hide();
+                    break;
             }
         }
 
