@@ -14,28 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using DustInTheWind.WindowsReboot.Application.DirectActionsArea.ExecuteLogOff;
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
-using MediatR;
-
-namespace DustInTheWind.WindowsReboot.Presentation.Commands
+namespace DustInTheWind.WindowsReboot.Domain
 {
-    public class LogOffCommand : CommandBase
+    /// <summary>
+    /// The way in which the action time is specified.
+    /// </summary>
+    public enum ScheduleTimeType
     {
-        private readonly IMediator mediator;
+        /// <summary>
+        /// The action time is specified as a fixed date and time.
+        /// </summary>
+        FixedDate,
 
-        public LogOffCommand(IUserInterface userInterface, IMediator mediator)
-            : base(userInterface)
-        {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
+        /// <summary>
+        /// The action will be executed every day at a specific hour.
+        /// </summary>
+        Daily,
 
-        protected override void DoExecute()
-        {
-            ExecuteLogOffRequest request = new ExecuteLogOffRequest();
+        /// <summary>
+        /// The action time is specified as a delay from the time when the timer is started.
+        /// </summary>
+        Delay,
 
-            _ = mediator.Send(request);
-        }
+        /// <summary>
+        /// The action time is exactly the time when the timer is started.
+        /// </summary>
+        Immediate
     }
 }

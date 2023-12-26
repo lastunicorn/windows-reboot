@@ -239,8 +239,8 @@
       <Project>{E361EAE2-D408-4DDA-ABD3-81AF3CCBF612}</Project>
       <Name>WindowsReboot.ConfigAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Domain.csproj">
-      <Project>{76665ccc-6451-4caf-893b-7da3d7f6ead0}</Project>
+    <ProjectReference Include="..\WindowsReboot.Domain\WindowsReboot.Domain.csproj">
+      <Project>{AC69944D-1FEF-4235-AC32-A5D4FC639955}</Project>
       <Name>WindowsReboot.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.Ports.ConfigAccess\WindowsReboot.Ports.ConfigAccess.csproj">

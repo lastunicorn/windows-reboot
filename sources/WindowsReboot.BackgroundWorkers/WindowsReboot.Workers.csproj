@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Domain.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\WindowsReboot.Domain\WindowsReboot.Domain.csproj" />
         <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\WorkersEngine\WorkerEngine.csproj" PrivateAssets="All" />
     </ItemGroup>

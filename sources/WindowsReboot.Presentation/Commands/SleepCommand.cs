@@ -15,27 +15,27 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Ports.SystemAccess;
+using DustInTheWind.WindowsReboot.Application.DirectActionsArea.ExecuteSleep;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class SleepCommand : CommandBase
     {
-        private readonly IOperatingSystem operatingSystem;
+        private readonly IMediator mediator;
 
-        public SleepCommand(IUserInterface userInterface, IOperatingSystem operatingSystem)
+        public SleepCommand(IUserInterface userInterface, IMediator mediator)
             : base(userInterface)
         {
-            this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         protected override void DoExecute()
         {
-            bool allowToContinue = UserInterface.Confirm("Do you want to put the system in 'Stand By' state?");
+            ExecuteSleepRequest request = new ExecuteSleepRequest();
 
-            if (allowToContinue)
-                operatingSystem.Sleep(false);
+            _ = mediator.Send(request);
         }
     }
 }

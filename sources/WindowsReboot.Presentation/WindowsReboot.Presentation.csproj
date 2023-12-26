@@ -159,13 +159,9 @@
       <Project>{95DFED73-834B-48B6-9956-AA891309C9C6}</Project>
       <Name>WindowsReboot.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Domain.csproj">
-      <Project>{76665CCC-6451-4CAF-893B-7DA3D7F6EAD0}</Project>
+    <ProjectReference Include="..\WindowsReboot.Domain\WindowsReboot.Domain.csproj">
+      <Project>{AC69944D-1FEF-4235-AC32-A5D4FC639955}</Project>
       <Name>WindowsReboot.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj">
-      <Project>{CA55A116-6AA7-4222-9686-2D57B4CD5E58}</Project>
-      <Name>WindowsReboot.Ports.SystemAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj">
       <Project>{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}</Project>

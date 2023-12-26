@@ -37,5 +37,19 @@ namespace DustInTheWind.WindowsReboot.Ports.UserAccess
         void CloseUserInterface();
 
         bool ConfirmClosingWhileTimerIsRunning();
+
+        bool ConfirmDirectLock();
+
+        bool ConfirmDirectLogOff(string userName);
+
+        bool ConfirmDirectSleep();
+
+        bool ConfirmDirectHibernation();
+
+        bool ConfirmDirectReboot();
+
+        bool ConfirmDirectShutDown();
+
+        bool ConfirmDirectPowerOff();
     }
 }

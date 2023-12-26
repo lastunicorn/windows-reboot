@@ -15,27 +15,21 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Application.DirectActionsArea.ExecuteLogOff;
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
-using MediatR;
+using System.Reflection;
 
-namespace DustInTheWind.WindowsReboot.Presentation.Commands
+namespace DustInTheWind.WindowsReboot.Domain
 {
-    public class LogOffCommand : CommandBase
+    public static class VersionUtil
     {
-        private readonly IMediator mediator;
-
-        public LogOffCommand(IUserInterface userInterface, IMediator mediator)
-            : base(userInterface)
+        public static string GetVersionToString()
         {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            Version version = GetVersion();
+            return version.ToString(3);
         }
 
-        protected override void DoExecute()
+        public static Version GetVersion()
         {
-            ExecuteLogOffRequest request = new ExecuteLogOffRequest();
-
-            _ = mediator.Send(request);
+            return Assembly.GetEntryAssembly().GetName().Version;
         }
     }
 }

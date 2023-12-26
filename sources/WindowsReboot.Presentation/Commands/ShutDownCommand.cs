@@ -15,27 +15,27 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Ports.SystemAccess;
+using DustInTheWind.WindowsReboot.Application.DirectActionsArea.ExecuteShutDown;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class ShutDownCommand : CommandBase
     {
-        private readonly IOperatingSystem operatingSystem;
+        private readonly IMediator mediator;
 
-        public ShutDownCommand(IUserInterface userInterface, IOperatingSystem operatingSystem)
+        public ShutDownCommand(IUserInterface userInterface, IMediator mediator)
             : base(userInterface)
         {
-            this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         protected override void DoExecute()
         {
-            bool allowToContinue = UserInterface.Confirm("Do you want to shut down the system?\n\nObs! From WinXP SP1 this command will also power off the system.");
+            ExecuteShutDownRequest request = new ExecuteShutDownRequest();
 
-            if (allowToContinue)
-                operatingSystem.ShutDown(false);
+            _ = mediator.Send(request);
         }
     }
 }

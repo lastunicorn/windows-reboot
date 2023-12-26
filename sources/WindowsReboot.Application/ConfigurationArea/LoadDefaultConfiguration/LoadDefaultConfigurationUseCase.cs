@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Domain;
-using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.ConfigurationArea.LoadDefaultConfiguration
@@ -18,7 +16,7 @@ namespace DustInTheWind.WindowsReboot.Application.ConfigurationArea.LoadDefaultC
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
-        
+
         public Task Handle(LoadDefaultConfigurationRequest request, CancellationToken cancellationToken)
         {
             if (executionTimer.IsRunning)

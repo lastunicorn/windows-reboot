@@ -15,27 +15,27 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Ports.SystemAccess;
+using DustInTheWind.WindowsReboot.Application.DirectActionsArea.ExecuteHibernate;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class HibernateCommand : CommandBase
     {
-        private readonly IOperatingSystem operatingSystem;
+        private readonly IMediator mediator;
 
-        public HibernateCommand(IUserInterface userInterface, IOperatingSystem operatingSystem)
+        public HibernateCommand(IUserInterface userInterface, IMediator mediator)
             : base(userInterface)
         {
-            this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         protected override void DoExecute()
         {
-            bool allowToContinue = UserInterface.Confirm("Do you want to put the system in 'Hibernate' state?");
+            ExecuteHibernateRequest request = new ExecuteHibernateRequest();
 
-            if (allowToContinue)
-                operatingSystem.Hibernate(false);
+            _ = mediator.Send(request);
         }
     }
 }

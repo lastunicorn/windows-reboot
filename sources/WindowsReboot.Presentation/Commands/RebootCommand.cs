@@ -15,27 +15,27 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Ports.SystemAccess;
+using DustInTheWind.WindowsReboot.Application.DirectActionsArea.ExecuteReboot;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
     public class RebootCommand : CommandBase
     {
-        private readonly IOperatingSystem operatingSystem;
+        private readonly IMediator mediator;
 
-        public RebootCommand(IUserInterface userInterface, IOperatingSystem operatingSystem)
+        public RebootCommand(IUserInterface userInterface, IMediator mediator)
             : base(userInterface)
         {
-            this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         protected override void DoExecute()
         {
-            bool allowToContinue = UserInterface.Confirm("Do you want to reboot the system?");
+            ExecuteRebootRequest request = new ExecuteRebootRequest();
 
-            if (allowToContinue)
-                operatingSystem.Reboot(false);
+            _ = mediator.Send(request);
         }
     }
 }

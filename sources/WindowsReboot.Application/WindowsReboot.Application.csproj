@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WindowsReboot.Core\WindowsReboot.Domain.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\EventBusEngine\EventBusEngine.csproj" />
+    <ProjectReference Include="..\WindowsReboot.Domain\WindowsReboot.Domain.csproj" />
     <ProjectReference Include="..\WindowsReboot.Ports.ConfigAccess\WindowsReboot.Ports.ConfigAccess.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj" PrivateAssets="All" />

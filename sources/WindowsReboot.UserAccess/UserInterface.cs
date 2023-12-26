@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
@@ -104,6 +105,48 @@ namespace DustInTheWind.WindowsReboot.UserAccess
 
             DialogResult dialogResult = MessageBox.Show(MainForm, message, "Close Windows Reboot", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
             return dialogResult == DialogResult.Yes;
+        }
+
+        public bool ConfirmDirectLock()
+        {
+            string message = "Do you want to lock the workstation?";
+            return MessageBox.Show(MainForm, message, string.Empty, MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK;
+        }
+
+        public bool ConfirmDirectLogOff(string userName)
+        {
+            string message = $"Do you want to log off the current user?\nThe current logged in user is '{userName}'";
+            return MessageBox.Show(MainForm, message, string.Empty, MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK;
+        }
+
+        public bool ConfirmDirectSleep()
+        {
+            string message = "Do you want to put the system in 'Stand By' state?";
+            return MessageBox.Show(MainForm, message, string.Empty, MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK;
+        }
+
+        public bool ConfirmDirectHibernation()
+        {
+            string message = "Do you want to put the system in 'Hibernate' state?";
+            return MessageBox.Show(MainForm, message, string.Empty, MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK;
+        }
+
+        public bool ConfirmDirectReboot()
+        {
+            string message = "Do you want to reboot the system?";
+            return MessageBox.Show(MainForm, message, string.Empty, MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK;
+        }
+
+        public bool ConfirmDirectShutDown()
+        {
+            string message = "Do you want to shut down the system?\n\nObs! From WinXP SP1 this command will also power off the system.";
+            return MessageBox.Show(MainForm, message, string.Empty, MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK;
+        }
+
+        public bool ConfirmDirectPowerOff()
+        {
+            string message = "Do you want to power off the system?\n\nObs! Only if the hardware supports 'Power Off'. Otherwise just a 'Shut Down' will be performed.";
+            return MessageBox.Show(MainForm, message, string.Empty, MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.OK;
         }
     }
 }
