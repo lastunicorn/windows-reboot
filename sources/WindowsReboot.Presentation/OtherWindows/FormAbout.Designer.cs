@@ -16,7 +16,7 @@
 
 namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
 {
-    partial class AboutForm
+    public partial class AboutForm
     {
         /// <summary>
         /// Required designer variable.
@@ -63,8 +63,8 @@ namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
             // 
             // labelTitle
             // 
-            this.labelTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTitle.Location = new System.Drawing.Point(12, 9);
             this.labelTitle.Margin = new System.Windows.Forms.Padding(3, 0, 3, 4);
@@ -75,8 +75,8 @@ namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.labelDate);
             this.groupBox1.Controls.Add(this.labelAuthor);
             this.groupBox1.Controls.Add(this.labelVersion);
@@ -91,8 +91,8 @@ namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
             // 
             // labelDate
             // 
-            this.labelDate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelDate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelDate.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.labelDate.Location = new System.Drawing.Point(69, 61);
             this.labelDate.Name = "labelDate";
@@ -102,8 +102,8 @@ namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
             // 
             // labelAuthor
             // 
-            this.labelAuthor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelAuthor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelAuthor.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.labelAuthor.Location = new System.Drawing.Point(69, 39);
             this.labelAuthor.Name = "labelAuthor";
@@ -113,8 +113,8 @@ namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
             // 
             // labelVersion
             // 
-            this.labelVersion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelVersion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelVersion.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.labelVersion.Location = new System.Drawing.Point(69, 17);
             this.labelVersion.Name = "labelVersion";
@@ -167,7 +167,7 @@ namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
             // 
             // pictureBoxClock
             // 
-            this.pictureBoxClock.Image = global::DustInTheWind.WindowsReboot.UserAccess.Properties.Resources.clock;
+            this.pictureBoxClock.Image = global::DustInTheWind.WindowsReboot.Presentation.Properties.Resources.clock;
             this.pictureBoxClock.Location = new System.Drawing.Point(12, 40);
             this.pictureBoxClock.Name = "pictureBoxClock";
             this.pictureBoxClock.Size = new System.Drawing.Size(100, 100);
@@ -177,8 +177,8 @@ namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
             // 
             // labelMoto
             // 
-            this.labelMoto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelMoto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.labelMoto.Location = new System.Drawing.Point(118, 39);
             this.labelMoto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.labelMoto.Name = "labelMoto";
@@ -189,9 +189,9 @@ namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
             // 
             // textBoxDescription
             // 
-            this.textBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDescription.Location = new System.Drawing.Point(12, 149);
             this.textBoxDescription.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
             this.textBoxDescription.Multiline = true;
@@ -222,6 +222,7 @@ namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About";
+            this.Load += new System.EventHandler(this.AboutForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxClock)).EndInit();

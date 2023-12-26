@@ -126,6 +126,24 @@
       <DependentUpon>StatusControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\StatusControlViewModel.cs" />
+    <Compile Include="OtherWindows\FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OtherWindows\FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OtherWindows\LicenseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OtherWindows\LicenseForm.Designer.cs">
+      <DependentUpon>LicenseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OtherWindows\OptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OtherWindows\OptionsForm.Designer.cs">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tray\TrayIcon.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -163,6 +181,10 @@
       <Project>{AC69944D-1FEF-4235-AC32-A5D4FC639955}</Project>
       <Name>WindowsReboot.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WindowsReboot.Ports.ConfigAccess\WindowsReboot.Ports.ConfigAccess.csproj">
+      <Project>{52315771-8889-4DB8-BAE1-48A420728D49}</Project>
+      <Name>WindowsReboot.Ports.ConfigAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.Ports.UserAccess\WindowsReboot.Ports.UserAccess.csproj">
       <Project>{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}</Project>
       <Name>WindowsReboot.Ports.UserAccess</Name>
@@ -197,6 +219,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\StatusControl.resx">
       <DependentUpon>StatusControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OtherWindows\FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OtherWindows\LicenseForm.resx">
+      <DependentUpon>LicenseForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OtherWindows\OptionsForm.resx">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Tray\TrayIcon.resx">
       <DependentUpon>TrayIcon.cs</DependentUpon>
@@ -244,6 +278,11 @@
   <ItemGroup>
     <None Include="Resources\header.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\clock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\License.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

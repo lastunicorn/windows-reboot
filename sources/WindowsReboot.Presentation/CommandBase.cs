@@ -15,7 +15,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics;
 using System.Threading;
+using System.Windows.Forms;
 using DustInTheWind.WindowsReboot.Ports.UserAccess;
 using DustInTheWind.WinFormsAdditions;
 
@@ -57,7 +59,8 @@ namespace DustInTheWind.WindowsReboot.Presentation
             }
             catch (Exception ex)
             {
-                UserInterface.DisplayError(ex);
+                Form mainForm = (Form)Control.FromHandle(Process.GetCurrentProcess().MainWindowHandle);
+                MessageBox.Show(mainForm, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

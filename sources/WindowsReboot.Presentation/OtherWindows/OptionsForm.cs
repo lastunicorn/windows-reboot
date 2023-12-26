@@ -23,7 +23,7 @@ namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
     /// <summary>
     /// Displays some options that the user can set.
     /// </summary>
-    internal partial class OptionsForm : Form
+    public partial class OptionsForm : Form
     {
         private readonly IConfigStorage configSection;
 

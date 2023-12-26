@@ -16,7 +16,7 @@
 
 namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
 {
-    partial class OptionsForm
+    public partial class OptionsForm
     {
         /// <summary>
         /// Required designer variable.

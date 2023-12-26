@@ -263,9 +263,9 @@
       <Project>{1D579956-B6C4-4FBF-BAC9-E749EA8C8662}</Project>
       <Name>WindowsReboot.SystemAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WindowsReboot.UserAccess\WindowsReboot.UserAccess.csproj">
+    <ProjectReference Include="..\WindowsReboot.UserAccess\WindowsReboot.PresentationAccess.csproj">
       <Project>{3D0B14FF-253A-435E-9031-673C7F672067}</Project>
-      <Name>WindowsReboot.UserAccess</Name>
+      <Name>WindowsReboot.PresentationAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\WinFormsAdditions\WinFormsAdditions.csproj">
       <Project>{A47C0D20-17D8-4B63-BE9A-F1F14CA4A64D}</Project>

@@ -16,7 +16,7 @@
 
 namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
 {
-    partial class LicenseForm
+    public partial class LicenseForm
     {
         /// <summary>
         /// Required designer variable.

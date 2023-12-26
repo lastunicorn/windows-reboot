@@ -147,9 +147,6 @@ namespace DustInTheWind.WindowsReboot
             MainWindowMinimizeBehavior mainWindowMinimizeBehavior = context.Resolve<MainWindowMinimizeBehavior>();
             mainWindow.AddBehavior(mainWindowMinimizeBehavior);
 
-            UserInterface userInterface = context.Resolve<UserInterface>();
-            userInterface.MainForm = mainWindow;
-
             trayIcon = context.Resolve<TrayIcon>();
             trayIcon.ViewModel = context.Resolve<TrayIconViewModel>();
 

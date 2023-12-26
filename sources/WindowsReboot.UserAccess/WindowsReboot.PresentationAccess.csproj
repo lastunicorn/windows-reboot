@@ -42,30 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OtherWindows\FormAbout.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OtherWindows\FormAbout.Designer.cs">
-      <DependentUpon>FormAbout.cs</DependentUpon>
-    </Compile>
-    <Compile Include="OtherWindows\LicenseForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OtherWindows\LicenseForm.Designer.cs">
-      <DependentUpon>LicenseForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="OtherWindows\OptionsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OtherWindows\OptionsForm.Designer.cs">
-      <DependentUpon>OptionsForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="UiDispatcher.cs" />
     <Compile Include="UserInterface.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
@@ -83,30 +60,11 @@
       <Project>{1A1B92B9-47D6-4F20-9F29-9E009B817ADF}</Project>
       <Name>WindowsReboot.Ports.UserAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WindowsReboot.Presentation\WindowsReboot.Presentation.csproj">
+      <Project>{3A4BBBB2-47AC-4355-8EFA-E1A1CF65FBA0}</Project>
+      <Name>WindowsReboot.Presentation</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="OtherWindows\FormAbout.resx">
-      <DependentUpon>FormAbout.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OtherWindows\LicenseForm.resx">
-      <DependentUpon>LicenseForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OtherWindows\OptionsForm.resx">
-      <DependentUpon>OptionsForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\clock.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\License.txt" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

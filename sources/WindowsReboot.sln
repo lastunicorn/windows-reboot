@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ports", "Ports", "{65ACE60B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Adapters", "Adapters", "{B1F5C43A-0715-410E-9469-E3DBE8D729D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.UserAccess", "WindowsReboot.UserAccess\WindowsReboot.UserAccess.csproj", "{3D0B14FF-253A-435E-9031-673C7F672067}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsReboot.PresentationAccess", "WindowsReboot.UserAccess\WindowsReboot.PresentationAccess.csproj", "{3D0B14FF-253A-435E-9031-673C7F672067}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsReboot.Application", "WindowsReboot.Application\WindowsReboot.Application.csproj", "{95DFED73-834B-48B6-9956-AA891309C9C6}"
 EndProject

@@ -15,14 +15,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Windows.Forms;
-using DustInTheWind.WindowsReboot.UserAccess.Properties;
+using DustInTheWind.WindowsReboot.Presentation.Properties;
 
 namespace DustInTheWind.WindowsReboot.UserAccess.OtherWindows
 {
     /// <summary>
     /// This form displays the license text.
     /// </summary>
-    internal partial class LicenseForm : Form
+    public partial class LicenseForm : Form
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LicenseForm"/> class.
