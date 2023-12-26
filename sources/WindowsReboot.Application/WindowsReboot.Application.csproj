@@ -29,12 +29,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EventBusEngine\EventBusEngine.csproj" />
-    <ProjectReference Include="..\WindowsReboot.Domain\WindowsReboot.Domain.csproj" />
+    <ProjectReference Include="..\EventBusEngine\EventBusEngine.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\WindowsReboot.Domain\WindowsReboot.Domain.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\WindowsReboot.Ports.ConfigAccess\WindowsReboot.Ports.ConfigAccess.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\WindowsReboot.Ports.PresentationAccess\WindowsReboot.Ports.PresentationAccess.csproj" PrivateAssets="All" />
-    <ProjectReference Include="..\WorkerEngine\WorkerEngine.csproj" />
+    <ProjectReference Include="..\WorkerEngine\WorkerEngine.csproj" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>

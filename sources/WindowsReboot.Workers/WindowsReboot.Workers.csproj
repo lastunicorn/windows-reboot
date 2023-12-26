@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\WindowsReboot.Domain\WindowsReboot.Domain.csproj" />
+        <ProjectReference Include="..\WindowsReboot.Domain\WindowsReboot.Domain.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\WindowsReboot.Ports.PresentationAccess\WindowsReboot.Ports.PresentationAccess.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\WorkerEngine\WorkerEngine.csproj" PrivateAssets="All" />
     </ItemGroup>
