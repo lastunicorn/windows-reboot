@@ -19,6 +19,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Domain;
 using MediatR;
+using ScheduleType = DustInTheWind.WindowsReboot.Domain.ScheduleType;
 
 namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.PresentActionTimeSettings
 {
@@ -35,16 +36,36 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.PresentActionTi
         {
             PresentActionTimeSettingsResponse response = new PresentActionTimeSettingsResponse
             {
-                DateTime = executionTimer.Schedule.DateTime,
-                TimeOfDay = executionTimer.Schedule.TimeOfDay,
-
-                Hours = executionTimer.Schedule.Hours,
-                Minutes = executionTimer.Schedule.Minutes,
-                Seconds = executionTimer.Schedule.Seconds,
-
-                Type = executionTimer.Schedule.Type,
                 IsAllowedToChange = !executionTimer.IsRunning
             };
+
+            if (executionTimer.Schedule is FixedDateSchedule fixedDateSchedule)
+            {
+                response.DateTime = fixedDateSchedule.DateTime;
+                response.Type = ScheduleType.FixedDate;
+            }
+
+            if (executionTimer.Schedule is DailySchedule dailySchedule)
+            {
+                response.DateTime = DateTime.Now + TimeSpan.FromHours(1);
+                response.TimeOfDay = dailySchedule.TimeOfDay;
+                response.Type = ScheduleType.Daily;
+            }
+
+            if (executionTimer.Schedule is DelaySchedule delaySchedule)
+            {
+                response.DateTime = DateTime.Now + TimeSpan.FromHours(1);
+                response.Hours = delaySchedule.Hours;
+                response.Minutes = delaySchedule.Minutes;
+                response.Seconds = delaySchedule.Seconds;
+                response.Type = ScheduleType.Delay;
+            }
+
+            if (executionTimer.Schedule is ImmediateSchedule)
+            {
+                response.DateTime = DateTime.Now + TimeSpan.FromHours(1);
+                response.Type = ScheduleType.Immediate;
+            }
 
             return Task.FromResult(response);
         }

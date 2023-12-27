@@ -19,13 +19,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.ActionTimeArea.PresentActionTimeSettings;
-using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDailyTime;
-using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetFixedDate;
-using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetFixedTime;
-using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetHours;
-using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetMinutes;
-using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetScheduleType;
-using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetSeconds;
+using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDailySchedule;
+using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDelaySchedule;
+using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetFixedDateSchedule;
+using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetSchedule;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WinFormsAdditions;
 using MediatR;
@@ -55,10 +52,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
                 if (!IsInitializeMode)
                 {
-                    SetScheduleTypeRequest request = new SetScheduleTypeRequest
-                    {
-                        ScheduleType = value
-                    };
+                    IRequest request = CreateSetScheduleRequest();
                     _ = mediator.Send(request);
                 }
             }
@@ -74,10 +68,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
                 if (!IsInitializeMode)
                 {
-                    SetFixedDateRequest request = new SetFixedDateRequest
-                    {
-                        Date = value
-                    };
+                    IRequest request = CreateSetScheduleRequest();
                     _ = mediator.Send(request);
                 }
             }
@@ -93,10 +84,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
                 if (!IsInitializeMode)
                 {
-                    SetFixedTimeRequest request = new SetFixedTimeRequest
-                    {
-                        Time = value
-                    };
+                    IRequest request = CreateSetScheduleRequest();
                     _ = mediator.Send(request);
                 }
             }
@@ -112,10 +100,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
                 if (!IsInitializeMode)
                 {
-                    SetHoursRequest request = new SetHoursRequest
-                    {
-                        Hours = value
-                    };
+                    IRequest request = CreateSetScheduleRequest();
                     _ = mediator.Send(request);
                 }
             }
@@ -131,10 +116,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
                 if (!IsInitializeMode)
                 {
-                    SetMinutesRequest request = new SetMinutesRequest
-                    {
-                        Minutes = value
-                    };
+                    IRequest request = CreateSetScheduleRequest();
                     _ = mediator.Send(request);
                 }
             }
@@ -150,10 +132,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
                 if (!IsInitializeMode)
                 {
-                    SetSecondsRequest request = new SetSecondsRequest
-                    {
-                        Seconds = value
-                    };
+                    IRequest request = CreateSetScheduleRequest();
                     _ = mediator.Send(request);
                 }
             }
@@ -169,10 +148,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
                 if (!IsInitializeMode)
                 {
-                    SetDailyTimeRequest request = new SetDailyTimeRequest
-                    {
-                        Time = value
-                    };
+                    IRequest request = CreateSetScheduleRequest();
                     _ = mediator.Send(request);
                 }
             }
@@ -219,7 +195,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 ScheduleType = response.Type;
 
                 Enabled = response.IsAllowedToChange;
-
             });
         }
 
@@ -227,16 +202,31 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         {
             RunInInitializeMode(() =>
             {
-                FixedDate = ev.DateTime.Date;
-                FixedTime = ev.DateTime.TimeOfDay;
-
-                DailyTime = ev.TimeOfDay;
-
-                DelayHours = ev.Hours;
-                DelayMinutes = ev.Minutes;
-                DelaySeconds = ev.Seconds;
-
                 ScheduleType = ev.Type;
+
+                switch (ev.Type)
+                {
+                    case ScheduleType.FixedDate:
+                        FixedDate = ev.DateTime.Date;
+                        FixedTime = ev.DateTime.TimeOfDay;
+                        break;
+
+                    case ScheduleType.Daily:
+                        DailyTime = ev.TimeOfDay;
+                        break;
+
+                    case ScheduleType.Delay:
+                        DelayHours = ev.Hours;
+                        DelayMinutes = ev.Minutes;
+                        DelaySeconds = ev.Seconds;
+                        break;
+
+                    case ScheduleType.Immediate:
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
 
                 Enabled = ev.IsAllowedToChange;
             });
@@ -258,6 +248,38 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             {
                 RunInInitializeMode(() => Enabled = true);
             });
+        }
+
+        private IRequest CreateSetScheduleRequest()
+        {
+            switch (scheduleType)
+            {
+                case ScheduleType.FixedDate:
+                    return new SetFixedDateScheduleRequest
+                    {
+                        DateTime = FixedDate
+                    };
+
+                case ScheduleType.Daily:
+                    return new SetDailyScheduleRequest
+                    {
+                        TimeOfDay = FixedTime
+                    };
+
+                case ScheduleType.Delay:
+                    return new SetDelayScheduleRequest
+                    {
+                        Hours = DelayHours,
+                        Minutes = DelayMinutes,
+                        Seconds = DelaySeconds
+                    };
+
+                case ScheduleType.Immediate:
+                    return new SetImmediateScheduleRequest();
+
+                default:
+                    throw new Exception("Invalid schedule type.");
+            }
         }
     }
 }

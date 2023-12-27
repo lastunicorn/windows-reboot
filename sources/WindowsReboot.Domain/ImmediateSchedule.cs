@@ -15,12 +15,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetFixedDate
+namespace DustInTheWind.WindowsReboot.Domain
 {
-    public class SetFixedDateRequest : IRequest
+    public class ImmediateSchedule : ISchedule
     {
-        public DateTime Date { get; set; }
+        public DateTime CalculateTimeFrom(DateTime now)
+        {
+            return now;
+        }
     }
 }

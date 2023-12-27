@@ -20,20 +20,23 @@ using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Domain;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetHours
+namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetFixedDateSchedule
 {
-    internal class SetHoursUseCase : IRequestHandler<SetHoursRequest>
+    internal class SetFixedDateScheduleUseCase : IRequestHandler<SetFixedDateScheduleRequest>
     {
         private readonly ExecutionTimer executionTimer;
 
-        public SetHoursUseCase(ExecutionTimer executionTimer)
+        public SetFixedDateScheduleUseCase(ExecutionTimer executionTimer)
         {
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
         }
 
-        public Task Handle(SetHoursRequest request, CancellationToken cancellationToken)
+        public Task Handle(SetFixedDateScheduleRequest request, CancellationToken cancellationToken)
         {
-            executionTimer.Schedule.Hours = request.Hours;
+            executionTimer.Schedule = new FixedDateSchedule
+            {
+                DateTime = request.DateTime
+            };
 
             return Task.CompletedTask;
         }

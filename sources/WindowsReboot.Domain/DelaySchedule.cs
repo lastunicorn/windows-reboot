@@ -15,27 +15,20 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using DustInTheWind.WindowsReboot.Domain;
-using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetScheduleType
+namespace DustInTheWind.WindowsReboot.Domain
 {
-    internal class SetScheduleTypeUseCase : IRequestHandler<SetScheduleTypeRequest>
+    public class DelaySchedule : ISchedule
     {
-        private readonly ExecutionTimer executionTimer;
+        public int Hours { get; set; }
 
-        public SetScheduleTypeUseCase(ExecutionTimer executionTimer)
+        public int Minutes { get; set; }
+
+        public int Seconds { get; set; }
+
+        public DateTime CalculateTimeFrom(DateTime now)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-        }
-
-        public Task Handle(SetScheduleTypeRequest request, CancellationToken cancellationToken)
-        {
-            executionTimer.Schedule.Type = request.ScheduleType;
-
-            return Task.CompletedTask;
+            return now + new TimeSpan(Hours, Minutes, Seconds);
         }
     }
 }

@@ -15,12 +15,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetFixedTime
+namespace DustInTheWind.WindowsReboot.Domain
 {
-    public class SetFixedTimeRequest : IRequest
+    public interface ISchedule
     {
-        public TimeSpan Time { get; set; }
+        DateTime CalculateTimeFrom(DateTime now);
     }
 }

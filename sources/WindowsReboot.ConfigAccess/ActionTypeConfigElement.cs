@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System.Configuration;
-using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 
 namespace DustInTheWind.WindowsReboot.ConfigAccess
 {

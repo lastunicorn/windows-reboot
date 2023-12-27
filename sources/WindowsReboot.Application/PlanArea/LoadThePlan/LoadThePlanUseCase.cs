@@ -17,6 +17,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using MediatR;
@@ -41,8 +42,8 @@ namespace DustInTheWind.WindowsReboot.Application.PlanArea.LoadThePlan
             if (executionTimer.IsRunning)
                 throw new WindowsRebootException("Cannot complete the task while the timer is started.");
 
-            executionTimer.Schedule = configuration.ActionTime;
-            executionPlan.ActionType = configuration.ActionType;
+            executionTimer.Schedule = configuration.Schedule.ToDomain();
+            executionPlan.ActionType = configuration.ActionType.ToDomain();
             executionPlan.ForceOption = configuration.ForceClosingPrograms
                 ? ForceOption.Yes
                 : ForceOption.No;

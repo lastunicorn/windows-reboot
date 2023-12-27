@@ -24,8 +24,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <RootNamespace>DustInTheWind.WindowsReboot.Ports.ConfigAccess</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\WindowsReboot.Domain\WindowsReboot.Domain.csproj" />
-    </ItemGroup>
-
 </Project>

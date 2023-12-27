@@ -14,28 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using DustInTheWind.WindowsReboot.Domain;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetMinutes
+namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetSchedule
 {
-    internal class SetMinutesUseCase : IRequestHandler<SetMinutesRequest>
+    public class SetImmediateScheduleRequest : IRequest
     {
-        private readonly ExecutionTimer executionTimer;
-
-        public SetMinutesUseCase(ExecutionTimer executionTimer)
-        {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-        }
-
-        public Task Handle(SetMinutesRequest request, CancellationToken cancellationToken)
-        {
-            executionTimer.Schedule.Minutes = request.Minutes;
-
-            return Task.CompletedTask;
-        }
     }
 }

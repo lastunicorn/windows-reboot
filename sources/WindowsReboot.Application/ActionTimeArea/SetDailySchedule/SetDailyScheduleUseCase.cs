@@ -14,13 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Domain;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetScheduleType
+namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDailySchedule
 {
-    public class SetScheduleTypeRequest : IRequest
+    internal class SetDailyScheduleUseCase : IRequestHandler<SetDailyScheduleRequest>
     {
-        public ScheduleType ScheduleType { get; set; }
+        private readonly ExecutionTimer executionTimer;
+
+        public SetDailyScheduleUseCase(ExecutionTimer executionTimer)
+        {
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+        }
+
+        public Task Handle(SetDailyScheduleRequest request, CancellationToken cancellationToken)
+        {
+            executionTimer.Schedule = new DailySchedule
+            {
+                TimeOfDay = request.TimeOfDay
+            };
+
+            return Task.CompletedTask;
+        }
     }
 }

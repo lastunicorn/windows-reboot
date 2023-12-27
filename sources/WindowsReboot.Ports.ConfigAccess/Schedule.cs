@@ -14,12 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using MediatR;
+using System;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetHours
+namespace DustInTheWind.WindowsReboot.Ports.ConfigAccess
 {
-    public class SetHoursRequest : IRequest
+    public class Schedule
     {
+        public ScheduleType Type { get; set; }
+
+        public DateTime DateTime { get; set; }
+
+        public TimeSpan TimeOfDay { get; set; }
+
         public int Hours { get; set; }
+
+        public int Minutes { get; set; }
+
+        public int Seconds { get; set; }
     }
 }

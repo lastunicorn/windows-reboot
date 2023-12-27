@@ -14,28 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using DustInTheWind.WindowsReboot.Domain;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetFixedTime
+namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDelaySchedule
 {
-    internal class SetFixedTimeUseCase : IRequestHandler<SetFixedTimeRequest>
+    public class SetDelayScheduleRequest : IRequest
     {
-        private readonly ExecutionTimer executionTimer;
+        public int Hours { get; set; }
 
-        public SetFixedTimeUseCase(ExecutionTimer executionTimer)
-        {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-        }
+        public int Minutes { get; set; }
 
-        public Task Handle(SetFixedTimeRequest request, CancellationToken cancellationToken)
-        {
-            executionTimer.Schedule.TimeOfDay = request.Time;
-
-            return Task.CompletedTask;
-        }
+        public int Seconds { get; set; }
     }
 }

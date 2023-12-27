@@ -16,20 +16,15 @@
 
 namespace DustInTheWind.WindowsReboot.Ports.ConfigAccess
 {
-    public interface IConfigStorage
+    public enum ActionType
     {
-        Schedule Schedule { get; set; }
-
-        ActionType ActionType { get; set; }
-
-        bool ForceClosingPrograms { get; set; }
-
-        bool StartTimerAtApplicationStart { get; set; }
-
-        bool CloseToTray { get; set; }
-
-        bool MinimizeToTray { get; set; }
-
-        void Save();
+        Ring,
+        LockWorkstation,
+        LogOff,
+        Sleep,
+        Hibernate,
+        Reboot,
+        ShutDown,
+        PowerOff
     }
 }

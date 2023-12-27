@@ -25,9 +25,10 @@ namespace DustInTheWind.WindowsReboot.Domain
         private readonly EventBus eventBus;
         private readonly Timer timer;
 
+        private static readonly ImmediateSchedule DefaultSchedule = new ImmediateSchedule();
         public readonly TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
         private volatile bool isRunning;
-        private Schedule schedule = Schedule.Immediate;
+        private ISchedule schedule = DefaultSchedule;
         private TimeSpan? warningTime;
         private bool shouldRaiseWarning;
         private DateTime startTime;
@@ -38,17 +39,17 @@ namespace DustInTheWind.WindowsReboot.Domain
 
         public bool IsRunning => isRunning;
 
-        public Schedule Schedule
+        public ISchedule Schedule
         {
             get => schedule;
             set
             {
                 if (value == null)
-                    schedule = Schedule.Immediate;
+                    schedule = DefaultSchedule;
 
                 schedule = value;
 
-                OnTimeChanges();
+                OnScheduleChangedChanges();
             }
         }
 
@@ -119,34 +120,30 @@ namespace DustInTheWind.WindowsReboot.Domain
 
         private DateTime? CalculateNextRunTime(DateTime now)
         {
-            switch (Schedule.Type)
+            if (Schedule is FixedDateSchedule)
             {
-                case ScheduleType.FixedDate:
-                {
-                    DateTime runTime = Schedule.CalculateTimeFrom(startTime);
-                    return runTime < now ? null as DateTime? : runTime;
-                }
-
-                case ScheduleType.Daily:
-                {
-                    return Schedule.CalculateTimeFrom(now);
-                }
-
-                case ScheduleType.Delay:
-                {
-                    DateTime runTime = Schedule.CalculateTimeFrom(startTime);
-                    return runTime < now ? null as DateTime? : runTime;
-                }
-
-                case ScheduleType.Immediate:
-                {
-                    DateTime runTime = Schedule.CalculateTimeFrom(startTime);
-                    return runTime < now ? null as DateTime? : runTime;
-                }
-
-                default:
-                    throw new ArgumentOutOfRangeException();
+                DateTime runTime = Schedule.CalculateTimeFrom(startTime);
+                return runTime < now ? null as DateTime? : runTime;
             }
+
+            if (Schedule is DailySchedule)
+            {
+                return Schedule.CalculateTimeFrom(now);
+            }
+
+            if (Schedule is DelaySchedule)
+            {
+                DateTime runTime = Schedule.CalculateTimeFrom(startTime);
+                return runTime < now ? null as DateTime? : runTime;
+            }
+
+            if (Schedule is ImmediateSchedule)
+            {
+                DateTime runTime = Schedule.CalculateTimeFrom(startTime);
+                return runTime < now ? null as DateTime? : runTime;
+            }
+
+            throw new ArgumentOutOfRangeException();
         }
 
         private void RestartInternal(DateTime nextRunTime)
@@ -230,22 +227,12 @@ namespace DustInTheWind.WindowsReboot.Domain
             eventBus.Publish(ev);
         }
 
-        protected virtual void OnTimeChanges()
+        protected virtual void OnScheduleChangedChanges()
         {
-            ScheduleChangedEvent ev = new ScheduleChangedEvent
+            ScheduleChangedEvent ev = new ScheduleChangedEvent(schedule)
             {
-                DateTime = schedule.DateTime,
-                TimeOfDay = schedule.TimeOfDay,
-
-                Hours = schedule.Hours,
-                Minutes = schedule.Minutes,
-                Seconds = schedule.Seconds,
-
-                Type = schedule.Type,
-
-                IsAllowedToChange = !IsRunning
+                IsAllowedToChange = !isRunning
             };
-
             eventBus.Publish(ev);
         }
 

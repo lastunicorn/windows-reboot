@@ -14,12 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using MediatR;
+using System;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetMinutes
+namespace DustInTheWind.WindowsReboot.Domain
 {
-    public class SetMinutesRequest : IRequest
+    public class DailySchedule : ISchedule
     {
-        public int Minutes { get; set; }
+        public TimeSpan TimeOfDay { get; set; }
+
+        public DateTime CalculateTimeFrom(DateTime now)
+        {
+            DateTime potentialTime = now.Date + TimeOfDay;
+
+            while (potentialTime < now)
+                potentialTime += TimeSpan.FromDays(1);
+
+            // todo: check if reached DateTime.Max
+
+            return potentialTime;
+        }
     }
 }

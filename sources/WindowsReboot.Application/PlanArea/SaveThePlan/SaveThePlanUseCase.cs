@@ -17,6 +17,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
@@ -41,9 +42,9 @@ namespace DustInTheWind.WindowsReboot.Application.PlanArea.SaveThePlan
 
         public Task Handle(SaveThePlanRequest request, CancellationToken cancellationToken)
         {
-            configuration.ActionTime = executionTimer.Schedule;
+            configuration.Schedule = executionTimer.Schedule.ToConfigModel();
 
-            configuration.ActionType = executionPlan.ActionType;
+            configuration.ActionType = executionPlan.ActionType.ToConfigModel();
             configuration.ForceClosingPrograms = executionPlan.ForceOption == ForceOption.Yes;
 
             configuration.Save();

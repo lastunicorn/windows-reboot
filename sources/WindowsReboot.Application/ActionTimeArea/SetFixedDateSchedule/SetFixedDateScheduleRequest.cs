@@ -15,27 +15,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using DustInTheWind.WindowsReboot.Domain;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetSeconds
+namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetFixedDateSchedule
 {
-    internal class SetSecondsUseCase : IRequestHandler<SetSecondsRequest>
+    public class SetFixedDateScheduleRequest : IRequest
     {
-        private readonly ExecutionTimer executionTimer;
-
-        public SetSecondsUseCase(ExecutionTimer executionTimer)
-        {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-        }
-
-        public Task Handle(SetSecondsRequest request, CancellationToken cancellationToken)
-        {
-            executionTimer.Schedule.Seconds = request.Seconds;
-
-            return Task.CompletedTask;
-        }
+        public DateTime DateTime { get; set; }
     }
 }

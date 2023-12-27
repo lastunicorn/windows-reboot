@@ -33,5 +33,36 @@ namespace DustInTheWind.WindowsReboot.Domain
         public int Seconds { get; set; }
 
         public bool IsAllowedToChange { get; set; }
+
+        internal ScheduleChangedEvent(ISchedule schedule)
+        {
+            switch (schedule)
+            {
+                case FixedDateSchedule fixedDateSchedule:
+                    DateTime = fixedDateSchedule.DateTime;
+                    Type = ScheduleType.FixedDate;
+                    break;
+
+                case DailySchedule dailySchedule:
+                    TimeOfDay = dailySchedule.TimeOfDay;
+                    Type = ScheduleType.Daily;
+                    break;
+
+                case DelaySchedule delaySchedule:
+                    Hours = delaySchedule.Hours;
+                    Minutes = delaySchedule.Minutes;
+                    Seconds = delaySchedule.Seconds;
+
+                    Type = ScheduleType.Delay;
+                    break;
+
+                case ImmediateSchedule _:
+                    Type = ScheduleType.Immediate;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
     }
 }

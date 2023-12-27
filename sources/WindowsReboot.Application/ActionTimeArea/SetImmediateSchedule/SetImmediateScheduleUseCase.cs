@@ -15,12 +15,27 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
+using DustInTheWind.WindowsReboot.Domain;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDailyTime
+namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetSchedule
 {
-    public class SetDailyTimeRequest : IRequest
+    internal class SetImmediateScheduleUseCase : IRequestHandler<SetImmediateScheduleRequest>
     {
-        public TimeSpan Time { get; set; }
+        private readonly ExecutionTimer executionTimer;
+
+        public SetImmediateScheduleUseCase(ExecutionTimer executionTimer)
+        {
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+        }
+
+        public Task Handle(SetImmediateScheduleRequest request, CancellationToken cancellationToken)
+        {
+            executionTimer.Schedule = new ImmediateSchedule();
+
+            return Task.CompletedTask;
+        }
     }
 }
