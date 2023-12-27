@@ -36,7 +36,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
     {
         private readonly IMediator mediator;
 
-        private ScheduleTimeType scheduleTimeType;
+        private ScheduleType scheduleType;
         private DateTime fixedDate;
         private TimeSpan fixedTime;
         private int delayHours;
@@ -45,12 +45,12 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         private TimeSpan dailyTime;
         private bool enabled;
 
-        public ScheduleTimeType ScheduleTimeType
+        public ScheduleType ScheduleType
         {
-            get => scheduleTimeType;
+            get => scheduleType;
             set
             {
-                scheduleTimeType = value;
+                scheduleType = value;
                 OnPropertyChanged();
 
                 if (!IsInitializeMode)
@@ -216,7 +216,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 DelayMinutes = response.Minutes;
                 DelaySeconds = response.Seconds;
 
-                ScheduleTimeType = response.Type;
+                ScheduleType = response.Type;
 
                 Enabled = response.IsAllowedToChange;
 
@@ -236,7 +236,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 DelayMinutes = ev.Minutes;
                 DelaySeconds = ev.Seconds;
 
-                ScheduleTimeType = ev.Type;
+                ScheduleType = ev.Type;
 
                 Enabled = ev.IsAllowedToChange;
             });

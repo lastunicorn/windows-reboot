@@ -33,11 +33,11 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         public GoToTrayCommand GoToTrayCommand { get; private set; }
 
-        public LoadDefaultConfigurationCommand LoadDefaultConfigurationCommand { get; private set; }
+        public LoadDefaultPlanCommand LoadDefaultPlanCommand { get; private set; }
 
-        public LoadConfigurationCommand LoadConfigurationCommand { get; private set; }
+        public LoadThePlanCommand LoadThePlanCommand { get; private set; }
 
-        public SaveConfigurationCommand SaveConfigurationCommand { get; private set; }
+        public SaveThePlanCommand SaveThePlanCommand { get; private set; }
 
         public OptionsCommand OptionsCommand { get; private set; }
 
@@ -78,8 +78,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         public WindowsRebootViewModel(EventBus eventBus,
             ActionTimeControlViewModel actionTimeControlViewModel, ActionTypeControlViewModel actionTypeControlViewModel,
             ActionControlViewModel actionControlViewModel, StatusControlViewModel statusControlViewModel,
-            GoToTrayCommand goToTrayCommand, LoadDefaultConfigurationCommand loadDefaultConfigurationCommand,
-            LoadConfigurationCommand loadConfigurationCommand, SaveConfigurationCommand saveConfigurationCommand,
+            GoToTrayCommand goToTrayCommand, LoadDefaultPlanCommand loadDefaultPlanCommand,
+            LoadThePlanCommand loadThePlanCommand, SaveThePlanCommand saveThePlanCommand,
             OptionsCommand optionsCommand, LicenseCommand licenseCommand, AboutCommand aboutCommand, ExitCommand exitCommand)
         {
             ActionTimeControlViewModel = actionTimeControlViewModel ?? throw new ArgumentNullException(nameof(actionTimeControlViewModel));
@@ -88,9 +88,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             StatusControlViewModel = statusControlViewModel ?? throw new ArgumentNullException(nameof(statusControlViewModel));
 
             GoToTrayCommand = goToTrayCommand ?? throw new ArgumentNullException(nameof(goToTrayCommand));
-            LoadDefaultConfigurationCommand = loadDefaultConfigurationCommand ?? throw new ArgumentNullException(nameof(loadDefaultConfigurationCommand));
-            LoadConfigurationCommand = loadConfigurationCommand ?? throw new ArgumentNullException(nameof(loadConfigurationCommand));
-            SaveConfigurationCommand = saveConfigurationCommand ?? throw new ArgumentNullException(nameof(saveConfigurationCommand));
+            LoadDefaultPlanCommand = loadDefaultPlanCommand ?? throw new ArgumentNullException(nameof(loadDefaultPlanCommand));
+            LoadThePlanCommand = loadThePlanCommand ?? throw new ArgumentNullException(nameof(loadThePlanCommand));
+            SaveThePlanCommand = saveThePlanCommand ?? throw new ArgumentNullException(nameof(saveThePlanCommand));
             OptionsCommand = optionsCommand ?? throw new ArgumentNullException(nameof(optionsCommand));
             LicenseCommand = licenseCommand ?? throw new ArgumentNullException(nameof(licenseCommand));
             AboutCommand = aboutCommand ?? throw new ArgumentNullException(nameof(aboutCommand));

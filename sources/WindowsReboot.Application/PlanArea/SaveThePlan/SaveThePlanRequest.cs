@@ -14,25 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using DustInTheWind.WindowsReboot.Application.ConfigurationArea.SaveConfiguration;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Presentation.Commands
+namespace DustInTheWind.WindowsReboot.Application.PlanArea.SaveThePlan
 {
-    public class SaveConfigurationCommand : CommandBase
+    public class SaveThePlanRequest : IRequest
     {
-        private readonly IMediator mediator;
-
-        public SaveConfigurationCommand(IMediator mediator)
-        {
-            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-        }
-
-        protected override void DoExecute()
-        {
-            SaveConfigurationRequest request = new SaveConfigurationRequest();
-            _ = mediator.Send(request);
-        }
     }
 }

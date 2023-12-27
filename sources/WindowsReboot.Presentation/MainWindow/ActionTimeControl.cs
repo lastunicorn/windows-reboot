@@ -54,7 +54,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                     delayTimeControl1.Bind(x => x.Minutes, viewModel, x => x.DelayMinutes, false, DataSourceUpdateMode.OnPropertyChanged);
                     delayTimeControl1.Bind(x => x.Seconds, viewModel, x => x.DelaySeconds, false, DataSourceUpdateMode.OnPropertyChanged);
 
-                    tabControlActionTime.SelectedIndex = ToTabIndex(viewModel.ScheduleTimeType);
+                    tabControlActionTime.SelectedIndex = ToTabIndex(viewModel.ScheduleType);
                     viewModel.PropertyChanged += HandleViewModelPropertyChanged;
                 }
             }
@@ -62,8 +62,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         private void HandleViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ScheduleTimeType") 
-                tabControlActionTime.SelectedIndex = ToTabIndex(viewModel.ScheduleTimeType);
+            if (e.PropertyName == "ScheduleType") 
+                tabControlActionTime.SelectedIndex = ToTabIndex(viewModel.ScheduleType);
         }
 
         public ActionTimeControl()
@@ -73,23 +73,23 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         private void tabControlActionTime_SelectedIndexChanged(object sender, EventArgs e)
         {
-            viewModel.ScheduleTimeType = FromTabIndex(tabControlActionTime.SelectedIndex);
+            viewModel.ScheduleType = FromTabIndex(tabControlActionTime.SelectedIndex);
         }
 
-        private static int ToTabIndex(ScheduleTimeType scheduleTimeType)
+        private static int ToTabIndex(ScheduleType scheduleType)
         {
-            switch (scheduleTimeType)
+            switch (scheduleType)
             {
-                case ScheduleTimeType.FixedDate:
+                case ScheduleType.FixedDate:
                     return 0;
 
-                case ScheduleTimeType.Daily:
+                case ScheduleType.Daily:
                     return 1;
 
-                case ScheduleTimeType.Delay:
+                case ScheduleType.Delay:
                     return 2;
 
-                case ScheduleTimeType.Immediate:
+                case ScheduleType.Immediate:
                     return 3;
 
                 default:
@@ -97,21 +97,21 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             }
         }
 
-        private static ScheduleTimeType FromTabIndex(int tabIndex)
+        private static ScheduleType FromTabIndex(int tabIndex)
         {
             switch (tabIndex)
             {
                 case 0:
-                    return ScheduleTimeType.FixedDate;
+                    return ScheduleType.FixedDate;
 
                 case 1:
-                    return ScheduleTimeType.Daily;
+                    return ScheduleType.Daily;
 
                 case 2:
-                    return ScheduleTimeType.Delay;
+                    return ScheduleType.Delay;
 
                 case 3:
-                    return ScheduleTimeType.Immediate;
+                    return ScheduleType.Immediate;
 
                 default:
                     throw new ArgumentOutOfRangeException();

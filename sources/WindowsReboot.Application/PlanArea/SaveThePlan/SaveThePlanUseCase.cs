@@ -19,33 +19,36 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
+using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ConfigurationArea.LoadConfiguration
+namespace DustInTheWind.WindowsReboot.Application.PlanArea.SaveThePlan
 {
-    internal class LoadConfigurationUseCase : IRequestHandler<LoadConfigurationRequest>
+    internal class SaveThePlanUseCase : IRequestHandler<SaveThePlanRequest>
     {
+        private readonly IUserInterface userInterface;
         private readonly ExecutionTimer executionTimer;
         private readonly ExecutionPlan executionPlan;
         private readonly IConfigStorage configuration;
 
-        public LoadConfigurationUseCase(ExecutionTimer executionTimer, ExecutionPlan executionPlan, IConfigStorage configuration)
+        public SaveThePlanUseCase(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan, IConfigStorage configuration)
         {
+            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
-        public Task Handle(LoadConfigurationRequest request, CancellationToken cancellationToken)
+        public Task Handle(SaveThePlanRequest request, CancellationToken cancellationToken)
         {
-            if (executionTimer.IsRunning)
-                throw new WindowsRebootException("Cannot complete the task while the timer is started.");
+            configuration.ActionTime = executionTimer.Schedule;
 
-            executionTimer.ScheduleTime = configuration.ActionTime;
-            executionPlan.ActionType = configuration.ActionType;
-            executionPlan.ForceOption = configuration.ForceClosingPrograms
-                ? ForceOption.Yes
-                : ForceOption.No;
+            configuration.ActionType = executionPlan.ActionType;
+            configuration.ForceClosingPrograms = executionPlan.ForceOption == ForceOption.Yes;
+
+            configuration.Save();
+
+            userInterface.DisplayMessage("The configuration was saved.");
 
             return Task.CompletedTask;
         }

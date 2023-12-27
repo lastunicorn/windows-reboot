@@ -32,8 +32,7 @@ namespace DustInTheWind.WindowsReboot.Domain
             string currentTimeString = ToString(currentTime);
             string actionTimeString = ToString(actionTime);
 
-            string message = string.Format(DefaultMessage, currentTimeString, actionTimeString);
-            return message;
+            return string.Format(DefaultMessage, currentTimeString, actionTimeString);
         }
 
         private static string ToString(DateTime dateTime)

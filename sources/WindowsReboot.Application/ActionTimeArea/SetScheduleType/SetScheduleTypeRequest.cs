@@ -21,6 +21,6 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetScheduleType
 {
     public class SetScheduleTypeRequest : IRequest
     {
-        public ScheduleTimeType ScheduleType { get; set; }
+        public ScheduleType ScheduleType { get; set; }
     }
 }

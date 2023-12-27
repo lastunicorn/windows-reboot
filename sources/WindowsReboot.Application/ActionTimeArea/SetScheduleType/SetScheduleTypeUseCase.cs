@@ -33,7 +33,7 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetScheduleType
 
         public Task Handle(SetScheduleTypeRequest request, CancellationToken cancellationToken)
         {
-            executionTimer.ScheduleTime.Type = request.ScheduleType;
+            executionTimer.Schedule.Type = request.ScheduleType;
 
             return Task.CompletedTask;
         }

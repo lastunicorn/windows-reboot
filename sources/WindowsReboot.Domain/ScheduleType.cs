@@ -14,11 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using MediatR;
-
-namespace DustInTheWind.WindowsReboot.Application.ConfigurationArea.SaveConfiguration
+namespace DustInTheWind.WindowsReboot.Domain
 {
-    public class SaveConfigurationRequest : IRequest
+    /// <summary>
+    /// The way in which the action time is specified.
+    /// </summary>
+    public enum ScheduleType
     {
+        /// <summary>
+        /// The action time is specified as a fixed date and time.
+        /// </summary>
+        FixedDate,
+
+        /// <summary>
+        /// The action will be executed every day at a specific hour.
+        /// </summary>
+        Daily,
+
+        /// <summary>
+        /// The action time is specified as a delay from the time when the timer is started.
+        /// </summary>
+        Delay,
+
+        /// <summary>
+        /// The action time is exactly the time when the timer is started.
+        /// </summary>
+        Immediate
     }
 }

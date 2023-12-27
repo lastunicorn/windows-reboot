@@ -67,14 +67,14 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             this.pictureBoxHeader = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBoxActionTime = new DustInTheWind.WinFormsAdditions.CustomControls.CustomGroupBox(this.components);
-            this.customGroupBoxStatusInfo = new DustInTheWind.WinFormsAdditions.CustomControls.CustomGroupBox(this.components);
-            this.groupBoxActionType = new DustInTheWind.WinFormsAdditions.CustomControls.CustomGroupBox(this.components);
-            this.groupBoxActionStart = new DustInTheWind.WinFormsAdditions.CustomControls.CustomGroupBox(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
             this.actionTimeControl1 = new DustInTheWind.WindowsReboot.Presentation.MainWindow.ActionTimeControl();
+            this.customGroupBoxStatusInfo = new DustInTheWind.WinFormsAdditions.CustomControls.CustomGroupBox(this.components);
             this.statusControl1 = new DustInTheWind.WindowsReboot.Presentation.MainWindow.StatusControl();
+            this.groupBoxActionType = new DustInTheWind.WinFormsAdditions.CustomControls.CustomGroupBox(this.components);
             this.actionTypeControl1 = new DustInTheWind.WindowsReboot.Presentation.MainWindow.ActionTypeControl();
+            this.groupBoxActionStart = new DustInTheWind.WinFormsAdditions.CustomControls.CustomGroupBox(this.components);
             this.actionControl1 = new DustInTheWind.WindowsReboot.Presentation.MainWindow.ActionControl();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHeader)).BeginInit();
             this.tableLayoutPanel6.SuspendLayout();
@@ -143,40 +143,40 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             this.loadInitialSettingsToolStripMenuItem.Command = null;
             this.loadInitialSettingsToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Presentation.Properties.Resources.splat_blue;
             this.loadInitialSettingsToolStripMenuItem.Name = "loadInitialSettingsToolStripMenuItem";
-            this.loadInitialSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.loadInitialSettingsToolStripMenuItem.Text = "&Load Settings";
+            this.loadInitialSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadInitialSettingsToolStripMenuItem.Text = "&Load the Plan";
             // 
             // saveCurrentSettingsToolStripMenuItem
             // 
             this.saveCurrentSettingsToolStripMenuItem.Command = null;
             this.saveCurrentSettingsToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Presentation.Properties.Resources.splat_yellow;
             this.saveCurrentSettingsToolStripMenuItem.Name = "saveCurrentSettingsToolStripMenuItem";
-            this.saveCurrentSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.saveCurrentSettingsToolStripMenuItem.Text = "&Save Settings";
+            this.saveCurrentSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveCurrentSettingsToolStripMenuItem.Text = "&Save the Plan";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // loadDefaultSettingsToolStripMenuItem
             // 
             this.loadDefaultSettingsToolStripMenuItem.Command = null;
             this.loadDefaultSettingsToolStripMenuItem.Image = global::DustInTheWind.WindowsReboot.Presentation.Properties.Resources.splat_black;
             this.loadDefaultSettingsToolStripMenuItem.Name = "loadDefaultSettingsToolStripMenuItem";
-            this.loadDefaultSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.loadDefaultSettingsToolStripMenuItem.Text = "Load &Default Settings";
+            this.loadDefaultSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadDefaultSettingsToolStripMenuItem.Text = "Load &Default Plan";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(183, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Command = null;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.optionsToolStripMenuItem.Text = "&Options...";
             // 
             // helpToolStripMenuItem
@@ -271,6 +271,15 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             this.groupBoxActionTime.TitleMargin = new System.Windows.Forms.Padding(0);
             this.groupBoxActionTime.TitlePadding = new System.Windows.Forms.Padding(3, 0, 5, 0);
             // 
+            // actionTimeControl1
+            // 
+            this.actionTimeControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.actionTimeControl1.Location = new System.Drawing.Point(8, 23);
+            this.actionTimeControl1.Name = "actionTimeControl1";
+            this.actionTimeControl1.Size = new System.Drawing.Size(373, 102);
+            this.actionTimeControl1.TabIndex = 1;
+            this.actionTimeControl1.ViewModel = null;
+            // 
             // customGroupBoxStatusInfo
             // 
             this.customGroupBoxStatusInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -291,6 +300,17 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             this.customGroupBoxStatusInfo.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customGroupBoxStatusInfo.TitleMargin = new System.Windows.Forms.Padding(0);
             this.customGroupBoxStatusInfo.TitlePadding = new System.Windows.Forms.Padding(0);
+            // 
+            // statusControl1
+            // 
+            this.statusControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusControl1.Location = new System.Drawing.Point(3, 4);
+            this.statusControl1.Margin = new System.Windows.Forms.Padding(0);
+            this.statusControl1.Name = "statusControl1";
+            this.statusControl1.Size = new System.Drawing.Size(383, 92);
+            this.statusControl1.TabIndex = 16;
+            this.statusControl1.TabStop = false;
+            this.statusControl1.ViewModel = null;
             // 
             // groupBoxActionType
             // 
@@ -313,6 +333,16 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             this.groupBoxActionType.TitleMargin = new System.Windows.Forms.Padding(0);
             this.groupBoxActionType.TitlePadding = new System.Windows.Forms.Padding(3, 0, 5, 0);
             // 
+            // actionTypeControl1
+            // 
+            this.actionTypeControl1.AutoSize = true;
+            this.actionTypeControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.actionTypeControl1.Location = new System.Drawing.Point(3, 21);
+            this.actionTypeControl1.Name = "actionTypeControl1";
+            this.actionTypeControl1.Size = new System.Drawing.Size(230, 73);
+            this.actionTypeControl1.TabIndex = 1;
+            this.actionTypeControl1.ViewModel = null;
+            // 
             // groupBoxActionStart
             // 
             this.groupBoxActionStart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -334,6 +364,15 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             this.groupBoxActionStart.TitleMargin = new System.Windows.Forms.Padding(0);
             this.groupBoxActionStart.TitlePadding = new System.Windows.Forms.Padding(3, 0, 5, 0);
             // 
+            // actionControl1
+            // 
+            this.actionControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.actionControl1.Location = new System.Drawing.Point(3, 19);
+            this.actionControl1.Name = "actionControl1";
+            this.actionControl1.Size = new System.Drawing.Size(139, 80);
+            this.actionControl1.TabIndex = 0;
+            this.actionControl1.ViewModel = null;
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.tableLayoutPanel6);
@@ -343,45 +382,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             this.panel1.Padding = new System.Windows.Forms.Padding(10);
             this.panel1.Size = new System.Drawing.Size(409, 375);
             this.panel1.TabIndex = 22;
-            // 
-            // actionTimeControl1
-            // 
-            this.actionTimeControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.actionTimeControl1.Location = new System.Drawing.Point(8, 23);
-            this.actionTimeControl1.Name = "actionTimeControl1";
-            this.actionTimeControl1.Size = new System.Drawing.Size(373, 102);
-            this.actionTimeControl1.TabIndex = 1;
-            this.actionTimeControl1.ViewModel = null;
-            // 
-            // statusControl1
-            // 
-            this.statusControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusControl1.Location = new System.Drawing.Point(3, 4);
-            this.statusControl1.Margin = new System.Windows.Forms.Padding(0);
-            this.statusControl1.Name = "statusControl1";
-            this.statusControl1.Size = new System.Drawing.Size(383, 92);
-            this.statusControl1.TabIndex = 16;
-            this.statusControl1.TabStop = false;
-            this.statusControl1.ViewModel = null;
-            // 
-            // actionTypeControl1
-            // 
-            this.actionTypeControl1.AutoSize = true;
-            this.actionTypeControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.actionTypeControl1.Location = new System.Drawing.Point(3, 21);
-            this.actionTypeControl1.Name = "actionTypeControl1";
-            this.actionTypeControl1.Size = new System.Drawing.Size(230, 73);
-            this.actionTypeControl1.TabIndex = 1;
-            this.actionTypeControl1.ViewModel = null;
-            // 
-            // actionControl1
-            // 
-            this.actionControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.actionControl1.Location = new System.Drawing.Point(3, 19);
-            this.actionControl1.Name = "actionControl1";
-            this.actionControl1.Size = new System.Drawing.Size(139, 80);
-            this.actionControl1.TabIndex = 0;
-            this.actionControl1.ViewModel = null;
             // 
             // WindowsRebootForm
             // 

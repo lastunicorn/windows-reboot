@@ -33,7 +33,7 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetFixedTime
 
         public Task Handle(SetFixedTimeRequest request, CancellationToken cancellationToken)
         {
-            executionTimer.ScheduleTime.TimeOfDay = request.Time;
+            executionTimer.Schedule.TimeOfDay = request.Time;
 
             return Task.CompletedTask;
         }

@@ -41,7 +41,7 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication
 
         public Task Handle(InitializeApplicationRequest request, CancellationToken cancellationToken)
         {
-            executionTimer.ScheduleTime = configStorage.ActionTime;
+            executionTimer.Schedule = configStorage.ActionTime;
             executionPlan.ActionType = configStorage.ActionType;
             executionPlan.ForceOption = configStorage.ForceClosingPrograms
                 ? ForceOption.Yes

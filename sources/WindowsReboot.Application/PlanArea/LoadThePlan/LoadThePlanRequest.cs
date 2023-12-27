@@ -16,9 +16,9 @@
 
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ConfigurationArea.LoadConfiguration
+namespace DustInTheWind.WindowsReboot.Application.PlanArea.LoadThePlan
 {
-    public class LoadConfigurationRequest : IRequest
+    public class LoadThePlanRequest : IRequest
     {
     }
 }

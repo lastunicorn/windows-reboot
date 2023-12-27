@@ -16,17 +16,17 @@
 
 using System;
 using DustInTheWind.EventBusEngine;
-using DustInTheWind.WindowsReboot.Application.ConfigurationArea.LoadDefaultConfiguration;
+using DustInTheWind.WindowsReboot.Application.PlanArea.LoadDefaultPlan;
 using DustInTheWind.WindowsReboot.Domain;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
 {
-    public class LoadDefaultConfigurationCommand : CommandBase
+    public class LoadDefaultPlanCommand : CommandBase
     {
         private readonly IMediator mediator;
 
-        public LoadDefaultConfigurationCommand(EventBus eventBus, IMediator mediator)
+        public LoadDefaultPlanCommand(EventBus eventBus, IMediator mediator)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
 
@@ -54,7 +54,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         protected override void DoExecute()
         {
-            LoadDefaultConfigurationRequest request = new LoadDefaultConfigurationRequest();
+            LoadDefaultPlanRequest request = new LoadDefaultPlanRequest();
             _ = mediator.Send(request);
         }
     }

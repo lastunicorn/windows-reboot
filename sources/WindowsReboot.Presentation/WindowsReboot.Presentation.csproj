@@ -69,15 +69,15 @@
     <Compile Include="Commands\GoToTrayCommand.cs" />
     <Compile Include="Commands\HibernateCommand.cs" />
     <Compile Include="Commands\LicenseCommand.cs" />
-    <Compile Include="Commands\LoadConfigurationCommand.cs" />
-    <Compile Include="Commands\LoadDefaultConfigurationCommand.cs" />
+    <Compile Include="Commands\LoadThePlanCommand.cs" />
+    <Compile Include="Commands\LoadDefaultPlanCommand.cs" />
     <Compile Include="Commands\LockComputerCommand.cs" />
     <Compile Include="Commands\LogOffCommand.cs" />
     <Compile Include="Commands\OptionsCommand.cs" />
     <Compile Include="Commands\PowerOffCommand.cs" />
     <Compile Include="Commands\RebootCommand.cs" />
     <Compile Include="Commands\RestoreMainWindowCommand.cs" />
-    <Compile Include="Commands\SaveConfigurationCommand.cs" />
+    <Compile Include="Commands\SaveThePlanCommand.cs" />
     <Compile Include="Commands\ShutDownCommand.cs" />
     <Compile Include="Commands\SleepCommand.cs" />
     <Compile Include="Commands\StartTimerCommand.cs" />
@@ -274,6 +274,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\License.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

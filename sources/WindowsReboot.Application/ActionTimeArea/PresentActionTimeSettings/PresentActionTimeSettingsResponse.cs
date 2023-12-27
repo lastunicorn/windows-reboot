@@ -21,7 +21,7 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.PresentActionTi
 {
     public class PresentActionTimeSettingsResponse
     {
-        public ScheduleTimeType Type { get; set; }
+        public ScheduleType Type { get; set; }
 
         public DateTime DateTime { get; set; }
 

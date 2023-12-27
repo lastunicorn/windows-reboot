@@ -35,14 +35,14 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.PresentActionTi
         {
             PresentActionTimeSettingsResponse response = new PresentActionTimeSettingsResponse
             {
-                DateTime = executionTimer.ScheduleTime.DateTime,
-                TimeOfDay = executionTimer.ScheduleTime.TimeOfDay,
+                DateTime = executionTimer.Schedule.DateTime,
+                TimeOfDay = executionTimer.Schedule.TimeOfDay,
 
-                Hours = executionTimer.ScheduleTime.Hours,
-                Minutes = executionTimer.ScheduleTime.Minutes,
-                Seconds = executionTimer.ScheduleTime.Seconds,
+                Hours = executionTimer.Schedule.Hours,
+                Minutes = executionTimer.Schedule.Minutes,
+                Seconds = executionTimer.Schedule.Seconds,
 
-                Type = executionTimer.ScheduleTime.Type,
+                Type = executionTimer.Schedule.Type,
                 IsAllowedToChange = !executionTimer.IsRunning
             };
 

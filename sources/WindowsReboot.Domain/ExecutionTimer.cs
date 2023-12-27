@@ -27,7 +27,7 @@ namespace DustInTheWind.WindowsReboot.Domain
 
         public readonly TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
         private volatile bool isRunning;
-        private ScheduleTime scheduleTime = ScheduleTime.Immediate;
+        private Schedule schedule = Schedule.Immediate;
         private TimeSpan? warningTime;
         private bool shouldRaiseWarning;
         private DateTime startTime;
@@ -38,15 +38,15 @@ namespace DustInTheWind.WindowsReboot.Domain
 
         public bool IsRunning => isRunning;
 
-        public ScheduleTime ScheduleTime
+        public Schedule Schedule
         {
-            get => scheduleTime;
+            get => schedule;
             set
             {
                 if (value == null)
-                    scheduleTime = ScheduleTime.Immediate;
+                    schedule = Schedule.Immediate;
 
-                scheduleTime = value;
+                schedule = value;
 
                 OnTimeChanges();
             }
@@ -119,28 +119,28 @@ namespace DustInTheWind.WindowsReboot.Domain
 
         private DateTime? CalculateNextRunTime(DateTime now)
         {
-            switch (ScheduleTime.Type)
+            switch (Schedule.Type)
             {
-                case ScheduleTimeType.FixedDate:
+                case ScheduleType.FixedDate:
                 {
-                    DateTime runTime = ScheduleTime.CalculateTimeFrom(startTime);
+                    DateTime runTime = Schedule.CalculateTimeFrom(startTime);
                     return runTime < now ? null as DateTime? : runTime;
                 }
 
-                case ScheduleTimeType.Daily:
+                case ScheduleType.Daily:
                 {
-                    return ScheduleTime.CalculateTimeFrom(now);
+                    return Schedule.CalculateTimeFrom(now);
                 }
 
-                case ScheduleTimeType.Delay:
+                case ScheduleType.Delay:
                 {
-                    DateTime runTime = ScheduleTime.CalculateTimeFrom(startTime);
+                    DateTime runTime = Schedule.CalculateTimeFrom(startTime);
                     return runTime < now ? null as DateTime? : runTime;
                 }
 
-                case ScheduleTimeType.Immediate:
+                case ScheduleType.Immediate:
                 {
-                    DateTime runTime = ScheduleTime.CalculateTimeFrom(startTime);
+                    DateTime runTime = Schedule.CalculateTimeFrom(startTime);
                     return runTime < now ? null as DateTime? : runTime;
                 }
 
@@ -234,14 +234,14 @@ namespace DustInTheWind.WindowsReboot.Domain
         {
             ScheduleChangedEvent ev = new ScheduleChangedEvent
             {
-                DateTime = scheduleTime.DateTime,
-                TimeOfDay = scheduleTime.TimeOfDay,
+                DateTime = schedule.DateTime,
+                TimeOfDay = schedule.TimeOfDay,
 
-                Hours = scheduleTime.Hours,
-                Minutes = scheduleTime.Minutes,
-                Seconds = scheduleTime.Seconds,
+                Hours = schedule.Hours,
+                Minutes = schedule.Minutes,
+                Seconds = schedule.Seconds,
 
-                Type = scheduleTime.Type,
+                Type = schedule.Type,
 
                 IsAllowedToChange = !IsRunning
             };

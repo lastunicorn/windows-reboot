@@ -26,10 +26,10 @@ namespace DustInTheWind.WindowsReboot.ConfigAccess
         private readonly Configuration config;
         private readonly WindowsRebootConfigSection configSection;
 
-        public ScheduleTime ActionTime
+        public Schedule ActionTime
         {
             get =>
-                new ScheduleTime
+                new Schedule
                 {
                     Type = configSection.ActionTime.Type,
                     DateTime = configSection.ActionTime.DateTime,
@@ -41,7 +41,7 @@ namespace DustInTheWind.WindowsReboot.ConfigAccess
             set
             {
                 configSection.ActionTime.Type = value.Type;
-                configSection.ActionTime.DateTime = value.Type == ScheduleTimeType.Daily
+                configSection.ActionTime.DateTime = value.Type == ScheduleType.Daily
                     ? DateTime.Today.Add(value.TimeOfDay)
                     : value.DateTime;
                 configSection.ActionTime.Hours = value.Hours;

@@ -20,7 +20,7 @@ namespace DustInTheWind.WindowsReboot.Ports.ConfigAccess
 {
     public interface IConfigStorage
     {
-        ScheduleTime ActionTime { get; set; }
+        Schedule ActionTime { get; set; }
 
         ActionType ActionType { get; set; }
 

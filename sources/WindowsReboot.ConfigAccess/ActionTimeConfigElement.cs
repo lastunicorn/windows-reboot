@@ -29,9 +29,9 @@ namespace DustInTheWind.WindowsReboot.ConfigAccess
         /// Gets or sets the way in which the action time is specified or how it will be calculated.
         /// </summary>
         [ConfigurationProperty("type", IsRequired = true)]
-        public ScheduleTimeType Type
+        public ScheduleType Type
         {
-            get => (ScheduleTimeType)this["type"];
+            get => (ScheduleType)this["type"];
             set => this["type"] = value;
         }
 

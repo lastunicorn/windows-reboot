@@ -33,7 +33,7 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetSeconds
 
         public Task Handle(SetSecondsRequest request, CancellationToken cancellationToken)
         {
-            executionTimer.ScheduleTime.Seconds = request.Seconds;
+            executionTimer.Schedule.Seconds = request.Seconds;
 
             return Task.CompletedTask;
         }

@@ -18,9 +18,9 @@ using System;
 
 namespace DustInTheWind.WindowsReboot.Domain
 {
-    public class ScheduleTime
+    public class Schedule
     {
-        public ScheduleTimeType Type { get; set; }
+        public ScheduleType Type { get; set; }
 
         public DateTime DateTime { get; set; }
 
@@ -32,14 +32,14 @@ namespace DustInTheWind.WindowsReboot.Domain
 
         public int Seconds { get; set; }
 
-        public static ScheduleTime Immediate { get; } = new ScheduleTime
+        public static Schedule Immediate { get; } = new Schedule
         {
-            Type = ScheduleTimeType.Immediate
+            Type = ScheduleType.Immediate
         };
 
-        public ScheduleTime()
+        public Schedule()
         {
-            Type = ScheduleTimeType.Immediate;
+            Type = ScheduleType.Immediate;
             DateTime = DateTime.Now;
         }
 
@@ -47,25 +47,25 @@ namespace DustInTheWind.WindowsReboot.Domain
         {
             switch (Type)
             {
-                case ScheduleTimeType.FixedDate:
+                case ScheduleType.FixedDate:
                     return DateTime;
 
-                case ScheduleTimeType.Daily:
-                {
-                    DateTime potentialTime = now.Date + TimeOfDay;
+                case ScheduleType.Daily:
+                    {
+                        DateTime potentialTime = now.Date + TimeOfDay;
 
-                    while (potentialTime < now)
-                        potentialTime += TimeSpan.FromDays(1);
+                        while (potentialTime < now)
+                            potentialTime += TimeSpan.FromDays(1);
 
-                    // todo: check if reached DateTime.Max
+                        // todo: check if reached DateTime.Max
 
-                    return potentialTime;
-                }
+                        return potentialTime;
+                    }
 
-                case ScheduleTimeType.Delay:
+                case ScheduleType.Delay:
                     return now + new TimeSpan(Hours, Minutes, Seconds);
 
-                case ScheduleTimeType.Immediate:
+                case ScheduleType.Immediate:
                     return now;
 
                 default:

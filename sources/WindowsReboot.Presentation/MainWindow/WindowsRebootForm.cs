@@ -39,9 +39,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 statusControl1.ViewModel = viewModel.StatusControlViewModel;
 
                 goToTrayToolStripMenuItem.Command = viewModel.GoToTrayCommand;
-                loadDefaultSettingsToolStripMenuItem.Command = viewModel.LoadDefaultConfigurationCommand;
-                loadInitialSettingsToolStripMenuItem.Command = viewModel.LoadConfigurationCommand;
-                saveCurrentSettingsToolStripMenuItem.Command = viewModel.SaveConfigurationCommand;
+                loadDefaultSettingsToolStripMenuItem.Command = viewModel.LoadDefaultPlanCommand;
+                loadInitialSettingsToolStripMenuItem.Command = viewModel.LoadThePlanCommand;
+                saveCurrentSettingsToolStripMenuItem.Command = viewModel.SaveThePlanCommand;
                 optionsToolStripMenuItem.Command = viewModel.OptionsCommand;
                 licenseToolStripMenuItem.Command = viewModel.LicenseCommand;
                 aboutToolStripMenuItem.Command = viewModel.AboutCommand;

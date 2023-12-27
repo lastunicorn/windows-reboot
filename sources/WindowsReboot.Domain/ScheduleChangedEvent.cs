@@ -20,7 +20,7 @@ namespace DustInTheWind.WindowsReboot.Domain
 {
     public class ScheduleChangedEvent
     {
-        public ScheduleTimeType Type { get; set; }
+        public ScheduleType Type { get; set; }
 
         public DateTime DateTime { get; set; }
 

@@ -103,9 +103,9 @@ namespace DustInTheWind.WindowsReboot
 
             containerBuilder.RegisterType<GoToTrayCommand>().AsSelf();
             containerBuilder.RegisterType<ExitCommand>().AsSelf();
-            containerBuilder.RegisterType<LoadConfigurationCommand>().AsSelf();
-            containerBuilder.RegisterType<SaveConfigurationCommand>().AsSelf();
-            containerBuilder.RegisterType<LoadDefaultConfigurationCommand>().AsSelf();
+            containerBuilder.RegisterType<LoadThePlanCommand>().AsSelf();
+            containerBuilder.RegisterType<SaveThePlanCommand>().AsSelf();
+            containerBuilder.RegisterType<LoadDefaultPlanCommand>().AsSelf();
             containerBuilder.RegisterType<OptionsCommand>().AsSelf();
             containerBuilder.RegisterType<LicenseCommand>().AsSelf();
             containerBuilder.RegisterType<AboutCommand>().AsSelf();
