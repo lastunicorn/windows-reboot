@@ -46,7 +46,8 @@ namespace DustInTheWind.WindowsReboot.Workers
 
         private void HandleExecutionTimerWarning(object sender, EventArgs e)
         {
-            userInterface.DisplayExecutionWarning(executionPlan.ActionType.ToString());
+            string actionName = executionPlan.ActionType.ToString();
+            userInterface.DisplayExecutionWarning(actionName);
         }
     }
 }

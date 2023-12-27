@@ -34,7 +34,7 @@ namespace DustInTheWind.WorkerEngine.Setup.Autofac
         {
             return AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.GetTypes())
-                .Where(x => x.IsAssignableTo<IWorker>())
+                .Where(x => x.IsClass && !x.IsAbstract && x.IsAssignableTo<IWorker>())
                 .Select(x => context.IsRegistered(x)
                     ? (IWorker)context.Resolve(x)
                     : null)
