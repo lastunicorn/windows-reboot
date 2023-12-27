@@ -64,44 +64,29 @@
     <Reference Include="Autofac, Version=7.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.7.1.0\lib\netstandard2.0\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="DustInTheWind.WindowsApi.ConsoleApi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DustInTheWind.WindowsApi.ConsoleApi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.ConsoleApi.dll</HintPath>
+    <Reference Include="DustInTheWind.WindowsApi.Core, Version=1.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Core.1.3.2\lib\netstandard2.0\DustInTheWind.WindowsApi.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DustInTheWind.WindowsApi.Core, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DustInTheWind.WindowsApi.Core.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Core.dll</HintPath>
+    <Reference Include="DustInTheWind.WindowsApi.Powrprof, Version=1.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Powrprof.1.3.2\lib\netstandard2.0\DustInTheWind.WindowsApi.Powrprof.dll</HintPath>
     </Reference>
-    <Reference Include="DustInTheWind.WindowsApi.Errhandlingapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DustInTheWind.WindowsApi.Errhandlingapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Errhandlingapi.dll</HintPath>
+    <Reference Include="DustInTheWind.WindowsApi.Processthreadsapi, Version=1.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Processthreadsapi.1.3.2\lib\netstandard2.0\DustInTheWind.WindowsApi.Processthreadsapi.dll</HintPath>
     </Reference>
-    <Reference Include="DustInTheWind.WindowsApi.Fileapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DustInTheWind.WindowsApi.Fileapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Fileapi.dll</HintPath>
+    <Reference Include="DustInTheWind.WindowsApi.Securitybaseapi, Version=1.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Securitybaseapi.1.3.2\lib\netstandard2.0\DustInTheWind.WindowsApi.Securitybaseapi.dll</HintPath>
     </Reference>
-    <Reference Include="DustInTheWind.WindowsApi.Handleapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DustInTheWind.WindowsApi.Handleapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Handleapi.dll</HintPath>
+    <Reference Include="DustInTheWind.WindowsApi.Winbase, Version=1.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Winbase.1.3.2\lib\netstandard2.0\DustInTheWind.WindowsApi.Winbase.dll</HintPath>
     </Reference>
-    <Reference Include="DustInTheWind.WindowsApi.ProcessEnv, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DustInTheWind.WindowsApi.ProcessEnv.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.ProcessEnv.dll</HintPath>
+    <Reference Include="DustInTheWind.WindowsApi.Windef, Version=1.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Windef.1.3.2\lib\netstandard2.0\DustInTheWind.WindowsApi.Windef.dll</HintPath>
     </Reference>
-    <Reference Include="DustInTheWind.WindowsApi.Processthreadsapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DustInTheWind.WindowsApi.Processthreadsapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Processthreadsapi.dll</HintPath>
+    <Reference Include="DustInTheWind.WindowsApi.Winnt, Version=1.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Winnt.1.3.2\lib\netstandard2.0\DustInTheWind.WindowsApi.Winnt.dll</HintPath>
     </Reference>
-    <Reference Include="DustInTheWind.WindowsApi.Sysinfoapi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DustInTheWind.WindowsApi.Sysinfoapi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Sysinfoapi.dll</HintPath>
-    </Reference>
-    <Reference Include="DustInTheWind.WindowsApi.Winbase, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DustInTheWind.WindowsApi.Winbase.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Winbase.dll</HintPath>
-    </Reference>
-    <Reference Include="DustInTheWind.WindowsApi.Windef, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DustInTheWind.WindowsApi.Windef.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Windef.dll</HintPath>
-    </Reference>
-    <Reference Include="DustInTheWind.WindowsApi.Wingdi, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DustInTheWind.WindowsApi.Wingdi.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Wingdi.dll</HintPath>
-    </Reference>
-    <Reference Include="DustInTheWind.WindowsApi.Winnt, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DustInTheWind.WindowsApi.Winnt.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Winnt.dll</HintPath>
-    </Reference>
-    <Reference Include="DustInTheWind.WindowsApi.Winuser, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DustInTheWind.WindowsApi.Winuser.1.2.0\lib\netstandard2.0\DustInTheWind.WindowsApi.Winuser.dll</HintPath>
+    <Reference Include="DustInTheWind.WindowsApi.Winuser, Version=1.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DustInTheWind.WindowsApi.Winuser.1.3.2\lib\netstandard2.0\DustInTheWind.WindowsApi.Winuser.dll</HintPath>
     </Reference>
     <Reference Include="MediatR, Version=12.0.0.0, Culture=neutral, PublicKeyToken=bb9a41a5e8aaa7e2, processorArchitecture=MSIL">
       <HintPath>..\packages\MediatR.12.2.0\lib\netstandard2.0\MediatR.dll</HintPath>

@@ -16,12 +16,13 @@
 
 using System;
 using System.Runtime.InteropServices;
+using DustInTheWind.WindowsApi.Powrprof;
 using DustInTheWind.WindowsApi.ProcessthreadsapiHeader;
+using DustInTheWind.WindowsApi.Securitybaseapi;
 using DustInTheWind.WindowsApi.Winbase;
+using DustInTheWind.WindowsApi.Winnt;
 using DustInTheWind.WindowsApi.Winuser;
 using DustInTheWind.WindowsReboot.Ports.SystemAccess;
-using DustInTheWind.WindowsReboot.SystemAccess.WinApi;
-using LUID = DustInTheWind.WindowsReboot.SystemAccess.WinApi.LUID;
 
 namespace DustInTheWind.WindowsReboot.SystemAccess
 {
@@ -32,55 +33,14 @@ namespace DustInTheWind.WindowsReboot.SystemAccess
     public class OperatingSystem : IOperatingSystem
     {
         /// <summary>
-        /// Checks if the system on which this application runs is an NT based system.
-        /// </summary>
-        /// <returns>true if the system is an NT based; false otherwise.</returns>
-        private static bool IsWinNT()
-        {
-            //int VER_PLATFORM_WIN32_NT = 2;
-            return (Environment.OSVersion.Platform == PlatformID.Win32NT);
-        }
-
-        /// <summary>
-        /// Sets the privilege needed to execute a ShutDown action.
-        /// </summary>
-        private static void EnableShutDown()
-        {
-            const short TOKEN_ADJUST_PRIVILEGES = 0x20;
-            const short TOKEN_QUERY = 0x08;
-            const short SE_PRIVILEGE_ENABLED = 0x02;
-            const string SE_SHUTDOWN_NAME = "SeShutdownPrivilege";
-
-            DustInTheWind.WindowsApi.Winbase.LUID tmpLuid;
-            TOKEN_PRIVILEGES tkp;
-
-            int processHandle = Processthreadsapi.GetCurrentProcess();
-            int desiredAccess = TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY;
-
-            if (Processthreadsapi.OpenProcessToken(processHandle, desiredAccess, out int tokenHandle) == WinApiConstants.FALSE)
-                throw new WindowsRebootException("Could not obtain the rights to execute the action.");
-
-            Winbase.LookupPrivilegeValueA(null, SE_SHUTDOWN_NAME, out tmpLuid);
-            tkp.PrivilegeCount = 1; // One privilege to set
-            tkp.TheLuid = new LUID();
-            tkp.TheLuid.UsedPart = tmpLuid.UsedPart;
-            tkp.TheLuid.IgnoredForNowHigh32BitPart = tmpLuid.IgnoredForNowHigh32BitPart;
-
-            tkp.Attributes = SE_PRIVILEGE_ENABLED;
-
-            if (WinApiFunctions.AdjustTokenPrivileges(tokenHandle, 0, ref tkp, Marshal.SizeOf(typeof(TOKEN_PRIVILEGES)), out _, out _) == WinApiConstants.FALSE)
-                throw new WindowsRebootException("Could not obtain the rights to execute the action.");
-        }
-
-        /// <summary>
-        /// Locks the workstation's display. To unlock the workstation, the user must log in.
+        /// Locks the workstation's display. To unlock the workstation, the user must log in again.
         /// </summary>
         public void Lock()
         {
-            if (Winuser.LockWorkStation() == WinApiConstants.FALSE)
-            {
-                throw new WindowsRebootException("The LockWorkstation action failed.");
-            }
+            bool success = Winuser.LockWorkStation();
+
+            if (!success)
+                throw new LockWorkstationFailedException();
         }
 
         /// <summary>
@@ -90,13 +50,16 @@ namespace DustInTheWind.WindowsReboot.SystemAccess
         public void LogOff(bool force)
         {
             ExitWindowsFlags flags = ExitWindowsFlags.LogOff;
-            SystemShutdownReason reason = SystemShutdownReason.SHTDN_REASON_MAJOR_OTHER | SystemShutdownReason.SHTDN_REASON_MINOR_OTHER | SystemShutdownReason.SHTDN_REASON_FLAG_PLANNED;
 
             if (force)
                 flags |= ExitWindowsFlags.Force;
 
-            if (Winuser.ExitWindowsEx(flags, reason) == WinApiConstants.FALSE)
-                throw new WindowsRebootException("The LogOff action failed.");
+            SystemShutdownReason reason = SystemShutdownReason.SHTDN_REASON_MAJOR_OTHER | SystemShutdownReason.SHTDN_REASON_MINOR_OTHER | SystemShutdownReason.SHTDN_REASON_FLAG_PLANNED;
+
+            bool success = Winuser.ExitWindowsEx(flags, reason);
+
+            if (!success)
+                throw new LogOffFailedException();
         }
 
         /// <summary>
@@ -114,8 +77,10 @@ namespace DustInTheWind.WindowsReboot.SystemAccess
             if (IsWinNT())
                 EnableShutDown();
 
-            if (WinApiFunctions.SetSuspendState(WinApiConstants.FALSE, (force ? WinApiConstants.TRUE : WinApiConstants.FALSE), WinApiConstants.FALSE) == WinApiConstants.FALSE)
-                throw new WindowsRebootException("The Sleep action failed.");
+            bool success = Powrprof.SetSuspendState(false, force, false);
+
+            if (!success)
+                throw new SleepFailedException();
         }
 
         /// <summary>
@@ -133,8 +98,10 @@ namespace DustInTheWind.WindowsReboot.SystemAccess
             if (IsWinNT())
                 EnableShutDown();
 
-            if (WinApiFunctions.SetSuspendState(WinApiConstants.TRUE, (force ? WinApiConstants.TRUE : WinApiConstants.FALSE), WinApiConstants.FALSE) == WinApiConstants.FALSE)
-                throw new WindowsRebootException("The Hibernate action failed.");
+            bool success = Powrprof.SetSuspendState(true, force, false);
+
+            if (!success)
+                throw new HibernateFailedException();
         }
 
         /// <summary>
@@ -143,17 +110,20 @@ namespace DustInTheWind.WindowsReboot.SystemAccess
         /// <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
         public void Reboot(bool force)
         {
+            if (IsWinNT())
+                EnableShutDown();
+
             ExitWindowsFlags flags = ExitWindowsFlags.Reboot;
-            SystemShutdownReason reason = SystemShutdownReason.SHTDN_REASON_MAJOR_OTHER | SystemShutdownReason.SHTDN_REASON_MINOR_OTHER | SystemShutdownReason.SHTDN_REASON_FLAG_PLANNED;
 
             if (force)
                 flags |= ExitWindowsFlags.Force;
 
-            if (IsWinNT())
-                EnableShutDown();
+            SystemShutdownReason reason = SystemShutdownReason.SHTDN_REASON_MAJOR_OTHER | SystemShutdownReason.SHTDN_REASON_MINOR_OTHER | SystemShutdownReason.SHTDN_REASON_FLAG_PLANNED;
 
-            if (Winuser.ExitWindowsEx(flags, reason) == WinApiConstants.FALSE)
-                throw new WindowsRebootException("The Reboot action failed.");
+            bool success = Winuser.ExitWindowsEx(flags, reason);
+
+            if (!success)
+                throw new RebootFailedException();
         }
 
         /// <summary>
@@ -167,17 +137,20 @@ namespace DustInTheWind.WindowsReboot.SystemAccess
         /// <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
         public void ShutDown(bool force)
         {
+            if (IsWinNT())
+                EnableShutDown();
+
             ExitWindowsFlags flags = ExitWindowsFlags.Shutdown;
-            SystemShutdownReason reason = SystemShutdownReason.SHTDN_REASON_MAJOR_OTHER | SystemShutdownReason.SHTDN_REASON_MINOR_OTHER | SystemShutdownReason.SHTDN_REASON_FLAG_PLANNED;
 
             if (force)
                 flags |= ExitWindowsFlags.Force;
 
-            if (IsWinNT())
-                EnableShutDown();
+            SystemShutdownReason reason = SystemShutdownReason.SHTDN_REASON_MAJOR_OTHER | SystemShutdownReason.SHTDN_REASON_MINOR_OTHER | SystemShutdownReason.SHTDN_REASON_FLAG_PLANNED;
 
-            if (Winuser.ExitWindowsEx(flags, reason) == WinApiConstants.FALSE)
-                throw new WindowsRebootException("The ShutDown action failed.");
+            bool success = Winuser.ExitWindowsEx(flags, reason);
+
+            if (!success)
+                throw new ShutDownFailedException();
         }
 
         /// <summary>
@@ -186,17 +159,86 @@ namespace DustInTheWind.WindowsReboot.SystemAccess
         /// <param name="force">If true, forces processes to terminate if they do not respond within the timeout interval.</param>
         public void PowerOff(bool force)
         {
+            if (IsWinNT())
+                EnableShutDown();
+
             ExitWindowsFlags flags = ExitWindowsFlags.PowerOff;
-            SystemShutdownReason reason = SystemShutdownReason.SHTDN_REASON_MAJOR_OTHER | SystemShutdownReason.SHTDN_REASON_MINOR_OTHER | SystemShutdownReason.SHTDN_REASON_FLAG_PLANNED;
 
             if (force)
                 flags |= ExitWindowsFlags.Force;
 
-            if (IsWinNT())
-                EnableShutDown();
+            SystemShutdownReason reason = SystemShutdownReason.SHTDN_REASON_MAJOR_OTHER | SystemShutdownReason.SHTDN_REASON_MINOR_OTHER | SystemShutdownReason.SHTDN_REASON_FLAG_PLANNED;
 
-            if (Winuser.ExitWindowsEx(flags, reason) == WinApiConstants.FALSE)
-                throw new WindowsRebootException("The PowerOff action failed.");
+            bool success = Winuser.ExitWindowsEx(flags, reason);
+
+            if (!success)
+                throw new PowerOffFailedException();
+        }
+
+        /// <summary>
+        /// Checks if the system on which this application runs is an NT based system.
+        /// </summary>
+        /// <returns>true if the system is an NT based; false otherwise.</returns>
+        private static bool IsWinNT()
+        {
+            return (Environment.OSVersion.Platform == PlatformID.Win32NT);
+        }
+
+        /// <summary>
+        /// Sets the privilege needed to execute a ShutDown action.
+        /// </summary>
+        private static void EnableShutDown()
+        {
+            int tokenHandle = OpenCurrentProcessToken();
+            LUID luid = RetrieveLuid();
+            AdjustTokenPrivileges(luid, tokenHandle);
+        }
+
+        private static int OpenCurrentProcessToken()
+        {
+            int processHandle = Processthreadsapi.GetCurrentProcess();
+            AccessTokens desiredAccess = AccessTokens.TOKEN_ADJUST_PRIVILEGES | AccessTokens.TOKEN_QUERY;
+
+            bool success = Processthreadsapi.OpenProcessToken(processHandle, desiredAccess, out int tokenHandle);
+
+            if (!success)
+                throw new ExecutionRightsException();
+
+            return tokenHandle;
+        }
+
+        private static LUID RetrieveLuid()
+        {
+            const string SE_SHUTDOWN_NAME = "SeShutdownPrivilege";
+            LUID luid;
+
+            bool success = Winbase.LookupPrivilegeValueA(null, SE_SHUTDOWN_NAME, out luid);
+
+            if (!success)
+                throw new ExecutionRightsException();
+
+            return luid;
+        }
+
+        private static void AdjustTokenPrivileges(LUID luid, int tokenHandle)
+        {
+            const short SE_PRIVILEGE_ENABLED = 0x02;
+
+            TOKEN_PRIVILEGES tokenPrivileges;
+            tokenPrivileges.PrivilegeCount = 1; // One privilege to set
+            tokenPrivileges.Privileges = new LUID_AND_ATTRIBUTES[1];
+            tokenPrivileges.Privileges[0] = new LUID_AND_ATTRIBUTES
+            {
+                Luid = luid,
+                Attributes = SE_PRIVILEGE_ENABLED
+            };
+
+            int bufferLength = Marshal.SizeOf(typeof(TOKEN_PRIVILEGES));
+
+            bool success = Securitybaseapi.AdjustTokenPrivileges(tokenHandle, false, ref tokenPrivileges, bufferLength, out _, out _);
+
+            if (!success)
+                throw new ExecutionRightsException();
         }
     }
 }

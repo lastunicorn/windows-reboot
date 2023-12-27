@@ -14,11 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot.SystemAccess.WinApi
+using System;
+
+namespace DustInTheWind.WindowsReboot.Ports.SystemAccess
 {
-    internal static class WinApiConstants
+    public class ExecutionRightsException : Exception
     {
-        public const int TRUE = 1;
-        public const int FALSE = 0;
+        private const string DefaultMessage = "Could not obtain the rights to execute the action.";
+
+        public ExecutionRightsException()
+            : base(DefaultMessage)
+        {
+        }
     }
 }

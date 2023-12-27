@@ -14,12 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot.SystemAccess.WinApi
+namespace DustInTheWind.WindowsReboot.Ports.SystemAccess
 {
-    internal struct TOKEN_PRIVILEGES
+    public class PowerOffFailedException : WindowsRebootException
     {
-        public int PrivilegeCount;
-        public LUID TheLuid;
-        public int Attributes;
+        private const string DefaultMessage = "The PowerOff action failed.";
+
+        public PowerOffFailedException()
+            : base(DefaultMessage)
+        {
+        }
     }
 }

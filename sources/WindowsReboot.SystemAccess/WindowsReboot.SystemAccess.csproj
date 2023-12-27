@@ -25,7 +25,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DustInTheWind.WindowsApi" Version="1.2.0" />
+      <PackageReference Include="DustInTheWind.WindowsApi.Powrprof" Version="1.3.2" />
+      <PackageReference Include="DustInTheWind.WindowsApi.Processthreadsapi" Version="1.3.2" />
+      <PackageReference Include="DustInTheWind.WindowsApi.Securitybaseapi" Version="1.3.2" />
+      <PackageReference Include="DustInTheWind.WindowsApi.Winbase" Version="1.3.2" />
+      <PackageReference Include="DustInTheWind.WindowsApi.Winnt" Version="1.3.2" />
+      <PackageReference Include="DustInTheWind.WindowsApi.Winuser" Version="1.3.2" />
     </ItemGroup>
 
     <ItemGroup>
