@@ -16,6 +16,7 @@
 
 using System;
 using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Domain.Scheduling;
 
 namespace DustInTheWind.WindowsReboot.Domain
 {
@@ -26,11 +27,12 @@ namespace DustInTheWind.WindowsReboot.Domain
 
         private readonly EventBus eventBus;
 
-        private ActionType actionType;
-        private ForceOption forceOption;
-        private ForceOption lastApplicableForceOption;
         private ISchedule schedule = DefaultSchedule;
+        private ActionType actionType = ActionType.Ring;
+        private ForceOption forceOption = ForceOption.NotApplicable;
+        private ForceOption lastApplicableForceOption = ForceOption.Yes;
         private TimeSpan? warningInterval = DefaultWarningTime;
+        private bool isWarningEnabled = true;
 
         public ISchedule Schedule
         {
@@ -41,21 +43,12 @@ namespace DustInTheWind.WindowsReboot.Domain
                     schedule = DefaultSchedule;
 
                 schedule = value;
-
-                OnScheduleChanged();
             }
         }
 
-        public TimeSpan? WarningInterval
-        {
-            get => warningInterval;
-            set
-            {
-                warningInterval = value;
-
-                OnWarningIntervalChanged();
-            }
-        }
+        public TimeSpan? WarningInterval => isWarningEnabled
+            ? warningInterval
+            : null;
 
         public ActionType ActionType
         {
@@ -93,20 +86,16 @@ namespace DustInTheWind.WindowsReboot.Domain
         public ExecutionPlan(EventBus eventBus)
         {
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-
-            ActionType = ActionType.Ring;
-            ForceOption = ForceOption.NotApplicable;
-            lastApplicableForceOption = ForceOption.Yes;
         }
 
         public void ActivateWarning()
         {
-            WarningInterval = DefaultWarningTime;
+            isWarningEnabled = true;
         }
 
         public void DeactivateWarning()
         {
-            WarningInterval = null;
+            isWarningEnabled = false;
         }
 
         private void AdjustForceOption()
@@ -149,22 +138,6 @@ namespace DustInTheWind.WindowsReboot.Domain
                 default:
                     return value == ForceOption.NotApplicable;
             }
-        }
-
-        protected virtual void OnWarningIntervalChanged()
-        {
-            WarningIntervalChangedEvent ev = new WarningIntervalChangedEvent
-            {
-                Interval = warningInterval
-            };
-
-            eventBus.Publish(ev);
-        }
-
-        protected virtual void OnScheduleChanged()
-        {
-            ScheduleChangedEvent ev = new ScheduleChangedEvent(schedule);
-            eventBus.Publish(ev);
         }
 
         protected virtual void OnForceOptionChanged()

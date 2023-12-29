@@ -59,10 +59,10 @@ namespace DustInTheWind.WindowsReboot.Application.ActionArea.Start
 
             executionProcess.Start(executionRequest);
 
-            OnStarted(runTime);
+            RaiseTimerStartedEvent(runTime);
         }
 
-        protected virtual void OnStarted(DateTime nextRunTime)
+        private void RaiseTimerStartedEvent(DateTime nextRunTime)
         {
             TimerStartedEvent ev = new TimerStartedEvent
             {

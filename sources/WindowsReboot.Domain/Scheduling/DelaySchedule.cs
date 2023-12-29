@@ -16,15 +16,19 @@
 
 using System;
 
-namespace DustInTheWind.WindowsReboot.Domain
+namespace DustInTheWind.WindowsReboot.Domain.Scheduling
 {
-    public class FixedDateSchedule : ISchedule
+    public class DelaySchedule : ISchedule
     {
-        public DateTime DateTime { get; set; }
+        public int Hours { get; set; }
+
+        public int Minutes { get; set; }
+
+        public int Seconds { get; set; }
 
         public DateTime CalculateTimeFrom(DateTime now)
         {
-            return DateTime;
+            return now + new TimeSpan(Hours, Minutes, Seconds);
         }
     }
 }

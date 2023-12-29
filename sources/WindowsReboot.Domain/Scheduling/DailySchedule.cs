@@ -16,19 +16,22 @@
 
 using System;
 
-namespace DustInTheWind.WindowsReboot.Domain
+namespace DustInTheWind.WindowsReboot.Domain.Scheduling
 {
-    public class DelaySchedule : ISchedule
+    public class DailySchedule : ISchedule
     {
-        public int Hours { get; set; }
-
-        public int Minutes { get; set; }
-
-        public int Seconds { get; set; }
+        public TimeSpan TimeOfDay { get; set; }
 
         public DateTime CalculateTimeFrom(DateTime now)
         {
-            return now + new TimeSpan(Hours, Minutes, Seconds);
+            DateTime potentialTime = now.Date + TimeOfDay;
+
+            while (potentialTime < now)
+                potentialTime += TimeSpan.FromDays(1);
+
+            // todo: check if reached DateTime.Max
+
+            return potentialTime;
         }
     }
 }

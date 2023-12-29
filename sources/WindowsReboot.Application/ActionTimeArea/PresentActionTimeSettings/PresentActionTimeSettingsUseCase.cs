@@ -18,9 +18,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Domain.Scheduling;
 using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
-using ScheduleType = DustInTheWind.WindowsReboot.Domain.ScheduleType;
+using ScheduleType = DustInTheWind.WindowsReboot.Domain.Scheduling.ScheduleType;
 
 namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.PresentActionTimeSettings
 {

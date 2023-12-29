@@ -16,6 +16,7 @@
 
 using System;
 using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Application;
 using DustInTheWind.WindowsReboot.Application.PlanArea.LoadThePlan;
 using DustInTheWind.WindowsReboot.Domain;
 using MediatR;

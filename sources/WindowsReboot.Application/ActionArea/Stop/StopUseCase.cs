@@ -18,7 +18,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.EventBusEngine;
-using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 
@@ -38,12 +37,12 @@ namespace DustInTheWind.WindowsReboot.Application.ActionArea.Stop
         public Task Handle(StopRequest request, CancellationToken cancellationToken)
         {
             executionProcess.Stop();
-            OnStopped();
+            RaiseTimerStoppedEvent();
 
             return Task.CompletedTask;
         }
 
-        private void OnStopped()
+        private void RaiseTimerStoppedEvent()
         {
             TimerStoppedEvent ev = new TimerStoppedEvent();
             eventBus.Publish(ev);

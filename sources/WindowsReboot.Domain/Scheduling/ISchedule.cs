@@ -14,31 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot.Domain
+using System;
+
+namespace DustInTheWind.WindowsReboot.Domain.Scheduling
 {
-    /// <summary>
-    /// The way in which the action time is specified.
-    /// </summary>
-    public enum ScheduleType
+    public interface ISchedule
     {
-        /// <summary>
-        /// The action time is specified as a fixed date and time.
-        /// </summary>
-        FixedDate,
-
-        /// <summary>
-        /// The action will be executed every day at a specific hour.
-        /// </summary>
-        Daily,
-
-        /// <summary>
-        /// The action time is specified as a delay from the time when the timer is started.
-        /// </summary>
-        Delay,
-
-        /// <summary>
-        /// The action time is exactly the time when the timer is started.
-        /// </summary>
-        Immediate
+        DateTime CalculateTimeFrom(DateTime now);
     }
 }

@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Domain.Scheduling;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using ScheduleType = DustInTheWind.WindowsReboot.Ports.ConfigAccess.ScheduleType;
 

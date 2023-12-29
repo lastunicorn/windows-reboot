@@ -19,6 +19,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Domain.Scheduling;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using DustInTheWind.WorkerEngine;
@@ -46,7 +47,9 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication
 
         public Task Handle(InitializeApplicationRequest request, CancellationToken cancellationToken)
         {
-            executionPlan.Schedule = configStorage.Schedule.ToDomain();
+            ISchedule schedule = configStorage.Schedule.ToDomain();
+            SetSchedule(schedule);
+
             executionPlan.ActionType = configStorage.ActionType.ToDomain();
             executionPlan.ForceOption = configStorage.ForceClosingPrograms
                 ? ForceOption.Yes
@@ -59,6 +62,14 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication
             //    Start();
 
             return Task.CompletedTask;
+        }
+
+        private void SetSchedule(ISchedule schedule)
+        {
+            executionPlan.Schedule = schedule;
+
+            ScheduleChangedEvent ev = new ScheduleChangedEvent(schedule);
+            eventBus.Publish(ev);
         }
 
         public void Start()
@@ -77,10 +88,10 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication
 
             executionProcess.Start(executionRequest);
 
-            OnStarted(runTime);
+            RaiseTimerStartedEvent(runTime);
         }
 
-        protected virtual void OnStarted(DateTime nextRunTime)
+        private void RaiseTimerStartedEvent(DateTime nextRunTime)
         {
             TimerStartedEvent ev = new TimerStartedEvent
             {

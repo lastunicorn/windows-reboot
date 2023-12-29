@@ -26,8 +26,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <ItemGroup>
         <ProjectReference Include="..\EventBusEngine\EventBusEngine.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\WindowsReboot.Ports.PresentationAccess\WindowsReboot.Ports.PresentationAccess.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj" PrivateAssets="All" />
     </ItemGroup>
 
 </Project>

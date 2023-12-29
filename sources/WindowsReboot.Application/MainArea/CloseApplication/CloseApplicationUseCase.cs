@@ -48,7 +48,7 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication
 
             if (configStorage.CloseToTray && !request.Force)
             {
-                OnGoToTray();
+                RaiseApplicationStateChangedEvent();
                 response.CloseSuccessfullyCompleted = false;
             }
             else
@@ -57,7 +57,7 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication
 
                 if (allowToClose)
                 {
-                    bool success = OnApplicationClosing();
+                    bool success = RaiseApplicationClosingEvent();
 
                     if (success)
                     {
@@ -66,7 +66,7 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication
                     }
                     else
                     {
-                        OnApplicationCloseRevoked();
+                        RaiseApplicationCloseRevokedEvent();
                         response.CloseSuccessfullyCompleted = false;
                     }
                 }
@@ -79,7 +79,7 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication
             return Task.FromResult(response);
         }
 
-        private void OnGoToTray()
+        private void RaiseApplicationStateChangedEvent()
         {
             ApplicationStateChangedEvent ev = new ApplicationStateChangedEvent
             {
@@ -88,14 +88,14 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication
             eventBus.Publish(ev);
         }
 
-        private bool OnApplicationClosing()
+        private bool RaiseApplicationClosingEvent()
         {
             ApplicationClosingEvent ev = new ApplicationClosingEvent();
             eventBus.Publish(ev);
             return !ev.IsCanceled;
         }
 
-        private void OnApplicationCloseRevoked()
+        private void RaiseApplicationCloseRevokedEvent()
         {
             ApplicationCloseRevokedEvent ev = new ApplicationCloseRevokedEvent();
             eventBus.Publish(ev);

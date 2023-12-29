@@ -17,8 +17,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication;
 using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Domain.Scheduling;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
@@ -30,26 +32,38 @@ namespace DustInTheWind.WindowsReboot.Application.PlanArea.LoadThePlan
         private readonly ExecutionPlan executionPlan;
         private readonly IConfigStorage configuration;
         private readonly IExecutionProcess executionProcess;
+        private readonly EventBus eventBus;
 
-        public LoadThePlanUseCase(ExecutionPlan executionPlan, IConfigStorage configuration, IExecutionProcess executionProcess)
+        public LoadThePlanUseCase(ExecutionPlan executionPlan, IConfigStorage configuration, IExecutionProcess executionProcess, EventBus eventBus)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         public Task Handle(LoadThePlanRequest request, CancellationToken cancellationToken)
         {
             if (executionProcess.IsTimerRunning())
-                throw new WindowsRebootException("Cannot complete the task while the timer is started.");
+                throw new TimerIsRunningException();
 
-            executionPlan.Schedule = configuration.Schedule.ToDomain();
+            ISchedule schedule = configuration.Schedule.ToDomain();
+            SetSchedule(schedule);
+
             executionPlan.ActionType = configuration.ActionType.ToDomain();
             executionPlan.ForceOption = configuration.ForceClosingPrograms
                 ? ForceOption.Yes
                 : ForceOption.No;
 
             return Task.CompletedTask;
+        }
+
+        private void SetSchedule(ISchedule schedule)
+        {
+            executionPlan.Schedule = schedule;
+
+            ScheduleChangedEvent ev = new ScheduleChangedEvent(schedule);
+            eventBus.Publish(ev);
         }
     }
 }

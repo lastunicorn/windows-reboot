@@ -16,10 +16,13 @@
 
 using System;
 
-namespace DustInTheWind.WindowsReboot.Domain
+namespace DustInTheWind.WindowsReboot.Domain.Scheduling
 {
-    public interface ISchedule
+    public class ImmediateSchedule : ISchedule
     {
-        DateTime CalculateTimeFrom(DateTime now);
+        public DateTime CalculateTimeFrom(DateTime now)
+        {
+            return now;
+        }
     }
 }

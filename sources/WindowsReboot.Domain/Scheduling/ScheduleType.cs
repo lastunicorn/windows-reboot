@@ -14,24 +14,31 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-
-namespace DustInTheWind.WindowsReboot.Domain
+namespace DustInTheWind.WindowsReboot.Domain.Scheduling
 {
-    public class DailySchedule : ISchedule
+    /// <summary>
+    /// The way in which the action time is specified.
+    /// </summary>
+    public enum ScheduleType
     {
-        public TimeSpan TimeOfDay { get; set; }
+        /// <summary>
+        /// The action time is specified as a fixed date and time.
+        /// </summary>
+        FixedDate,
 
-        public DateTime CalculateTimeFrom(DateTime now)
-        {
-            DateTime potentialTime = now.Date + TimeOfDay;
+        /// <summary>
+        /// The action will be executed every day at a specific hour.
+        /// </summary>
+        Daily,
 
-            while (potentialTime < now)
-                potentialTime += TimeSpan.FromDays(1);
+        /// <summary>
+        /// The action time is specified as a delay from the time when the timer is started.
+        /// </summary>
+        Delay,
 
-            // todo: check if reached DateTime.Max
-
-            return potentialTime;
-        }
+        /// <summary>
+        /// The action time is exactly the time when the timer is started.
+        /// </summary>
+        Immediate
     }
 }

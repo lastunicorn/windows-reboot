@@ -16,6 +16,7 @@
 
 using System;
 using DustInTheWind.EventBusEngine;
+using DustInTheWind.WindowsReboot.Application;
 using DustInTheWind.WindowsReboot.Application.ActionArea.PresentStartAbility;
 using DustInTheWind.WindowsReboot.Application.ActionArea.Start;
 using DustInTheWind.WindowsReboot.Domain;

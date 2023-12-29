@@ -16,7 +16,7 @@
 
 using System;
 
-namespace DustInTheWind.WindowsReboot.Domain
+namespace DustInTheWind.WindowsReboot.Application
 {
     public class WarningIntervalChangedEvent
     {

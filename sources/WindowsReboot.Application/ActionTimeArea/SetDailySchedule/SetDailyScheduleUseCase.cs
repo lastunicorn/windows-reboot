@@ -17,8 +17,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.WindowsReboot.Application.PlanArea.LoadDefaultPlan;
+using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Domain.Scheduling;
 using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 
@@ -28,11 +29,13 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDailySchedul
     {
         private readonly ExecutionPlan executionPlan;
         private readonly IExecutionProcess executionProcess;
+        private readonly EventBus eventBus;
 
-        public SetDailyScheduleUseCase(ExecutionPlan executionPlan, IExecutionProcess executionProcess)
+        public SetDailyScheduleUseCase(ExecutionPlan executionPlan, IExecutionProcess executionProcess, EventBus eventBus)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
             this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         public Task Handle(SetDailyScheduleRequest request, CancellationToken cancellationToken)
@@ -40,12 +43,22 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDailySchedul
             if (executionProcess.IsTimerRunning())
                 throw new TimerIsRunningException();
 
-            executionPlan.Schedule = new DailySchedule
+            DailySchedule schedule = new DailySchedule
             {
                 TimeOfDay = request.TimeOfDay
             };
 
+            SetSchedule(schedule);
+
             return Task.CompletedTask;
+        }
+
+        private void SetSchedule(ISchedule schedule)
+        {
+            executionPlan.Schedule = schedule;
+
+            ScheduleChangedEvent ev = new ScheduleChangedEvent(schedule);
+            eventBus.Publish(ev);
         }
     }
 }

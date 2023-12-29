@@ -14,15 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+using DustInTheWind.WindowsReboot.Domain;
 
-namespace DustInTheWind.WindowsReboot.Domain
+namespace DustInTheWind.WindowsReboot.Application
 {
-    public class ImmediateSchedule : ISchedule
+    internal class TimerIsRunningException : WindowsRebootException
     {
-        public DateTime CalculateTimeFrom(DateTime now)
+        private const string DefaultMessage = "Cannot complete the task while the timer is running.";
+
+        public TimerIsRunningException()
+            : base(DefaultMessage)
         {
-            return now;
         }
     }
 }
