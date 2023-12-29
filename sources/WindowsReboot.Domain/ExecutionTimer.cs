@@ -15,7 +15,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.Threading;
 using DustInTheWind.EventBusEngine;
 
 namespace DustInTheWind.WindowsReboot.Domain
@@ -23,14 +22,13 @@ namespace DustInTheWind.WindowsReboot.Domain
     public class ExecutionTimer : IDisposable
     {
         private readonly EventBus eventBus;
-        private readonly Timer timer;
+        private readonly InternalExecutionTimer timer;
 
         private static readonly ImmediateSchedule DefaultSchedule = new ImmediateSchedule();
         public readonly TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
         private volatile bool isRunning;
         private ISchedule schedule = DefaultSchedule;
         private TimeSpan? warningInterval;
-        private bool shouldRaiseWarning;
         private DateTime startTime;
 
         public event EventHandler Warning;
@@ -67,41 +65,32 @@ namespace DustInTheWind.WindowsReboot.Domain
             }
         }
 
-        public TimeSpan TimeUntilAction => ActionTime - DateTime.Now;
+        public TimeSpan TimeUntilAction => timer.ActionTime - DateTime.Now;
 
-        public DateTime ActionTime { get; private set; }
+        public DateTime ActionTime => timer.ActionTime;
 
         public ExecutionTimer(EventBus eventBus)
         {
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
 
-            timer = new Timer(TimerElapsed);
+            timer = new InternalExecutionTimer();
+            timer.Warning += TimerWarning;
+            timer.Ring += TimerRing;
 
             WarningInterval = TimeSpan.FromSeconds(30);
         }
 
-        private void TimerElapsed(object state)
+        private void TimerWarning(object sender, EventArgs e)
         {
-            if (shouldRaiseWarning)
-            {
-                shouldRaiseWarning = false;
+            OnWarning();
+        }
 
-                TimeSpan interval = ActionTime - DateTime.Now;
-                StartTimer(interval);
+        private void TimerRing(object sender, EventArgs e)
+        {
+            OnRing();
+            isRunning = false;
 
-                OnWarning();
-            }
-            else
-            {
-                DateTime? nextRunTime = CalculateNextRunTime(ActionTime + TimeSpan.FromTicks(1));
-
-                if (nextRunTime == null)
-                    Stop();
-                else
-                    RestartInternal(nextRunTime.Value);
-
-                OnRing();
-            }
+            OnStopped();
         }
 
         public void Start()
@@ -112,7 +101,9 @@ namespace DustInTheWind.WindowsReboot.Domain
             if (nextRunTime == null)
                 throw new ActionTimeInThePastException(ActionTime, startTime);
 
-            RestartInternal(nextRunTime.Value);
+            timer.ActionTime = nextRunTime.Value;
+            timer.WarningInterval = warningInterval;
+            timer.Start();
 
             OnStarted();
         }
@@ -126,40 +117,12 @@ namespace DustInTheWind.WindowsReboot.Domain
                 : runTime;
         }
 
-        private void RestartInternal(DateTime nextRunTime)
-        {
-            ActionTime = nextRunTime;
-
-            shouldRaiseWarning = warningInterval != null && warningInterval < ActionTime - startTime;
-
-            TimeSpan interval = shouldRaiseWarning
-                ? ActionTime - DateTime.Now - warningInterval.Value
-                : ActionTime - DateTime.Now;
-
-            isRunning = true;
-
-            StartTimer(interval);
-        }
-
-        private void StartTimer(TimeSpan interval)
-        {
-            if (interval < TimeSpan.Zero)
-                interval = TimeSpan.Zero;
-
-            timer.Change((long)interval.TotalMilliseconds, -1);
-        }
-
         public void Stop()
         {
-            StopTimer();
+            timer.Stop();
             isRunning = false;
 
             OnStopped();
-        }
-
-        private void StopTimer()
-        {
-            timer.Change(-1, -1);
         }
 
         public void ActivateWarning()
