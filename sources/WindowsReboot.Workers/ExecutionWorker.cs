@@ -15,35 +15,47 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.WindowsReboot.Application.TimerArea.ExecutePlan;
+using DustInTheWind.WindowsReboot.Application.TimerArea.WarnTheUser;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WorkerEngine;
+using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Workers
 {
     public class ExecutionWorker : IWorker
     {
+        private readonly IMediator mediator;
         private readonly ExecutionTimer executionTimer;
-        private readonly ExecutionPlan executionPlan;
 
-        public ExecutionWorker(ExecutionTimer executionTimer, ExecutionPlan executionPlan)
+        public ExecutionWorker(IMediator mediator, ExecutionTimer executionTimer)
         {
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
-            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public void Start()
         {
+            executionTimer.Warning += HandleExecutionTimerWarning;
             executionTimer.Ring += HandleExecutionTimerRing;
         }
 
         public void Stop()
         {
+            executionTimer.Warning -= HandleExecutionTimerWarning;
             executionTimer.Ring -= HandleExecutionTimerRing;
+        }
+
+        private void HandleExecutionTimerWarning(object sender, EventArgs e)
+        {
+            WarnTheUserRequest request = new WarnTheUserRequest();
+            _ = mediator.Send(request);
         }
 
         private void HandleExecutionTimerRing(object sender, EventArgs eventArgs)
         {
-            executionPlan.Execute();
+            ExecutePlanRequest request = new ExecutePlanRequest();
+            _ = mediator.Send(request);
         }
     }
 }

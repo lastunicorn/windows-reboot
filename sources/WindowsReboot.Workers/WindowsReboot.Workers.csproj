@@ -25,6 +25,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="MediatR" Version="12.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\WindowsReboot.Application\WindowsReboot.Application.csproj" />
         <ProjectReference Include="..\WindowsReboot.Domain\WindowsReboot.Domain.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\WindowsReboot.Ports.PresentationAccess\WindowsReboot.Ports.PresentationAccess.csproj" PrivateAssets="All" />
         <ProjectReference Include="..\WorkerEngine\WorkerEngine.csproj" PrivateAssets="All" />

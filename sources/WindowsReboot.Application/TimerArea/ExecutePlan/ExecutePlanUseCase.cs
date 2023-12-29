@@ -20,34 +20,20 @@ using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Domain;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.PlanArea.LoadDefaultPlan
+namespace DustInTheWind.WindowsReboot.Application.TimerArea.ExecutePlan
 {
-    internal class LoadDefaultPlanUseCase : IRequestHandler<LoadDefaultPlanRequest>
+    internal class ExecutePlanUseCase : IRequestHandler<ExecutePlanRequest>
     {
-        private readonly ExecutionTimer executionTimer;
         private readonly ExecutionPlan executionPlan;
 
-        public LoadDefaultPlanUseCase(ExecutionTimer executionTimer, ExecutionPlan executionPlan)
+        public ExecutePlanUseCase(ExecutionPlan executionPlan)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
-        public Task Handle(LoadDefaultPlanRequest request, CancellationToken cancellationToken)
+        public Task Handle(ExecutePlanRequest request, CancellationToken cancellationToken)
         {
-            if (executionTimer.IsRunning)
-                throw new WindowsRebootException("Cannot complete the task while the timer is started.");
-
-            executionTimer.Schedule = new DelaySchedule
-            {
-                Hours = 0,
-                Minutes = 10,
-                Seconds = 0
-            };
-
-            executionPlan.ActionType = ActionType.PowerOff;
-            executionPlan.ForceOption = ForceOption.Yes;
-            executionTimer.DeactivateWarning();
+            executionPlan.Execute();
 
             return Task.CompletedTask;
         }

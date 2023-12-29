@@ -87,7 +87,6 @@ namespace DustInTheWind.WindowsReboot.Domain
                 shouldRaiseWarning = false;
 
                 TimeSpan interval = ActionTime - DateTime.Now;
-
                 StartTimer(interval);
 
                 OnWarning();
@@ -118,32 +117,13 @@ namespace DustInTheWind.WindowsReboot.Domain
             OnStarted();
         }
 
-        private DateTime? CalculateNextRunTime(DateTime now)
+        private DateTime? CalculateNextRunTime(DateTime dateTime)
         {
-            if (Schedule is FixedDateSchedule)
-            {
-                DateTime runTime = Schedule.CalculateTimeFrom(startTime);
-                return runTime < now ? null as DateTime? : runTime;
-            }
+            DateTime runTime = Schedule.CalculateTimeFrom(dateTime);
 
-            if (Schedule is DailySchedule)
-            {
-                return Schedule.CalculateTimeFrom(now);
-            }
-
-            if (Schedule is DelaySchedule)
-            {
-                DateTime runTime = Schedule.CalculateTimeFrom(startTime);
-                return runTime < now ? null as DateTime? : runTime;
-            }
-
-            if (Schedule is ImmediateSchedule)
-            {
-                DateTime runTime = Schedule.CalculateTimeFrom(startTime);
-                return runTime < now ? null as DateTime? : runTime;
-            }
-
-            throw new ArgumentOutOfRangeException();
+            return runTime < dateTime
+                ? null as DateTime?
+                : runTime;
         }
 
         private void RestartInternal(DateTime nextRunTime)
@@ -221,7 +201,7 @@ namespace DustInTheWind.WindowsReboot.Domain
         {
             WarningTimeChangedEvent ev = new WarningTimeChangedEvent
             {
-                Time = WarningTime
+                Time = warningTime
             };
 
             eventBus.Publish(ev);
