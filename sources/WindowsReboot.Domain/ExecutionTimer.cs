@@ -25,10 +25,10 @@ namespace DustInTheWind.WindowsReboot.Domain
         private readonly InternalExecutionTimer timer;
 
         private static readonly ImmediateSchedule DefaultSchedule = new ImmediateSchedule();
-        public readonly TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
+        public static TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
         private volatile bool isRunning;
         private ISchedule schedule = DefaultSchedule;
-        private TimeSpan? warningInterval;
+        private TimeSpan? warningInterval = DefaultWarningTime;
         private DateTime startTime;
 
         public event EventHandler Warning;
@@ -76,8 +76,6 @@ namespace DustInTheWind.WindowsReboot.Domain
             timer = new InternalExecutionTimer();
             timer.Warning += TimerWarning;
             timer.Ring += TimerRing;
-
-            WarningInterval = TimeSpan.FromSeconds(30);
         }
 
         private void TimerWarning(object sender, EventArgs e)

@@ -35,8 +35,9 @@ namespace DustInTheWind.WindowsReboot.Domain
             get => actionType;
             set
             {
-                if (!Enum.IsDefined(typeof(ActionType), value))
-                    throw new ArgumentException("Invalid action type value");
+                bool isNewValueDefined = Enum.IsDefined(typeof(ActionType), value);
+                if (!isNewValueDefined)
+                    throw new InvalidActionTypeException(value);
 
                 actionType = value;
                 OnActionTypeChanged();
@@ -135,35 +136,6 @@ namespace DustInTheWind.WindowsReboot.Domain
                         ForceOption = ForceOption.NotApplicable;
                     break;
             }
-        }
-
-        private bool SafeSetForceOption(ForceOption value)
-        {
-            switch (ActionType)
-            {
-                case ActionType.LogOff:
-                case ActionType.Sleep:
-                case ActionType.Hibernate:
-                case ActionType.Reboot:
-                case ActionType.ShutDown:
-                case ActionType.PowerOff:
-                    if (value != ForceOption.Yes && value != ForceOption.No)
-                    {
-                        ForceOption = value;
-                        lastApplicableForceOption = value;
-                        return true;
-                    }
-                    break;
-
-                case ActionType.Ring:
-                case ActionType.LockWorkstation:
-                default:
-                    if (value != ForceOption.NotApplicable)
-                        ForceOption = ForceOption.NotApplicable;
-                    break;
-            }
-
-            return false;
         }
 
         private bool IsAllowedToSet(ForceOption value)
