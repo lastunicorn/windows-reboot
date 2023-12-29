@@ -22,9 +22,12 @@ namespace DustInTheWind.WindowsReboot.PresentationAccess
 {
     public class UiDispatcher : IUiDispatcher
     {
-        private readonly SynchronizationContext synchronizationContext;
+        private static SynchronizationContext synchronizationContext;
 
-        public UiDispatcher()
+        /// <summary>
+        /// Must be called from the UI thread.
+        /// </summary>
+        public static void Initialize()
         {
             synchronizationContext = SynchronizationContext.Current;
         }

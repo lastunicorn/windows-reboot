@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Autofac;
 using DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication;
 using DustInTheWind.WindowsReboot.Presentation.Behaviors;
 using DustInTheWind.WindowsReboot.Presentation.MainWindow;
 using DustInTheWind.WindowsReboot.Presentation.Tray;
+using DustInTheWind.WindowsReboot.PresentationAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot
@@ -37,8 +37,10 @@ namespace DustInTheWind.WindowsReboot
             IContainer container = containerBuilder.Build();
 
             InitializeWindowsForms();
-            InitializeBusiness(container).Wait();
+            InitializeBusiness(container);
             CreateGui(container);
+
+            UiDispatcher.Initialize();
         }
 
         private static void InitializeWindowsForms()
@@ -52,11 +54,11 @@ namespace DustInTheWind.WindowsReboot
             }
         }
 
-        private static Task InitializeBusiness(IComponentContext context)
+        private static void InitializeBusiness(IComponentContext context)
         {
             IMediator mediator = context.Resolve<IMediator>();
             InitializeApplicationRequest request = new InitializeApplicationRequest();
-            return mediator.Send(request);
+            mediator.Send(request).Wait();
         }
 
         private void CreateGui(IComponentContext context)

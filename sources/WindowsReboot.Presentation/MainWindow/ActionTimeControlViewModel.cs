@@ -259,13 +259,13 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 case ScheduleType.FixedDate:
                     return new SetFixedDateScheduleRequest
                     {
-                        DateTime = FixedDate
+                        DateTime = FixedDate + FixedTime
                     };
 
                 case ScheduleType.Daily:
                     return new SetDailyScheduleRequest
                     {
-                        TimeOfDay = FixedTime
+                        TimeOfDay = DailyTime
                     };
 
                 case ScheduleType.Delay:
