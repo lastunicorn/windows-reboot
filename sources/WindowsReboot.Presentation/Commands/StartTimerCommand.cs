@@ -17,8 +17,8 @@
 using System;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application;
-using DustInTheWind.WindowsReboot.Application.ActionArea.PresentStartAbility;
-using DustInTheWind.WindowsReboot.Application.ActionArea.Start;
+using DustInTheWind.WindowsReboot.Application.PlanExecutionArea.StartTimer;
+using DustInTheWind.WindowsReboot.Application.PlanStateArea.PresentStartAbility;
 using DustInTheWind.WindowsReboot.Domain;
 using MediatR;
 
@@ -66,7 +66,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         protected override void DoExecute()
         {
-            StartRequest request = new StartRequest();
+            StartTimerRequest request = new StartTimerRequest();
             _ = mediator.Send(request);
         }
     }

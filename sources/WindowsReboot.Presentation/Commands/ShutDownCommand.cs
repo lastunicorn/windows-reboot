@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Application.DirectActionsArea.ExecuteShutDown;
+using DustInTheWind.WindowsReboot.Application.DirectExecutionArea.ExecuteShutDown;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands

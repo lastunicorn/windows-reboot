@@ -18,7 +18,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.EventBusEngine;
-using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
+using DustInTheWind.WindowsReboot.Application.MainArea.HideApplication;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using MediatR;
@@ -42,7 +42,7 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.MinimizeApplication
             {
                 ApplicationStateChangedEvent ev = new ApplicationStateChangedEvent
                 {
-                    ApplicationState = ApplicationState.Tray
+                    ApplicationState = ApplicationState.Hidden
                 };
 
                 eventBus.Publish(ev);

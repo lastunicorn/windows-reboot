@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Application.DirectActionsArea.ExecuteLogOff;
+using DustInTheWind.WindowsReboot.Application.DirectExecutionArea.ExecuteLogOff;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands

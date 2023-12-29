@@ -17,8 +17,8 @@
 using System;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application;
-using DustInTheWind.WindowsReboot.Application.ActionArea.PresentStopAbility;
-using DustInTheWind.WindowsReboot.Application.ActionArea.Stop;
+using DustInTheWind.WindowsReboot.Application.PlanExecutionArea.StopTimer;
+using DustInTheWind.WindowsReboot.Application.PlanStateArea.PresentStopAbility;
 using DustInTheWind.WindowsReboot.Domain;
 using MediatR;
 
@@ -66,7 +66,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         protected override void DoExecute()
         {
-            StopRequest request = new StopRequest();
+            StopTimerRequest request = new StopTimerRequest();
             _ = mediator.Send(request);
         }
     }

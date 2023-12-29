@@ -19,6 +19,6 @@ namespace DustInTheWind.WindowsReboot.Application
     public enum ApplicationState
     {
         Normal,
-        Tray
+        Hidden
     }
 }

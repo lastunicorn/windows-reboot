@@ -20,7 +20,7 @@ using System.Windows.Forms;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application;
 using DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication;
-using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
+using DustInTheWind.WindowsReboot.Application.MainArea.HideApplication;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
@@ -120,7 +120,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
                         IsVisible = false;
                         break;
 
-                    case ApplicationState.Tray:
+                    case ApplicationState.Hidden:
                         IsVisible = true;
                         break;
 

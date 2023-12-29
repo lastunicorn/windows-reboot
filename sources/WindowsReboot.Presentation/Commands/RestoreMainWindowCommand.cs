@@ -17,8 +17,8 @@
 using System;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application;
-using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
-using DustInTheWind.WindowsReboot.Application.MainArea.RestoreFromTray;
+using DustInTheWind.WindowsReboot.Application.MainArea.HideApplication;
+using DustInTheWind.WindowsReboot.Application.MainArea.RestoreApplication;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
@@ -46,7 +46,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         protected override void DoExecute()
         {
-            RestoreFromTrayRequest request = new RestoreFromTrayRequest();
+            RestoreApplicationRequest request = new RestoreApplicationRequest();
             _ = mediator.Send(request);
         }
     }

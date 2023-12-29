@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Application.DirectActionsArea.ExecutePowerOff;
+using DustInTheWind.WindowsReboot.Application.DirectExecutionArea.ExecutePowerOff;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands

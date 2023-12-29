@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Application.PlanArea.SaveThePlan;
+using DustInTheWind.WindowsReboot.Application.PlanStorageArea.SaveThePlan;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands

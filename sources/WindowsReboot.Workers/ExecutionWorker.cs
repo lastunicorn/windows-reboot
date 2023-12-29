@@ -15,8 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using DustInTheWind.WindowsReboot.Application.TimerArea.ExecutePlan;
-using DustInTheWind.WindowsReboot.Application.TimerArea.WarnTheUser;
+using DustInTheWind.WindowsReboot.Application.PlanExecutionArea.ExecutePlannedAction;
+using DustInTheWind.WindowsReboot.Application.PlanExecutionArea.WarnTheUser;
 using DustInTheWind.WorkerEngine;
 using MediatR;
 
@@ -72,7 +72,7 @@ namespace DustInTheWind.WindowsReboot.Workers
 
         private void TimerRing(object sender, EventArgs eventArgs)
         {
-            ExecutePlanRequest request = new ExecutePlanRequest();
+            ExecutePlannedActionRequest request = new ExecutePlannedActionRequest();
             _ = mediator.Send(request);
         }
 

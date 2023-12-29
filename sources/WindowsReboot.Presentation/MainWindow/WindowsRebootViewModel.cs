@@ -19,7 +19,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application;
-using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
+using DustInTheWind.WindowsReboot.Application.MainArea.HideApplication;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WinFormsAdditions;
@@ -114,7 +114,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                         IsVisible = true;
                         break;
 
-                    case ApplicationState.Tray:
+                    case ApplicationState.Hidden:
                         IsVisible = false;
                         break;
 

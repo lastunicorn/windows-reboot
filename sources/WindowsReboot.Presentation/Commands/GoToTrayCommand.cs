@@ -17,7 +17,7 @@
 using System;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application;
-using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
+using DustInTheWind.WindowsReboot.Application.MainArea.HideApplication;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands
@@ -27,7 +27,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
         private readonly IMediator mediator;
         private ApplicationState applicationState;
 
-        public override bool CanExecute => applicationState != ApplicationState.Tray;
+        public override bool CanExecute => applicationState != ApplicationState.Hidden;
 
         public GoToTrayCommand(IMediator mediator, EventBus eventBus)
         {
@@ -45,7 +45,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         protected override void DoExecute()
         {
-            GoToTrayRequest goToTrayRequest = new GoToTrayRequest();
+            HideApplicationRequest goToTrayRequest = new HideApplicationRequest();
             _ = mediator.Send(goToTrayRequest);
         }
     }

@@ -17,7 +17,7 @@
 using System.Reflection;
 using Autofac;
 using DustInTheWind.EventBusEngine;
-using DustInTheWind.WindowsReboot.Application.ActionTypeArea.PresentActionTypeConfiguration;
+using DustInTheWind.WindowsReboot.Application.PlanStateArea.PresentActionTypeConfiguration;
 using DustInTheWind.WindowsReboot.ConfigAccess;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
