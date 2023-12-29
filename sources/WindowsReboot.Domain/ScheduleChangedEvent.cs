@@ -32,8 +32,6 @@ namespace DustInTheWind.WindowsReboot.Domain
 
         public int Seconds { get; set; }
 
-        public bool IsAllowedToChange { get; set; }
-
         internal ScheduleChangedEvent(ISchedule schedule)
         {
             switch (schedule)

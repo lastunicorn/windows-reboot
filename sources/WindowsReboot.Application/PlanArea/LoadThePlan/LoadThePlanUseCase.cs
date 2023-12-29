@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
+using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.PlanArea.LoadThePlan
@@ -28,16 +29,18 @@ namespace DustInTheWind.WindowsReboot.Application.PlanArea.LoadThePlan
     {
         private readonly ExecutionPlan executionPlan;
         private readonly IConfigStorage configuration;
+        private readonly IExecutionProcess executionProcess;
 
-        public LoadThePlanUseCase(ExecutionPlan executionPlan, IConfigStorage configuration)
+        public LoadThePlanUseCase(ExecutionPlan executionPlan, IConfigStorage configuration, IExecutionProcess executionProcess)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
         }
 
         public Task Handle(LoadThePlanRequest request, CancellationToken cancellationToken)
         {
-            if (executionPlan.IsRunning)
+            if (executionProcess.IsTimerRunning())
                 throw new WindowsRebootException("Cannot complete the task while the timer is started.");
 
             executionPlan.Schedule = configuration.Schedule.ToDomain();

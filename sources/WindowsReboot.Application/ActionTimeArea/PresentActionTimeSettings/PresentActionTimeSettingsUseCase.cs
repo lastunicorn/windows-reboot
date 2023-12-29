@@ -18,6 +18,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 using ScheduleType = DustInTheWind.WindowsReboot.Domain.ScheduleType;
 
@@ -26,17 +27,19 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.PresentActionTi
     internal class PresentActionTimeSettingsUseCase : IRequestHandler<PresentActionTimeSettingsRequest, PresentActionTimeSettingsResponse>
     {
         private readonly ExecutionPlan executionPlan;
+        private readonly IExecutionProcess executionProcess;
 
-        public PresentActionTimeSettingsUseCase(ExecutionPlan executionPlan)
+        public PresentActionTimeSettingsUseCase(ExecutionPlan executionPlan, IExecutionProcess executionProcess)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
         }
 
         public Task<PresentActionTimeSettingsResponse> Handle(PresentActionTimeSettingsRequest request, CancellationToken cancellationToken)
         {
             PresentActionTimeSettingsResponse response = new PresentActionTimeSettingsResponse
             {
-                IsAllowedToChange = !executionPlan.IsRunning
+                IsAllowedToChange = !executionProcess.IsTimerRunning()
             };
 
             if (executionPlan.Schedule is FixedDateSchedule fixedDateSchedule)

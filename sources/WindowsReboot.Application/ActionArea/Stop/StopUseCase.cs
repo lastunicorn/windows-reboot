@@ -17,24 +17,36 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.ActionArea.Stop
 {
     internal class StopUseCase : IRequestHandler<StopRequest>
     {
-        private readonly ExecutionPlan executionPlan;
+        private readonly IExecutionProcess executionProcess;
+        private readonly EventBus eventBus;
 
-        public StopUseCase(ExecutionPlan executionPlan)
+        public StopUseCase(IExecutionProcess executionProcess, EventBus eventBus)
         {
-            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         public Task Handle(StopRequest request, CancellationToken cancellationToken)
         {
-            executionPlan.Stop();
+            executionProcess.Stop();
+            OnStopped();
+
             return Task.CompletedTask;
+        }
+
+        private void OnStopped()
+        {
+            TimerStoppedEvent ev = new TimerStoppedEvent();
+            eventBus.Publish(ev);
         }
     }
 }

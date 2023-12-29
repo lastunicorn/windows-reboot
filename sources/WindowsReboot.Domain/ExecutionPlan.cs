@@ -30,17 +30,11 @@ namespace DustInTheWind.WindowsReboot.Domain
         private readonly EventBus eventBus;
         private readonly IUserInterface userInterface;
 
-        private readonly InternalExecutionTimer timer;
-        private volatile bool isRunning;
-        private DateTime startTime;
-
         private ActionType actionType;
         private ForceOption forceOption;
         private ForceOption lastApplicableForceOption;
         private ISchedule schedule = DefaultSchedule;
         private TimeSpan? warningInterval = DefaultWarningTime;
-
-        public bool IsRunning => isRunning;
 
         public ISchedule Schedule
         {
@@ -52,7 +46,7 @@ namespace DustInTheWind.WindowsReboot.Domain
 
                 schedule = value;
 
-                OnScheduleChangedChanges();
+                OnScheduleChanged();
             }
         }
 
@@ -61,18 +55,11 @@ namespace DustInTheWind.WindowsReboot.Domain
             get => warningInterval;
             set
             {
-                if (isRunning)
-                    throw new InvalidOperationException();
-
                 warningInterval = value;
 
                 OnWarningIntervalChanged();
             }
         }
-
-        public TimeSpan TimeUntilAction => timer.ActionTime - DateTime.Now;
-
-        public DateTime ActionTime => timer.ActionTime;
 
         public ActionType ActionType
         {
@@ -107,10 +94,6 @@ namespace DustInTheWind.WindowsReboot.Domain
             }
         }
 
-        public event EventHandler Warning;
-
-        public event EventHandler Ring;
-
         public ExecutionPlan(IOperatingSystem operatingSystem, EventBus eventBus, IUserInterface userInterface)
         {
             this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
@@ -120,51 +103,16 @@ namespace DustInTheWind.WindowsReboot.Domain
             ActionType = ActionType.Ring;
             ForceOption = ForceOption.NotApplicable;
             lastApplicableForceOption = ForceOption.Yes;
-
-            timer = new InternalExecutionTimer();
-            timer.Warning += TimerWarning;
-            timer.Ring += TimerRing;
         }
 
-        public void Execute()
+        public void ActivateWarning()
         {
-            switch (ActionType)
-            {
-                case ActionType.Ring:
-                    userInterface.DisplayNotification();
-                    break;
+            WarningInterval = DefaultWarningTime;
+        }
 
-                case ActionType.LockWorkstation:
-                    operatingSystem.Lock();
-                    break;
-
-                case ActionType.LogOff:
-                    operatingSystem.LogOff(ForceOption == ForceOption.Yes);
-                    break;
-
-                case ActionType.Sleep:
-                    operatingSystem.Sleep(ForceOption == ForceOption.Yes);
-                    break;
-
-                case ActionType.Hibernate:
-                    operatingSystem.Hibernate(ForceOption == ForceOption.Yes);
-                    break;
-
-                case ActionType.Reboot:
-                    operatingSystem.Reboot(ForceOption == ForceOption.Yes);
-                    break;
-
-                case ActionType.ShutDown:
-                    operatingSystem.ShutDown(ForceOption == ForceOption.Yes);
-                    break;
-
-                case ActionType.PowerOff:
-                    operatingSystem.PowerOff(ForceOption == ForceOption.Yes);
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+        public void DeactivateWarning()
+        {
+            WarningInterval = null;
         }
 
         private void AdjustForceOption()
@@ -209,84 +157,45 @@ namespace DustInTheWind.WindowsReboot.Domain
             }
         }
 
-        private void TimerWarning(object sender, EventArgs e)
+        public void Execute()
         {
-            OnWarning();
-        }
-
-        private void TimerRing(object sender, EventArgs e)
-        {
-            OnRing();
-            isRunning = false;
-
-            OnStopped();
-        }
-
-        public void Start()
-        {
-            startTime = DateTime.Now;
-            DateTime? nextRunTime = CalculateNextRunTime(startTime);
-
-            if (nextRunTime == null)
-                throw new ActionTimeInThePastException(ActionTime, startTime);
-
-            timer.ActionTime = nextRunTime.Value;
-            timer.WarningInterval = warningInterval;
-            timer.Start();
-
-            OnStarted();
-        }
-
-        private DateTime? CalculateNextRunTime(DateTime dateTime)
-        {
-            DateTime runTime = Schedule.CalculateTimeFrom(dateTime);
-
-            return runTime < dateTime
-                ? null as DateTime?
-                : runTime;
-        }
-
-        public void Stop()
-        {
-            timer.Stop();
-            isRunning = false;
-
-            OnStopped();
-        }
-
-        public void ActivateWarning()
-        {
-            WarningInterval = DefaultWarningTime;
-        }
-
-        public void DeactivateWarning()
-        {
-            WarningInterval = null;
-        }
-
-        protected virtual void OnStarted()
-        {
-            TimerStartedEvent ev = new TimerStartedEvent
+            switch (ActionType)
             {
-                ActionTime = ActionTime
-            };
-            eventBus.Publish(ev);
-        }
+                case ActionType.Ring:
+                    userInterface.DisplayNotification();
+                    break;
 
-        protected virtual void OnStopped()
-        {
-            TimerStoppedEvent ev = new TimerStoppedEvent();
-            eventBus.Publish(ev);
-        }
+                case ActionType.LockWorkstation:
+                    operatingSystem.Lock();
+                    break;
 
-        protected virtual void OnWarning()
-        {
-            Warning?.Invoke(this, EventArgs.Empty);
-        }
+                case ActionType.LogOff:
+                    operatingSystem.LogOff(ForceOption == ForceOption.Yes);
+                    break;
 
-        protected virtual void OnRing()
-        {
-            Ring?.Invoke(this, EventArgs.Empty);
+                case ActionType.Sleep:
+                    operatingSystem.Sleep(ForceOption == ForceOption.Yes);
+                    break;
+
+                case ActionType.Hibernate:
+                    operatingSystem.Hibernate(ForceOption == ForceOption.Yes);
+                    break;
+
+                case ActionType.Reboot:
+                    operatingSystem.Reboot(ForceOption == ForceOption.Yes);
+                    break;
+
+                case ActionType.ShutDown:
+                    operatingSystem.ShutDown(ForceOption == ForceOption.Yes);
+                    break;
+
+                case ActionType.PowerOff:
+                    operatingSystem.PowerOff(ForceOption == ForceOption.Yes);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         protected virtual void OnWarningIntervalChanged()
@@ -299,12 +208,9 @@ namespace DustInTheWind.WindowsReboot.Domain
             eventBus.Publish(ev);
         }
 
-        protected virtual void OnScheduleChangedChanges()
+        protected virtual void OnScheduleChanged()
         {
-            ScheduleChangedEvent ev = new ScheduleChangedEvent(schedule)
-            {
-                IsAllowedToChange = !isRunning
-            };
+            ScheduleChangedEvent ev = new ScheduleChangedEvent(schedule);
             eventBus.Publish(ev);
         }
 
@@ -324,11 +230,6 @@ namespace DustInTheWind.WindowsReboot.Domain
                 ActionType = ActionType
             };
             eventBus.Publish(ev);
-        }
-
-        public void Dispose()
-        {
-            timer.Dispose();
         }
     }
 }

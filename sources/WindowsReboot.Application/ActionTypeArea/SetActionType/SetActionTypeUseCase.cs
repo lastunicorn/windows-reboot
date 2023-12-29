@@ -18,6 +18,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.SetActionType
@@ -25,14 +26,19 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.SetActionType
     internal class SetActionTypeUseCase : IRequestHandler<SetActionTypeRequest>
     {
         private readonly ExecutionPlan executionPlan;
+        private readonly IExecutionProcess executionProcess;
 
-        public SetActionTypeUseCase(ExecutionPlan executionPlan)
+        public SetActionTypeUseCase(ExecutionPlan executionPlan, IExecutionProcess executionProcess)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
         }
 
         public Task Handle(SetActionTypeRequest request, CancellationToken cancellationToken)
         {
+            if (executionProcess.IsTimerRunning())
+                throw new Exception("Timer is running.");
+
             executionPlan.ActionType = request.ActionType;
             return Task.CompletedTask;
         }

@@ -228,7 +228,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                         throw new ArgumentOutOfRangeException();
                 }
 
-                Enabled = ev.IsAllowedToChange;
+                Enabled = true;
             });
 
             return Task.CompletedTask;

@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DustInTheWind.WorkerEngine
 {
@@ -48,6 +49,11 @@ namespace DustInTheWind.WorkerEngine
 
             foreach (IWorker worker in workers)
                 worker.Stop();
+        }
+
+        public T GetOne<T>()
+        {
+            return (T)workers.FirstOrDefault(x => x is T);
         }
     }
 }

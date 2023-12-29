@@ -139,6 +139,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServicesSetup.cs" />
     <Compile Include="WindowsRebootApplication.cs" />
     <None Include="packages.config" />
     <None Include="Resources\License.txt" />
@@ -215,6 +216,14 @@
     <ProjectReference Include="..\WindowsReboot.Application\WindowsReboot.Application.csproj">
       <Project>{95DFED73-834B-48B6-9956-AA891309C9C6}</Project>
       <Name>WindowsReboot.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsReboot.Ports.WorkerAccess\WindowsReboot.Ports.WorkerAccess.csproj">
+      <Project>{1B4C8F34-9C52-407B-AB20-1A1792BD0A05}</Project>
+      <Name>WindowsReboot.Ports.WorkerAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsReboot.WorkerAccess\WindowsReboot.WorkerAccess.csproj">
+      <Project>{9EE8BAA2-AEF5-478B-B87C-E05A3342FC19}</Project>
+      <Name>WindowsReboot.WorkerAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\WindowsReboot.Workers\WindowsReboot.Workers.csproj">
       <Project>{51F474F7-2443-496B-AFC5-ABA7BCBA5FA1}</Project>

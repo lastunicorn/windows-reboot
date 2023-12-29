@@ -22,6 +22,7 @@ using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
+using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication
@@ -31,14 +32,14 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication
         private readonly EventBus eventBus;
         private readonly IUserInterface userInterface;
         private readonly IConfigStorage configStorage;
-        private readonly ExecutionPlan executionPlan;
+        private readonly IExecutionProcess executionProcess;
 
-        public CloseApplicationUseCase(EventBus eventBus, IUserInterface userInterface, IConfigStorage configStorage, ExecutionPlan executionPlan)
+        public CloseApplicationUseCase(EventBus eventBus, IUserInterface userInterface, IConfigStorage configStorage, IExecutionProcess executionProcess)
         {
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
             this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
             this.configStorage = configStorage ?? throw new ArgumentNullException(nameof(configStorage));
-            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
         }
 
         public Task<CloseApplicationResponse> Handle(CloseApplicationRequest request, CancellationToken cancellationToken)
@@ -52,7 +53,7 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication
             }
             else
             {
-                bool allowToClose = !executionPlan.IsRunning || userInterface.ConfirmClosingWhileTimerIsRunning();
+                bool allowToClose = !executionProcess.IsTimerRunning() || userInterface.ConfirmClosingWhileTimerIsRunning();
 
                 if (allowToClose)
                 {

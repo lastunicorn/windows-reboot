@@ -20,18 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <AssemblyName>DustInTheWind.WindowsReboot.Workers</AssemblyName>
-        <RootNamespace>DustInTheWind.WindowsReboot.Workers</RootNamespace>
+        <AssemblyName>DustInTheWind.WindowsReboot.WorkerAccess</AssemblyName>
+        <RootNamespace>DustInTheWind.WindowsReboot.WorkerAccess</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR" Version="12.2.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\WindowsReboot.Application\WindowsReboot.Application.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\WindowsReboot.Domain\WindowsReboot.Domain.csproj" PrivateAssets="All" />
-        <ProjectReference Include="..\WorkerEngine\WorkerEngine.csproj" PrivateAssets="All" />
+        <ProjectReference Include="..\WindowsReboot.Ports.WorkerAccess\WindowsReboot.Ports.WorkerAccess.csproj" />
+        <ProjectReference Include="..\WindowsReboot.Workers\WindowsReboot.Workers.csproj" />
+        <ProjectReference Include="..\WorkerEngine\WorkerEngine.csproj" />
     </ItemGroup>
 
 </Project>

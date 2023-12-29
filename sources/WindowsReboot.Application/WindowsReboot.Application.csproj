@@ -34,6 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <ProjectReference Include="..\WindowsReboot.Ports.ConfigAccess\WindowsReboot.Ports.ConfigAccess.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\WindowsReboot.Ports.SystemAccess\WindowsReboot.Ports.SystemAccess.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\WindowsReboot.Ports.PresentationAccess\WindowsReboot.Ports.PresentationAccess.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\WindowsReboot.Ports.WorkerAccess\WindowsReboot.Ports.WorkerAccess.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\WorkerEngine\WorkerEngine.csproj" PrivateAssets="All" />
   </ItemGroup>
 

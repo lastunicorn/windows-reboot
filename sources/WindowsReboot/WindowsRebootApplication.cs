@@ -14,27 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Reflection;
+using System.Windows.Forms;
 using Autofac;
-using DustInTheWind.EventBusEngine;
-using DustInTheWind.WindowsReboot.Application.ActionTypeArea.PresentActionTypeConfiguration;
 using DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication;
-using DustInTheWind.WindowsReboot.ConfigAccess;
-using DustInTheWind.WindowsReboot.Domain;
-using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
-using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
-using DustInTheWind.WindowsReboot.Ports.SystemAccess;
 using DustInTheWind.WindowsReboot.Presentation.Behaviors;
-using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WindowsReboot.Presentation.MainWindow;
 using DustInTheWind.WindowsReboot.Presentation.Tray;
-using DustInTheWind.WindowsReboot.PresentationAccess;
-using DustInTheWind.WindowsReboot.SystemAccess;
-using DustInTheWind.WindowsReboot.Workers;
-using DustInTheWind.WorkerEngine.Setup.Autofac;
 using MediatR;
-using MediatR.Extensions.Autofac.DependencyInjection;
-using MediatR.Extensions.Autofac.DependencyInjection.Builder;
 
 namespace DustInTheWind.WindowsReboot
 {
@@ -46,86 +32,25 @@ namespace DustInTheWind.WindowsReboot
         public WindowsRebootApplication()
         {
             ContainerBuilder containerBuilder = new ContainerBuilder();
-            ConfigureServices(containerBuilder);
-
+            ServicesSetup.Execute(containerBuilder);
             IContainer container = containerBuilder.Build();
 
             InitializeApplication(container);
-        }
-
-        private static void ConfigureServices(ContainerBuilder containerBuilder)
-        {
-            // External Services
-
-            containerBuilder.RegisterType<ConfigStorage>().As<IConfigStorage>().SingleInstance();
-            containerBuilder.RegisterType<UserInterface>().AsSelf().As<IUserInterface>().SingleInstance();
-            containerBuilder.RegisterType<OperatingSystem>().As<IOperatingSystem>().SingleInstance();
-
-            // Internal State
-
-            containerBuilder.RegisterType<ExecutionPlan>().AsSelf().SingleInstance();
-
-            // Workers
-
-            Assembly[] workerAssemblies =
-            {
-                typeof(ExecutionWorker).Assembly
-            };
-            containerBuilder.RegisterWorkers(workerAssemblies);
-
-            // Infrastructure
-
-            containerBuilder.RegisterType<EventBus>().AsSelf().SingleInstance();
-
-            Assembly useCaseAssembly = typeof(PresentActionTypeConfigurationRequest).Assembly;
-            MediatRConfiguration mediatRConfiguration = MediatRConfigurationBuilder.Create(useCaseAssembly)
-                .WithAllOpenGenericHandlerTypesRegistered()
-                .Build();
-            containerBuilder.RegisterMediatR(mediatRConfiguration);
-
-            // Presentation
-
-            containerBuilder.RegisterType<UiDispatcher>().As<IUiDispatcher>().SingleInstance();
-
-            containerBuilder.RegisterType<WindowsRebootForm>().AsSelf();
-            containerBuilder.RegisterType<WindowsRebootViewModel>().AsSelf();
-            containerBuilder.RegisterType<MainWindowCloseBehaviour>().AsSelf();
-            containerBuilder.RegisterType<MainWindowMinimizeBehavior>().AsSelf();
-
-            containerBuilder.RegisterType<ActionTimeControlViewModel>().AsSelf();
-            containerBuilder.RegisterType<ActionTypeControlViewModel>().AsSelf();
-            containerBuilder.RegisterType<ActionControlViewModel>().AsSelf();
-            containerBuilder.RegisterType<StatusControlViewModel>().AsSelf();
-
-            containerBuilder.RegisterType<StartTimerCommand>().AsSelf();
-            containerBuilder.RegisterType<StopTimerCommand>().AsSelf();
-
-            containerBuilder.RegisterType<GoToTrayCommand>().AsSelf();
-            containerBuilder.RegisterType<ExitCommand>().AsSelf();
-            containerBuilder.RegisterType<LoadThePlanCommand>().AsSelf();
-            containerBuilder.RegisterType<SaveThePlanCommand>().AsSelf();
-            containerBuilder.RegisterType<LoadDefaultPlanCommand>().AsSelf();
-            containerBuilder.RegisterType<OptionsCommand>().AsSelf();
-            containerBuilder.RegisterType<LicenseCommand>().AsSelf();
-            containerBuilder.RegisterType<AboutCommand>().AsSelf();
-
-            containerBuilder.RegisterType<TrayIcon>().AsSelf();
-            containerBuilder.RegisterType<TrayIconViewModel>().AsSelf();
-
-            containerBuilder.RegisterType<RestoreMainWindowCommand>().AsSelf();
-            containerBuilder.RegisterType<LockComputerCommand>().AsSelf();
-            containerBuilder.RegisterType<LogOffCommand>().AsSelf();
-            containerBuilder.RegisterType<SleepCommand>().AsSelf();
-            containerBuilder.RegisterType<HibernateCommand>().AsSelf();
-            containerBuilder.RegisterType<RebootCommand>().AsSelf();
-            containerBuilder.RegisterType<ShutDownCommand>().AsSelf();
-            containerBuilder.RegisterType<PowerOffCommand>().AsSelf();
         }
 
         private void InitializeApplication(IComponentContext context)
         {
             System.Windows.Forms.Application.EnableVisualStyles();
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+
+            // Force the initialization of the Windows Forms environment.
+            using (Form form = new Form())
+            {
+            }
+
+            IMediator mediator = context.Resolve<IMediator>();
+            InitializeApplicationRequest request = new InitializeApplicationRequest();
+            mediator.Send(request).Wait();
 
             mainWindow = context.Resolve<WindowsRebootForm>();
             mainWindow.ViewModel = context.Resolve<WindowsRebootViewModel>();
@@ -138,10 +63,6 @@ namespace DustInTheWind.WindowsReboot
 
             trayIcon = context.Resolve<TrayIcon>();
             trayIcon.ViewModel = context.Resolve<TrayIconViewModel>();
-
-            IMediator mediator = context.Resolve<IMediator>();
-            InitializeApplicationRequest request = new InitializeApplicationRequest();
-            mediator.Send(request).Wait();
         }
 
         public void Run()

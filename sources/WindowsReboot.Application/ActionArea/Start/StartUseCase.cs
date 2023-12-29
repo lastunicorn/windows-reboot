@@ -17,7 +17,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.ActionArea.Start
@@ -25,16 +27,48 @@ namespace DustInTheWind.WindowsReboot.Application.ActionArea.Start
     internal class StartUseCase : IRequestHandler<StartRequest>
     {
         private readonly ExecutionPlan executionPlan;
+        private readonly IExecutionProcess executionProcess;
+        private readonly EventBus eventBus;
 
-        public StartUseCase(ExecutionPlan executionPlan)
+        public StartUseCase(ExecutionPlan executionPlan, IExecutionProcess executionProcess, EventBus eventBus)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         public Task Handle(StartRequest request, CancellationToken cancellationToken)
         {
-            executionPlan.Start();
+            Start();
             return Task.CompletedTask;
+        }
+
+        public void Start()
+        {
+            DateTime startTime = DateTime.Now;
+            DateTime runTime = executionPlan.Schedule.CalculateTimeFrom(startTime);
+
+            if (runTime < startTime)
+                throw new ActionTimeInThePastException(runTime, startTime);
+
+            ExecutionRequest executionRequest = new ExecutionRequest
+            {
+                ActionTime = runTime,
+                WarningInterval = executionPlan.WarningInterval
+            };
+
+            executionProcess.Start(executionRequest);
+
+            OnStarted(runTime);
+        }
+
+        protected virtual void OnStarted(DateTime nextRunTime)
+        {
+            TimerStartedEvent ev = new TimerStartedEvent
+            {
+                ActionTime = nextRunTime
+            };
+            eventBus.Publish(ev);
         }
     }
 }

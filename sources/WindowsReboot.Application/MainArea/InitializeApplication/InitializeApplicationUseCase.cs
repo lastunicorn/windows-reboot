@@ -17,8 +17,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
+using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using DustInTheWind.WorkerEngine;
 using MediatR;
 
@@ -29,12 +31,17 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication
         private readonly ExecutionPlan executionPlan;
         private readonly WorkersContainer workersContainer;
         private readonly IConfigStorage configStorage;
+        private readonly IExecutionProcess executionProcess;
+        private readonly EventBus eventBus;
 
-        public InitializeApplicationUseCase(ExecutionPlan executionPlan, WorkersContainer workersContainer, IConfigStorage configStorage)
+        public InitializeApplicationUseCase(ExecutionPlan executionPlan, WorkersContainer workersContainer, IConfigStorage configStorage,
+            IExecutionProcess executionProcess, EventBus eventBus)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
             this.workersContainer = workersContainer ?? throw new ArgumentNullException(nameof(workersContainer));
             this.configStorage = configStorage ?? throw new ArgumentNullException(nameof(configStorage));
+            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         public Task Handle(InitializeApplicationRequest request, CancellationToken cancellationToken)
@@ -45,12 +52,41 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication
                 ? ForceOption.Yes
                 : ForceOption.No;
 
-            if (configStorage.StartTimerAtApplicationStart)
-                executionPlan.Start();
-
             workersContainer.Start();
 
+            // todo: implement auto-start
+            //if (configStorage.StartTimerAtApplicationStart)
+            //    Start();
+
             return Task.CompletedTask;
+        }
+
+        public void Start()
+        {
+            DateTime startTime = DateTime.Now;
+            DateTime runTime = executionPlan.Schedule.CalculateTimeFrom(startTime);
+
+            if (runTime < startTime)
+                throw new ActionTimeInThePastException(runTime, startTime);
+
+            ExecutionRequest executionRequest = new ExecutionRequest
+            {
+                ActionTime = runTime,
+                WarningInterval = executionPlan.WarningInterval
+            };
+
+            executionProcess.Start(executionRequest);
+
+            OnStarted(runTime);
+        }
+
+        protected virtual void OnStarted(DateTime nextRunTime)
+        {
+            TimerStartedEvent ev = new TimerStartedEvent
+            {
+                ActionTime = nextRunTime
+            };
+            eventBus.Publish(ev);
         }
     }
 }

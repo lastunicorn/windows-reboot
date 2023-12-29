@@ -19,16 +19,19 @@ using System.Threading;
 
 namespace DustInTheWind.WindowsReboot.Domain
 {
-    internal sealed class InternalExecutionTimer : IDisposable
+    public sealed class InternalExecutionTimer : IDisposable
     {
         private readonly Timer timer;
         private TimerStep step;
+        private volatile bool isRunning;
 
         public DateTime ActionTime { get; set; }
 
         public TimeSpan? WarningInterval { get; set; }
 
         public DateTime? WarningTime => ActionTime - WarningInterval;
+
+        public bool IsRunning => isRunning;
 
         public event EventHandler Warning;
 
@@ -104,11 +107,13 @@ namespace DustInTheWind.WindowsReboot.Domain
                 interval = TimeSpan.Zero;
 
             timer.Change((long)interval.TotalMilliseconds, -1);
+            isRunning = true;
         }
 
         private void StopTimer()
         {
             timer.Change(-1, -1);
+            isRunning = false;
         }
 
         private void OnWarning()

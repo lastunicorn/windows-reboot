@@ -23,39 +23,64 @@ using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Workers
 {
-    public class ExecutionWorker : IWorker
+    public sealed class ExecutionWorker : IWorker, IDisposable
     {
         private readonly IMediator mediator;
-        private readonly ExecutionPlan executionPlan;
 
-        public ExecutionWorker(IMediator mediator, ExecutionPlan executionPlan)
+        private readonly InternalExecutionTimer timer;
+
+        public bool IsRunning => timer.IsRunning;
+
+        public TimeSpan TimeUntilAction => timer.ActionTime - DateTime.Now;
+
+        public DateTime ActionTime => timer.ActionTime;
+
+        public ExecutionWorker(IMediator mediator)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+
+            timer = new InternalExecutionTimer();
         }
 
         public void Start()
         {
-            executionPlan.Warning += HandleExecutionPlanWarning;
-            executionPlan.Ring += HandleExecutionPlanRing;
+            timer.Warning += TimerWarning;
+            timer.Ring += TimerRing;
         }
 
         public void Stop()
         {
-            executionPlan.Warning -= HandleExecutionPlanWarning;
-            executionPlan.Ring -= HandleExecutionPlanRing;
+            timer.Warning -= TimerWarning;
+            timer.Ring -= TimerRing;
         }
 
-        private void HandleExecutionPlanWarning(object sender, EventArgs e)
+        public void StartTimer(DateTime actionTime, TimeSpan? warningInterval = null)
+        {
+            timer.ActionTime = actionTime;
+            timer.WarningInterval = warningInterval;
+            timer.Start();
+        }
+
+        public void StopTimer()
+        {
+            timer.Stop();
+        }
+
+        private void TimerWarning(object sender, EventArgs e)
         {
             WarnTheUserRequest request = new WarnTheUserRequest();
             _ = mediator.Send(request);
         }
 
-        private void HandleExecutionPlanRing(object sender, EventArgs eventArgs)
+        private void TimerRing(object sender, EventArgs eventArgs)
         {
             ExecutePlanRequest request = new ExecutePlanRequest();
             _ = mediator.Send(request);
+        }
+
+        public void Dispose()
+        {
+            timer?.Dispose();
         }
     }
 }

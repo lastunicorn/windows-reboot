@@ -18,6 +18,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.PlanArea.LoadDefaultPlan
@@ -25,15 +26,17 @@ namespace DustInTheWind.WindowsReboot.Application.PlanArea.LoadDefaultPlan
     internal class LoadDefaultPlanUseCase : IRequestHandler<LoadDefaultPlanRequest>
     {
         private readonly ExecutionPlan executionPlan;
+        private readonly IExecutionProcess executionProcess;
 
-        public LoadDefaultPlanUseCase(ExecutionPlan executionPlan)
+        public LoadDefaultPlanUseCase(ExecutionPlan executionPlan, IExecutionProcess executionProcess)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
         }
 
         public Task Handle(LoadDefaultPlanRequest request, CancellationToken cancellationToken)
         {
-            if (executionPlan.IsRunning)
+            if (executionProcess.IsTimerRunning())
                 throw new TimerIsRunningException();
 
             executionPlan.Schedule = new DelaySchedule

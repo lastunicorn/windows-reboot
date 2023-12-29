@@ -17,25 +17,25 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.ActionArea.PresentStopAbility
 {
     internal class PresentStopAbilityUseCase : IRequestHandler<PresentStopAbilityRequest, PresentStopAbilityResponse>
     {
-        private readonly ExecutionPlan executionPlan;
+        private readonly IExecutionProcess executionProcess;
 
-        public PresentStopAbilityUseCase(ExecutionPlan executionPlan)
+        public PresentStopAbilityUseCase(IExecutionProcess executionProcess)
         {
-            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
         }
 
         public Task<PresentStopAbilityResponse> Handle(PresentStopAbilityRequest request, CancellationToken cancellationToken)
         {
             PresentStopAbilityResponse response = new PresentStopAbilityResponse
             {
-                CanStop = executionPlan.IsRunning
+                CanStop = executionProcess.IsTimerRunning()
             };
 
             return Task.FromResult(response);

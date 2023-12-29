@@ -17,7 +17,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.WindowsReboot.Application.PlanArea.LoadDefaultPlan;
 using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDailySchedule
@@ -25,14 +27,19 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDailySchedul
     internal class SetDailyScheduleUseCase : IRequestHandler<SetDailyScheduleRequest>
     {
         private readonly ExecutionPlan executionPlan;
+        private readonly IExecutionProcess executionProcess;
 
-        public SetDailyScheduleUseCase(ExecutionPlan executionPlan)
+        public SetDailyScheduleUseCase(ExecutionPlan executionPlan, IExecutionProcess executionProcess)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
         }
 
         public Task Handle(SetDailyScheduleRequest request, CancellationToken cancellationToken)
         {
+            if (executionProcess.IsTimerRunning())
+                throw new TimerIsRunningException();
+
             executionPlan.Schedule = new DailySchedule
             {
                 TimeOfDay = request.TimeOfDay

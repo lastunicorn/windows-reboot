@@ -17,25 +17,25 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.ActionArea.PresentStartAbility
 {
     internal class PresentStartAbilityUseCase : IRequestHandler<PresentStartAbilityRequest, PresentStartAbilityResponse>
     {
-        private readonly ExecutionPlan executionPlan;
+        private readonly IExecutionProcess executionProcess;
 
-        public PresentStartAbilityUseCase(ExecutionPlan executionPlan)
+        public PresentStartAbilityUseCase(IExecutionProcess executionProcess)
         {
-            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
         }
 
         public Task<PresentStartAbilityResponse> Handle(PresentStartAbilityRequest request, CancellationToken cancellationToken)
         {
             PresentStartAbilityResponse response = new PresentStartAbilityResponse
             {
-                CanStart = !executionPlan.IsRunning
+                CanStart = !executionProcess.IsTimerRunning()
             };
 
             return Task.FromResult(response);

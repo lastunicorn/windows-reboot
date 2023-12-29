@@ -22,15 +22,15 @@ using DustInTheWind.WindowsReboot.Application;
 using DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication;
 using DustInTheWind.WindowsReboot.Application.MainArea.GoToTray;
 using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
 using DustInTheWind.WinFormsAdditions;
-using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Tray
 {
     public class TrayIconViewModel : ViewModelBase
     {
-        private readonly ExecutionPlan executionPlan;
+        private readonly IExecutionProcess executionProcess;
         private readonly string defaultText;
         private string text;
         private bool isVisible;
@@ -74,8 +74,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
 
         public ExitCommand ExitCommand { get; private set; }
 
-        public TrayIconViewModel(ExecutionPlan executionPlan,
-            EventBus eventBus, IMediator mediator,
+        public TrayIconViewModel(IExecutionProcess executionProcess,
+            EventBus eventBus,
             RestoreMainWindowCommand restoreMainWindowCommand,
             LockComputerCommand lockComputerCommand,
             LogOffCommand logOffCommand,
@@ -87,9 +87,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
             ExitCommand exitCommand)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
-            if (mediator == null) throw new ArgumentNullException(nameof(mediator));
-
-            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
 
             RestoreMainWindowCommand = restoreMainWindowCommand ?? throw new ArgumentNullException(nameof(restoreMainWindowCommand));
             LockComputerCommand = lockComputerCommand ?? throw new ArgumentNullException(nameof(lockComputerCommand));
@@ -150,8 +148,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
         {
             try
             {
-                Text = executionPlan.IsRunning
-                    ? (TimerText)executionPlan.TimeUntilAction
+                Text = executionProcess.IsTimerRunning()
+                    ? (TimerText)executionProcess.GetTimeUntilAction()
                     : defaultText;
             }
             catch (Exception ex)

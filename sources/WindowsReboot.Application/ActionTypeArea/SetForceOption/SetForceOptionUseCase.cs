@@ -18,6 +18,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.SetForceOption
@@ -25,14 +26,19 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.SetForceOption
     internal class SetForceOptionUseCase : IRequestHandler<SetForceOptionRequest>
     {
         private readonly ExecutionPlan executionPlan;
+        private readonly IExecutionProcess executionProcess;
 
-        public SetForceOptionUseCase(ExecutionPlan executionPlan)
+        public SetForceOptionUseCase(ExecutionPlan executionPlan, IExecutionProcess executionProcess)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
         }
 
         public Task Handle(SetForceOptionRequest request, CancellationToken cancellationToken)
         {
+            if (executionProcess.IsTimerRunning())
+                throw new Exception("Timer is running.");
+
             executionPlan.ForceOption = request.ForceOption;
 
             return Task.CompletedTask;
