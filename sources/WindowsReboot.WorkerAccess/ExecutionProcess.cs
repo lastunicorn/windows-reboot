@@ -19,7 +19,7 @@ using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using DustInTheWind.WindowsReboot.Workers;
 using DustInTheWind.WorkerEngine;
 
-namespace WindowsReboot.WorkerAccess
+namespace DustInTheWind.WindowsReboot.WorkerAccess
 {
     public class ExecutionProcess : IExecutionProcess
     {

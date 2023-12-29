@@ -22,7 +22,7 @@ using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetSchedule
+namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetImmediateSchedule
 {
     internal class SetImmediateScheduleUseCase : IRequestHandler<SetImmediateScheduleRequest>
     {

@@ -16,7 +16,7 @@
 
 using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetSchedule
+namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetImmediateSchedule
 {
     public class SetImmediateScheduleRequest : IRequest
     {

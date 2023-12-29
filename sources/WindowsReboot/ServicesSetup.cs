@@ -30,11 +30,11 @@ using DustInTheWind.WindowsReboot.Presentation.MainWindow;
 using DustInTheWind.WindowsReboot.Presentation.Tray;
 using DustInTheWind.WindowsReboot.PresentationAccess;
 using DustInTheWind.WindowsReboot.SystemAccess;
+using DustInTheWind.WindowsReboot.WorkerAccess;
 using DustInTheWind.WindowsReboot.Workers;
 using DustInTheWind.WorkerEngine.Setup.Autofac;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using MediatR.Extensions.Autofac.DependencyInjection.Builder;
-using WindowsReboot.WorkerAccess;
 
 namespace DustInTheWind.WindowsReboot
 {

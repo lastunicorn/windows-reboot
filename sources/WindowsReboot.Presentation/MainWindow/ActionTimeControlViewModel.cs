@@ -22,7 +22,7 @@ using DustInTheWind.WindowsReboot.Application.ActionTimeArea.PresentActionTimeSe
 using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDailySchedule;
 using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDelaySchedule;
 using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetFixedDateSchedule;
-using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetSchedule;
+using DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetImmediateSchedule;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WinFormsAdditions;
 using MediatR;
