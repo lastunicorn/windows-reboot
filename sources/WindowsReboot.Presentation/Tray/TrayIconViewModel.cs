@@ -30,7 +30,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
 {
     public class TrayIconViewModel : ViewModelBase
     {
-        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
         private readonly string defaultText;
         private string text;
         private bool isVisible;
@@ -74,7 +74,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
 
         public ExitCommand ExitCommand { get; private set; }
 
-        public TrayIconViewModel(ExecutionTimer executionTimer,
+        public TrayIconViewModel(ExecutionPlan executionPlan,
             EventBus eventBus, IMediator mediator,
             RestoreMainWindowCommand restoreMainWindowCommand,
             LockComputerCommand lockComputerCommand,
@@ -89,7 +89,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
             if (mediator == null) throw new ArgumentNullException(nameof(mediator));
 
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
 
             RestoreMainWindowCommand = restoreMainWindowCommand ?? throw new ArgumentNullException(nameof(restoreMainWindowCommand));
             LockComputerCommand = lockComputerCommand ?? throw new ArgumentNullException(nameof(lockComputerCommand));
@@ -150,8 +150,8 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
         {
             try
             {
-                Text = executionTimer.IsRunning
-                    ? (TimerText)executionTimer.TimeUntilAction
+                Text = executionPlan.IsRunning
+                    ? (TimerText)executionPlan.TimeUntilAction
                     : defaultText;
             }
             catch (Exception ex)

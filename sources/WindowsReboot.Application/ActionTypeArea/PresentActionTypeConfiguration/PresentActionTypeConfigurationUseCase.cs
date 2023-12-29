@@ -24,12 +24,10 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.PresentActionTy
 {
     public class PresentActionTypeConfigurationUseCase : IRequestHandler<PresentActionTypeConfigurationRequest, PresentActionTypeConfigurationResponse>
     {
-        private readonly ExecutionTimer executionTimer;
         private readonly ExecutionPlan executionPlan;
 
-        public PresentActionTypeConfigurationUseCase(ExecutionTimer executionTimer, ExecutionPlan executionPlan)
+        public PresentActionTypeConfigurationUseCase(ExecutionPlan executionPlan)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
@@ -38,7 +36,7 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.PresentActionTy
             PresentActionTypeConfigurationResponse response = new PresentActionTypeConfigurationResponse
             {
                 ActionType = executionPlan.ActionType,
-                IsWarningEnabled = executionTimer.WarningInterval != null,
+                IsWarningEnabled = executionPlan.WarningInterval != null,
                 ForceOption = executionPlan.ForceOption
             };
 

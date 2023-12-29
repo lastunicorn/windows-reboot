@@ -25,34 +25,34 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.PresentActionTi
 {
     internal class PresentActionTimeSettingsUseCase : IRequestHandler<PresentActionTimeSettingsRequest, PresentActionTimeSettingsResponse>
     {
-        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
 
-        public PresentActionTimeSettingsUseCase(ExecutionTimer executionTimer)
+        public PresentActionTimeSettingsUseCase(ExecutionPlan executionPlan)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public Task<PresentActionTimeSettingsResponse> Handle(PresentActionTimeSettingsRequest request, CancellationToken cancellationToken)
         {
             PresentActionTimeSettingsResponse response = new PresentActionTimeSettingsResponse
             {
-                IsAllowedToChange = !executionTimer.IsRunning
+                IsAllowedToChange = !executionPlan.IsRunning
             };
 
-            if (executionTimer.Schedule is FixedDateSchedule fixedDateSchedule)
+            if (executionPlan.Schedule is FixedDateSchedule fixedDateSchedule)
             {
                 response.DateTime = fixedDateSchedule.DateTime;
                 response.Type = ScheduleType.FixedDate;
             }
 
-            if (executionTimer.Schedule is DailySchedule dailySchedule)
+            if (executionPlan.Schedule is DailySchedule dailySchedule)
             {
                 response.DateTime = DateTime.Now + TimeSpan.FromHours(1);
                 response.TimeOfDay = dailySchedule.TimeOfDay;
                 response.Type = ScheduleType.Daily;
             }
 
-            if (executionTimer.Schedule is DelaySchedule delaySchedule)
+            if (executionPlan.Schedule is DelaySchedule delaySchedule)
             {
                 response.DateTime = DateTime.Now + TimeSpan.FromHours(1);
                 response.Hours = delaySchedule.Hours;
@@ -61,7 +61,7 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.PresentActionTi
                 response.Type = ScheduleType.Delay;
             }
 
-            if (executionTimer.Schedule is ImmediateSchedule)
+            if (executionPlan.Schedule is ImmediateSchedule)
             {
                 response.DateTime = DateTime.Now + TimeSpan.FromHours(1);
                 response.Type = ScheduleType.Immediate;

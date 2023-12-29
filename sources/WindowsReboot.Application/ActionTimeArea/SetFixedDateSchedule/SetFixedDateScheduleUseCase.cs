@@ -24,16 +24,16 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetFixedDateSch
 {
     internal class SetFixedDateScheduleUseCase : IRequestHandler<SetFixedDateScheduleRequest>
     {
-        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
 
-        public SetFixedDateScheduleUseCase(ExecutionTimer executionTimer)
+        public SetFixedDateScheduleUseCase(ExecutionPlan executionPlan)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public Task Handle(SetFixedDateScheduleRequest request, CancellationToken cancellationToken)
         {
-            executionTimer.Schedule = new FixedDateSchedule
+            executionPlan.Schedule = new FixedDateSchedule
             {
                 DateTime = request.DateTime
             };

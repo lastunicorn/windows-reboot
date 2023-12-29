@@ -24,16 +24,16 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDailySchedul
 {
     internal class SetDailyScheduleUseCase : IRequestHandler<SetDailyScheduleRequest>
     {
-        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
 
-        public SetDailyScheduleUseCase(ExecutionTimer executionTimer)
+        public SetDailyScheduleUseCase(ExecutionPlan executionPlan)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public Task Handle(SetDailyScheduleRequest request, CancellationToken cancellationToken)
         {
-            executionTimer.Schedule = new DailySchedule
+            executionPlan.Schedule = new DailySchedule
             {
                 TimeOfDay = request.TimeOfDay
             };

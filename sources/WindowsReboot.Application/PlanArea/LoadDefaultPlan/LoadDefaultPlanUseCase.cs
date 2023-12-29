@@ -24,21 +24,19 @@ namespace DustInTheWind.WindowsReboot.Application.PlanArea.LoadDefaultPlan
 {
     internal class LoadDefaultPlanUseCase : IRequestHandler<LoadDefaultPlanRequest>
     {
-        private readonly ExecutionTimer executionTimer;
         private readonly ExecutionPlan executionPlan;
 
-        public LoadDefaultPlanUseCase(ExecutionTimer executionTimer, ExecutionPlan executionPlan)
+        public LoadDefaultPlanUseCase(ExecutionPlan executionPlan)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public Task Handle(LoadDefaultPlanRequest request, CancellationToken cancellationToken)
         {
-            if (executionTimer.IsRunning)
-                throw new WindowsRebootException("Cannot complete the task while the timer is started.");
+            if (executionPlan.IsRunning)
+                throw new TimerIsRunningException();
 
-            executionTimer.Schedule = new DelaySchedule
+            executionPlan.Schedule = new DelaySchedule
             {
                 Hours = 0,
                 Minutes = 10,
@@ -47,7 +45,7 @@ namespace DustInTheWind.WindowsReboot.Application.PlanArea.LoadDefaultPlan
 
             executionPlan.ActionType = ActionType.PowerOff;
             executionPlan.ForceOption = ForceOption.Yes;
-            executionTimer.DeactivateWarning();
+            executionPlan.DeactivateWarning();
 
             return Task.CompletedTask;
         }

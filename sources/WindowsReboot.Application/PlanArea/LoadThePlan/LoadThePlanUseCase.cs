@@ -26,23 +26,21 @@ namespace DustInTheWind.WindowsReboot.Application.PlanArea.LoadThePlan
 {
     internal class LoadThePlanUseCase : IRequestHandler<LoadThePlanRequest>
     {
-        private readonly ExecutionTimer executionTimer;
         private readonly ExecutionPlan executionPlan;
         private readonly IConfigStorage configuration;
 
-        public LoadThePlanUseCase(ExecutionTimer executionTimer, ExecutionPlan executionPlan, IConfigStorage configuration)
+        public LoadThePlanUseCase(ExecutionPlan executionPlan, IConfigStorage configuration)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         public Task Handle(LoadThePlanRequest request, CancellationToken cancellationToken)
         {
-            if (executionTimer.IsRunning)
+            if (executionPlan.IsRunning)
                 throw new WindowsRebootException("Cannot complete the task while the timer is started.");
 
-            executionTimer.Schedule = configuration.Schedule.ToDomain();
+            executionPlan.Schedule = configuration.Schedule.ToDomain();
             executionPlan.ActionType = configuration.ActionType.ToDomain();
             executionPlan.ForceOption = configuration.ForceClosingPrograms
                 ? ForceOption.Yes

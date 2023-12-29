@@ -24,19 +24,19 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.SetWarningOptio
 {
     internal class SetWarningOptionUseCase : IRequestHandler<SetWarningOptionRequest>
     {
-        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
 
-        public SetWarningOptionUseCase(ExecutionTimer executionTimer)
+        public SetWarningOptionUseCase(ExecutionPlan executionPlan)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public Task Handle(SetWarningOptionRequest request, CancellationToken cancellationToken)
         {
             if (request.ActivateWarning)
-                executionTimer.ActivateWarning();
+                executionPlan.ActivateWarning();
             else
-                executionTimer.DeactivateWarning();
+                executionPlan.DeactivateWarning();
 
             return Task.CompletedTask;
         }

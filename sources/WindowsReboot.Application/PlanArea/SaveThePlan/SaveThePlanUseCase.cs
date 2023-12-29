@@ -28,21 +28,19 @@ namespace DustInTheWind.WindowsReboot.Application.PlanArea.SaveThePlan
     internal class SaveThePlanUseCase : IRequestHandler<SaveThePlanRequest>
     {
         private readonly IUserInterface userInterface;
-        private readonly ExecutionTimer executionTimer;
         private readonly ExecutionPlan executionPlan;
         private readonly IConfigStorage configuration;
 
-        public SaveThePlanUseCase(IUserInterface userInterface, ExecutionTimer executionTimer, ExecutionPlan executionPlan, IConfigStorage configuration)
+        public SaveThePlanUseCase(IUserInterface userInterface, ExecutionPlan executionPlan, IConfigStorage configuration)
         {
             this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         public Task Handle(SaveThePlanRequest request, CancellationToken cancellationToken)
         {
-            configuration.Schedule = executionTimer.Schedule.ToConfigModel();
+            configuration.Schedule = executionPlan.Schedule.ToConfigModel();
 
             configuration.ActionType = executionPlan.ActionType.ToConfigModel();
             configuration.ForceClosingPrograms = executionPlan.ForceOption == ForceOption.Yes;

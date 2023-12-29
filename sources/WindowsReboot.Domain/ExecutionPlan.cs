@@ -29,6 +29,52 @@ namespace DustInTheWind.WindowsReboot.Domain
         private ActionType actionType;
         private ForceOption forceOption;
         private ForceOption lastApplicableForceOption;
+        private readonly InternalExecutionTimer timer;
+
+        private static readonly ImmediateSchedule DefaultSchedule = new ImmediateSchedule();
+        public static TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
+        private volatile bool isRunning;
+        private ISchedule schedule = DefaultSchedule;
+        private TimeSpan? warningInterval = DefaultWarningTime;
+        private DateTime startTime;
+
+        public event EventHandler Warning;
+
+        public event EventHandler Ring;
+
+        public bool IsRunning => isRunning;
+
+        public ISchedule Schedule
+        {
+            get => schedule;
+            set
+            {
+                if (value == null)
+                    schedule = DefaultSchedule;
+
+                schedule = value;
+
+                OnScheduleChangedChanges();
+            }
+        }
+
+        public TimeSpan? WarningInterval
+        {
+            get => warningInterval;
+            set
+            {
+                if (isRunning)
+                    throw new InvalidOperationException();
+
+                warningInterval = value;
+
+                OnWarningIntervalChanged();
+            }
+        }
+
+        public TimeSpan TimeUntilAction => timer.ActionTime - DateTime.Now;
+
+        public DateTime ActionTime => timer.ActionTime;
 
         public ActionType ActionType
         {
@@ -72,6 +118,10 @@ namespace DustInTheWind.WindowsReboot.Domain
             ActionType = ActionType.Ring;
             ForceOption = ForceOption.NotApplicable;
             lastApplicableForceOption = ForceOption.Yes;
+
+            timer = new InternalExecutionTimer();
+            timer.Warning += TimerWarning;
+            timer.Ring += TimerRing;
         }
 
         public void Execute()
@@ -155,6 +205,110 @@ namespace DustInTheWind.WindowsReboot.Domain
                 default:
                     return value == ForceOption.NotApplicable;
             }
+        }
+
+        private void TimerWarning(object sender, EventArgs e)
+        {
+            OnWarning();
+        }
+
+        private void TimerRing(object sender, EventArgs e)
+        {
+            OnRing();
+            isRunning = false;
+
+            OnStopped();
+        }
+
+        public void Start()
+        {
+            startTime = DateTime.Now;
+            DateTime? nextRunTime = CalculateNextRunTime(startTime);
+
+            if (nextRunTime == null)
+                throw new ActionTimeInThePastException(ActionTime, startTime);
+
+            timer.ActionTime = nextRunTime.Value;
+            timer.WarningInterval = warningInterval;
+            timer.Start();
+
+            OnStarted();
+        }
+
+        private DateTime? CalculateNextRunTime(DateTime dateTime)
+        {
+            DateTime runTime = Schedule.CalculateTimeFrom(dateTime);
+
+            return runTime < dateTime
+                ? null as DateTime?
+                : runTime;
+        }
+
+        public void Stop()
+        {
+            timer.Stop();
+            isRunning = false;
+
+            OnStopped();
+        }
+
+        public void ActivateWarning()
+        {
+            WarningInterval = DefaultWarningTime;
+        }
+
+        public void DeactivateWarning()
+        {
+            WarningInterval = null;
+        }
+
+        protected virtual void OnStarted()
+        {
+            TimerStartedEvent ev = new TimerStartedEvent
+            {
+                ActionTime = ActionTime
+            };
+            eventBus.Publish(ev);
+        }
+
+        protected virtual void OnStopped()
+        {
+            TimerStoppedEvent ev = new TimerStoppedEvent();
+            eventBus.Publish(ev);
+        }
+
+        protected virtual void OnWarning()
+        {
+            Warning?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnRing()
+        {
+            Ring?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnWarningIntervalChanged()
+        {
+            WarningIntervalChangedEvent ev = new WarningIntervalChangedEvent
+            {
+                Interval = warningInterval
+            };
+
+            eventBus.Publish(ev);
+        }
+
+        protected virtual void OnScheduleChangedChanges()
+        {
+            ScheduleChangedEvent ev = new ScheduleChangedEvent(schedule)
+            {
+                IsAllowedToChange = !isRunning
+            };
+            eventBus.Publish(ev);
+        }
+
+        public void Dispose()
+        {
+            timer.Dispose();
         }
 
         protected virtual void OnForceOptionChanged()

@@ -24,16 +24,16 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetSchedule
 {
     internal class SetImmediateScheduleUseCase : IRequestHandler<SetImmediateScheduleRequest>
     {
-        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
 
-        public SetImmediateScheduleUseCase(ExecutionTimer executionTimer)
+        public SetImmediateScheduleUseCase(ExecutionPlan executionPlan)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public Task Handle(SetImmediateScheduleRequest request, CancellationToken cancellationToken)
         {
-            executionTimer.Schedule = new ImmediateSchedule();
+            executionPlan.Schedule = new ImmediateSchedule();
 
             return Task.CompletedTask;
         }

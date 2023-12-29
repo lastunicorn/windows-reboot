@@ -31,14 +31,14 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication
         private readonly EventBus eventBus;
         private readonly IUserInterface userInterface;
         private readonly IConfigStorage configStorage;
-        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
 
-        public CloseApplicationUseCase(EventBus eventBus, IUserInterface userInterface, IConfigStorage configStorage, ExecutionTimer executionTimer)
+        public CloseApplicationUseCase(EventBus eventBus, IUserInterface userInterface, IConfigStorage configStorage, ExecutionPlan executionPlan)
         {
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
             this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
             this.configStorage = configStorage ?? throw new ArgumentNullException(nameof(configStorage));
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public Task<CloseApplicationResponse> Handle(CloseApplicationRequest request, CancellationToken cancellationToken)
@@ -52,7 +52,7 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication
             }
             else
             {
-                bool allowToClose = !executionTimer.IsRunning || userInterface.ConfirmClosingWhileTimerIsRunning();
+                bool allowToClose = !executionPlan.IsRunning || userInterface.ConfirmClosingWhileTimerIsRunning();
 
                 if (allowToClose)
                 {

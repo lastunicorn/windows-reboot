@@ -26,33 +26,33 @@ namespace DustInTheWind.WindowsReboot.Workers
     public class ExecutionWorker : IWorker
     {
         private readonly IMediator mediator;
-        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
 
-        public ExecutionWorker(IMediator mediator, ExecutionTimer executionTimer)
+        public ExecutionWorker(IMediator mediator, ExecutionPlan executionPlan)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public void Start()
         {
-            executionTimer.Warning += HandleExecutionTimerWarning;
-            executionTimer.Ring += HandleExecutionTimerRing;
+            executionPlan.Warning += HandleExecutionPlanWarning;
+            executionPlan.Ring += HandleExecutionPlanRing;
         }
 
         public void Stop()
         {
-            executionTimer.Warning -= HandleExecutionTimerWarning;
-            executionTimer.Ring -= HandleExecutionTimerRing;
+            executionPlan.Warning -= HandleExecutionPlanWarning;
+            executionPlan.Ring -= HandleExecutionPlanRing;
         }
 
-        private void HandleExecutionTimerWarning(object sender, EventArgs e)
+        private void HandleExecutionPlanWarning(object sender, EventArgs e)
         {
             WarnTheUserRequest request = new WarnTheUserRequest();
             _ = mediator.Send(request);
         }
 
-        private void HandleExecutionTimerRing(object sender, EventArgs eventArgs)
+        private void HandleExecutionPlanRing(object sender, EventArgs eventArgs)
         {
             ExecutePlanRequest request = new ExecutePlanRequest();
             _ = mediator.Send(request);

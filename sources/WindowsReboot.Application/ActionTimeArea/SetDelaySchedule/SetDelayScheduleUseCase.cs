@@ -24,16 +24,16 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTimeArea.SetDelaySchedul
 {
     internal class SetDelayScheduleUseCase : IRequestHandler<SetDelayScheduleRequest>
     {
-        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
 
-        public SetDelayScheduleUseCase(ExecutionTimer executionTimer)
+        public SetDelayScheduleUseCase(ExecutionPlan executionPlan)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public Task Handle(SetDelayScheduleRequest request, CancellationToken cancellationToken)
         {
-            executionTimer.Schedule = new DelaySchedule
+            executionPlan.Schedule = new DelaySchedule
             {
                 Hours = request.Hours,
                 Minutes = request.Minutes,

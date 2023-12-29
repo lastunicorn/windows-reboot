@@ -24,16 +24,16 @@ namespace DustInTheWind.WindowsReboot.Application.ActionArea.Stop
 {
     internal class StopUseCase : IRequestHandler<StopRequest>
     {
-        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
 
-        public StopUseCase(ExecutionTimer executionTimer)
+        public StopUseCase(ExecutionPlan executionPlan)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public Task Handle(StopRequest request, CancellationToken cancellationToken)
         {
-            executionTimer.Stop();
+            executionPlan.Stop();
             return Task.CompletedTask;
         }
     }

@@ -14,27 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Domain;
-using MediatR;
 
-namespace DustInTheWind.WindowsReboot.Application.ActionArea.Start
+namespace DustInTheWind.WindowsReboot.Application.PlanArea.LoadDefaultPlan
 {
-    internal class StartUseCase : IRequestHandler<StartRequest>
+    internal class TimerIsRunningException : WindowsRebootException
     {
-        private readonly ExecutionPlan executionPlan;
+        private const string DefaultMessage = "Cannot complete the task while the timer is started.";
 
-        public StartUseCase(ExecutionPlan executionPlan)
+        public TimerIsRunningException()
+            : base(DefaultMessage)
         {
-            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
-        }
-
-        public Task Handle(StartRequest request, CancellationToken cancellationToken)
-        {
-            executionPlan.Start();
-            return Task.CompletedTask;
         }
     }
 }

@@ -63,7 +63,6 @@ namespace DustInTheWind.WindowsReboot
 
             // Internal State
 
-            containerBuilder.RegisterType<ExecutionTimer>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<ExecutionPlan>().AsSelf().SingleInstance();
 
             // Workers

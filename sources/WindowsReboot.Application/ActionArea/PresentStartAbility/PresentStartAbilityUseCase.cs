@@ -24,18 +24,18 @@ namespace DustInTheWind.WindowsReboot.Application.ActionArea.PresentStartAbility
 {
     internal class PresentStartAbilityUseCase : IRequestHandler<PresentStartAbilityRequest, PresentStartAbilityResponse>
     {
-        private readonly ExecutionTimer executionTimer;
+        private readonly ExecutionPlan executionPlan;
 
-        public PresentStartAbilityUseCase(ExecutionTimer executionTimer)
+        public PresentStartAbilityUseCase(ExecutionPlan executionPlan)
         {
-            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
         }
 
         public Task<PresentStartAbilityResponse> Handle(PresentStartAbilityRequest request, CancellationToken cancellationToken)
         {
             PresentStartAbilityResponse response = new PresentStartAbilityResponse
             {
-                CanStart = !executionTimer.IsRunning
+                CanStart = !executionPlan.IsRunning
             };
 
             return Task.FromResult(response);
