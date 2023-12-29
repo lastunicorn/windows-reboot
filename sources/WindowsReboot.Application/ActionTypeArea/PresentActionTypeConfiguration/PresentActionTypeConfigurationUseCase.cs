@@ -38,7 +38,7 @@ namespace DustInTheWind.WindowsReboot.Application.ActionTypeArea.PresentActionTy
             PresentActionTypeConfigurationResponse response = new PresentActionTypeConfigurationResponse
             {
                 ActionType = executionPlan.ActionType,
-                IsWarningEnabled = executionTimer.WarningTime != null,
+                IsWarningEnabled = executionTimer.WarningInterval != null,
                 ForceOption = executionPlan.ForceOption
             };
 

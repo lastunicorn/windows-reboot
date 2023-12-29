@@ -140,7 +140,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                 .Select(x => new ActionTypeItem(x))
                 .ToArray();
 
-            eventBus.Subscribe<WarningTimeChangedEvent>(HandleTimerWarningTimeChangedEvent);
+            eventBus.Subscribe<WarningIntervalChangedEvent>(HandleTimerWarningTimeChangedEvent);
             eventBus.Subscribe<TimerStartedEvent>(HandleTimerStartedEvent);
             eventBus.Subscribe<TimerStoppedEvent>(HandleTimerStoppedEvent);
 
@@ -167,13 +167,13 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             });
         }
 
-        private void HandleTimerWarningTimeChangedEvent(WarningTimeChangedEvent ev)
+        private void HandleTimerWarningTimeChangedEvent(WarningIntervalChangedEvent ev)
         {
             Dispatch(() =>
             {
                 RunInInitializeMode(() =>
                 {
-                    IsWarningEnable = ev.Time != null;
+                    IsWarningEnable = ev.Interval != null;
                 });
             });
         }

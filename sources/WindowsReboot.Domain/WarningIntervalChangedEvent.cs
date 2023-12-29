@@ -18,8 +18,8 @@ using System;
 
 namespace DustInTheWind.WindowsReboot.Domain
 {
-    public class WarningTimeChangedEvent
+    public class WarningIntervalChangedEvent
     {
-        public TimeSpan? Time { get; set; }
+        public TimeSpan? Interval { get; set; }
     }
 }

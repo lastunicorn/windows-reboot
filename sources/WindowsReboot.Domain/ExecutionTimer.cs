@@ -29,7 +29,7 @@ namespace DustInTheWind.WindowsReboot.Domain
         public readonly TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
         private volatile bool isRunning;
         private ISchedule schedule = DefaultSchedule;
-        private TimeSpan? warningTime;
+        private TimeSpan? warningInterval;
         private bool shouldRaiseWarning;
         private DateTime startTime;
 
@@ -53,17 +53,17 @@ namespace DustInTheWind.WindowsReboot.Domain
             }
         }
 
-        public TimeSpan? WarningTime
+        public TimeSpan? WarningInterval
         {
-            get => warningTime;
+            get => warningInterval;
             set
             {
                 if (isRunning)
                     throw new InvalidOperationException();
 
-                warningTime = value;
+                warningInterval = value;
 
-                OnWarningTimeChanged();
+                OnWarningIntervalChanged();
             }
         }
 
@@ -77,7 +77,7 @@ namespace DustInTheWind.WindowsReboot.Domain
 
             timer = new Timer(TimerElapsed);
 
-            WarningTime = TimeSpan.FromSeconds(30);
+            WarningInterval = TimeSpan.FromSeconds(30);
         }
 
         private void TimerElapsed(object state)
@@ -130,10 +130,10 @@ namespace DustInTheWind.WindowsReboot.Domain
         {
             ActionTime = nextRunTime;
 
-            shouldRaiseWarning = warningTime != null && warningTime < ActionTime - startTime;
+            shouldRaiseWarning = warningInterval != null && warningInterval < ActionTime - startTime;
 
             TimeSpan interval = shouldRaiseWarning
-                ? ActionTime - DateTime.Now - warningTime.Value
+                ? ActionTime - DateTime.Now - warningInterval.Value
                 : ActionTime - DateTime.Now;
 
             isRunning = true;
@@ -164,12 +164,12 @@ namespace DustInTheWind.WindowsReboot.Domain
 
         public void ActivateWarning()
         {
-            WarningTime = DefaultWarningTime;
+            WarningInterval = DefaultWarningTime;
         }
 
         public void DeactivateWarning()
         {
-            WarningTime = null;
+            WarningInterval = null;
         }
 
         protected virtual void OnStarted()
@@ -197,11 +197,11 @@ namespace DustInTheWind.WindowsReboot.Domain
             Ring?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnWarningTimeChanged()
+        protected virtual void OnWarningIntervalChanged()
         {
-            WarningTimeChangedEvent ev = new WarningTimeChangedEvent
+            WarningIntervalChangedEvent ev = new WarningIntervalChangedEvent
             {
-                Time = warningTime
+                Interval = warningInterval
             };
 
             eventBus.Publish(ev);
