@@ -23,24 +23,22 @@ namespace DustInTheWind.WindowsReboot.Domain
 {
     public class ExecutionPlan
     {
+        private static readonly ImmediateSchedule DefaultSchedule = new ImmediateSchedule();
+        public static TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
+
         private readonly IOperatingSystem operatingSystem;
         private readonly EventBus eventBus;
         private readonly IUserInterface userInterface;
+
+        private readonly InternalExecutionTimer timer;
+        private volatile bool isRunning;
+        private DateTime startTime;
+
         private ActionType actionType;
         private ForceOption forceOption;
         private ForceOption lastApplicableForceOption;
-        private readonly InternalExecutionTimer timer;
-
-        private static readonly ImmediateSchedule DefaultSchedule = new ImmediateSchedule();
-        public static TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
-        private volatile bool isRunning;
         private ISchedule schedule = DefaultSchedule;
         private TimeSpan? warningInterval = DefaultWarningTime;
-        private DateTime startTime;
-
-        public event EventHandler Warning;
-
-        public event EventHandler Ring;
 
         public bool IsRunning => isRunning;
 
@@ -108,6 +106,10 @@ namespace DustInTheWind.WindowsReboot.Domain
                 OnForceOptionChanged();
             }
         }
+
+        public event EventHandler Warning;
+
+        public event EventHandler Ring;
 
         public ExecutionPlan(IOperatingSystem operatingSystem, EventBus eventBus, IUserInterface userInterface)
         {
@@ -306,11 +308,6 @@ namespace DustInTheWind.WindowsReboot.Domain
             eventBus.Publish(ev);
         }
 
-        public void Dispose()
-        {
-            timer.Dispose();
-        }
-
         protected virtual void OnForceOptionChanged()
         {
             ForceOptionChangedEvent ev = new ForceOptionChangedEvent
@@ -327,6 +324,11 @@ namespace DustInTheWind.WindowsReboot.Domain
                 ActionType = ActionType
             };
             eventBus.Publish(ev);
+        }
+
+        public void Dispose()
+        {
+            timer.Dispose();
         }
     }
 }
