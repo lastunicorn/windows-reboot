@@ -99,7 +99,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
             PowerOffCommand = powerOffCommand ?? throw new ArgumentNullException(nameof(powerOffCommand));
             ExitCommand = exitCommand ?? throw new ArgumentNullException(nameof(exitCommand));
 
-            defaultText = string.Format("{0} {1}", System.Windows.Forms.Application.ProductName, VersionUtil.GetVersionToString());
+            string productName = System.Windows.Forms.Application.ProductName;
+            string versionAsString = VersionUtil.GetVersionToString();
+            defaultText = $"{productName} {versionAsString}";
 
             Text = defaultText;
 

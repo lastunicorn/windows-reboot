@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Autofac;
 using DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication;
@@ -35,10 +36,12 @@ namespace DustInTheWind.WindowsReboot
             ServicesSetup.Execute(containerBuilder);
             IContainer container = containerBuilder.Build();
 
-            InitializeApplication(container);
+            InitializeWindowsForms();
+            InitializeBusiness(container).Wait();
+            CreateGui(container);
         }
 
-        private void InitializeApplication(IComponentContext context)
+        private static void InitializeWindowsForms()
         {
             System.Windows.Forms.Application.EnableVisualStyles();
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
@@ -47,11 +50,17 @@ namespace DustInTheWind.WindowsReboot
             using (Form form = new Form())
             {
             }
+        }
 
+        private static Task InitializeBusiness(IComponentContext context)
+        {
             IMediator mediator = context.Resolve<IMediator>();
             InitializeApplicationRequest request = new InitializeApplicationRequest();
-            mediator.Send(request).Wait();
+            return mediator.Send(request);
+        }
 
+        private void CreateGui(IComponentContext context)
+        {
             mainWindow = context.Resolve<WindowsRebootForm>();
             mainWindow.ViewModel = context.Resolve<WindowsRebootViewModel>();
 

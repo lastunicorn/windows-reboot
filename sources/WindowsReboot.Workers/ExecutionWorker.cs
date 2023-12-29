@@ -17,7 +17,6 @@
 using System;
 using DustInTheWind.WindowsReboot.Application.TimerArea.ExecutePlan;
 using DustInTheWind.WindowsReboot.Application.TimerArea.WarnTheUser;
-using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WorkerEngine;
 using MediatR;
 
@@ -26,20 +25,19 @@ namespace DustInTheWind.WindowsReboot.Workers
     public sealed class ExecutionWorker : IWorker, IDisposable
     {
         private readonly IMediator mediator;
-
-        private readonly InternalExecutionTimer timer;
+        private readonly ExecutionTimer timer;
 
         public bool IsRunning => timer.IsRunning;
 
-        public TimeSpan TimeUntilAction => timer.ActionTime - DateTime.Now;
-
         public DateTime ActionTime => timer.ActionTime;
+
+        public TimeSpan TimeUntilAction => timer.ActionTime - DateTime.Now;
 
         public ExecutionWorker(IMediator mediator)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-            timer = new InternalExecutionTimer();
+            timer = new ExecutionTimer();
         }
 
         public void Start()

@@ -17,9 +17,9 @@
 using System;
 using System.Threading;
 
-namespace DustInTheWind.WindowsReboot.Domain
+namespace DustInTheWind.WindowsReboot.Workers
 {
-    public sealed class InternalExecutionTimer : IDisposable
+    internal sealed class ExecutionTimer : IDisposable
     {
         private readonly Timer timer;
         private TimerStep step;
@@ -37,7 +37,7 @@ namespace DustInTheWind.WindowsReboot.Domain
 
         public event EventHandler Ring;
 
-        public InternalExecutionTimer()
+        public ExecutionTimer()
         {
             timer = new Timer(TimerElapsed);
         }
