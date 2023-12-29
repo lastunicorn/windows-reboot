@@ -18,6 +18,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
+using DustInTheWind.WindowsReboot.Ports.SystemAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.TimerArea.ExecutePlan
@@ -25,17 +27,62 @@ namespace DustInTheWind.WindowsReboot.Application.TimerArea.ExecutePlan
     internal class ExecutePlanUseCase : IRequestHandler<ExecutePlanRequest>
     {
         private readonly ExecutionPlan executionPlan;
+        private readonly IUserInterface userInterface;
+        private readonly IOperatingSystem operatingSystem;
 
-        public ExecutePlanUseCase(ExecutionPlan executionPlan)
+        public ExecutePlanUseCase(ExecutionPlan executionPlan, IUserInterface userInterface, IOperatingSystem operatingSystem)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
+            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
+            this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
         }
 
         public Task Handle(ExecutePlanRequest request, CancellationToken cancellationToken)
         {
-            executionPlan.Execute();
+            Execute();
 
             return Task.CompletedTask;
+        }
+
+        public void Execute()
+        {
+            switch (executionPlan.ActionType)
+            {
+                case ActionType.Ring:
+                    userInterface.DisplayNotification();
+                    break;
+
+                case ActionType.LockWorkstation:
+                    operatingSystem.Lock();
+                    break;
+
+                case ActionType.LogOff:
+                    operatingSystem.LogOff(executionPlan.ForceOption == ForceOption.Yes);
+                    break;
+
+                case ActionType.Sleep:
+                    operatingSystem.Sleep(executionPlan.ForceOption == ForceOption.Yes);
+                    break;
+
+                case ActionType.Hibernate:
+                    operatingSystem.Hibernate(executionPlan.ForceOption == ForceOption.Yes);
+                    break;
+
+                case ActionType.Reboot:
+                    operatingSystem.Reboot(executionPlan.ForceOption == ForceOption.Yes);
+                    break;
+
+                case ActionType.ShutDown:
+                    operatingSystem.ShutDown(executionPlan.ForceOption == ForceOption.Yes);
+                    break;
+
+                case ActionType.PowerOff:
+                    operatingSystem.PowerOff(executionPlan.ForceOption == ForceOption.Yes);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

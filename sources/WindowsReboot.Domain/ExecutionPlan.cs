@@ -16,8 +16,6 @@
 
 using System;
 using DustInTheWind.EventBusEngine;
-using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
-using DustInTheWind.WindowsReboot.Ports.SystemAccess;
 
 namespace DustInTheWind.WindowsReboot.Domain
 {
@@ -26,9 +24,7 @@ namespace DustInTheWind.WindowsReboot.Domain
         private static readonly ImmediateSchedule DefaultSchedule = new ImmediateSchedule();
         public static TimeSpan? DefaultWarningTime = TimeSpan.FromSeconds(30);
 
-        private readonly IOperatingSystem operatingSystem;
         private readonly EventBus eventBus;
-        private readonly IUserInterface userInterface;
 
         private ActionType actionType;
         private ForceOption forceOption;
@@ -94,11 +90,9 @@ namespace DustInTheWind.WindowsReboot.Domain
             }
         }
 
-        public ExecutionPlan(IOperatingSystem operatingSystem, EventBus eventBus, IUserInterface userInterface)
+        public ExecutionPlan(EventBus eventBus)
         {
-            this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-            this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
 
             ActionType = ActionType.Ring;
             ForceOption = ForceOption.NotApplicable;
@@ -154,47 +148,6 @@ namespace DustInTheWind.WindowsReboot.Domain
                 case ActionType.LockWorkstation:
                 default:
                     return value == ForceOption.NotApplicable;
-            }
-        }
-
-        public void Execute()
-        {
-            switch (ActionType)
-            {
-                case ActionType.Ring:
-                    userInterface.DisplayNotification();
-                    break;
-
-                case ActionType.LockWorkstation:
-                    operatingSystem.Lock();
-                    break;
-
-                case ActionType.LogOff:
-                    operatingSystem.LogOff(ForceOption == ForceOption.Yes);
-                    break;
-
-                case ActionType.Sleep:
-                    operatingSystem.Sleep(ForceOption == ForceOption.Yes);
-                    break;
-
-                case ActionType.Hibernate:
-                    operatingSystem.Hibernate(ForceOption == ForceOption.Yes);
-                    break;
-
-                case ActionType.Reboot:
-                    operatingSystem.Reboot(ForceOption == ForceOption.Yes);
-                    break;
-
-                case ActionType.ShutDown:
-                    operatingSystem.ShutDown(ForceOption == ForceOption.Yes);
-                    break;
-
-                case ActionType.PowerOff:
-                    operatingSystem.PowerOff(ForceOption == ForceOption.Yes);
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 
