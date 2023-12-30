@@ -20,7 +20,6 @@ using System.Threading.Tasks;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.MainArea.HideApplication;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
-using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.MainArea.MinimizeApplication

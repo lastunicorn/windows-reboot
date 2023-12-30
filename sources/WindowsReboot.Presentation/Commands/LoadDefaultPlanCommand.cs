@@ -18,7 +18,6 @@ using System;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application;
 using DustInTheWind.WindowsReboot.Application.PlanStorageArea.LoadDefaultPlan;
-using DustInTheWind.WindowsReboot.Domain;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands

@@ -52,7 +52,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         }
 
         public event EventHandler HoursChanged;
+
         public event EventHandler MinutesChanged;
+
         public event EventHandler SecondsChanged;
 
         public DelayTimeTabContent()

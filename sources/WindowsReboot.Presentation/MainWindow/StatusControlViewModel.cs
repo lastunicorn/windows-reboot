@@ -19,7 +19,6 @@ using System.Threading;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application;
 using DustInTheWind.WindowsReboot.Application.PlanStateArea.PresentTimerStatus;
-using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WinFormsAdditions;
 using MediatR;
 

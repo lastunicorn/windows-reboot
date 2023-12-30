@@ -21,7 +21,6 @@ using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Domain.Scheduling;
 using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
-using ScheduleType = DustInTheWind.WindowsReboot.Domain.Scheduling.ScheduleType;
 
 namespace DustInTheWind.WindowsReboot.Application.PlanStateArea.PresentActionTimeSettings
 {

@@ -19,7 +19,6 @@ using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application;
 using DustInTheWind.WindowsReboot.Application.PlanExecutionArea.StartTimer;
 using DustInTheWind.WindowsReboot.Application.PlanStateArea.PresentStartAbility;
-using DustInTheWind.WindowsReboot.Domain;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Presentation.Commands

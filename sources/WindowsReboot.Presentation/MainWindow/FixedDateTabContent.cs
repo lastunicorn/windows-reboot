@@ -42,6 +42,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         }
 
         public event EventHandler DateChanged;
+
         public event EventHandler TimeChanged;
 
         public FixedDateTabContent()

@@ -35,8 +35,10 @@ namespace DustInTheWind.WindowsReboot.PresentationAccess
         {
             Form mainForm = GetMainForm();
 
-            using (AboutForm form = new AboutForm()) 
+            using (AboutForm form = new AboutForm())
+            {
                 form.ShowDialog(mainForm);
+            }
         }
 
         public void DisplayLicense()

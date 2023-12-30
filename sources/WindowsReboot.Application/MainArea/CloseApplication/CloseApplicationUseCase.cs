@@ -19,7 +19,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application.MainArea.HideApplication;
-using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using DustInTheWind.WindowsReboot.Ports.WorkerAccess;

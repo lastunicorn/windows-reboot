@@ -181,7 +181,7 @@ namespace DustInTheWind.WindowsReboot.SystemAccess
         /// <returns>true if the system is an NT based; false otherwise.</returns>
         private static bool IsWinNT()
         {
-            return (Environment.OSVersion.Platform == PlatformID.Win32NT);
+            return Environment.OSVersion.Platform == PlatformID.Win32NT;
         }
 
         /// <summary>

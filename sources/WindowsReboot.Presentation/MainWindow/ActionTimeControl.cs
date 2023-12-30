@@ -62,7 +62,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 
         private void HandleViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ScheduleType") 
+            if (e.PropertyName == "ScheduleType")
                 tabControlActionTime.SelectedIndex = ToTabIndex(viewModel.ScheduleType);
         }
 

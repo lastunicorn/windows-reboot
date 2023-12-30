@@ -24,7 +24,6 @@ using DustInTheWind.WindowsReboot.Application.PlanSetupArea.SetDelaySchedule;
 using DustInTheWind.WindowsReboot.Application.PlanSetupArea.SetFixedDateSchedule;
 using DustInTheWind.WindowsReboot.Application.PlanSetupArea.SetImmediateSchedule;
 using DustInTheWind.WindowsReboot.Application.PlanStateArea.PresentActionTimeSettings;
-using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Domain.Scheduling;
 using DustInTheWind.WinFormsAdditions;
 using MediatR;

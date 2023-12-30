@@ -30,10 +30,10 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
             set
             {
                 viewModel = value;
-                
+
                 ClearBindings();
 
-                if (viewModel != null) 
+                if (viewModel != null)
                     CreateBindings();
             }
         }

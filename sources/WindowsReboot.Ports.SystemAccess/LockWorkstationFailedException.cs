@@ -16,11 +16,11 @@
 
 namespace DustInTheWind.WindowsReboot.Ports.SystemAccess
 {
-    public class ShutDownFailedException : WindowsRebootException
+    public class LockWorkstationFailedException : WindowsRebootException
     {
-        private const string DefaultMessage = "The ShutDown action failed.";
+        private const string DefaultMessage = "The Loc Workstation action failed.";
 
-        public ShutDownFailedException()
+        public LockWorkstationFailedException()
             : base(DefaultMessage)
         {
         }

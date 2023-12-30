@@ -31,7 +31,7 @@ namespace DustInTheWind.WindowsReboot.Domain
         private ActionType actionType = ActionType.Ring;
         private ForceOption forceOption = ForceOption.NotApplicable;
         private ForceOption lastApplicableForceOption = ForceOption.Yes;
-        private TimeSpan? warningInterval = DefaultWarningTime;
+        private readonly TimeSpan? warningInterval = DefaultWarningTime;
         private bool isWarningEnabled = true;
 
         public ISchedule Schedule

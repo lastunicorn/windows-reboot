@@ -23,6 +23,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
     public class ActionControlViewModel
     {
         public ICommand StartTimerCommand { get; set; }
+
         public ICommand StopTimerCommand { get; set; }
 
         public ActionControlViewModel(StartTimerCommand startTimerCommand, StopTimerCommand stopTimerCommand)

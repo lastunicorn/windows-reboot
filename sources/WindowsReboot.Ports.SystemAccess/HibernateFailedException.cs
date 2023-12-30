@@ -16,11 +16,11 @@
 
 namespace DustInTheWind.WindowsReboot.Ports.SystemAccess
 {
-    public class ShutDownFailedException : WindowsRebootException
+    public class HibernateFailedException : WindowsRebootException
     {
-        private const string DefaultMessage = "The ShutDown action failed.";
+        private const string DefaultMessage = "The Hibernate action failed.";
 
-        public ShutDownFailedException()
+        public HibernateFailedException()
             : base(DefaultMessage)
         {
         }
