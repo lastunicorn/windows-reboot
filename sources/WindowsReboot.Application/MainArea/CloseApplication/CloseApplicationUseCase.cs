@@ -22,6 +22,7 @@ using DustInTheWind.WindowsReboot.Application.MainArea.HideApplication;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
 using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
+using DustInTheWind.WorkerEngine;
 using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication
@@ -31,72 +32,64 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication
         private readonly EventBus eventBus;
         private readonly IUserInterface userInterface;
         private readonly IConfigStorage configStorage;
-        private readonly IExecutionProcess executionProcess;
+        private readonly IExecutionTimer executionTimer;
+        private readonly WorkersContainer workersContainer;
+        private CloseApplicationResponse response;
 
-        public CloseApplicationUseCase(EventBus eventBus, IUserInterface userInterface, IConfigStorage configStorage, IExecutionProcess executionProcess)
+        public CloseApplicationUseCase(EventBus eventBus, IUserInterface userInterface, IConfigStorage configStorage,
+            IExecutionTimer executionTimer, WorkersContainer workersContainer)
         {
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
             this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
             this.configStorage = configStorage ?? throw new ArgumentNullException(nameof(configStorage));
-            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
+            this.workersContainer = workersContainer ?? throw new ArgumentNullException(nameof(workersContainer));
         }
 
         public Task<CloseApplicationResponse> Handle(CloseApplicationRequest request, CancellationToken cancellationToken)
         {
-            CloseApplicationResponse response = new CloseApplicationResponse();
+            response = new CloseApplicationResponse();
 
-            if (configStorage.CloseToTray && !request.Force)
-            {
-                RaiseApplicationStateChangedEvent();
-                response.CloseSuccessfullyCompleted = false;
-            }
-            else
-            {
-                bool allowToClose = !executionProcess.IsTimerRunning() || userInterface.ConfirmClosingWhileTimerIsRunning();
-
-                if (allowToClose)
-                {
-                    bool success = RaiseApplicationClosingEvent();
-
-                    if (success)
-                    {
-                        userInterface.CloseUserInterface();
-                        response.CloseSuccessfullyCompleted = true;
-                    }
-                    else
-                    {
-                        RaiseApplicationCloseRevokedEvent();
-                        response.CloseSuccessfullyCompleted = false;
-                    }
-                }
-                else
-                {
-                    response.CloseSuccessfullyCompleted = false;
-                }
-            }
+            CloseApplication(request.Force);
 
             return Task.FromResult(response);
         }
 
-        private void RaiseApplicationStateChangedEvent()
+        private void CloseApplication(bool force)
+        {
+            bool shouldHideInsteadOfClose = configStorage.CloseToTray && !force;
+
+            if (shouldHideInsteadOfClose)
+            {
+                RaiseApplicationStateChangedEvent(ApplicationState.Hidden);
+                return;
+            }
+
+            bool allowToCloseWhileTimerIsRunning = !executionTimer.IsTimerRunning() || userInterface.ConfirmClosingWhileTimerIsRunning();
+
+            if (!allowToCloseWhileTimerIsRunning)
+                return;
+
+            RaiseApplicationClosingEvent();
+
+            userInterface.CloseUserInterface();
+            workersContainer.Stop();
+
+            response.CloseSuccessfullyCompleted = true;
+        }
+
+        private void RaiseApplicationStateChangedEvent(ApplicationState applicationState)
         {
             ApplicationStateChangedEvent ev = new ApplicationStateChangedEvent
             {
-                ApplicationState = ApplicationState.Hidden
+                ApplicationState = applicationState
             };
             eventBus.Publish(ev);
         }
 
-        private bool RaiseApplicationClosingEvent()
+        private void RaiseApplicationClosingEvent()
         {
             ApplicationClosingEvent ev = new ApplicationClosingEvent();
-            eventBus.Publish(ev);
-            return !ev.IsCanceled;
-        }
-
-        private void RaiseApplicationCloseRevokedEvent()
-        {
-            ApplicationCloseRevokedEvent ev = new ApplicationCloseRevokedEvent();
             eventBus.Publish(ev);
         }
     }

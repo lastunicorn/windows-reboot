@@ -47,7 +47,8 @@ namespace DustInTheWind.WindowsReboot
             containerBuilder.RegisterType<ConfigStorage>().As<IConfigStorage>().SingleInstance();
             containerBuilder.RegisterType<UserInterface>().AsSelf().As<IUserInterface>().SingleInstance();
             containerBuilder.RegisterType<OperatingSystem>().As<IOperatingSystem>().SingleInstance();
-            containerBuilder.RegisterType<ExecutionProcess>().As<IExecutionProcess>().SingleInstance();
+            containerBuilder.RegisterType<ExecutionTimer>().As<IExecutionTimer>().SingleInstance();
+            containerBuilder.RegisterType<SystemClock>().As<ISystemClock>().SingleInstance();
 
             // Internal State
 

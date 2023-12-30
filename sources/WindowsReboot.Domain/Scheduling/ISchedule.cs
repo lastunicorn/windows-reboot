@@ -20,6 +20,6 @@ namespace DustInTheWind.WindowsReboot.Domain.Scheduling
 {
     public interface ISchedule
     {
-        DateTime CalculateTimeFrom(DateTime now);
+        DateTime ComputeActionTimeRelativeTo(DateTime now);
     }
 }

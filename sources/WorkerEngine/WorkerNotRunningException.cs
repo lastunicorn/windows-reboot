@@ -14,9 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication
+using System;
+
+namespace DustInTheWind.WorkerEngine
 {
-    public class ApplicationCloseRevokedEvent
+    public class WorkerNotRunningException : Exception
     {
+        private static string DefaultMessage = "The worker is not running.";
+
+        public WorkerNotRunningException()
+            : base(DefaultMessage)
+        {
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace DustInTheWind.WindowsReboot.Domain.Scheduling
 
         public int Seconds { get; set; }
 
-        public DateTime CalculateTimeFrom(DateTime now)
+        public DateTime ComputeActionTimeRelativeTo(DateTime now)
         {
             return now + new TimeSpan(Hours, Minutes, Seconds);
         }

@@ -17,6 +17,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Ports.PresentationAccess;
 using DustInTheWind.WindowsReboot.Ports.SystemAccess;
@@ -29,17 +30,20 @@ namespace DustInTheWind.WindowsReboot.Application.PlanExecutionArea.ExecutePlann
         private readonly ExecutionPlan executionPlan;
         private readonly IUserInterface userInterface;
         private readonly IOperatingSystem operatingSystem;
+        private readonly EventBus eventBus;
 
-        public ExecutePlannedActionUseCase(ExecutionPlan executionPlan, IUserInterface userInterface, IOperatingSystem operatingSystem)
+        public ExecutePlannedActionUseCase(ExecutionPlan executionPlan, IUserInterface userInterface, IOperatingSystem operatingSystem, EventBus eventBus)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
             this.userInterface = userInterface ?? throw new ArgumentNullException(nameof(userInterface));
             this.operatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
+            this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         public Task Handle(ExecutePlannedActionRequest request, CancellationToken cancellationToken)
         {
             Execute();
+            RaiseTimerStoppedEvent();
 
             return Task.CompletedTask;
         }
@@ -83,6 +87,12 @@ namespace DustInTheWind.WindowsReboot.Application.PlanExecutionArea.ExecutePlann
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void RaiseTimerStoppedEvent()
+        {
+            TimerStoppedEvent ev = new TimerStoppedEvent();
+            eventBus.Publish(ev);
         }
     }
 }

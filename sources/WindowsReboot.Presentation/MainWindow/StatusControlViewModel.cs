@@ -90,10 +90,22 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         {
             Dispatch(() =>
             {
-                CurrentTime = DateTime.Now;
+                DateTime now = DateTime.Now;
 
-                if (ActionTime != null)
-                    TimerTime = ActionTime - DateTime.Now;
+                CurrentTime = now;
+
+                if (ActionTime == null)
+                {
+                    TimerTime = null;
+                }
+                else
+                {
+                    TimeSpan? newTimerTime = ActionTime - now;
+
+                    TimerTime = newTimerTime < TimeSpan.Zero
+                        ? TimeSpan.Zero
+                        : newTimerTime;
+                }
             });
         }
 

@@ -18,11 +18,5 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.CloseApplication
 {
     public class ApplicationClosingEvent
     {
-        public bool IsCanceled { get; private set; }
-
-        public void Cancel()
-        {
-            IsCanceled = true;
-        }
     }
 }

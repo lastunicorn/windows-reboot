@@ -22,7 +22,7 @@ namespace DustInTheWind.WindowsReboot.Domain.Scheduling
     {
         public TimeSpan TimeOfDay { get; set; }
 
-        public DateTime CalculateTimeFrom(DateTime now)
+        public DateTime ComputeActionTimeRelativeTo(DateTime now)
         {
             DateTime potentialTime = now.Date + TimeOfDay;
 

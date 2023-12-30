@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System.Windows.Forms;
 using Autofac;
 using DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication;
 using DustInTheWind.WindowsReboot.Presentation.Behaviors;
@@ -32,26 +31,19 @@ namespace DustInTheWind.WindowsReboot
 
         public WindowsRebootApplication()
         {
+            IContainer container = InitializeContainer();
+
+            InitializeBusiness(container);
+            InitializeGui(container);
+        }
+
+        private static IContainer InitializeContainer()
+        {
             ContainerBuilder containerBuilder = new ContainerBuilder();
             ServicesSetup.Execute(containerBuilder);
             IContainer container = containerBuilder.Build();
-
-            InitializeWindowsForms();
-            InitializeBusiness(container);
-            CreateGui(container);
-
-            UiDispatcher.Initialize();
-        }
-
-        private static void InitializeWindowsForms()
-        {
-            System.Windows.Forms.Application.EnableVisualStyles();
-            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
-
-            // Force the initialization of the Windows Forms environment.
-            using (Form form = new Form())
-            {
-            }
+            
+            return container;
         }
 
         private static void InitializeBusiness(IComponentContext context)
@@ -61,8 +53,13 @@ namespace DustInTheWind.WindowsReboot
             mediator.Send(request).Wait();
         }
 
-        private void CreateGui(IComponentContext context)
+        private void InitializeGui(IComponentContext context)
         {
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+            
+            // Main Window
+
             mainWindow = context.Resolve<WindowsRebootForm>();
             mainWindow.ViewModel = context.Resolve<WindowsRebootViewModel>();
 
@@ -72,8 +69,14 @@ namespace DustInTheWind.WindowsReboot
             MainWindowMinimizeBehavior mainWindowMinimizeBehavior = context.Resolve<MainWindowMinimizeBehavior>();
             mainWindow.AddBehavior(mainWindowMinimizeBehavior);
 
+            // Tray Icon
+
             trayIcon = context.Resolve<TrayIcon>();
             trayIcon.ViewModel = context.Resolve<TrayIconViewModel>();
+
+            // UI Dispatcher
+
+            UiDispatcher.Initialize();
         }
 
         public void Run()

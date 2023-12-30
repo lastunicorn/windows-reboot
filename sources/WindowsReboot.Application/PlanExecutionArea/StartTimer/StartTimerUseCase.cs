@@ -19,6 +19,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Domain;
+using DustInTheWind.WindowsReboot.Ports.SystemAccess;
 using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using MediatR;
 
@@ -27,14 +28,16 @@ namespace DustInTheWind.WindowsReboot.Application.PlanExecutionArea.StartTimer
     internal class StartTimerUseCase : IRequestHandler<StartTimerRequest>
     {
         private readonly ExecutionPlan executionPlan;
-        private readonly IExecutionProcess executionProcess;
+        private readonly IExecutionTimer executionTimer;
         private readonly EventBus eventBus;
+        private readonly ISystemClock systemClock;
 
-        public StartTimerUseCase(ExecutionPlan executionPlan, IExecutionProcess executionProcess, EventBus eventBus)
+        public StartTimerUseCase(ExecutionPlan executionPlan, IExecutionTimer executionTimer, EventBus eventBus, ISystemClock systemClock)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
-            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+            this.systemClock = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
         }
 
         public Task Handle(StartTimerRequest request, CancellationToken cancellationToken)
@@ -45,21 +48,21 @@ namespace DustInTheWind.WindowsReboot.Application.PlanExecutionArea.StartTimer
 
         public void Start()
         {
-            DateTime startTime = DateTime.Now;
-            DateTime runTime = executionPlan.Schedule.CalculateTimeFrom(startTime);
+            DateTime startTime = systemClock.GetCurrentTime();
+            DateTime actionTime = executionPlan.Schedule.ComputeActionTimeRelativeTo(startTime);
 
-            if (runTime < startTime)
-                throw new ActionTimeInThePastException(runTime, startTime);
+            if (actionTime < startTime)
+                throw new ActionTimeInThePastException(actionTime, startTime);
 
             ExecutionRequest executionRequest = new ExecutionRequest
             {
-                ActionTime = runTime,
+                ActionTime = actionTime,
                 WarningInterval = executionPlan.WarningInterval
             };
 
-            executionProcess.Start(executionRequest);
+            executionTimer.Start(executionRequest);
 
-            RaiseTimerStartedEvent(runTime);
+            RaiseTimerStartedEvent(actionTime);
         }
 
         private void RaiseTimerStartedEvent(DateTime nextRunTime)

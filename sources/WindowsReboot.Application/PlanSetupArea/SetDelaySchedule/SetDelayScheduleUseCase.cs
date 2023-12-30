@@ -28,19 +28,19 @@ namespace DustInTheWind.WindowsReboot.Application.PlanSetupArea.SetDelaySchedule
     internal class SetDelayScheduleUseCase : IRequestHandler<SetDelayScheduleRequest>
     {
         private readonly ExecutionPlan executionPlan;
-        private readonly IExecutionProcess executionProcess;
+        private readonly IExecutionTimer executionTimer;
         private readonly EventBus eventBus;
 
-        public SetDelayScheduleUseCase(ExecutionPlan executionPlan, IExecutionProcess executionProcess, EventBus eventBus)
+        public SetDelayScheduleUseCase(ExecutionPlan executionPlan, IExecutionTimer executionTimer, EventBus eventBus)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
-            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         public Task Handle(SetDelayScheduleRequest request, CancellationToken cancellationToken)
         {
-            if (executionProcess.IsTimerRunning())
+            if (executionTimer.IsTimerRunning())
                 throw new TimerIsRunningException();
 
             DelaySchedule schedule = new DelaySchedule

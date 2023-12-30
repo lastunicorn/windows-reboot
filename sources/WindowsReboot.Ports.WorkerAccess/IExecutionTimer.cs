@@ -14,12 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace DustInTheWind.WindowsReboot.Workers
+using System;
+
+namespace DustInTheWind.WindowsReboot.Ports.WorkerAccess
 {
-    internal enum TimerStep
+    public interface IExecutionTimer
     {
-        None,
-        Warn,
-        Ring
+        void Start(ExecutionRequest executionRequest);
+
+        void Stop();
+
+        bool IsTimerRunning();
+
+        TimeSpan GetTimeUntilAction();
+
+        DateTime GetActionTime();
     }
 }

@@ -14,17 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-
-namespace DustInTheWind.WindowsReboot.Domain.Scheduling
+namespace DustInTheWind.WindowsReboot.Workers
 {
-    public class FixedDateSchedule : ISchedule
+    internal enum TimerState
     {
-        public DateTime DateTime { get; set; }
-
-        public DateTime ComputeActionTimeRelativeTo(DateTime now)
-        {
-            return DateTime;
-        }
+        NotStarted = 0,
+        RunningForWarning,
+        RunningForRing
     }
 }

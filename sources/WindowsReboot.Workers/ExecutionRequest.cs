@@ -16,15 +16,14 @@
 
 using System;
 
-namespace DustInTheWind.WindowsReboot.Domain.Scheduling
+namespace DustInTheWind.WindowsReboot.Workers
 {
-    public class FixedDateSchedule : ISchedule
+    public class ExecutionRequest
     {
-        public DateTime DateTime { get; set; }
+        public Guid Id { get; set; }
 
-        public DateTime ComputeActionTimeRelativeTo(DateTime now)
-        {
-            return DateTime;
-        }
+        public DateTime ActionTime { get; set; }
+
+        public TimeSpan? WarningInterval { get; set; }
     }
 }

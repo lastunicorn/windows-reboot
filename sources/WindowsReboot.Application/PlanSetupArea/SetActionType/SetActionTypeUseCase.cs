@@ -26,17 +26,17 @@ namespace DustInTheWind.WindowsReboot.Application.PlanSetupArea.SetActionType
     internal class SetActionTypeUseCase : IRequestHandler<SetActionTypeRequest>
     {
         private readonly ExecutionPlan executionPlan;
-        private readonly IExecutionProcess executionProcess;
+        private readonly IExecutionTimer executionTimer;
 
-        public SetActionTypeUseCase(ExecutionPlan executionPlan, IExecutionProcess executionProcess)
+        public SetActionTypeUseCase(ExecutionPlan executionPlan, IExecutionTimer executionTimer)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
-            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
         }
 
         public Task Handle(SetActionTypeRequest request, CancellationToken cancellationToken)
         {
-            if (executionProcess.IsTimerRunning())
+            if (executionTimer.IsTimerRunning())
                 throw new Exception("Timer is running.");
 
             executionPlan.ActionType = request.ActionType;

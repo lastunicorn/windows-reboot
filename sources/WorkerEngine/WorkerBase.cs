@@ -14,17 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-using System;
-
-namespace DustInTheWind.WindowsReboot.Domain.Scheduling
+namespace DustInTheWind.WorkerEngine
 {
-    public class FixedDateSchedule : ISchedule
+    public abstract class WorkerBase : IWorker
     {
-        public DateTime DateTime { get; set; }
+        protected bool IsStarted { get; private set; }
 
-        public DateTime ComputeActionTimeRelativeTo(DateTime now)
+        public void Start()
         {
-            return DateTime;
+            DoStart();
+            IsStarted = true;
         }
+
+        protected abstract void DoStart();
+
+        public void Stop()
+        {
+            DoStop();
+            IsStarted = false;
+        }
+
+        protected abstract void DoStop();
     }
 }

@@ -15,16 +15,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using DustInTheWind.WindowsReboot.Ports.SystemAccess;
 
-namespace DustInTheWind.WindowsReboot.Domain.Scheduling
+namespace DustInTheWind.WindowsReboot.SystemAccess
 {
-    public class FixedDateSchedule : ISchedule
+    public class SystemClock : ISystemClock
     {
-        public DateTime DateTime { get; set; }
-
-        public DateTime ComputeActionTimeRelativeTo(DateTime now)
+        public DateTime GetCurrentTime()
         {
-            return DateTime;
+            return DateTime.Now;
         }
     }
 }

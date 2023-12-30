@@ -27,19 +27,19 @@ namespace DustInTheWind.WindowsReboot.Application.PlanStateArea.PresentActionTim
     internal class PresentActionTimeSettingsUseCase : IRequestHandler<PresentActionTimeSettingsRequest, PresentActionTimeSettingsResponse>
     {
         private readonly ExecutionPlan executionPlan;
-        private readonly IExecutionProcess executionProcess;
+        private readonly IExecutionTimer executionTimer;
 
-        public PresentActionTimeSettingsUseCase(ExecutionPlan executionPlan, IExecutionProcess executionProcess)
+        public PresentActionTimeSettingsUseCase(ExecutionPlan executionPlan, IExecutionTimer executionTimer)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
-            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
         }
 
         public Task<PresentActionTimeSettingsResponse> Handle(PresentActionTimeSettingsRequest request, CancellationToken cancellationToken)
         {
             PresentActionTimeSettingsResponse response = new PresentActionTimeSettingsResponse
             {
-                IsAllowedToChange = !executionProcess.IsTimerRunning()
+                IsAllowedToChange = !executionTimer.IsTimerRunning()
             };
 
             if (executionPlan.Schedule is FixedDateSchedule fixedDateSchedule)

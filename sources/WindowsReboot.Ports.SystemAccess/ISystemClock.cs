@@ -16,18 +16,10 @@
 
 using System;
 
-namespace DustInTheWind.WindowsReboot.Ports.WorkerAccess
+namespace DustInTheWind.WindowsReboot.Ports.SystemAccess
 {
-    public interface IExecutionProcess
+    public interface ISystemClock
     {
-        void Start(ExecutionRequest executionRequest);
-
-        void Stop();
-
-        bool IsTimerRunning();
-
-        TimeSpan GetTimeUntilAction();
-
-        DateTime GetActionTime();
+        DateTime GetCurrentTime();
     }
 }

@@ -22,12 +22,12 @@ using MediatR;
 
 namespace DustInTheWind.WindowsReboot.Workers
 {
-    public sealed class ExecutionWorker : IWorker, IDisposable
+    public sealed class ExecutionWorker : WorkerBase, IDisposable
     {
         private readonly IMediator mediator;
-        private readonly ExecutionTimer timer;
+        private readonly CustomTimer timer;
 
-        public bool IsRunning => timer.IsRunning;
+        public bool IsTimerRunning => timer.IsRunning;
 
         public DateTime ActionTime => timer.ActionTime;
 
@@ -37,30 +37,36 @@ namespace DustInTheWind.WindowsReboot.Workers
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-            timer = new ExecutionTimer();
+            timer = new CustomTimer();
         }
 
-        public void Start()
+        protected override void DoStart()
         {
             timer.Warning += TimerWarning;
             timer.Ring += TimerRing;
         }
 
-        public void Stop()
+        protected override void DoStop()
         {
             timer.Warning -= TimerWarning;
             timer.Ring -= TimerRing;
         }
 
-        public void StartTimer(DateTime actionTime, TimeSpan? warningInterval = null)
+        public void StartTimer(ExecutionRequest executionRequest)
         {
-            timer.ActionTime = actionTime;
-            timer.WarningInterval = warningInterval;
+            if (!IsStarted)
+                throw new WorkerNotRunningException();
+
+            timer.ActionTime = executionRequest.ActionTime;
+            timer.WarningInterval = executionRequest.WarningInterval;
             timer.Start();
         }
 
         public void StopTimer()
         {
+            if (!IsStarted)
+                throw new WorkerNotRunningException();
+
             timer.Stop();
         }
 

@@ -21,6 +21,7 @@ using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Domain;
 using DustInTheWind.WindowsReboot.Domain.Scheduling;
 using DustInTheWind.WindowsReboot.Ports.ConfigAccess;
+using DustInTheWind.WindowsReboot.Ports.SystemAccess;
 using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using DustInTheWind.WorkerEngine;
 using MediatR;
@@ -32,17 +33,19 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication
         private readonly ExecutionPlan executionPlan;
         private readonly WorkersContainer workersContainer;
         private readonly IConfigStorage configStorage;
-        private readonly IExecutionProcess executionProcess;
+        private readonly IExecutionTimer executionTimer;
         private readonly EventBus eventBus;
+        private readonly ISystemClock systemClock;
 
         public InitializeApplicationUseCase(ExecutionPlan executionPlan, WorkersContainer workersContainer, IConfigStorage configStorage,
-            IExecutionProcess executionProcess, EventBus eventBus)
+            IExecutionTimer executionTimer, EventBus eventBus, ISystemClock systemClock)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
             this.workersContainer = workersContainer ?? throw new ArgumentNullException(nameof(workersContainer));
             this.configStorage = configStorage ?? throw new ArgumentNullException(nameof(configStorage));
-            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
+            this.systemClock = systemClock ?? throw new ArgumentNullException(nameof(systemClock));
         }
 
         public Task Handle(InitializeApplicationRequest request, CancellationToken cancellationToken)
@@ -68,27 +71,32 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication
         {
             executionPlan.Schedule = schedule;
 
-            ScheduleChangedEvent ev = new ScheduleChangedEvent(schedule);
-            eventBus.Publish(ev);
+            RaiseScheduleChangedEvent(schedule);
         }
 
-        public void Start()
+        private void Start()
         {
-            DateTime startTime = DateTime.Now;
-            DateTime runTime = executionPlan.Schedule.CalculateTimeFrom(startTime);
+            DateTime startTime = systemClock.GetCurrentTime();
+            DateTime actionTime = executionPlan.Schedule.ComputeActionTimeRelativeTo(startTime);
 
-            if (runTime < startTime)
-                throw new ActionTimeInThePastException(runTime, startTime);
+            if (actionTime < startTime)
+                throw new ActionTimeInThePastException(actionTime, startTime);
 
             ExecutionRequest executionRequest = new ExecutionRequest
             {
-                ActionTime = runTime,
+                ActionTime = actionTime,
                 WarningInterval = executionPlan.WarningInterval
             };
 
-            executionProcess.Start(executionRequest);
+            executionTimer.Start(executionRequest);
 
-            RaiseTimerStartedEvent(runTime);
+            RaiseTimerStartedEvent(actionTime);
+        }
+
+        private void RaiseScheduleChangedEvent(ISchedule schedule)
+        {
+            ScheduleChangedEvent ev = new ScheduleChangedEvent(schedule);
+            eventBus.Publish(ev);
         }
 
         private void RaiseTimerStartedEvent(DateTime nextRunTime)
@@ -97,6 +105,7 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication
             {
                 ActionTime = nextRunTime
             };
+
             eventBus.Publish(ev);
         }
     }

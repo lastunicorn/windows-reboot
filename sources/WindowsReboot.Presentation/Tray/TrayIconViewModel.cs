@@ -30,11 +30,10 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
 {
     public class TrayIconViewModel : ViewModelBase
     {
-        private readonly IExecutionProcess executionProcess;
+        private readonly IExecutionTimer executionTimer;
         private readonly string defaultText;
         private string text;
         private bool isVisible;
-        private bool wasVisibleBeforeClosing;
 
         public string Text
         {
@@ -74,7 +73,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
 
         public ExitCommand ExitCommand { get; private set; }
 
-        public TrayIconViewModel(IExecutionProcess executionProcess,
+        public TrayIconViewModel(IExecutionTimer executionTimer,
             EventBus eventBus,
             RestoreMainWindowCommand restoreMainWindowCommand,
             LockComputerCommand lockComputerCommand,
@@ -87,7 +86,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
             ExitCommand exitCommand)
         {
             if (eventBus == null) throw new ArgumentNullException(nameof(eventBus));
-            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
 
             RestoreMainWindowCommand = restoreMainWindowCommand ?? throw new ArgumentNullException(nameof(restoreMainWindowCommand));
             LockComputerCommand = lockComputerCommand ?? throw new ArgumentNullException(nameof(lockComputerCommand));
@@ -107,7 +106,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
 
             eventBus.Subscribe<ApplicationStateChangedEvent>(HandleApplicationStateChangedEvent);
             eventBus.Subscribe<ApplicationClosingEvent>(HandleApplicationClosingEvent);
-            eventBus.Subscribe<ApplicationCloseRevokedEvent>(HandleApplicationCloseRevokedEvent);
         }
 
         private void HandleApplicationStateChangedEvent(ApplicationStateChangedEvent ev)
@@ -137,21 +135,15 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
 
         private void HandleApplicationClosingEvent(ApplicationClosingEvent ev)
         {
-            wasVisibleBeforeClosing = isVisible;
             IsVisible = false;
-        }
-
-        private void HandleApplicationCloseRevokedEvent(ApplicationCloseRevokedEvent ev)
-        {
-            IsVisible = wasVisibleBeforeClosing;
         }
 
         public void OnNotifyIconMouseMove()
         {
             try
             {
-                Text = executionProcess.IsTimerRunning()
-                    ? (TimerText)executionProcess.GetTimeUntilAction()
+                Text = executionTimer.IsTimerRunning()
+                    ? (TimerText)executionTimer.GetTimeUntilAction()
                     : defaultText;
             }
             catch (Exception ex)

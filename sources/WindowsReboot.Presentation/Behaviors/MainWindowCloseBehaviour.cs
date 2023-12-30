@@ -58,7 +58,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.Behaviors
             form.FormClosing += HandleMainWindowFormClosing;
 
             eventBus.Subscribe<ApplicationClosingEvent>(HandleApplicationClosingEvent);
-            eventBus.Subscribe<ApplicationCloseRevokedEvent>(HandleApplicationCloseRevokedEvent);
         }
 
         private void Stop()
@@ -66,7 +65,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.Behaviors
             form.FormClosing -= HandleMainWindowFormClosing;
 
             eventBus.Unsubscribe<ApplicationClosingEvent>(HandleApplicationClosingEvent);
-            eventBus.Unsubscribe<ApplicationCloseRevokedEvent>(HandleApplicationCloseRevokedEvent);
         }
 
         private void HandleMainWindowFormClosing(object sender, FormClosingEventArgs e)
@@ -91,11 +89,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.Behaviors
         private void HandleApplicationClosingEvent(ApplicationClosingEvent ev)
         {
             closingFromBusiness = true;
-        }
-
-        private void HandleApplicationCloseRevokedEvent(ApplicationCloseRevokedEvent ev)
-        {
-            closingFromBusiness = false;
         }
     }
 }

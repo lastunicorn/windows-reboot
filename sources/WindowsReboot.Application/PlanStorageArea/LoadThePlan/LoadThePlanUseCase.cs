@@ -31,20 +31,20 @@ namespace DustInTheWind.WindowsReboot.Application.PlanStorageArea.LoadThePlan
     {
         private readonly ExecutionPlan executionPlan;
         private readonly IConfigStorage configuration;
-        private readonly IExecutionProcess executionProcess;
+        private readonly IExecutionTimer executionTimer;
         private readonly EventBus eventBus;
 
-        public LoadThePlanUseCase(ExecutionPlan executionPlan, IConfigStorage configuration, IExecutionProcess executionProcess, EventBus eventBus)
+        public LoadThePlanUseCase(ExecutionPlan executionPlan, IConfigStorage configuration, IExecutionTimer executionTimer, EventBus eventBus)
         {
             this.executionPlan = executionPlan ?? throw new ArgumentNullException(nameof(executionPlan));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         public Task Handle(LoadThePlanRequest request, CancellationToken cancellationToken)
         {
-            if (executionProcess.IsTimerRunning())
+            if (executionTimer.IsTimerRunning())
                 throw new TimerIsRunningException();
 
             ISchedule schedule = configuration.Schedule.ToDomain();

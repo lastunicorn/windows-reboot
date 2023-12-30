@@ -33,13 +33,19 @@ namespace DustInTheWind.WindowsReboot.Application.MainArea.HideApplication
 
         public Task Handle(HideApplicationRequest request, CancellationToken cancellationToken)
         {
-            ApplicationStateChangedEvent ev = new ApplicationStateChangedEvent
-            {
-                ApplicationState = ApplicationState.Hidden
-            };
-            eventBus.Publish(ev);
+            RaiseApplicationStateChangedEvent(ApplicationState.Hidden);
 
             return Task.CompletedTask;
+        }
+
+        private void RaiseApplicationStateChangedEvent(ApplicationState applicationState)
+        {
+            ApplicationStateChangedEvent ev = new ApplicationStateChangedEvent
+            {
+                ApplicationState = applicationState
+            };
+
+            eventBus.Publish(ev);
         }
     }
 }

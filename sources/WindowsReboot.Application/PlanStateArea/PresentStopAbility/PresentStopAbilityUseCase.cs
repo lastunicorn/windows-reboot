@@ -24,18 +24,18 @@ namespace DustInTheWind.WindowsReboot.Application.PlanStateArea.PresentStopAbili
 {
     internal class PresentStopAbilityUseCase : IRequestHandler<PresentStopAbilityRequest, PresentStopAbilityResponse>
     {
-        private readonly IExecutionProcess executionProcess;
+        private readonly IExecutionTimer executionTimer;
 
-        public PresentStopAbilityUseCase(IExecutionProcess executionProcess)
+        public PresentStopAbilityUseCase(IExecutionTimer executionTimer)
         {
-            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
         }
 
         public Task<PresentStopAbilityResponse> Handle(PresentStopAbilityRequest request, CancellationToken cancellationToken)
         {
             PresentStopAbilityResponse response = new PresentStopAbilityResponse
             {
-                CanStop = executionProcess.IsTimerRunning()
+                CanStop = executionTimer.IsTimerRunning()
             };
 
             return Task.FromResult(response);

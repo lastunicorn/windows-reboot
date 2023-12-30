@@ -25,18 +25,18 @@ namespace DustInTheWind.WindowsReboot.Application.PlanExecutionArea.StopTimer
 {
     internal class StopTimerUseCase : IRequestHandler<StopTimerRequest>
     {
-        private readonly IExecutionProcess executionProcess;
+        private readonly IExecutionTimer executionTimer;
         private readonly EventBus eventBus;
 
-        public StopTimerUseCase(IExecutionProcess executionProcess, EventBus eventBus)
+        public StopTimerUseCase(IExecutionTimer executionTimer, EventBus eventBus)
         {
-            this.executionProcess = executionProcess ?? throw new ArgumentNullException(nameof(executionProcess));
+            this.executionTimer = executionTimer ?? throw new ArgumentNullException(nameof(executionTimer));
             this.eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
         }
 
         public Task Handle(StopTimerRequest request, CancellationToken cancellationToken)
         {
-            executionProcess.Stop();
+            executionTimer.Stop();
             RaiseTimerStoppedEvent();
 
             return Task.CompletedTask;

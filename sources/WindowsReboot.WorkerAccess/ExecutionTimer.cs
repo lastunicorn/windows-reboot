@@ -18,14 +18,15 @@ using System;
 using DustInTheWind.WindowsReboot.Ports.WorkerAccess;
 using DustInTheWind.WindowsReboot.Workers;
 using DustInTheWind.WorkerEngine;
+using ExecutionRequest = DustInTheWind.WindowsReboot.Ports.WorkerAccess.ExecutionRequest;
 
 namespace DustInTheWind.WindowsReboot.WorkerAccess
 {
-    public class ExecutionProcess : IExecutionProcess
+    public class ExecutionTimer : IExecutionTimer
     {
         private readonly WorkersContainer workersContainer;
 
-        public ExecutionProcess(WorkersContainer workersContainer)
+        public ExecutionTimer(WorkersContainer workersContainer)
         {
             this.workersContainer = workersContainer ?? throw new ArgumentNullException(nameof(workersContainer));
         }
@@ -34,7 +35,13 @@ namespace DustInTheWind.WindowsReboot.WorkerAccess
         {
             ExecutionWorker executionWorker = workersContainer.GetOne<ExecutionWorker>();
 
-            executionWorker.StartTimer(executionRequest.ActionTime, executionRequest.WarningInterval);
+            Workers.ExecutionRequest requestForWorker = new Workers.ExecutionRequest
+            {
+                ActionTime = executionRequest.ActionTime,
+                WarningInterval = executionRequest.WarningInterval
+            };
+
+            executionWorker.StartTimer(requestForWorker);
         }
 
         public void Stop()
@@ -46,7 +53,7 @@ namespace DustInTheWind.WindowsReboot.WorkerAccess
         public bool IsTimerRunning()
         {
             ExecutionWorker executionWorker = workersContainer.GetOne<ExecutionWorker>();
-            return executionWorker.IsRunning;
+            return executionWorker.IsTimerRunning;
         }
 
         public TimeSpan GetTimeUntilAction()
