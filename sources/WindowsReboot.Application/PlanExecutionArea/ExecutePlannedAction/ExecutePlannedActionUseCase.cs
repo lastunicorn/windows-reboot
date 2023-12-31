@@ -43,7 +43,7 @@ namespace DustInTheWind.WindowsReboot.Application.PlanExecutionArea.ExecutePlann
         public Task Handle(ExecutePlannedActionRequest request, CancellationToken cancellationToken)
         {
             Execute();
-            RaiseTimerStoppedEvent();
+            RaiseTimerStoppedEvent(request.RequestId);
 
             return Task.CompletedTask;
         }
@@ -89,9 +89,12 @@ namespace DustInTheWind.WindowsReboot.Application.PlanExecutionArea.ExecutePlann
             }
         }
 
-        private void RaiseTimerStoppedEvent()
+        private void RaiseTimerStoppedEvent(Guid requestId)
         {
-            TimerStoppedEvent ev = new TimerStoppedEvent();
+            TimerStoppedEvent ev = new TimerStoppedEvent
+            {
+                RequestId = requestId
+            };
             eventBus.Publish(ev);
         }
     }

@@ -56,19 +56,21 @@ namespace DustInTheWind.WindowsReboot.Application.PlanExecutionArea.StartTimer
 
             ExecutionRequest executionRequest = new ExecutionRequest
             {
+                Id = Guid.NewGuid(),
                 ActionTime = actionTime,
                 WarningInterval = executionPlan.WarningInterval
             };
 
             executionTimer.Start(executionRequest);
 
-            RaiseTimerStartedEvent(actionTime);
+            RaiseTimerStartedEvent(actionTime, executionRequest.Id);
         }
 
-        private void RaiseTimerStartedEvent(DateTime nextRunTime)
+        private void RaiseTimerStartedEvent(DateTime nextRunTime, Guid requestId)
         {
             TimerStartedEvent ev = new TimerStartedEvent
             {
+                RequestId = requestId,
                 ActionTime = nextRunTime
             };
             eventBus.Publish(ev);

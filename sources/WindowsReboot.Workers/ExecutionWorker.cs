@@ -26,6 +26,7 @@ namespace DustInTheWind.WindowsReboot.Workers
     {
         private readonly IMediator mediator;
         private readonly CustomTimer timer;
+        private Guid currentRequestId = Guid.Empty;
 
         public bool IsTimerRunning => timer.IsRunning;
 
@@ -57,6 +58,8 @@ namespace DustInTheWind.WindowsReboot.Workers
             if (!IsStarted)
                 throw new WorkerNotRunningException();
 
+            currentRequestId = executionRequest.Id;
+
             timer.ActionTime = executionRequest.ActionTime;
             timer.WarningInterval = executionRequest.WarningInterval;
             timer.Start();
@@ -78,7 +81,13 @@ namespace DustInTheWind.WindowsReboot.Workers
 
         private void TimerRing(object sender, EventArgs eventArgs)
         {
-            ExecutePlannedActionRequest request = new ExecutePlannedActionRequest();
+            ExecutePlannedActionRequest request = new ExecutePlannedActionRequest
+            {
+                RequestId = currentRequestId
+            };
+
+            currentRequestId = Guid.Empty;
+
             _ = mediator.Send(request);
         }
 

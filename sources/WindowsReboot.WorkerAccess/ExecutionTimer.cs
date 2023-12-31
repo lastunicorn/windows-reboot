@@ -37,6 +37,7 @@ namespace DustInTheWind.WindowsReboot.WorkerAccess
 
             Workers.ExecutionRequest requestForWorker = new Workers.ExecutionRequest
             {
+                Id = executionRequest.Id,
                 ActionTime = executionRequest.ActionTime,
                 WarningInterval = executionRequest.WarningInterval
             };

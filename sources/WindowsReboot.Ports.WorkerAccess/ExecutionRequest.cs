@@ -20,6 +20,8 @@ namespace DustInTheWind.WindowsReboot.Ports.WorkerAccess
 {
     public class ExecutionRequest
     {
+        public Guid Id { get; set; }
+
         public DateTime ActionTime { get; set; }
 
         public TimeSpan? WarningInterval { get; set; }

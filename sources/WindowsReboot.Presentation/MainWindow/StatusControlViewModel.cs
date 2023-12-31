@@ -32,6 +32,9 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         private DateTime? actionTime;
         private TimeSpan? timerTime;
 
+        private Guid lastStartId = Guid.Empty;
+        private Guid lastEndId = Guid.Empty;
+
         public DateTime CurrentTime
         {
             get => currentTime;
@@ -113,7 +116,25 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         {
             Dispatch(() =>
             {
-                ActionTime = ev.ActionTime;
+                if (ev.RequestId == lastEndId)
+                {
+                    // start the request that was already ended => stop the timer
+
+                    lastStartId = Guid.Empty;
+                    lastEndId = Guid.Empty;
+
+                    ActionTime = null;
+                    TimerTime = null;
+                }
+                else
+                {
+                    // start a new request
+
+                    lastStartId = ev.RequestId;
+                    lastEndId = Guid.Empty;
+
+                    ActionTime = ev.ActionTime;
+                }
             });
         }
 
@@ -121,8 +142,37 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
         {
             Dispatch(() =>
             {
-                ActionTime = null;
-                TimerTime = null;
+                if (lastStartId == Guid.Empty)
+                {
+                    // no request was started yet => keep the end request for a later processing.
+
+                    lastEndId = ev.RequestId;
+
+                    ActionTime = null;
+                    TimerTime = null;
+                }
+                else
+                {
+                    if (ev.RequestId == lastStartId)
+                    {
+                        // ending the request that was previously started.
+
+                        lastStartId = Guid.Empty;
+                        lastEndId = Guid.Empty;
+
+                        ActionTime = null;
+                        TimerTime = null;
+                    }
+                    else
+                    {
+                        // ending a request that was NOT previously started => keep the end request for a later processing.
+
+                        lastEndId = ev.RequestId;
+
+                        ActionTime = null;
+                        TimerTime = null;
+                    }
+                }
             });
         }
 

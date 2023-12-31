@@ -16,15 +16,14 @@
 
 using System;
 using DustInTheWind.WindowsReboot.Presentation.Commands;
-using DustInTheWind.WinFormsAdditions;
 
 namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
 {
     public class ActionControlViewModel
     {
-        public ICommand StartTimerCommand { get; set; }
+        public StartTimerCommand StartTimerCommand { get; }
 
-        public ICommand StopTimerCommand { get; set; }
+        public StopTimerCommand StopTimerCommand { get; }
 
         public ActionControlViewModel(StartTimerCommand startTimerCommand, StopTimerCommand stopTimerCommand)
         {

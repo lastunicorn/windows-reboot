@@ -20,6 +20,8 @@ namespace DustInTheWind.WindowsReboot.Application
 {
     public class TimerStartedEvent
     {
+        public Guid RequestId { get; set; }
+
         public DateTime ActionTime { get; set; }
     }
 }
