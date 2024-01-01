@@ -16,6 +16,7 @@
 
 using System.Windows.Forms;
 using Autofac;
+using DustInTheWind.WindowsReboot.Application.MainArea.AutoStart.AutoStart;
 using DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication;
 using DustInTheWind.WindowsReboot.Presentation.Behaviors;
 using DustInTheWind.WindowsReboot.Presentation.MainWindow;
@@ -35,6 +36,8 @@ namespace DustInTheWind.WindowsReboot
             InitializeServiceContainer();
             InitializeBusiness();
             InitializeGui();
+
+            AutoStartBusiness();
         }
 
         private static void InitializeServiceContainer()
@@ -61,6 +64,10 @@ namespace DustInTheWind.WindowsReboot
             {
             }
 
+            // UI Dispatcher
+
+            UiDispatcher.Initialize();
+
             // Main Window
 
             WindowsRebootForm mainForm = container.Resolve<WindowsRebootForm>();
@@ -76,10 +83,13 @@ namespace DustInTheWind.WindowsReboot
             // Tray Icon
 
             trayIcon = container.Resolve<TrayIcon>();
+        }
 
-            // UI Dispatcher
-
-            UiDispatcher.Initialize();
+        private static void AutoStartBusiness()
+        {
+            IMediator mediator = container.Resolve<IMediator>();
+            AutoStartRequest request = new AutoStartRequest();
+            _ = mediator.Send(request);
         }
     }
 }

@@ -52,7 +52,10 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         private void HandleTimerStartedEvent(TimerStartedEvent ev)
         {
-            CanExecute = true;
+            Dispatch(() =>
+            {
+                CanExecute = true;
+            });
         }
 
         private void HandleTimerStoppedEvent(TimerStoppedEvent ev)

@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Threading.Tasks;
 using DustInTheWind.EventBusEngine;
 using DustInTheWind.WindowsReboot.Application;
 using DustInTheWind.WindowsReboot.Application.PlanExecutionArea.StartTimer;
@@ -36,10 +37,10 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
             eventBus.Subscribe<TimerStartedEvent>(HandleTimerStartedEvent);
             eventBus.Subscribe<TimerStoppedEvent>(HandleTimerStoppedEvent);
 
-            Initialize();
+            Initialize().Wait();
         }
 
-        private async void Initialize()
+        private async Task Initialize()
         {
             PresentStartAbilityRequest request = new PresentStartAbilityRequest();
             PresentStartAbilityResponse response = await mediator.Send(request);
@@ -52,7 +53,10 @@ namespace DustInTheWind.WindowsReboot.Presentation.Commands
 
         private void HandleTimerStartedEvent(TimerStartedEvent ev)
         {
-            CanExecute = false;
+            Dispatch(() =>
+            {
+                CanExecute = false;
+            });
         }
 
         private void HandleTimerStoppedEvent(TimerStoppedEvent ev)
