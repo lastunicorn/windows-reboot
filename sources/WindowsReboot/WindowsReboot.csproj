@@ -140,7 +140,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicesSetup.cs" />
-    <Compile Include="WindowsRebootApplication.cs" />
+    <Compile Include="WindowsRebootApplicationContext.cs" />
     <None Include="packages.config" />
     <None Include="Resources\License.txt" />
     <EmbeddedResource Include="Properties\Resources.resx">

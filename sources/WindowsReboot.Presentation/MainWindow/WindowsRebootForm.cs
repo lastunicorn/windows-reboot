@@ -24,31 +24,34 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
     {
         private WindowsRebootViewModel viewModel;
 
-        public WindowsRebootViewModel ViewModel
+        public WindowsRebootForm(WindowsRebootViewModel viewModel)
         {
-            get => viewModel;
-            set
-            {
-                viewModel = value;
+            InitializeComponent();
 
-                this.Bind(x => x.Text, viewModel, x => x.Title, false, DataSourceUpdateMode.Never);
+            SetViewModel(viewModel);
+        }
 
-                actionTimeControl1.ViewModel = viewModel.ActionTimeControlViewModel;
-                actionTypeControl1.ViewModel = viewModel.ActionTypeControlViewModel;
-                actionControl1.ViewModel = viewModel.ActionControlViewModel;
-                statusControl1.ViewModel = viewModel.StatusControlViewModel;
+        public void SetViewModel(WindowsRebootViewModel value)
+        {
+            viewModel = value;
 
-                goToTrayToolStripMenuItem.Command = viewModel.GoToTrayCommand;
-                loadDefaultSettingsToolStripMenuItem.Command = viewModel.LoadDefaultPlanCommand;
-                loadInitialSettingsToolStripMenuItem.Command = viewModel.LoadThePlanCommand;
-                saveCurrentSettingsToolStripMenuItem.Command = viewModel.SaveThePlanCommand;
-                optionsToolStripMenuItem.Command = viewModel.OptionsCommand;
-                licenseToolStripMenuItem.Command = viewModel.LicenseCommand;
-                aboutToolStripMenuItem.Command = viewModel.AboutCommand;
-                exitToolStripMenuItem.Command = viewModel.ExitCommand;
+            this.Bind(x => x.Text, viewModel, x => x.Title, false, DataSourceUpdateMode.Never);
 
-                viewModel.PropertyChanged += HandleViewModelPropertyChanged;
-            }
+            actionTimeControl1.ViewModel = viewModel.ActionTimeControlViewModel;
+            actionTypeControl1.ViewModel = viewModel.ActionTypeControlViewModel;
+            actionControl1.ViewModel = viewModel.ActionControlViewModel;
+            statusControl1.ViewModel = viewModel.StatusControlViewModel;
+
+            goToTrayToolStripMenuItem.Command = viewModel.GoToTrayCommand;
+            loadDefaultSettingsToolStripMenuItem.Command = viewModel.LoadDefaultPlanCommand;
+            loadInitialSettingsToolStripMenuItem.Command = viewModel.LoadThePlanCommand;
+            saveCurrentSettingsToolStripMenuItem.Command = viewModel.SaveThePlanCommand;
+            optionsToolStripMenuItem.Command = viewModel.OptionsCommand;
+            licenseToolStripMenuItem.Command = viewModel.LicenseCommand;
+            aboutToolStripMenuItem.Command = viewModel.AboutCommand;
+            exitToolStripMenuItem.Command = viewModel.ExitCommand;
+
+            viewModel.PropertyChanged += HandleViewModelPropertyChanged;
         }
 
         private void HandleViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -66,11 +69,6 @@ namespace DustInTheWind.WindowsReboot.Presentation.MainWindow
                     Hide();
                     break;
             }
-        }
-
-        public WindowsRebootForm()
-        {
-            InitializeComponent();
         }
     }
 }

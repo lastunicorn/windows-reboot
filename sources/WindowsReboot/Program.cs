@@ -23,8 +23,8 @@ namespace DustInTheWind.WindowsReboot
         [STAThread]
         private static void Main()
         {
-            WindowsRebootApplication application = new WindowsRebootApplication();
-            application.Run();
+            WindowsRebootApplicationContext applicationContext = new WindowsRebootApplicationContext();
+            System.Windows.Forms.Application.Run(applicationContext);
         }
     }
 }

@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System.Windows.Forms;
 using Autofac;
 using DustInTheWind.WindowsReboot.Application.MainArea.InitializeApplication;
 using DustInTheWind.WindowsReboot.Presentation.Behaviors;
@@ -24,64 +25,61 @@ using MediatR;
 
 namespace DustInTheWind.WindowsReboot
 {
-    internal class WindowsRebootApplication
+    internal class WindowsRebootApplicationContext : ApplicationContext
     {
-        private WindowsRebootForm mainWindow;
         private TrayIcon trayIcon;
+        private static IContainer container;
 
-        public WindowsRebootApplication()
+        public WindowsRebootApplicationContext()
         {
-            IContainer container = InitializeContainer();
-
-            InitializeBusiness(container);
-            InitializeGui(container);
+            InitializeServiceContainer();
+            InitializeBusiness();
+            InitializeGui();
         }
 
-        private static IContainer InitializeContainer()
+        private static void InitializeServiceContainer()
         {
             ContainerBuilder containerBuilder = new ContainerBuilder();
             ServicesSetup.Execute(containerBuilder);
-            IContainer container = containerBuilder.Build();
-            
-            return container;
+            container = containerBuilder.Build();
         }
 
-        private static void InitializeBusiness(IComponentContext context)
+        private static void InitializeBusiness()
         {
-            IMediator mediator = context.Resolve<IMediator>();
+            IMediator mediator = container.Resolve<IMediator>();
             InitializeApplicationRequest request = new InitializeApplicationRequest();
             mediator.Send(request).Wait();
         }
 
-        private void InitializeGui(IComponentContext context)
+        private void InitializeGui()
         {
             System.Windows.Forms.Application.EnableVisualStyles();
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
-            
+
+            // Force the Windows Forms initialization.
+            using (Form form = new Form())
+            {
+            }
+
             // Main Window
 
-            mainWindow = context.Resolve<WindowsRebootForm>();
-            mainWindow.ViewModel = context.Resolve<WindowsRebootViewModel>();
+            WindowsRebootForm mainForm = container.Resolve<WindowsRebootForm>();
 
-            MainWindowCloseBehaviour mainWindowCloseBehaviour = context.Resolve<MainWindowCloseBehaviour>();
-            mainWindow.AddBehavior(mainWindowCloseBehaviour);
+            MainWindowCloseBehaviour mainWindowCloseBehaviour = container.Resolve<MainWindowCloseBehaviour>();
+            mainForm.AddBehavior(mainWindowCloseBehaviour);
 
-            MainWindowMinimizeBehavior mainWindowMinimizeBehavior = context.Resolve<MainWindowMinimizeBehavior>();
-            mainWindow.AddBehavior(mainWindowMinimizeBehavior);
+            MainWindowMinimizeBehavior mainWindowMinimizeBehavior = container.Resolve<MainWindowMinimizeBehavior>();
+            mainForm.AddBehavior(mainWindowMinimizeBehavior);
+
+            MainForm = mainForm;
 
             // Tray Icon
 
-            trayIcon = context.Resolve<TrayIcon>();
-            trayIcon.ViewModel = context.Resolve<TrayIconViewModel>();
+            trayIcon = container.Resolve<TrayIcon>();
 
             // UI Dispatcher
 
             UiDispatcher.Initialize();
-        }
-
-        public void Run()
-        {
-            System.Windows.Forms.Application.Run(mainWindow);
         }
     }
 }

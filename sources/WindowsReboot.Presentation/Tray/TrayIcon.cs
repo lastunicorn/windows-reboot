@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -23,43 +24,30 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
     {
         private TrayIconViewModel viewModel;
 
-        public TrayIconViewModel ViewModel
+        public TrayIcon(TrayIconViewModel viewModel)
         {
-            get => viewModel;
-            set
-            {
-                if (viewModel != null)
-                {
-                    toolStripMenuItem1.Command = null;
-                    lockComputerToolStripMenuItem.Command = null;
-                    logOffToolStripMenuItem.Command = null;
-                    sleepToolStripMenuItem.Command = null;
-                    hibernateToolStripMenuItem.Command = null;
-                    rebootToolStripMenuItem.Command = null;
-                    shutDownToolStripMenuItem.Command = null;
-                    powerOffToolStripMenuItem.Command = null;
-                    toolStripMenuItem2.Command = null;
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
-                    viewModel.PropertyChanged -= HandleViewModelPropertyChanged;
-                }
+            InitializeComponent();
 
-                viewModel = value;
+            SetViewModel(viewModel);
+        }
 
-                if (viewModel != null)
-                {
-                    toolStripMenuItem1.Command = viewModel.RestoreMainWindowCommand;
-                    lockComputerToolStripMenuItem.Command = viewModel.LockComputerCommand;
-                    logOffToolStripMenuItem.Command = viewModel.LogOffCommand;
-                    sleepToolStripMenuItem.Command = viewModel.SleepCommand;
-                    hibernateToolStripMenuItem.Command = viewModel.HibernateCommand;
-                    rebootToolStripMenuItem.Command = viewModel.RebootCommand;
-                    shutDownToolStripMenuItem.Command = viewModel.ShutDownCommand;
-                    powerOffToolStripMenuItem.Command = viewModel.PowerOffCommand;
-                    toolStripMenuItem2.Command = viewModel.ExitCommand;
+        private void SetViewModel(TrayIconViewModel value)
+        {
+            viewModel = value;
 
-                    viewModel.PropertyChanged += HandleViewModelPropertyChanged;
-                }
-            }
+            toolStripMenuItem1.Command = viewModel.RestoreMainWindowCommand;
+            lockComputerToolStripMenuItem.Command = viewModel.LockComputerCommand;
+            logOffToolStripMenuItem.Command = viewModel.LogOffCommand;
+            sleepToolStripMenuItem.Command = viewModel.SleepCommand;
+            hibernateToolStripMenuItem.Command = viewModel.HibernateCommand;
+            rebootToolStripMenuItem.Command = viewModel.RebootCommand;
+            shutDownToolStripMenuItem.Command = viewModel.ShutDownCommand;
+            powerOffToolStripMenuItem.Command = viewModel.PowerOffCommand;
+            toolStripMenuItem2.Command = viewModel.ExitCommand;
+
+            viewModel.PropertyChanged += HandleViewModelPropertyChanged;
         }
 
         private void HandleViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -75,19 +63,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.Tray
                     break;
             }
         }
-
-        public TrayIcon()
-        {
-            InitializeComponent();
-        }
-
-        public TrayIcon(IContainer container)
-        {
-            container.Add(this);
-
-            InitializeComponent();
-        }
-
+        
         private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && viewModel != null && viewModel.RestoreMainWindowCommand != null && viewModel.RestoreMainWindowCommand.CanExecute)
