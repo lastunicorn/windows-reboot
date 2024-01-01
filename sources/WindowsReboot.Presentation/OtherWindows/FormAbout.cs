@@ -40,7 +40,7 @@ namespace DustInTheWind.WindowsReboot.Presentation.OtherWindows
             labelVersion.Text = VersionUtil.GetVersion().ToString();
 
             labelAuthor.Text = System.Windows.Forms.Application.CompanyName;
-            labelDate.Text = "2016";
+            labelDate.Text = "January 2024";
             textBoxDescription.Text = AssemblyDescription;
         }
 
